@@ -1,15 +1,19 @@
-
- <!DOCTYPE HTML>
-<html >
+<!DOCTYPE HTML>
+<html>
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
   
     <title>相册 | ov智商捉急</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=3,minimum-scale=1">
     
     <meta name="author" content="Jay Wang">
     
-    <meta name="description" content="$(function(){$(‘instagram-lite’).instagramLite({clientID: ‘b948a5f3f448476995bb05325832ef2d’,username: ‘ohahabienaola’,list: false,urls: false,load_mo">
+    <meta name="description" content="Load more                    
+
+  
+            $(&#39;.il-buzzfeedfood&#39;).instagramLite({
+                username: &#39;ohahabienaola&#39;,
+                clientI">
     
     
     
@@ -22,14 +26,13 @@
     <link rel="apple-touch-icon-precomposed" href="/img/touxiang.jpg">
     
     <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-</head>
-
+</head></html>
   <body>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
       <div>
 		
 			<div id="imglogo">
-				<a href="/"><img src="/img/xiaozaizi.png" alt="ov智商捉急" title="ov智商捉急"/></a>
+				<a href="/"><img src="/img/xiaozaizi.png" alt="ov智商捉急" title="ov智商捉急"></a>
 			</div>
 			
 			<div id="textlogo">
@@ -53,7 +56,7 @@
 					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search">
 						<input type="hidden" name="q" value="site:ovjaywang.github.io">
 					</form>
 					
@@ -61,7 +64,6 @@
 				</ul>
 			</nav>			
 </div>
-
     </header>
     <div id="container">
       <div id="main" class="post" itemscope itemprop="blogPost">
@@ -76,8 +78,8 @@
       <a href="http://ovjaywang.github.io" title="Jay Wang">Jay Wang</a>
     </p>
   <p class="article-time">
-    <time datetime="2016-04-11T08:27:08.038Z" itemprop="datePublished">2016-04-11</time>
-    Updated:<time datetime="2016-04-11T08:27:07.959Z" itemprop="dateModified">2016-04-11</time>
+    <time datetime="2016-04-11T09:19:44.474Z" itemprop="datePublished">2016-04-11</time>
+    Updated:<time datetime="2016-04-11T09:19:44.394Z" itemprop="dateModified">2016-04-11</time>
     
   </p>
 </header>
@@ -89,15 +91,316 @@
 		
 		</div>
 		
-		<p><script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script></p>
-<p><script src="js/instagramLite.js"></script></p>
-<p><script type="text/javascript">$(function(){$(‘instagram-lite’).instagramLite({clientID: ‘b948a5f3f448476995bb05325832ef2d’,username: ‘ohahabienaola’,list: false,urls: false,load_more: ‘.load-more’,success: function() {console.log(‘The request was successful!’);},error: function(errorCode, errorMessage) {console.log(‘There was an error with the request’);if(errorCode &amp;&amp; errorMessage) {console.log(errorCode +’: ‘+ errorMessage);}}});})<br></script></p>
-<ul class="instagram-lite"></ul>  
+		<p><link rel="stylesheet" type="text/css" media="screen" href="https://raw.githubusercontent.com/michael-lynch/instagram-lite/master/src/css/style.css"></p>
+<p><div class="content"><br>            <div class="wrapper"><br>                <ul class="il-buzzfeedfood"></ul><br>                <a href="#" class="il-buzzfeedfood-load-more il-load-more" title="Load more images from Instagram">Load more</a><br>            </div><br>        </div></p>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+<script>  
+            $('.il-buzzfeedfood').instagramLite({
+                username: 'ohahabienaola',
+                clientID: 'b948a5f3f448476995bb05325832ef2d',
+                urls: true,
+                limit: 8,
+                videos: true,
+                load_more: '.il-buzzfeedfood-load-more',
+                success: function() {
+
+                    console.log('The request was successful!');
+
+                },
+                error: function(errorCode, errorMessage) {
+
+                    console.log('There was an error');
+
+                    if(errorCode && errorMessage) {
+
+                        alert(errorCode +': '+ errorMessage);
+
+                    }
+
+                }
+            });
+
+        </script>
+<script>
+    ;(function($) {
+    $.fn.instagramLite = function(options) {
+
+        // return if no element was bound
+        // so chained events can continue
+        if(!this.length) { 
+            return this; 
+        }
+
+        // define plugin
+        plugin = this;
+
+        // define default parameters
+        plugin.defaults = {
+            username: null,
+            clientID: null,
+            limit: null,
+            list: true,
+            videos: false,
+            urls: false,
+            captions: false,
+            date: false,
+            likes: false,
+            comments_count: false,
+            max_id: null,
+            load_more: null,
+            error: function() {},
+            success: function() {}
+        }
+
+        // vars
+        var s = $.extend({}, plugin.defaults, options),
+            el = $(this);
+
+        var getMaxId = function(items) {
+
+            // return id of last item
+            return items[items.length-1].id;
+        };
+
+        var formatCaption = function(caption) {
+
+            var words = caption.split(' '),
+                newCaption = '';
+
+            for(var i = 0; i < words.length; i++) {
+
+                var word;
+
+                if(words[i][0] == '@') {
+                    var a = '<a href="http://twitter.com/'+words[i].replace('@', '').toLowerCase()+'" target="_blank">'+words[i]+'</a>';
+                    word = a;
+                } else if(words[i][0] == '#') {
+                    var a = '<a href="http://twitter.com/hashtag/'+words[i].replace('#', '').toLowerCase()+'" target="_blank">'+words[i]+'</a>';
+                    word = a;
+                } else {
+                    word = words[i]
+                }
+
+                newCaption += word + ' ';
+            }
+
+            return newCaption;
+
+        };
+
+        var loadContent = function() {
+
+            // if client ID and username were provided
+            if(s.clientID && s.username) {
+
+                // for each element
+                el.each(function() {
+
+                    var el = $(this);
+
+                    // search the user
+                    // to get user ID
+                    $.ajax({
+                        type: 'GET',
+                        url: 'https://api.instagram.com/v1/users/search?q='+s.username+'&client_id='+s.clientID+'&callback=?',
+                        dataType: 'jsonp',
+                        success: function(data) {
+
+                            if(data.data.length) {
+
+                                // define user namespace
+                                var thisUser = data.data[0];
+
+                                // construct API endpoint
+                                var url = 'https://api.instagram.com/v1/users/'+thisUser.id+'/media/recent/?client_id='+s.clientID+'&count='+s.limit+'&callback=?';
+
+                                // concat max id if max id is set
+                                url += (s.max_id) ? '&max_id='+s.max_id : '';
+
+                                $.ajax({
+                                    type: 'GET',
+                                    url: url,
+                                    dataType: 'jsonp',
+                                    success: function(data) {
+
+                                        // if success status
+                                        if(data.meta.code === 200 && data.data.length) {
+
+                                            // for each piece of media returned
+                                            for(var i = 0; i < data.data.length; i++) {
+
+                                                // define media namespace
+                                                var thisMedia = data.data[i],
+                                                    item;
+
+                                                // if media type is image or videos is set to false
+                                                if(thisMedia.type === 'image' || !s.videos) {
+
+                                                    // construct image
+                                                    item = '<img class="il-photo__img" src="'+thisMedia.images.standard_resolution.url+'" alt="Instagram Image" data-filter="'+thisMedia.filter+'" />';
+
+                                                    // if url setting is true
+                                                    if(s.urls) {
+
+                                                        item = '<a href="'+thisMedia.link+'" target="_blank">'+item+'</a>';
+
+                                                    }
+
+                                                    if(s.captions || s.date || s.likes || s.comments_count) {
+                                                        item += '<div class="il-photo__meta">';
+                                                    }
+
+                                                    // if caption setting is true
+                                                    if(s.captions && thisMedia.caption) {
+
+                                                        item += '<div class="il-photo__caption" data-caption-id="'+thisMedia.caption.id+'">'+formatCaption(thisMedia.caption.text)+'</div>';
+
+                                                    }
+
+                                                    // if date setting is true
+                                                    if(s.date) {
+
+                                                        var date = new Date(thisMedia.created_time * 1000),
+                                                            day = date.getDate(),
+                                                            month = date.getMonth() + 1,
+                                                            year = date.getFullYear(),
+                                                            hours = date.getHours(),
+                                                            minutes = date.getMinutes(),
+                                                            seconds = date.getSeconds();
+
+                                                        date = month +'/'+ day +'/'+ year;
+
+                                                        item += '<div class="il-photo__date">'+date+'</div>';
+
+                                                    }
+
+                                                    // if likes setting is true
+                                                    if(s.likes) {
+
+                                                        item += '<div class="il-photo__likes">'+thisMedia.likes.count+'</div>';
+
+                                                    }
+
+                                                    // if caption setting is true
+                                                    if(s.comments_count && thisMedia.comments) {
+
+                                                        item += '<div class="il-photo__comments">'+thisMedia.comments.count+'</div>';
+
+                                                    }
+
+                                                    if(s.captions || s.date || s.likes || s.comments_count) {
+                                                        item += '</div>';
+                                                    }
+
+                                                }
+
+                                                if(thisMedia.type === 'video' && s.videos) {
+
+                                                    if(thisMedia.videos) {
+
+                                                        var src;
+
+                                                        if(thisMedia.videos.standard_resolution) {
+
+                                                            src = thisMedia.videos.standard_resolution.url;
+
+                                                        } else if(thisMedia.videos.low_resolution) {
+
+                                                            src = thisMedia.videos.low_resolution.url;
+
+                                                        } else if(thisMedia.videos.low_bandwidth) {
+
+                                                            src = thisMedia.videos.low_bandwidth.url;
+
+                                                        }
+
+                                                        item = '<video poster="'+thisMedia.images.standard_resolution.url+'" controls>';
+
+                                                        item += '<source src="'+src+'" type="video/mp4;"></source>';
+
+                                                        item += '</video>';
+
+                                                    }
+                                                }
+
+                                                // if list setting is true
+                                                if(s.list && item) {
+
+                                                    // redefine item with wrapping list item
+                                                    item = '<li class="il-item" data-instagram-id="'+thisMedia.id+'">'+item+'</li>';
+                                                }
+
+                                                // append image / video
+                                                if(item !== '') {
+                                                    el.append(item);
+                                                }
+                                            }
+
+                                            // set new max id
+                                            s.max_id = getMaxId(data.data);
+
+                                            // execute success callback
+                                            s.success.call(this);
+
+                                        } else {
+
+                                            // execute error callback
+                                            s.error.call(this, data.meta.code, data.meta.error_message);
+
+                                        }
+
+                                    },
+                                    error: function() {
+
+                                        // recent media ajax request failed
+                                        // execute error callback
+                                        s.error.call(this);
+                                    }
+                                });
+
+                            } else {
+
+                                // error finding username
+                                // execute error callback
+                                s.error.call(this);
+
+                            }
+                        },
+                        error: function() {
+
+                            // search username ajax request failed
+                            // execute error callback
+                            s.error.call(this);
+
+                        }
+                    });
+
+                });
+
+            } else {
+
+                // username or client ID were not provided
+                // execute error callback
+                s.error.call(this);
+            };
+        }
+
+        // bind load more click event
+        if(s.load_more){
+            $(s.load_more).on('click', function(e) {
+                e.preventDefault();
+                loadContent();
+            });
+        }
+
+        // init
+        loadContent(); 
+    }
+
+})(jQuery);   
+</script>  
 	</div>
 		<footer class="article-footer clearfix">
-
-
-
 
 <div class="article-share" id="share">
 
@@ -108,12 +411,10 @@
 </footer>   	       
 	</article>
 	
-	
-<section class="comment">
+	<section class="comment">
 	<div class="ds-thread"></div>
 </section>
-
-</div>  
+</div>
       <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
   <div id="toc" class="toc-aside">
@@ -125,8 +426,7 @@
 <div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
 <aside class="clearfix">
 
-  
-<div class="categorieslist">
+  <div class="categorieslist">
 	<p class="asidetitle">Categories</p>
 		<ul>
 		
@@ -135,9 +435,7 @@
 		</ul>
 </div>
 
-
-  
-<div class="tagslist">
+  <div class="tagslist">
 	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
 		
@@ -146,24 +444,21 @@
 		</ul>
 </div>
 
-
   <div class="rsspart">
 	<a href="null" target="_blank" title="rss">RSS</a>
 </div>
 
-  
   <div class="tagcloudlist">
     <p class="asidetitle">Tag Cloud</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/hello/" style="font-size: 10px;">hello</a>
+       <a href="/tags/hello/" style="font-size: 10px">hello</a>
     </div>
   </div>
-
 
 </aside>
 </div>
     </div>
-    <footer><div id="footer" >
+    <footer><div id="footer">
 	
 	<div class="line">
 		<span></span>
@@ -172,7 +467,7 @@
 	
 	
 	<section class="info">
-		<p> 这里是ov的站 <br/>
+		<p> 这里是ov的站 <br>
 			多多留言交流技术问题阿</p>
 	</section>
 	 
@@ -190,8 +485,7 @@
 		<a href="http://ovjaywang.github.io" target="_blank" title="Jay Wang">Jay Wang</a>
 		
 		</p>
-</div>
-</footer>
+</div></footer>
     <script src="/js/jquery-2.1.0.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){ 
@@ -317,10 +611,5 @@ $(document).ready(function(){
 
 <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
-
-
-
+<!-- End: Injected MathJax --><!-- hexo-inject:end -->
   </body>
-</html>
