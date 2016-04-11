@@ -9,7 +9,11 @@
     
     <meta name="author" content="Jay Wang">
     
-    <meta name="description" content="图片来自instagram，正在加载中…">
+    <meta name="description" content="jQuery(function($) {
+  $(&#39;.instagram&#39;).on(&#39;willLoadInstagram&#39;, function(event, options) {
+    console.log(options);
+  });
+  $(&#39;.instagram&#39;).on(&#39;didLoa">
     
     
     
@@ -36,7 +40,7 @@
 				<h1 class="site-name"><a href="/" title="ov智商捉急">ov智商捉急</a></h1>
 				<h2 class="blog-motto"></h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -53,7 +57,7 @@
 					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
 						<input type="hidden" name="q" value="site:ovjaywang.github.io">
 					</form>
 					
@@ -76,8 +80,8 @@
       <a href="http://ovjaywang.github.io" title="Jay Wang">Jay Wang</a>
     </p>
   <p class="article-time">
-    <time datetime="2016-04-11T06:48:06.686Z" itemprop="datePublished">2016-04-11</time>
-    更新日期:<time datetime="2016-04-11T06:48:06.578Z" itemprop="dateModified">2016-04-11</time>
+    <time datetime="2016-04-11T07:45:13.607Z" itemprop="datePublished">2016-04-11</time>
+    Updated:<time datetime="2016-04-11T07:45:13.498Z" itemprop="dateModified">2016-04-11</time>
     
   </p>
 </header>
@@ -85,13 +89,28 @@
 		
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
+			<strong class="toc-title">Contents</strong>
 		
 		</div>
 		
-		<p><script src="/js/jquery.lazyload.js"></script></p>
-<p><script src="/js/instagram.js"></script></p>
-<div class="instagram" data-user-id="49993929" access_token="49993929.b948a5f.38f898dd1241471f82c0b3f9671d288c"><br>    <a href="http://instagram.com/ohahabienaola" target="_blank" class="open-ins">图片来自instagram，正在加载中…</a><br></div>
+		<div class="instagram"></div>
+
+<script src="js/jquery.js"></script>
+<script src="js/instagram.min.js"></script>
+<script>
+jQuery(function($) {
+  $('.instagram').on('willLoadInstagram', function(event, options) {
+    console.log(options);
+  });
+  $('.instagram').on('didLoadInstagram', function(event, response) {
+    console.log(response);
+  });
+  $('.instagram').instagram({
+  userId: 49993929,
+  accessToken: '49993929.b948a5f.38f898dd1241471f82c0b3f9671d288c'
+    });
+});
+</script>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -114,20 +133,20 @@
 </section>
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
   <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
+  <strong class="toc-title">Contents</strong>
   
   </div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
 <aside class="clearfix">
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分类</p>
+	<p class="asidetitle">Categories</p>
 		<ul>
 		
 			<li><a href="/categories/tucao/" title="tucao">tucao<sup>1</sup></a></li>
@@ -138,7 +157,7 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">标签</p>
+	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
 		
 			<li><a href="/tags/hello/" title="hello">hello<sup>1</sup></a></li>
@@ -148,12 +167,12 @@
 
 
   <div class="rsspart">
-	<a href="null" target="_blank" title="rss">RSS 订阅</a>
+	<a href="null" target="_blank" title="rss">RSS</a>
 </div>
 
   
   <div class="tagcloudlist">
-    <p class="asidetitle">标签云</p>
+    <p class="asidetitle">Tag Cloud</p>
     <div class="tagcloudlist clearfix">
        <a href="/tags/hello/" style="font-size: 10px;">hello</a>
     </div>
