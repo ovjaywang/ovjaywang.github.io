@@ -9,11 +9,7 @@
     
     <meta name="author" content="Jay Wang">
     
-    <meta name="description" content="jQuery(function($) {
-  $(&#39;.instagram&#39;).on(&#39;willLoadInstagram&#39;, function(event, options) {
-    console.log(options);
-  });
-  $(&#39;.instagram&#39;).on(&#39;didLoa">
+    <meta name="description" content="$(function(){$(‘instagram-lite’).instagramLite({clientID: ‘b948a5f3f448476995bb05325832ef2d’,username: ‘ohahabienaola’,list: false,urls: false,load_mo">
     
     
     
@@ -80,8 +76,8 @@
       <a href="http://ovjaywang.github.io" title="Jay Wang">Jay Wang</a>
     </p>
   <p class="article-time">
-    <time datetime="2016-04-11T07:56:07.059Z" itemprop="datePublished">2016-04-11</time>
-    Updated:<time datetime="2016-04-11T07:56:06.955Z" itemprop="dateModified">2016-04-11</time>
+    <time datetime="2016-04-11T08:27:08.038Z" itemprop="datePublished">2016-04-11</time>
+    Updated:<time datetime="2016-04-11T08:27:07.959Z" itemprop="dateModified">2016-04-11</time>
     
   </p>
 </header>
@@ -93,24 +89,10 @@
 		
 		</div>
 		
-		<script src="js/jquery.js"></script>
-<script src="js/instagram.min.js"></script>
-<div class="instagram"></div>
-<script>
-jQuery(function($) {
-  $('.instagram').on('willLoadInstagram', function(event, options) {
-    console.log(options);
-  });
-  $('.instagram').on('didLoadInstagram', function(event, response) {
-    console.log(response);
-  });
-  $('.instagram').instagram({
-  userId: 49993929,
-  accessToken: '49993929.b948a5f.38f898dd1241471f82c0b3f9671d288c'
-    });
-});
-</script>
-  
+		<p><script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script></p>
+<p><script src="js/instagramLite.js"></script></p>
+<p><script type="text/javascript">$(function(){$(‘instagram-lite’).instagramLite({clientID: ‘b948a5f3f448476995bb05325832ef2d’,username: ‘ohahabienaola’,list: false,urls: false,load_more: ‘.load-more’,success: function() {console.log(‘The request was successful!’);},error: function(errorCode, errorMessage) {console.log(‘There was an error with the request’);if(errorCode &amp;&amp; errorMessage) {console.log(errorCode +’: ‘+ errorMessage);}}});})<br></script></p>
+<ul class="instagram-lite"></ul>  
 	</div>
 		<footer class="article-footer clearfix">
 
