@@ -1,0 +1,555 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>后方交会检校(6)--后方交会的补充及DLT和角锥体法 | ov智商捉急</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=3,minimum-scale=1">
+    
+    <meta name="author" content="Jay Wang">
+    
+    <meta name="description" content="除了后方交会之外，常用的进行内外参数检校的方法还有DLT和角锥体法。
+写在前面：DLT可在未提供初值的情况下推导内外方位元素，同时不需要迭代，但精度相比后方交会较低；DLT与后方交会等价。
+内容提要
+DLT基本原理与公式&amp;nbsp; L的基本形式&amp;nbsp;&amp;nbsp;用Li表示内外参数&amp;nbsp;">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/touxiang.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/touxiang.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head></html>
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/xiaozaizi.png" alt="ov智商捉急" title="ov智商捉急"></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="ov智商捉急">ov智商捉急</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">dooby.me</a></li>
+					
+						<li><a href="/me">关于我</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/instagram">Ig</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search">
+						<input type="hidden" name="q" value="site:ovjaywang.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/11/04/e5-90-8e-e6-96-b9-e4-ba-a4-e4-bc-9a-e6-a3-80-e6-a0-a16-dlt-e5-92-8c-e8-a7-92-e9-94-a5-e4-bd-93-e6-b3-95/" title="后方交会检校(6)--后方交会的补充及DLT和角锥体法" itemprop="url">后方交会检校(6)--后方交会的补充及DLT和角锥体法</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://ovjaywang.github.io" title="Jay Wang">Jay Wang</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2015-11-04T07:29:32.000Z" itemprop="datePublished">2015-11-04</time>
+    Updated:<time datetime="2016-04-11T14:09:45.581Z" itemprop="dateModified">2016-04-11</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+		</div>
+		
+		<p>除了后方交会之外，常用的进行内外参数检校的方法还有DLT和角锥体法。</p>
+<p>写在前面：DLT可在<font color="#FF0000">未提供初值</font>的情况下推导内外方位元素，同时<font color="#FF0000">不需要迭代</font>，但精度相比后方交会较低；<font color="#FF0000">DLT与后方交会等价</font>。</p>
+<p><strong><font color="#FF0000" size="5">内容提要</font></strong></p>
+<p><a href="#DLT基本原理与公式">DLT基本原理与公式</a>&nbsp; <a href="#其中">L的基本形式</a>&nbsp;&nbsp;<a href="#根据求得的li计算各参数">用Li表示内外参数</a>&nbsp;</p>
+<p><a href="#非正交与比例尺不一致因素">非正交与比例尺不一致因素</a>&nbsp; <a href="#DLT的真正一般形式">DLT的真正一般形式</a>&nbsp; <a href="#包含2项因素的Li表达内外参数">包含2项因素的Li表达内外参数</a>&nbsp;</p>
+<p><a href="#包含畸变参数校正的DLT">包含畸变参数校正的DLT</a></p>
+<p><a name="DLT基本原理与公式">DLT基本原理与公式</a></p>
+<p>基本原理：将物方点坐标（X,Y,Z）和(x,y)看做是空间中的某种线性变换，可以互为函数。一般地，将x,y用X,Y,Z表示。</p>
+<p>基本公式：</p>
+<p>$$!\left{\begin{matrix}x+\frac{L<em>{1}X+L</em>{2}Y+L<em>{3}Z+L</em>{4}}{L<em>{9}X+L</em>{10}Y+L<em>{11}Z+1}=0\y+\frac{L</em>{5}X+L<em>{6}Y+L</em>{7}Z+L<em>{8}}{L</em>{9}X+L<em>{10}Y+L</em>{11}Z+1}=0\end{matrix}\right.$$</p>
+<p>DLT误差方程：</p>
+<font color="#FF0000">$$!\begin{pmatrix}v<em>{x}\v</em>{y}\end{pmatrix}=\begin{pmatrix}X&amp;Y&amp;Z&amp;1&amp;0&amp;0&amp;0&amp;0&amp;xX&amp;xY&amp;xZ\0&amp;0&amp;0&amp;0&amp;X&amp;Y&amp;Z&amp;1&amp;yX&amp;yY&amp;yZ\end{pmatrix}\begin{pmatrix}L<em>{1}\L</em>{2}\L<em>{3}\L</em>{4}\L<em>{5}\L</em>{6}\L<em>{7}\L</em>{8}\L<em>{9}\L</em>{10}\L<em>{11}\end{pmatrix}+\begin{pmatrix}l</em>{x}\l_{y}\end{pmatrix}$$</font>
+
+<p>与后方交会一样，若有n个控制点，则A矩阵有2n行。还是利用求改正数的公式求取。</p>
+<p>DLT推导过程如下：</p>
+<p>根据共线方程的后方交会形式：</p>
+<p>$$!x-x<em>{0}+f</em>{x}\frac{a<em>{1}(X-X</em>{s})+b<em>{1}(Y-Y</em>{s})+c<em>{1}(Z-Z</em>{s})}{a<em>{3}(X-X</em>{s})+b<em>{3}(Y-Y</em>{s})+c<em>{3}(Z-Z</em>{s})}=0$$</p>
+<p>$$!y-y<em>{0}+f</em>{y}\frac{a<em>{2}(X-X</em>{s})+b<em>{2}(Y-Y</em>{s})+c<em>{2}(Z-Z</em>{s})}{a<em>{3}(X-X</em>{s})+b<em>{3}(Y-Y</em>{s})+c<em>{3}(Z-Z</em>{s})}=0$$</p>
+<p>这里，f分为fx和fy，即主距在像空系中这两个分量的投影。因为有的单个ccd xy方向上的大小不一致，即不是正方形。</p>
+<p>将X，Y，Z和Xs，Ys，Zs分离，将之看作是摄影中心的变换坐标。</p>
+<font color="#FF0000">$$!\left{\begin{matrix}r<em>{1}=-(a</em>{1}X<em>{s}+b</em>{1}Y<em>{s}+c</em>{1}Z<em>{s})\r</em>{2}=-(a<em>{2}X</em>{s}+b<em>{2}Y</em>{s}+c<em>{2}Z</em>{s})\r<em>{3}=-(a</em>{3}X<em>{s}+b</em>{3}Y<em>{s}+c</em>{3}Z_{s})\end{matrix}\right.$$</font>
+
+<p>化简可得</p>
+<p>$$!x-x<em>{0}+f</em>{x}\frac{a<em>{1}X+b</em>{1}Y+c<em>{1}Z+r</em>{1}}{a<em>{3}X+b</em>{3}Y+c<em>{3}Z+r</em>{3}}=0$$</p>
+<p>$$!y-y<em>{0}+f</em>{y}\frac{a<em>{2}X+b</em>{2}Y+c<em>{2}Z+r</em>{1}}{a<em>{3}X+b</em>{3}Y+c<em>{3}Z+r</em>{3}}=0$$</p>
+<p>将x0，y0通分。</p>
+<p>$$!x+\frac{(a<em>{1}f</em>{x}-a<em>{3}x</em>{0})X+(b<em>{1}f</em>{x}-b<em>{3}x</em>{0})Y+(c<em>{1}f</em>{x}-c<em>{3}x</em>{0})Z+(r<em>{1}f</em>{x}-r<em>{3}x</em>{0})}{a<em>{3}X+b</em>{3}Y+c<em>{3}Z+r</em>{3}}=0$$</p>
+<p>$$!y+\frac{(a<em>{2}f</em>{y}-a<em>{3}y</em>{0})X+(b<em>{2}f</em>{y}-b<em>{3}y</em>{0})Y+(c<em>{2}f</em>{y}-c<em>{3}y</em>{0})Z+(r<em>{2}f</em>{y}-r<em>{3}y</em>{0})}{a<em>{3}X+b</em>{3}Y+c<em>{3}Z+r</em>{3}}=0$$</p>
+<p>将X、Y、Z的系数简化为L，即</p>
+<p>$$!x+\frac{L<em>{1}X+L</em>{2}Y+L<em>{3}Z+L</em>{4}}{L<em>{9}X+L</em>{10}Y+L_{11}Z+1}=0$$</p>
+<p>$$!y+\frac{L<em>{5}X+L</em>{6}Y+L<em>{7}Z+L</em>{8}}{L<em>{9}X+L</em>{10}Y+L_{11}Z+1}=0$$</p>
+<p><a name="其中">其中，L为：</a></p>
+<font color="#FF0000">$$!L=\begin{bmatrix}L<em>{1}&amp;L</em>{2}&amp;L<em>{3}&amp;L</em>{4}\L<em>{5}&amp;L</em>{6}&amp;L<em>{7}&amp;L</em>{8}\L<em>{9}&amp;L</em>{10}&amp;L<em>{11}&amp;L</em>{12}\end{bmatrix}$$</font>
+
+<p><img src="http://www.dooby.me/wp-content/uploads/2015/11/151C86750F1FFF17ECE621971610488CBAE13A81.jpg" alt=""></p>
+<p>该公式表示像点测量坐标与物方点坐标直接的变化，无需内方位元素。从另一个角度看，L矩阵其实是二维坐标通过三次矩阵变换得到的三维坐标，即：</p>
+<p>$$!L=\frac{1}{r<em>{3}}\begin{bmatrix}f</em>{x}&amp;0&amp;-x<em>{0}\0&amp;f</em>{y}&amp;-y<em>{0}\0&amp;0&amp;1\end{bmatrix}\begin{bmatrix}a</em>{1}&amp;b<em>{1}&amp;c</em>{1}\a<em>{2}&amp;b</em>{2}&amp;c<em>{2}\a</em>{3}&amp;b<em>{3}&amp;c</em>{3}\end{bmatrix}\begin{bmatrix}1&amp;0&amp;0&amp;X<em>{s}\0&amp;1&amp;0&amp;Y</em>{s}\0&amp;0&amp;1&amp;Z<em>{s}\end{bmatrix}=\frac{1}{r</em>{3}}\begin{bmatrix}f<em>{x}&amp;0&amp;-x</em>{0}\0&amp;f<em>{y}&amp;-y</em>{0}\0&amp;0&amp;1\end{bmatrix}\begin{bmatrix}R&amp;t\0^{T}&amp;1\end{bmatrix}$$</p>
+<p>第一个矩阵由内方位元素组成，是辅助坐标和像平面坐标的平移和比例关系；第二个矩阵是外方位元素的角元素，表达物方系和地辅系的坐标旋转关系；第三个矩阵是外方位线元素，表达物方坐标和地辅系坐标的原点平移关系。</p>
+<p>由于计算机视觉中使用齐次坐标，即如下形式</p>
+<p>$$!\begin{pmatrix}x\y\1\end{pmatrix}=L\begin{pmatrix}X\Y\Z\1\end{pmatrix}=\begin{bmatrix}L<em>{1}&amp;L</em>{2}&amp;L<em>{3}&amp;L</em>{4}\L<em>{5}&amp;L</em>{6}&amp;L<em>{7}&amp;L</em>{8}\L<em>{9}&amp;L</em>{10}&amp;L<em>{11}&amp;L</em>{12}\end{bmatrix}\begin{pmatrix}X\Y\Z\1\end{pmatrix}$$因此形成了上红色式子。</p>
+<p><a name="根据求得的li计算各参数">根据求得的li计算各参数</a></p>
+<p>重要参数的求解：</p>
+<p>$$!r<em>{3}=\frac{1}{(L</em>{9}^{2}+L<em>{10}^{2}+L</em>{11}^{2})^{1/2}}$$</p>
+<p>(1)内方位元素</p>
+<p>$$!x<em>{0}=-(L</em>{1}L<em>{9}+L</em>{2}L<em>{10}+L</em>{3}L<em>{11})/(L</em>{9}^{2}+<em>{10}^{2}+L</em>{11}^{2})$$</p>
+<p>$$!y<em>{0}=-(L</em>{5}L<em>{9}+L</em>{6}L<em>{10}+L</em>{7}L<em>{11})/(L</em>{9}^{2}+<em>{10}^{2}+L</em>{11}^{2})$$</p>
+<p>$$!f<em>{x}^{2}=-x</em>{0}^{2}+(L<em>{1}^{2}+L</em>{2}^{2}+L<em>{3}^{2})/(L</em>{9}^{2}+<em>{10}^{2}+L</em>{11}^{2})$$</p>
+<p>$$!f<em>{y}^{2}=-y</em>{0}^{2}+(L<em>{4}^{2}+L</em>{5}^{2}+L<em>{6}^{2})/(L</em>{9}^{2}+<em>{10}^{2}+L</em>{11}^{2})$$</p>
+<p>$$!f=\frac{1}{2}(f<em>{x}+f</em>{y})$$</p>
+<p>(2)外方位角元素</p>
+<p>$$!\begin{bmatrix}a<em>{1}&amp;b</em>{1}&amp;c<em>{1}\end{bmatrix}=\frac{1}{f</em>{x}}\begin{bmatrix}\frac{L<em>{1}}{(L</em>{9}^{2}+L<em>{10}^{2}+L</em>{11}^{2})^{1/2}}+a<em>{3}x</em>{0}\frac{L<em>{2}}{(L</em>{9}^{2}+L<em>{10}^{2}+L</em>{11}^{2})^{1/2}}+b<em>{3}x</em>{0}\frac{L<em>{3}}{(L</em>{9}^{2}+L<em>{10}^{2}+L</em>{11}^{2})^{1/2}}+c<em>{3}x</em>{0}\end{bmatrix}$$</p>
+<p>$$!\begin{bmatrix}a<em>{2}&amp;b</em>{2}&amp;c<em>{2}\end{bmatrix}=\frac{1}{f</em>{y}}\begin{bmatrix}\frac{L<em>{5}}{(L</em>{9}^{2}+L<em>{10}^{2}+L</em>{11}^{2})^{1/2}}+a<em>{3}y</em>{0}\frac{L<em>{6}}{(L</em>{9}^{2}+L<em>{10}^{2}+L</em>{11}^{2})^{1/2}}+b<em>{3}y</em>{0}\frac{L<em>{7}}{(L</em>{9}^{2}+L<em>{10}^{2}+L</em>{11}^{2})^{1/2}}+c<em>{3}y</em>{0}\end{bmatrix}$$</p>
+<p>$$!\begin{bmatrix}a<em>{3}&amp;b</em>{3}&amp;c<em>{3}\end{bmatrix}=\frac{1}{(L</em>{9}^{2}+L<em>{10^{2}}+L</em>{11}^{2})^{1/2}}\begin{bmatrix}L<em>{9}&amp;L</em>{10}&amp;L_{11}\end{bmatrix}$$</p>
+<p>可以注意到的是，DLT解求内外方位元素是有次序的，因为外方位元素解求的公式中包含有所有的内方位元素。</p>
+<p>$$!\left{\begin{matrix}\varphi =arctan(\frac{a<em>{3}}{c</em>{3}})=arctan(\frac{l<em>{9}}{l</em>{11}})\\omega =arcsin(-b<em>{3})=arcsin(-\frac{l</em>{10}}{l<em>{9}^2+l</em>{10}^{2}+l<em>{11}^{2}})\\kappa =arctan(\frac{b</em>{1}}{b<em>{2}})=arctan(\frac{f</em>{y}[x<em>{0}\frac{L</em>{2}}{(L<em>{9}^{2}+L</em>{10}^{2}+L<em>{11}^{2})^{1/2}}+b</em>{3}]}{f<em>{x}[y</em>{0}\frac{L<em>{6}}{(L</em>{9}^{2}+L<em>{10}^{2}+L</em>{11}^{2})^{1/2}}+b_{3}]})\end{matrix}\right.$$</p>
+<p>(3)外方位线元素<br> 则需要根据如下方程解出</p>
+<p>$$!a<em>{3}X</em>{s}+b<em>{3}Y</em>{s}+c<em>{3}Z</em>{s}+r_{3}$$</p>
+<p>$$!\frac{a<em>{1}f</em>{x}-a<em>{3}x</em>{0}}{r<em>{3}}X</em>{s}+\frac{b<em>{1}f</em>{x}-b<em>{3}x</em>{0}}{r<em>{3}}Y</em>{s}+\frac{c<em>{1}f</em>{x}-c<em>{3}x</em>{0}}{r<em>{3}}+L</em>{4}=0$$</p>
+<p>$$!\frac{a<em>{2}f</em>{y}-a<em>{3}y</em>{0}}{r<em>{3}}X</em>{s}+\frac{b<em>{2}f</em>{y}-b<em>{3}y</em>{0}}{r<em>{3}}Y</em>{s}+\frac{c<em>{2}f</em>{y}-c<em>{3}y</em>{0}}{r<em>{3}}+L</em>{8}=0$$</p>
+<p>&nbsp;</p>
+<p>DLT实质上与共线方程等价，Li之间的相关性，因为2个条件=11个参数-必要观测个数</p>
+<hr>
+<p>以上是只解求内外方位元素的时候，Li与各参数的关系，如果加上光学畸变、非正交比例、比例尺不一致等误差，光学畸变在前文中提到。</p>
+<p>x轴方向上比例系数为1，y轴方向比例系数为(1+ds).则</p>
+<p>x轴方向上的主距为fx，y轴方向上的主距为fy=fx/(1+ds).</p>
+<p>对数字相机，比例尺不一致可认为是襄垣x、y方向长度不等引起的；而不正交性误差可认为是像元x、y方向排列不垂直引起的。</p>
+<p><a name="非正交与比例尺不一致因素">如图展现了以上两种误差的原因。</a></p>
+<p><img src="http://www.dooby.me/wp-content/uploads/2015/11/C99CDEAA218715286FA9FE07A8E69B343C345FAA.jpg" alt=""></p>
+<p>以下表述中，小括号代表坐标系，中括号代表坐标值。</p>
+<p>$$!(\overline{x},\overline{y})[on<em>{2},on</em>{1}]$$——以像主点为原点（像平面坐标系的原点），不包含线性误差的<font color="#FF0000">某像点p的坐标</font></p>
+<p>$$!(x,y)[om<em>{2},0m</em>{1}]$$——以像主点为原点，不包含正交性dβ误差的像点p坐标。</p>
+<p>$$!(x,y)[om<em>{2},om</em>{1}^{‘}]$$——以像主点为原点，不包括正交性dβ误差及比例尺不一致误差ds的像点坐标p</p>
+<p>则从图中可知，$$!\delta x=on<em>{2}-om</em>{2}=m<em>{2}p\cdot sin d\beta=om</em>{1}\cdot sin d\beta=(1+ds)(y-y<em>{0})sind\beta\approx (y-y</em>{0})sind\beta$$</p>
+<p>$$!\delta y=on<em>{1}-om</em>{1}^{‘}=om<em>{1}\cdot cosd\beta -om</em>{1}^{‘}=(1+ds)(y-y<em>{0})\cdot cosd\beta-(y-y</em>{0})=<a href="y-y_{0}">(1+ds)\cdot cosd\beta -1</a>\approx (y-y_{0})\cdot ds$$</p>
+<p>将上式2值带入线性方程<font color="#FF0000">有线性误差的形式</font>：式中有11个独立参数，3个内方位x0,yo,fx6个外方位Xs，Ys，Zs，φ，ω，k，比例尺不一致系数ds，xy轴不正交系数dβ。</p>
+<p>$$!\left{\begin{matrix}x-x<em>{0}+(1+ds)(y-y</em>{0})\cdot sind\beta +f<em>{x}\frac{a</em>{1}(X-X<em>{s}+b</em>{1}(Y-Y<em>{s})+c</em>{1}(Z-Z<em>{s})}{a</em>{3}(X-X<em>{s})+b</em>{3}(Y-Y<em>{s})+c</em>{3}(Z-Z<em>{s})}=0\y-y</em>{0}+[(1+ds)\cdot cosd\beta-1] (y-y<em>{0})+f</em>{x}\frac{a<em>{1}(X-X</em>{s}+b<em>{1}(Y-Y</em>{s})+c<em>{1}(Z-Z</em>{s})}{a<em>{3}(X-X</em>{s})+b<em>{3}(Y-Y</em>{s})+c<em>{3}(Z-Z</em>{s})}=0\end{matrix}\right.$$</p>
+<p>通过一系列的化简，如前面介绍不带线性误差一样，提取出r1，r2，r3，<a name="DLT的真正一般形式">得到：</a></p>
+<p>$$!x+\frac{\frac{1}{r<em>{3}}(a</em>{1}f<em>{x}-a</em>{2}f<em>{x}tand\beta -a</em>{3}x<em>{0})}{\frac{a</em>{3}}{r<em>{3}}X+\frac{b</em>{3}}{r<em>{3}}Y+\frac{c</em>{3}}{r<em>{3}}Z+1}\cdot X+\frac{\frac{1}{r</em>{3}}(b<em>{1}f</em>{x}-b<em>{2}f</em>{x}tand\beta -b<em>{3}x</em>{0})}{\frac{a<em>{3}}{r</em>{3}}X+\frac{b<em>{3}}{r</em>{3}}Y+\frac{c<em>{3}}{r</em>{3}}Z+1}\cdot Y+\frac{\frac{1}{r<em>{3}}(c</em>{1}f<em>{x}-c</em>{2}f<em>{x}tand\beta -c</em>{3}x<em>{0})}{\frac{a</em>{3}}{r<em>{3}}X+\frac{b</em>{3}}{r<em>{3}}Y+\frac{c</em>{3}}{r<em>{3}}Z+1}\cdot Z+\frac{\frac{1}{r</em>{3}}(r<em>{1}f</em>{x}-r<em>{2}f</em>{x}tand\beta -r<em>{3}x</em>{0})}{\frac{a<em>{3}}{r</em>{3}}X+\frac{b<em>{3}}{r</em>{3}}Y+\frac{c<em>{3}}{r</em>{3}}Z+1}=0$$</p>
+<p>$$!y+\frac{\frac{1}{r<em>{3}}[\frac{a</em>{2}f<em>{x}}{(1+ds)cosd\beta }-a</em>{3}\cdot y<em>{0}]}{\frac{a</em>{3}}{r<em>{3}}X+\frac{b</em>{3}}{r<em>{3}}Y+\frac{c</em>{3}}{r<em>{3}}Z+1}\cdot X+\frac{\frac{1}{r</em>{3}}[\frac{b<em>{2}f</em>{x}}{(1+ds)cosd\beta }-b<em>{3}\cdot y</em>{0}]}{\frac{a<em>{3}}{r</em>{3}}X+\frac{b<em>{3}}{r</em>{3}}Y+\frac{c<em>{3}}{r</em>{3}}Z+1}\cdot Y+\frac{\frac{1}{r<em>{3}}[\frac{c</em>{2}f}{(1+ds)cosd\beta }-c<em>{3}\cdot y</em>{0}]}{\frac{a<em>{3}}{r</em>{3}}X+\frac{b<em>{3}}{r</em>{3}}Y+\frac{c<em>{3}}{r</em>{3}}Z+1}\cdot Z+\frac{\frac{1}{r<em>{3}}[\frac{r</em>{2}f<em>{x}}{(1+ds)cosd\beta }-r</em>{3}\cdot y<em>{0}]}{\frac{a</em>{3}}{r<em>{3}}X+\frac{b</em>{3}}{r<em>{3}}Y+\frac{c</em>{3}}{r_{3}}Z+1}=0$$</p>
+<p>则上式即可化为基本式：</p>
+<p>$$!x+\frac{l<em>{1}X+l</em>{2}Y+l<em>{3}Z+l</em>{4}}{l<em>{9}X+l</em>{10}Y+l_{11}Z+1}=0$$</p>
+<p>$$!y+\frac{l<em>{5}X+l</em>{6}Y+l<em>{7}Z+l</em>{8}}{l<em>{9}X+l</em>{10}Y+l_{11}Z+1}=0$$</p>
+<p>其中，l4、l8可化简：</p>
+<p>$$!l<em>{8}=\frac{1}{r</em>{3}}[\frac{r<em>{2}f</em>{x}}{(1+ds)\cdot d\beta}-r<em>{3}\cdot y</em>{0}]=\frac{1}{r<em>{3}}[\frac{-(a</em>{2}Xs+b<em>{2}Y</em>{s}+c<em>{2}Z</em>{s})f<em>{x}}{(1+ds)\cdot cosd\beta }+(a</em>{3}X<em>{s}+b</em>{3}Y<em>{s}+c</em>{3}Z<em>{s})\cdot y</em>{0}]=-\frac{1}{r<em>{3}}[(\frac{a</em>{2}f<em>{x}}{(1+ds)\cdot cosd\beta }-a</em>{3}y<em>{0})X</em>{s}+(\frac{b<em>{2}f</em>{x}}{(1+ds)\cdot cosd\beta }-b<em>{3}y</em>{0})Y<em>{s}+(\frac{c</em>{2}f<em>{x}}{(1+ds)\cdot cosd\beta }-c</em>{3}y<em>{0})Z</em>{s}]=-(l<em>{5}X</em>{s}+l<em>{6}Y</em>{s}+l<em>{7}Z</em>{s})$$</p>
+<p>$$!l<em>{4}=\frac{1}{r</em>{3}}(r<em>{1}f</em>{x}-r<em>{2}f</em>{x}tand\beta -r<em>{3}x</em>{0})=-(l<em>{1}X</em>{s}+l<em>{2}Y</em>{s}+l<em>{3}Z</em>{s})$$</p>
+<p>由于未知数是11个，因此最少需要布置6个控制点。</p>
+<p>值得一提的是，像主点的求解公式与没有畸变参与<a name="包含2项因素的Li表达内外参数">相同</a>，</p>
+<p>$$!x<em>{0}=-(L</em>{1}L<em>{9}+L</em>{2}L<em>{10}+L</em>{3}L<em>{11})/(L</em>{9}^{2}+<em>{10}^{2}+L</em>{11}^{2})$$</p>
+<p>$$!y<em>{0}=-(L</em>{5}L<em>{9}+L</em>{6}L<em>{10}+L</em>{7}L<em>{11})/(L</em>{9}^{2}+<em>{10}^{2}+L</em>{11}^{2})$$</p>
+<p>最重要的ds和dβ，设：</p>
+<p>$$!\overline{A}=r<em>{3}^{2}(l</em>{1}^{2}+l<em>{2}^{2}+l</em>{3}^{2})-x<em>{0}^{2}=\frac{f</em>{x}^{2}}{cos^{2}d\beta }$$</p>
+<p>$$!B=r<em>{3}^{2}(l</em>{5}^{2}+l<em>{6}^{2}+l</em>{7}^{2})-y<em>{0}^{2}=\frac{f</em>{x}^{2}}{(1+ds)^{2}cos^{2}d\beta }$$</p>
+<p>$$!C=r<em>{3}^{2}(l</em>{1}l<em>{5}+l</em>{2}l<em>{6}+l</em>{3}l<em>{7})-x</em>{0}y<em>{0}=\frac{-f</em>{x}^{2}sind\beta }{(1+ds)cos^{2}d\beta }$$</p>
+<p>$$!ds=\sqrt{\frac{\overline{A}}{B}-1}$$</p>
+<p>$$!sind\beta =\pm \sqrt{\frac{C^{2}}{\overline{A}B}}$$</p>
+<p>而主距的公式变为：</p>
+<p>$$!f_{x}=\sqrt{\overline{A}}cosd\beta $$</p>
+<p>$$!f<em>{y}=\frac{f</em>{x}}{1+ds}$$</p>
+<p>外方位角元素：</p>
+<p>$$!tan\varphi =\frac{a<em>{3}}{c</em>{3}}$$</p>
+<p>$$!sin\omega =-b_{3}$$</p>
+<p>$$!tan\kappa =\frac{b<em>{1}}{b</em>{2}}$$</p>
+<p>其中，$$a<em>{3}=r</em>{3}l<em>{9},b</em>{3}=r<em>{3}l</em>{10},c<em>{3}=r</em>{3}l_{11}$$</p>
+<p>而外方位线元素由以下三个式子构成：</p>
+<p>$$!l<em>{1}X</em>{s}+l<em>{2}Y</em>{s}+l<em>{3}Z</em>{s}=-l_{4}$$</p>
+<p>$$!l<em>{5}X</em>{s}+l<em>{6}Y</em>{s}+l<em>{7}Z</em>{s}=-l_{8}$$</p>
+<p>$$!l<em>{9}X</em>{s}+l<em>{10}Y</em>{s}+l<em>{11}Z</em>{s}=\frac{a<em>{3}}{r</em>{3}}X<em>{s}+\frac{b</em>{3}}{r<em>{3}}Y</em>{s}+\frac{c<em>{3}}{r</em>{3}}Z<em>{s}=-\frac{a</em>{3}Xs+b<em>{3}Y</em>{s}+c<em>{3}Z</em>{s}}{a<em>{3}Xs+b</em>{3}Y<em>{s}+c</em>{3}Z_{s}}=-1$$</p>
+<p>到这里，能解求出包含非正交比例和xy不一致比例，但缺乏了对镜头畸变的改正。若将镜头畸变写入DLT方程式，则变为：</p>
+<p>$$!x+v<em>{x}+\Delta x+\frac{l</em>{1}X+l<em>{2}Y+l</em>{3}Z+l<em>{4}}{l</em>{9}X+l<em>{10}Y+l</em>{11}Z+1}=0$$</p>
+<p>$$!y+v<em>{y}+\Delta y+\frac{l</em>{5}X+l<em>{6}Y+l</em>{7}Z+l<em>{8}}{l</em>{9}X+l<em>{10}Y+l</em>{11}Z+1}=0$$</p>
+<p>其中，vx vy是残差，△x △y是畸变的改正数，若忽略切向畸变且只去一项径向畸变的参数作为例子，</p>
+<p>$$!\left{\begin{matrix}\Delta x=(x-x<em>{0})r^{2}k</em>{1}\\Delta y=(y-y<em>{0})r^{2}k</em>{1}\end{matrix}\right.$$</p>
+<p>再令$$A=l<em>{9}X+l</em>{10}Y+l_{11}Z+1$$</p>
+<p>以li为未知数，列误差方程，则DLT<a name="包含畸变参数校正的DLT">公式可化简为</a>：</p>
+<p>$$!v<em>{x}=-\frac{1}{A}[Xl</em>{1}+Yl<em>{2}+Zl</em>{3}+l<em>{4}+xXl</em>{9}+xYl<em>{10}+xZl</em>{11}+A(x-x<em>{0}^{2})r^{2}k</em>{1}+x]$$</p>
+<p>$$!v<em>{y}=-\frac{1}{A}[Xl</em>{5}+Yl<em>{6}+Zl</em>{7}+l<em>{8}+yXl</em>{9}+yYl<em>{10}+yZl</em>{11}+A(y-y<em>{0}^{2})r^{2}k</em>{1}+x]$$</p>
+<p>矩阵的形式则可写为（以物方坐标表示像点坐标）：</p>
+<font color="#FF0000">$$!\begin{bmatrix}v<em>{x}\v</em>{y}\end{bmatrix}=\begin{bmatrix}\frac{X}{A}&amp;\frac{Y}{A}&amp;\frac{Z}{A}&amp;\frac{1}{A}&amp;0&amp;0&amp;0&amp;0&amp;\frac{xX}{A}&amp;\frac{xY}{A}&amp;\frac{xZ}{A}&amp;(x-x<em>{0})r^{2}\0&amp;0&amp;0&amp;0&amp;\frac{X}{A}&amp;\frac{Y}{A}&amp;\frac{Z}{A}&amp;\frac{1}{A}&amp;\frac{yX}{A}&amp;\frac{yY}{A}&amp;\frac{yZ}{A}&amp;(y-y</em>{0})r^{2}\end{bmatrix}\begin{bmatrix}l<em>{1}\l</em>{2}\l<em>{3}\l</em>{4}\l<em>{5}\l</em>{6}\l<em>{7}\l</em>{8}\l<em>{9}\l</em>{10}\l<em>{11}\k</em>{1}\end{bmatrix}-\begin{bmatrix}\frac{x}{A}\\frac{y}{A}\end{bmatrix}$$</font>
+
+<p>可简写为:</p>
+<p>$$!V=AL+BX-W$$</p>
+<p>其中L是11个（二维DLT是可能是8个）li参数，X是单独提出来计算的畸变系数，在后交时通常加载改正数值里，当学要加入更多畸变参数时，需要确定更多的B矩阵中的形式。W一般是x/A,y/A.</p>
+<p>A和B的求取也是迭代计算，每次迭代A的值计算是通过控制点求得的。对不同控制点像点坐标列误差方程，A的值也不同。</p>
+<p>简单提一下以像方坐标表示物放坐标的DLT公式：</p>
+<p>$$!(l<em>{1}+\overline{x}l</em>{9})X+(l<em>{2}+\overline{x}l</em>{10})Y+(l<em>{3}+\overline{x}l</em>{11})Z+(l_{4}+\overline{x})=0$$</p>
+<p>$$!(l<em>{5}+\overline{y}l</em>{9})X+(l<em>{6}+\overline{y}l</em>{10})Y+(l<em>{7}+\overline{y}l</em>{11})Z+(l_{8}+\overline{y})=0$$</p>
+<p>直接线性变换的精度：可提供1/5000摄影距离精度的测量成果。影响DLT解法精度的是：控制点分布数量质量、像点坐标的测量精度、两张相片主光轴的交会角、像片张数、非线性畸变误差的改正数。</p>
+<div class="PoweredByWebStory" style="margin-top:15px;margin-bottom:10px"><a href="http://sns.juziyue.com/webinvite.php?u=94887" target="_blank" rel="external"></a>&nbsp;今天你<a href="http://sns.juziyue.com/webinvite.php?u=94887" target="_blank" rel="external">菊子曰</a>了么？</div>  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-tags">
+  
+  <span></span> <a href="/tags/检校/">检校</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/什么都学一下/">什么都学一下</a>►<a class="article-category-link" href="/categories/什么都学一下/学习log/">学习log</a>
+</div>
+<div class="article-share" id="share">
+
+  <div data-url="http://ovjaywang.github.io/2015/11/04/e5-90-8e-e6-96-b9-e4-ba-a4-e4-bc-9a-e6-a3-80-e6-a0-a16-dlt-e5-92-8c-e8-a7-92-e9-94-a5-e4-bd-93-e6-b3-95/" data-title="后方交会检校(6)--后方交会的补充及DLT和角锥体法 | ov智商捉急" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	<nav class="article-nav clearfix">
+ 
+ <div class="prev">
+ <a href="/2015/11/04/uac-involved/" title="无人机影像相关--拍摄、校正、平差、拼接">
+  <strong>PREVIOUS:</strong><br>
+  <span>
+  无人机影像相关--拍摄、校正、平差、拼接</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/11/04/e5-90-8e-e6-96-b9-e4-ba-a4-e4-bc-9a-e6-a3-80-e6-a0-a14-e7-95-b8-e5-8f-98-e7-9f-ab-e6-ad-a3/" title="后方交会检校(5)--多片后方交会&amp;相对绝对定向">
+ <strong>NEXT:</strong><br> 
+ <span>后方交会检校(5)--多片后方交会&amp;相对绝对定向
+</span>
+</a>
+</div>
+
+</nav>
+	<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+</div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  <div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/App强推/" title="App强推">App强推<sup>8</sup></a></li>
+		
+			<li><a href="/categories/tucao/" title="tucao">tucao<sup>1</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/" title="什么都学一下">什么都学一下<sup>21</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/代码狗/" title="代码狗">代码狗<sup>1</sup></a></li>
+		
+			<li><a href="/categories/代码狗/" title="代码狗">代码狗<sup>23</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/学习log/" title="学习log">学习log<sup>20</sup></a></li>
+		
+			<li><a href="/categories/代码狗/学习log/" title="学习log">学习log<sup>23</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/代码狗/学习log/" title="学习log">学习log<sup>1</sup></a></li>
+		
+			<li><a href="/categories/槽/" title="槽">槽<sup>65</sup></a></li>
+		
+			<li><a href="/categories/软件测评/" title="软件测评">软件测评<sup>5</sup></a></li>
+		
+			<li><a href="/categories/软件测评/软文/" title="软文">软文<sup>5</sup></a></li>
+		
+			<li><a href="/categories/App强推/软文/" title="软文">软文<sup>8</sup></a></li>
+		
+		</ul>
+</div>
+
+  <div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Android/" title="Android">Android<sup>14</sup></a></li>
+		
+			<li><a href="/tags/ICP/" title="ICP">ICP<sup>1</sup></a></li>
+		
+			<li><a href="/tags/MMC/" title="MMC">MMC<sup>1</sup></a></li>
+		
+			<li><a href="/tags/MME/" title="MME">MME<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SPark/" title="SPark">SPark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/bae/" title="bae">bae<sup>1</sup></a></li>
+		
+			<li><a href="/tags/dbscan/" title="dbscan">dbscan<sup>1</sup></a></li>
+		
+			<li><a href="/tags/demo/" title="demo">demo<sup>1</sup></a></li>
+		
+			<li><a href="/tags/erdas/" title="erdas">erdas<sup>1</sup></a></li>
+		
+			<li><a href="/tags/gms/" title="gms">gms<sup>1</sup></a></li>
+		
+			<li><a href="/tags/hadoop/" title="hadoop">hadoop<sup>3</sup></a></li>
+		
+			<li><a href="/tags/hello/" title="hello">hello<sup>1</sup></a></li>
+		
+			<li><a href="/tags/java/" title="java">java<sup>5</sup></a></li>
+		
+			<li><a href="/tags/jena/" title="jena">jena<sup>2</sup></a></li>
+		
+			<li><a href="/tags/juddi/" title="juddi">juddi<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mark/" title="mark">mark<sup>5</sup></a></li>
+		
+			<li><a href="/tags/mfc/" title="mfc">mfc<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mysql/" title="mysql">mysql<sup>1</sup></a></li>
+		
+			<li><a href="/tags/nba/" title="nba">nba<sup>2</sup></a></li>
+		
+			<li><a href="/tags/ontology/" title="ontology">ontology<sup>3</sup></a></li>
+		
+		</ul>
+</div>
+
+  <div class="rsspart">
+	<a href="null" target="_blank" title="rss">RSS</a>
+</div>
+
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/Android/" style="font-size: 17.5px">Android</a> <a href="/tags/ICP/" style="font-size: 10px">ICP</a> <a href="/tags/MMC/" style="font-size: 10px">MMC</a> <a href="/tags/MME/" style="font-size: 10px">MME</a> <a href="/tags/SPark/" style="font-size: 10px">SPark</a> <a href="/tags/bae/" style="font-size: 10px">bae</a> <a href="/tags/dbscan/" style="font-size: 10px">dbscan</a> <a href="/tags/demo/" style="font-size: 10px">demo</a> <a href="/tags/erdas/" style="font-size: 10px">erdas</a> <a href="/tags/gms/" style="font-size: 10px">gms</a> <a href="/tags/hadoop/" style="font-size: 12.5px">hadoop</a> <a href="/tags/hello/" style="font-size: 10px">hello</a> <a href="/tags/java/" style="font-size: 15px">java</a> <a href="/tags/jena/" style="font-size: 11.25px">jena</a> <a href="/tags/juddi/" style="font-size: 10px">juddi</a> <a href="/tags/mark/" style="font-size: 15px">mark</a> <a href="/tags/mfc/" style="font-size: 10px">mfc</a> <a href="/tags/mysql/" style="font-size: 10px">mysql</a> <a href="/tags/nba/" style="font-size: 11.25px">nba</a> <a href="/tags/ontology/" style="font-size: 12.5px">ontology</a> <a href="/tags/opencv/" style="font-size: 10px">opencv</a> <a href="/tags/python/" style="font-size: 11.25px">python</a> <a href="/tags/recommend/" style="font-size: 12.5px">recommend</a> <a href="/tags/sublimetext/" style="font-size: 10px">sublimetext</a> <a href="/tags/test/" style="font-size: 11.25px">test</a> <a href="/tags/后方交会/" style="font-size: 15px">后方交会</a> <a href="/tags/吐槽/" style="font-size: 20px">吐槽</a> <a href="/tags/呵呵/" style="font-size: 18.75px">呵呵</a> <a href="/tags/呵呵哒/" style="font-size: 10px">呵呵哒</a> <a href="/tags/寂寞寂寞就好/" style="font-size: 12.5px">寂寞寂寞就好</a> <a href="/tags/年度总结/" style="font-size: 11.25px">年度总结</a> <a href="/tags/我失恋了/" style="font-size: 10px">我失恋了</a> <a href="/tags/控制台/" style="font-size: 10px">控制台</a> <a href="/tags/无线传输/" style="font-size: 10px">无线传输</a> <a href="/tags/本体/" style="font-size: 11.25px">本体</a> <a href="/tags/本体论/" style="font-size: 11.25px">本体论</a> <a href="/tags/机器学习/" style="font-size: 10px">机器学习</a> <a href="/tags/梯子/" style="font-size: 10px">梯子</a> <a href="/tags/检校/" style="font-size: 16.25px">检校</a> <a href="/tags/测评/" style="font-size: 11.25px">测评</a> <a href="/tags/游记/" style="font-size: 10px">游记</a> <a href="/tags/点云/" style="font-size: 10px">点云</a> <a href="/tags/热点/" style="font-size: 10px">热点</a> <a href="/tags/电影/" style="font-size: 12.5px">电影</a> <a href="/tags/算法/" style="font-size: 10px">算法</a> <a href="/tags/精度/" style="font-size: 10px">精度</a> <a href="/tags/翔/" style="font-size: 13.75px">翔</a> <a href="/tags/考研/" style="font-size: 16.25px">考研</a> <a href="/tags/航空摄影测量/" style="font-size: 10px">航空摄影测量</a> <a href="/tags/装机/" style="font-size: 10px">装机</a> <a href="/tags/计算机视觉/" style="font-size: 10px">计算机视觉</a> <a href="/tags/语义网/" style="font-size: 11.25px">语义网</a> <a href="/tags/足球/" style="font-size: 10px">足球</a> <a href="/tags/静态ip/" style="font-size: 10px">静态ip</a> <a href="/tags/音乐/" style="font-size: 10px">音乐</a> <a href="/tags/马克/" style="font-size: 15px">马克</a>
+    </div>
+  </div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer">
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> 这里是ov的站 <br>
+			多多留言交流技术问题阿</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/302060345" target="_blank" title="weibo"></a>
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2016 
+		
+		<a href="http://ovjaywang.github.io" target="_blank" title="Jay Wang">Jay Wang</a>
+		
+		</p>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"dooby"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax --><!-- hexo-inject:end -->
+  </body>

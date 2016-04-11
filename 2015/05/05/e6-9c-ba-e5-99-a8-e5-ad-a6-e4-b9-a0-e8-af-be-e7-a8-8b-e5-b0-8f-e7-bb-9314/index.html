@@ -1,0 +1,510 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>[机器学习课程小结][1/10] | ov智商捉急</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=3,minimum-scale=1">
+    
+    <meta name="author" content="Jay Wang">
+    
+    <meta name="description" content="最近在Stanford的网络课程学习了机器学习的课程，Andre Ng讲的灰常不错啊。每种算法对应的实例挺多的，推导也很详细，它基本用matlab实现。就是概率统计数理统计矩阵论方面的知识最近得补一补了，直接应用在编程语言编写某些函数也是挺头疼的，不错还是略有收获。总共20节，听完5节，做个小结。
+">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/touxiang.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/touxiang.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head></html>
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/xiaozaizi.png" alt="ov智商捉急" title="ov智商捉急"></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="ov智商捉急">ov智商捉急</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">dooby.me</a></li>
+					
+						<li><a href="/me">关于我</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/instagram">Ig</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search">
+						<input type="hidden" name="q" value="site:ovjaywang.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/05/05/e6-9c-ba-e5-99-a8-e5-ad-a6-e4-b9-a0-e8-af-be-e7-a8-8b-e5-b0-8f-e7-bb-9314/" title="[机器学习课程小结][1/10]" itemprop="url">[机器学习课程小结][1/10]</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://ovjaywang.github.io" title="Jay Wang">Jay Wang</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2015-05-05T09:29:19.000Z" itemprop="datePublished">2015-05-05</time>
+    Updated:<time datetime="2016-04-11T14:09:45.581Z" itemprop="dateModified">2016-04-11</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+		</div>
+		
+		<p><img src="http://ww3.sinaimg.cn/large/68eb7c93jw1ertx4e3tejj203704bglr.jpg" alt=""><span style="color: #000000">最近在Stanford的网络课程学习了机器学习的课程，Andre Ng讲的灰常不错啊。每种算法对应的实例挺多的，推导也很详细，它基本用matlab实现。就是概率统计数理统计矩阵论方面的知识最近得补一补了，直接应用在编程语言编写某些函数也是挺头疼的，不错还是略有收获。总共20节，听完5节，做个小结。</span></p>
+<p><span style="color: #000000">[L1 Introduction]</span><br><span style="color: #000000"> 凸优化理论 隐式马尔科夫模型 O natation 学习型算法</span></p>
+<p><span style="color: #000000">1)Supervised Learning</span><br><span style="color: #000000"> 回归问题 Regression 分类问题(x|y)(肿瘤大小|癌症良恶) 学习给定了标准答案的样本-&gt;分析新样本的可能性 支持向量机Support Vector Machine</span><br><span style="color: #000000"> 2)Learning Theory</span><br><span style="color: #000000"> 3)Unsupervised Learning</span><br><span style="color: #000000"> 挖掘 聚类分析-&gt;图像分析和处理的应用 像素处理 ICA Algorithm 鸡尾酒问题（不同声源声音分离）</span><br><span style="color: #000000"> 4)Reinforcement Learning</span><br><span style="color: #000000"> 决策分析</span></p>
+<p>&nbsp;</p>
+<blockquote>
+<p><span style="color: #000000">马可夫过程</span></p>
+</blockquote>
+<p><span style="color: #000000"> </span></p>
+<p><span style="color: #000000">在概率论及统计学中，马可夫过程（英语：Markov process）是一个具备了马可夫性质的随机过程。马可夫过程是不具备记忆特质的（memorylessness）。换言之，马可夫过程的条件概率</span><span style="color: #ff0000">仅仅与系统的当前状态相关，而与它的过去历史或未来状态，都是独立、不相关的</span>。<span style="color: #000000">具备离散状态的马可夫过程，通常被称为马可夫链。马可夫链通常使用离散的时间集合定义，又称离散时间马可夫链。具有马尔可夫性质的过程通常称之为马尔可夫过程。</span></p>
+<table style="width: 60%"><br><tbody><br><tr><br><th scope="col"><span style="color: #000000"> </span></th><br><th scope="col"><span style="color: #000000">可数或有限的状态空间</span></th><br><th scope="col"><span style="color: #000000">连续或一般的状态空间</span></th><br></tr><br><tr><br><th scope="row"><span style="color: #000000">离散时间</span></th><br><td><span style="color: #000000">在可数且有限状态空间下的<a style="color: #000000" title="马可夫链">马可夫链</a></span></td><br><td><span style="color: #000000"><a style="color: #000000" title="Harris chain">Harris chain</a> (在一般状态空间下的马可夫链)</span></td><br></tr><br><tr><br><th style="width: 10%" scope="row"><span style="color: #000000">连续时间</span></th><br><td style="width: 25%"><span style="color: #000000"><a style="color: #000000" title="&quot;Continuous-time">Continuous-time Markov process</a></span></td><br><td style="width: 25%"><span style="color: #000000">任何具备马可夫性质的<a class="new" style="color: #000000" title="连续随机过程">连续随机过程</a>，例如<a style="color: #000000" title="维纳过程">维纳过程</a></span></td><br></tr><br></tbody><br></table>
+
+<p>## </p>
+<p><span style="color: #000000">具有马尔可夫表示的非马尔可夫过程的例子，例如有移动平均时间序列。最有名的马尔可夫过程为马尔可夫链，但不少其他的过程，包括布朗运动也是马尔可夫过程。</span></p>
+<p>&nbsp;</p>
+<blockquote>
+<p><span style="color: #000000">隐马尔可夫模型</span></p>
+</blockquote>
+<p>&nbsp;</p>
+<p><span style="color: #000000">隐马尔可夫模型（Hidden Markov Model，HMM）是统计模型，它用来描述一个含有隐含未知参数的马尔可夫过程。</span><span style="color: #ff0000">其难点是从可观察的参数中确定该过程的隐含参数</span><span style="color: #000000">。然后利用这些参数来作进一步的分析，例如模式识别。在正常的马尔可夫模型中，状态对于观察者来说是直接可见的。这样状态的转换概率便是全部的参数。而在隐马尔可夫模型中,状态并不是直接可见的，但受状态影响的某些变量则是可见的。</span><span style="color: #ff0000">每一个状态在可能输出的符号上都有一概率分布。因此输出符号的序列能够透露出状态序列的一些信息。</span></p>
+<p><span style="color: #000000">隐马尔可夫模型最初是在20世纪60年代后半期Leonard E. Baum和其它一些作者在一系列的统计学论文中描述的。HMM最初的应用之一是开始于20世纪70年代中期的语音识别。 在1980年代后半期，HMM开始应用到生物序列尤其是DNA的分析中。此后，在生物信息学领域HMM逐渐成为一项不可或缺的技术。</span></p>
+<p><span style="color: #000000">HMM有三个典型(canonical)问题:</span><br><span style="color: #000000"> 已知模型参数，计算某一特定输出序列的概率.通常使用forward算法解决.</span><br><span style="color: #000000"> 已知模型参数，寻找最可能的能产生某一特定输出序列的隐含状态的序列.通常使用Viterbi算法解决.</span><br><span style="color: #000000"> 已知输出序列，寻找最可能的状态转移以及输出概率.通常使用Baum-Welch算法以及Reversed Viterbi算法解决.</span></p>
+<p>&nbsp;</p>
+<blockquote>
+<p>凸优化</p>
+</blockquote>
+<p>&nbsp;</p>
+<p><span style="color: #000000">凸优化，或叫做凸最优化，凸最小化，是数学最优化的一个子领域，研究</span><span style="color: #ff0000">定义于凸集中的凸函数最小化的问题</span><span style="color: #000000">。凸优化在某种意义上说较一般情形的数学最优化问题要简单，譬如在</span><span style="color: #ff0000">凸优化中局部最优值必定是全局最优值</span>。<span style="color: #000000">凸函数的凸性使得凸分析中的有力工具在最优化问题中得以应用，如次导数等。</span><br><span style="color: #000000"> 凸优化应用于很多学科领域，诸如自动控制系统，信号处理，通讯和网络，电子电路设计，数据分析和建模，统计学(最优化设计），以及金融。在近来运算能力提高和最优化理论发展的背景下，一般的凸优化已经接近简单的线性规划一样直捷易行。许多最优化问题都可以转化成凸优化（凸最小化）问题，例如求凹函数f最大值的问题就等同于求凸函数 -f最小值的问题。</span></p>
+<p><span style="color: #000000">凸优化（凸最小化）问题可以用以下几种方法求解：</span><br>捆集法<br><span style="color: #ff0000">次梯度法</span><br><span style="color: #000000">内点法</span></p>
+<p><span style="color: #000000">[L2]Linear Regression线性回归 Gradient descent梯度下降 Normal equations正规化方程组（都需要矩阵变换知识）</span></p>
+<p><span style="color: #000000">{(x(i), y(i)); i =1, . . . , m}称作包含m个训练样本的训练集合</span></p>
+<p><img src="http://ww1.sinaimg.cn/large/68eb7c93gw1ertvgzf951j20h70czgmk.jpg" alt=""></p>
+<p><span style="color: #000000">h是假设的模型，可以带有一定先验知识，也可以是推测类型。学习算法通过学习训练集合的样本，得到h假设中的一定参数，在新的样本中进行预测和他推理</span>。<span style="color: #ff0000">若目标变量y是连续的，则这样的学习问题可归为回归问题；若目标变量y是离散的，例如可在{0,1}中取值的垃圾邮件归类、癌症可能性判定问题，则可归为分类问题。</span></p>
+<p><img src="http://ww4.sinaimg.cn/large/68eb7c93gw1ertvos0ycwj20b803qjri.jpg" alt=""></p>
+<p><span style="color: #000000">假设h假设是线性的，则假设就是各个参数线性的代数和。其中θ和x均是向量。x中各向量分量是各自变因素的取值，θ是各个自变量分量的系数或权重。则机器学习算法的目的就是求这个假设函数h(x)与真实值y的最小值。评估标准J(θ)以各样本和预测值的差的平方的二分之一为准。（二分之一纯粹是为了后期的运算）</span></p>
+<p><img src="http://ww4.sinaimg.cn/large/68eb7c93gw1ertvwyw9uwj20en04hq37.jpg" alt=""></p>
+<p><span style="color: #000000">1. LMS（<span class="Apple-converted-space"> </span>Least mean square） 算法</span></p>
+<p><span style="color: #000000">即最小均方算法。算法实质是自适应的纠错学习，在学习中纠正参数θ的取值，直到收敛。其中，运用的最多的是梯度下降算法（Gradient Descent）</span></p>
+<p><span style="color: #000000">算法步骤为：</span></p>
+<p><span style="color: #000000">a)选取一个初始参数向量，可令其为0向量</span></p>
+<p><span style="color: #000000">b)重复查找各方向梯度，沿着梯度下降最快的方向搜索</span></p>
+<p><span style="color: #000000">c)直到四周均比局部梯度大的局部最优点</span></p>
+<p><span style="color: #000000">算法的数学描述为（该式为原始式，即梯度下降的数学定义）：</span></p>
+<p><img src="http://ww3.sinaimg.cn/large/68eb7c93gw1ertwxvy7r7j20a503h0st.jpg" alt=""></p>
+<p><span style="color: #000000">：=与计算机编程中的赋值语句等同。α称作学习比率。则上式中J(θ)对θ求导的数学推导式为：</span></p>
+<p><img src="http://ww1.sinaimg.cn/large/68eb7c93jw1ertx3pvtwhj20k70aw0ui.jpg" alt=""></p>
+<p><span style="color: #000000">这里更新最上式，对于</span><span style="color: #ff0000">单个训练样本 </span></p>
+<p><img src="http://ww3.sinaimg.cn/large/68eb7c93jw1ertxdj12m5j20ef02k0sy.jpg" alt=""></p>
+<p><span style="color: #000000">对</span><span style="color: #ff0000">所有训练样本<span style="color: #000000">，沿着梯度方向不断计算直到收敛</span></span></p>
+<p><img src="http://ww3.sinaimg.cn/large/68eb7c93jw1ertxfgsbo8j20jb067mxy.jpg" alt=""></p>
+<p><span style="color: #000000">该方法中，每一次梯度的计算都用到了每个训练样本，这种梯度下降的方法称为</span> <span style="color: #ff0000">批梯度下降<span style="color: #000000">。由于这里的最优化问题只有一个全局，因此这里的局部梯度最优点即是全局的梯度最优点。此外还可以采取<span style="color: #ff0000">随机梯度下降</span>，每次梯度的计算选取随机的样本点，这样收敛的速度更快，但可能永远不会收敛到最优点，但会集中在最优点附近。因而在训练样本较大时可以采用随机梯度下降。这是随机梯度下降算法的数学表达：<img src="http://ww2.sinaimg.cn/large/68eb7c93jw1ertxr2dnpkj20pi09omy1.jpg" alt=""></span></span><span style="color: #000000">这是利用批梯度下降算法计算的梯度直到收敛，可以注意到每一次步长是不一样的，步长可在学习中不断调节，越接近最优点步长越短。</span></p>
+<p><img src="http://ww3.sinaimg.cn/large/68eb7c93jw1ertxp6yvc3j20is0ewtb2.jpg" alt=""><span style="color: #000000">2.正规化方程</span></p>
+<p><span style="color: #000000">梯度下降是一种求取价值函数J(θ)的方法，正规化方程是另一种方案。首先提到的是几个必要的矩阵知识：</span></p>
+<p><span style="color: #000000">f与向量A的映射关系中，对f进行求导的定义：</span></p>
+<p><img src="http://ww1.sinaimg.cn/large/68eb7c93jw1erty55sgncj20x00800v7.jpg" alt=""></p>
+<p><span style="color: #000000">关于迹的一些定理：</span></p>
+<p><span style="color: #000000">迹的乘法交换：</span></p>
+<p><img src="http://ww1.sinaimg.cn/large/68eb7c93jw1ertychjkpmj20ko03ydgn.jpg" alt=""></p>
+<p><span style="color: #000000">迹和转置的迹；迹的加法结合；迹的数乘</span></p>
+<p><img src="http://ww4.sinaimg.cn/large/68eb7c93jw1ertycuu329j20bg05bdg7.jpg" alt=""></p>
+<p><span style="color: #000000">迹与倒数相关：</span></p>
+<p><img src="http://ww4.sinaimg.cn/large/68eb7c93jw1ertyf4n67aj20gl080ab4.jpg" alt=""></p>
+<p><span style="color: #000000">上式中，B是n_m矩阵，f的定义是依赖m_n矩阵的函数f（A）的值等于AB的迹。其中f（A）中的A的含义是A矩阵的每一个矩阵分量。</span></p>
+<p><span style="color: #000000">将J(θ)写成矩阵形式，给定的训练集合定义成矩阵X（m*n）m是训练样本个数，n是每个训练样本的自变量分量。</span></p>
+<p><img src="http://ww1.sinaimg.cn/large/68eb7c93jw1erv2wqwhymj20bt06vt91.jpg" alt=""></p>
+<p><span style="color: #000000">则已知的结果也可以用矩阵表示，或者说是向量表示</span></p>
+<p><img src="http://ww2.sinaimg.cn/large/68eb7c93jw1erv2xjw1fgj207e06m0sv.jpg" alt=""></p>
+<p><span style="color: #000000">假设h和y的向量差为</span></p>
+<p><img src="http://ww3.sinaimg.cn/large/68eb7c93jw1erv2z16c93j20iw0a33zm.jpg" alt=""></p>
+<p><span style="color: #000000">J(θ)则可以表示为：</span></p>
+<p><img src="http://ww3.sinaimg.cn/large/68eb7c93jw1erv2zsi8x8j20mc05qdgh.jpg" alt=""></p>
+<p><span style="color: #000000">可以看到，h-y利用了向量内乘的方式，即向量乘以向量的转置，得到的实际上是个一维矩阵即一个数。为了找到J(θ)的最小值，可利用矩阵的求导，并参考上式中迹与倒数相关第三条：</span></p>
+<p><img src="http://ww4.sinaimg.cn/large/68eb7c93jw1erv36i7jh1j20p20dhq5v.jpg" alt=""></p>
+<p><span style="color: #000000">第三步骤中，利用到实数的迹也是它本身，第四步中用到了迹和迹的转置，第五步中的方法是利用迹与倒数相关第三条，将A的转置设为θ，B=B的转置=X的转置*X C=单位阵，带入公式即可。令上式为零，则求出导数为零时θ的取值。得到的方程称为正规化方程：</span></p>
+<p><img src="http://ww1.sinaimg.cn/large/68eb7c93jw1erv3chess6j20wy06babl.jpg" alt=""></p>
+<blockquote>
+<p>梯度下降</p>
+</blockquote>
+<p><span style="color: #000000">梯度下降法，基于这样的观察：如果实值函数 F(x)在点 (a,f(a)) 处可微且有定义，那么<span style="color: #ff0000">函数 F(x)在 a点沿着梯度相反的方向 -▽ F(a) 下降最快</span>。</span></p>
+<p><span style="color: #000000">因而，如果</span><img src="http://upload.wikimedia.org/math/3/f/f/3ff0cdc9fd95f11558270cd4db06ac28.png" alt="\mathbf{b}=\mathbf{a}-\gamma\nabla F(\mathbf{a})"><span style="color: #000000">,对于 <img src="http://upload.wikimedia.org/math/e/2/4/e243b8724ee0860a2b24f48b7c5c2360.png" alt="\gamma&gt;0"> 为一个够小数值时成立，那么 <img src="http://upload.wikimedia.org/math/9/b/b/9bb1b9d10c2499804ac52aaf0aacd8fe.png" alt="F(\mathbf{a})\geq F(\mathbf{b})">。</span></p>
+<p><span style="color: #000000">考虑到这一点，我们可以从函数 <img src="http://upload.wikimedia.org/math/8/0/0/800618943025315f869e4e1f09471012.png" alt="F"> 的局部极小值的初始估计 <img src="http://upload.wikimedia.org/math/c/d/5/cd5146b777ca8406c51d8ba8da7fe901.png" alt="\mathbf{x}_0"> 出发，并考虑如下序列 <img src="http://upload.wikimedia.org/math/e/3/6/e36041cdf241095ff7a0e0169a8d405e.png" alt="\mathbf{x}_0, \mathbf{x}_1, \mathbf{x}_2, \dots"> 使得</span></p>
+<dl><dd><span style="color: #000000"><img src="http://upload.wikimedia.org/math/8/b/0/8b0e3f1c41429f48f4788cfee9fe57ee.png" alt="\mathbf{x}_{n+1}=\mathbf{x}_n-\gamma_n \nabla F(\mathbf{x}_n),\ n \ge 0."></span></dd></dl>
+
+<p><span style="color: #000000">因此可得到</span><img src="http://upload.wikimedia.org/math/3/e/a/3ea251fcbc5ebc8b22f515e171570797.png" alt="F(\mathbf{x}_0)\ge F(\mathbf{x}_1)\ge F(\mathbf{x}_2)\ge \cdots,">如果顺利的话序列 <img src="http://upload.wikimedia.org/math/c/a/c/cac7a8ab62b2a332af1981678d0504e3.png" alt="(\mathbf{x}_n)"> 收敛到期望的极值。<span style="color: #000000">注意每次迭代<em>步长</em> <img src="http://upload.wikimedia.org/math/3/3/4/334de1ea38b615839e4ee6b65ee1b103.png" alt="\gamma"> 可以改变。假设 <img src="http://upload.wikimedia.org/math/8/0/0/800618943025315f869e4e1f09471012.png" alt="F"> 定义在平面上，并且函数图像是一个碗型。蓝色的曲线是等高线，即函数 <img src="http://upload.wikimedia.org/math/8/0/0/800618943025315f869e4e1f09471012.png" alt="F"> 为常数的集合构成的曲线。红色的箭头指向该点梯度的反方向。（一点处的梯度方向与通过该点的等高线的垂线。沿着梯度<em>下降</em>方向，将最终到达碗底，即函数 <img src="http://upload.wikimedia.org/math/8/0/0/800618943025315f869e4e1f09471012.png" alt="F"> 值最小的点。</span></p>
+<p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Gradient_descent.png/350px-Gradient_descent.png" alt=""></p>
+<p>&nbsp;</p>  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-tags">
+  
+  <span></span> <a href="/tags/机器学习/">机器学习</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/什么都学一下/">什么都学一下</a>►<a class="article-category-link" href="/categories/什么都学一下/学习log/">学习log</a>
+</div>
+<div class="article-share" id="share">
+
+  <div data-url="http://ovjaywang.github.io/2015/05/05/e6-9c-ba-e5-99-a8-e5-ad-a6-e4-b9-a0-e8-af-be-e7-a8-8b-e5-b0-8f-e7-bb-9314/" data-title="[机器学习课程小结][1/10] | ov智商捉急" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	<nav class="article-nav clearfix">
+ 
+ <div class="prev">
+ <a href="/2015/05/07/mfc-e4-b8-ad-e6-b7-bb-e5-8a-a0-e6-8e-a7-e5-88-b6-e5-8f-b0-e8-b0-83-e8-af-95/" title="MFC中添加控制台调试">
+  <strong>PREVIOUS:</strong><br>
+  <span>
+  MFC中添加控制台调试</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/04/21/cmakeqt5-0-with-opengl-e7-bc-96-e8-af-91cloudcompare/" title="Cmake+qt5.0 with Opengl编译CloudCompare">
+ <strong>NEXT:</strong><br> 
+ <span>Cmake+qt5.0 with Opengl编译CloudCompare
+</span>
+</a>
+</div>
+
+</nav>
+	<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+</div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  <div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/App强推/" title="App强推">App强推<sup>8</sup></a></li>
+		
+			<li><a href="/categories/tucao/" title="tucao">tucao<sup>1</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/" title="什么都学一下">什么都学一下<sup>21</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/代码狗/" title="代码狗">代码狗<sup>1</sup></a></li>
+		
+			<li><a href="/categories/代码狗/" title="代码狗">代码狗<sup>23</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/学习log/" title="学习log">学习log<sup>20</sup></a></li>
+		
+			<li><a href="/categories/代码狗/学习log/" title="学习log">学习log<sup>23</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/代码狗/学习log/" title="学习log">学习log<sup>1</sup></a></li>
+		
+			<li><a href="/categories/槽/" title="槽">槽<sup>65</sup></a></li>
+		
+			<li><a href="/categories/软件测评/" title="软件测评">软件测评<sup>5</sup></a></li>
+		
+			<li><a href="/categories/软件测评/软文/" title="软文">软文<sup>5</sup></a></li>
+		
+			<li><a href="/categories/App强推/软文/" title="软文">软文<sup>8</sup></a></li>
+		
+		</ul>
+</div>
+
+  <div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Android/" title="Android">Android<sup>14</sup></a></li>
+		
+			<li><a href="/tags/ICP/" title="ICP">ICP<sup>1</sup></a></li>
+		
+			<li><a href="/tags/MMC/" title="MMC">MMC<sup>1</sup></a></li>
+		
+			<li><a href="/tags/MME/" title="MME">MME<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SPark/" title="SPark">SPark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/bae/" title="bae">bae<sup>1</sup></a></li>
+		
+			<li><a href="/tags/dbscan/" title="dbscan">dbscan<sup>1</sup></a></li>
+		
+			<li><a href="/tags/demo/" title="demo">demo<sup>1</sup></a></li>
+		
+			<li><a href="/tags/erdas/" title="erdas">erdas<sup>1</sup></a></li>
+		
+			<li><a href="/tags/gms/" title="gms">gms<sup>1</sup></a></li>
+		
+			<li><a href="/tags/hadoop/" title="hadoop">hadoop<sup>3</sup></a></li>
+		
+			<li><a href="/tags/hello/" title="hello">hello<sup>1</sup></a></li>
+		
+			<li><a href="/tags/java/" title="java">java<sup>5</sup></a></li>
+		
+			<li><a href="/tags/jena/" title="jena">jena<sup>2</sup></a></li>
+		
+			<li><a href="/tags/juddi/" title="juddi">juddi<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mark/" title="mark">mark<sup>5</sup></a></li>
+		
+			<li><a href="/tags/mfc/" title="mfc">mfc<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mysql/" title="mysql">mysql<sup>1</sup></a></li>
+		
+			<li><a href="/tags/nba/" title="nba">nba<sup>2</sup></a></li>
+		
+			<li><a href="/tags/ontology/" title="ontology">ontology<sup>3</sup></a></li>
+		
+		</ul>
+</div>
+
+  <div class="rsspart">
+	<a href="null" target="_blank" title="rss">RSS</a>
+</div>
+
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/Android/" style="font-size: 17.5px">Android</a> <a href="/tags/ICP/" style="font-size: 10px">ICP</a> <a href="/tags/MMC/" style="font-size: 10px">MMC</a> <a href="/tags/MME/" style="font-size: 10px">MME</a> <a href="/tags/SPark/" style="font-size: 10px">SPark</a> <a href="/tags/bae/" style="font-size: 10px">bae</a> <a href="/tags/dbscan/" style="font-size: 10px">dbscan</a> <a href="/tags/demo/" style="font-size: 10px">demo</a> <a href="/tags/erdas/" style="font-size: 10px">erdas</a> <a href="/tags/gms/" style="font-size: 10px">gms</a> <a href="/tags/hadoop/" style="font-size: 12.5px">hadoop</a> <a href="/tags/hello/" style="font-size: 10px">hello</a> <a href="/tags/java/" style="font-size: 15px">java</a> <a href="/tags/jena/" style="font-size: 11.25px">jena</a> <a href="/tags/juddi/" style="font-size: 10px">juddi</a> <a href="/tags/mark/" style="font-size: 15px">mark</a> <a href="/tags/mfc/" style="font-size: 10px">mfc</a> <a href="/tags/mysql/" style="font-size: 10px">mysql</a> <a href="/tags/nba/" style="font-size: 11.25px">nba</a> <a href="/tags/ontology/" style="font-size: 12.5px">ontology</a> <a href="/tags/opencv/" style="font-size: 10px">opencv</a> <a href="/tags/python/" style="font-size: 11.25px">python</a> <a href="/tags/recommend/" style="font-size: 12.5px">recommend</a> <a href="/tags/sublimetext/" style="font-size: 10px">sublimetext</a> <a href="/tags/test/" style="font-size: 11.25px">test</a> <a href="/tags/后方交会/" style="font-size: 15px">后方交会</a> <a href="/tags/吐槽/" style="font-size: 20px">吐槽</a> <a href="/tags/呵呵/" style="font-size: 18.75px">呵呵</a> <a href="/tags/呵呵哒/" style="font-size: 10px">呵呵哒</a> <a href="/tags/寂寞寂寞就好/" style="font-size: 12.5px">寂寞寂寞就好</a> <a href="/tags/年度总结/" style="font-size: 11.25px">年度总结</a> <a href="/tags/我失恋了/" style="font-size: 10px">我失恋了</a> <a href="/tags/控制台/" style="font-size: 10px">控制台</a> <a href="/tags/无线传输/" style="font-size: 10px">无线传输</a> <a href="/tags/本体/" style="font-size: 11.25px">本体</a> <a href="/tags/本体论/" style="font-size: 11.25px">本体论</a> <a href="/tags/机器学习/" style="font-size: 10px">机器学习</a> <a href="/tags/梯子/" style="font-size: 10px">梯子</a> <a href="/tags/检校/" style="font-size: 16.25px">检校</a> <a href="/tags/测评/" style="font-size: 11.25px">测评</a> <a href="/tags/游记/" style="font-size: 10px">游记</a> <a href="/tags/点云/" style="font-size: 10px">点云</a> <a href="/tags/热点/" style="font-size: 10px">热点</a> <a href="/tags/电影/" style="font-size: 12.5px">电影</a> <a href="/tags/算法/" style="font-size: 10px">算法</a> <a href="/tags/精度/" style="font-size: 10px">精度</a> <a href="/tags/翔/" style="font-size: 13.75px">翔</a> <a href="/tags/考研/" style="font-size: 16.25px">考研</a> <a href="/tags/航空摄影测量/" style="font-size: 10px">航空摄影测量</a> <a href="/tags/装机/" style="font-size: 10px">装机</a> <a href="/tags/计算机视觉/" style="font-size: 10px">计算机视觉</a> <a href="/tags/语义网/" style="font-size: 11.25px">语义网</a> <a href="/tags/足球/" style="font-size: 10px">足球</a> <a href="/tags/静态ip/" style="font-size: 10px">静态ip</a> <a href="/tags/音乐/" style="font-size: 10px">音乐</a> <a href="/tags/马克/" style="font-size: 15px">马克</a>
+    </div>
+  </div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer">
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> 这里是ov的站 <br>
+			多多留言交流技术问题阿</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/302060345" target="_blank" title="weibo"></a>
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2016 
+		
+		<a href="http://ovjaywang.github.io" target="_blank" title="Jay Wang">Jay Wang</a>
+		
+		</p>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"dooby"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax --><!-- hexo-inject:end -->
+  </body>

@@ -1,0 +1,475 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>Android中listview使用baseAdapter的下拉刷新和加载更多功能 | ov智商捉急</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=3,minimum-scale=1">
+    
+    <meta name="author" content="Jay Wang">
+    
+    <meta name="description" content="该功能基于多个成熟的博客和demo的集成，最适合开发的方式推荐。
+首先是利用baseAdapter开发listview，baseAdapter拓展性自由性非常高，利用activity加载适配器Adapter再加载资源进入视图view中，图片imageview textview 等都可以自由的组织布局">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/touxiang.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/touxiang.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head></html>
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/xiaozaizi.png" alt="ov智商捉急" title="ov智商捉急"></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="ov智商捉急">ov智商捉急</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">dooby.me</a></li>
+					
+						<li><a href="/me">关于我</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/instagram">Ig</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search">
+						<input type="hidden" name="q" value="site:ovjaywang.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2013/06/02/android-listview-push-update/" title="Android中listview使用baseAdapter的下拉刷新和加载更多功能" itemprop="url">Android中listview使用baseAdapter的下拉刷新和加载更多功能</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://ovjaywang.github.io" title="Jay Wang">Jay Wang</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2013-06-01T20:58:24.000Z" itemprop="datePublished">2013-06-02</time>
+    Updated:<time datetime="2016-04-11T14:09:45.580Z" itemprop="dateModified">2016-04-11</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+		</div>
+		
+		<p>该功能基于多个成熟的博客和demo的集成，最适合开发的方式推荐。</p>
+<p>首先是利用baseAdapter开发listview，baseAdapter拓展性自由性非常高，利用activity加载适配器Adapter再加载资源进入视图view中，图片imageview textview 等都可以自由的组织布局。在一个额外的xml布局中写好单个list项目的布局就可以自由的适配载入整个list 参考<a href="http://www.oschina.net/code/snippet_203635_7475" target="_blank" rel="external">自定义BaseAdapter</a> <a href="http://pan.baidu.com/share/link?shareid=464702&amp;uk=4195521600" target="_blank" rel="external">demo</a>针对arrayAdapter simpleAdpter等四个适配器的比较。</p>
+<p>其次是下拉刷新的功能，虽然网上有很多例子，但是不是继承FrameLayout 就是集成activity。很少有继承listactivity并且还使用baseAdapter的例子。这里主要参考的是<a href="http://blog.csdn.net/berber78/article/details/7387271" target="_blank" rel="external">Android中实现下拉刷新</a>以及<a href="http://greatwqs.iteye.com/blog/1058366" target="_blank" rel="external">Android:ListView使用RelativeLayout与TableLayout比较</a> 这里的关键并不是头尾的算法和头尾的布局，关键的是如何将listview嵌入另一个布局中并保持布局的稳定和及时性。由于使用的是baseAdapter数据不是直接在activity里添加而是通过继承自baseAdapter的适配器调用getView函数获得的，因而数据的呈现极其容易出现冲突。这里展示两种方法：<br>其一是针对上边<a href="http://blog.csdn.net/berber78/article/details/7387271" target="_blank" rel="external">Android中实现下拉刷新</a>的例子中的函数改写的。原代码是：</p>
+<p><pre class="brush: xml; gutter: true; first-line: 1; highlight: []; html-script: false"><br>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<br>&lt;RelativeLayout<br>  xmlns:android=&quot;<a href="http://schemas.android.com/apk/res/android&amp;quot" target="_blank" rel="external">http://schemas.android.com/apk/res/android&amp;quot</a>;<br>  android:layout_width=&quot;fill_parent&quot;<br>  android:layout_height=&quot;fill_parent&quot;<br>  &gt;<br>  &lt;LinearLayout android:orientation=&quot;vertical&quot;<br>                android:layout_width=&quot;fill_parent&quot;<br>                android:layout_height=&quot;fill_parent&quot;<br>                android:background=&quot;#000000&quot;&gt;<br>        //将ListView改为包名.自定义的列表类名，MsgListView.java代码见后，此代码不需改通用，下拉刷新相关即此处，其他无关<br>        &lt;cn.xd.microblogging.tools.MsgListView<br>        android:id=&quot;@android:id/list&quot;<br>        android:layout_height=&quot;wrap_content&quot;<br>        android:layout_width=&quot;fill_parent&quot;<br>        android:layout_weight=&quot;1.0&quot;<br>        android:drawSelectorOnTop=&quot;false&quot;<br>        android:scrollbars=&quot;vertical&quot;<br>        android:fadingEdgeLength=&quot;0dip&quot;<br>        android:divider=&quot;@drawable/line&quot;<br>        android:dividerHeight=&quot;3.0dip&quot;<br>        android:cacheColorHint=&quot;#00000000&quot;<br>        android:paddingBottom=&quot;40dp&quot;/&gt;<br>  &lt;/LinearLayout&gt;<br>  &lt;LinearLayout<br>      android:id=&quot;@+id/msg_list_load&quot;<br>      android:layout_width=&quot;fill_parent&quot;<br>      android:layout_height=&quot;fill_parent&quot; &gt;<br>    &lt;LinearLayout android:id=&quot;@android:id/empty&quot;<br>                  android:layout_width=&quot;fill_parent&quot;<br>                  android:layout_height=&quot;fill_parent&quot; &gt;<br>      &lt;include<br>        android:id=&quot;@android:id/empty&quot;<br>        layout=&quot;@layout/empty_loading&quot;<br>        android:layout_width=&quot;fill_parent&quot;<br>        android:layout_height=&quot;fill_parent&quot; /&gt;<br>     &lt;/LinearLayout&gt;<br>  &lt;/LinearLayout&gt;<br>&lt;/RelativeLayout&gt;<br></pre><br>我的原baseAdapter的适配xml是：</p>
+<p><pre class="brush: xml; gutter: true; first-line: 1; highlight: []; html-script: false"><br>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<br>&lt;LinearLayout xmlns:android=&quot;<a href="http://schemas.android.com/apk/res/android&amp;quot" target="_blank" rel="external">http://schemas.android.com/apk/res/android&amp;quot</a>;<br>    android:layout_width=&quot;fill_parent&quot;<br>    android:layout_height=&quot;fill_parent&quot;<br>    android:orientation=&quot;horizontal&quot; &gt;<br>    &lt;LinearLayout<br>        android:layout_width=&quot;wrap_content&quot;<br>        android:layout_height=&quot;wrap_content&quot;<br>        android:orientation=&quot;vertical&quot; &gt;<br>        &lt;ImageView<br>            android:id=&quot;@+id/img&quot;<br>            android:layout_width=&quot;100dp&quot;<br>            android:layout_height=&quot;wrap_content&quot;<br>            android:layout_margin=&quot;5dp&quot; /&gt;<br>        &lt;TextView<br>            android:id=&quot;@+id/msgname&quot;<br>            android:layout_width=&quot;wrap_content&quot;<br>            android:layout_height=&quot;wrap_content&quot;<br>            android:layout_gravity=&quot;center&quot;<br>            android:layout_marginBottom=&quot;4dp&quot;<br>            android:textColor=&quot;#FFFFFFFF&quot;<br>            android:textSize=&quot;12sp&quot; /&gt;<br>    &lt;/LinearLayout&gt;<br>    &lt;LinearLayout<br>        android:layout_width=&quot;wrap_content&quot;<br>        android:layout_height=&quot;wrap_content&quot;<br>        android:orientation=&quot;vertical&quot; &gt;<br>        &lt;TextView<br>            android:id=&quot;@+id/msgtext&quot;<br>            android:layout_width=&quot;wrap_content&quot;<br>            android:layout_height=&quot;100dp&quot;<br>            android:textColor=&quot;#FFFFFFFF&quot;<br>            android:textSize=&quot;22sp&quot; /&gt;<br>        &lt;LinearLayout<br>            android:layout_width=&quot;wrap_content&quot;<br>            android:layout_height=&quot;wrap_content&quot;<br>            android:orientation=&quot;horizontal&quot;<br>            android:layout_gravity=&quot;left&quot; &gt;<br>            &lt;TextView<br>                android:id=&quot;@+id/topic&quot;<br>                android:layout_width=&quot;wrap_content&quot;<br>                android:layout_height=&quot;wrap_content&quot;<br>                android:layout_gravity=&quot;left&quot;<br>                android:layout_marginRight=&quot;10dp&quot;<br>                android:textColor=&quot;#FFFFFFFF&quot;<br>                android:textSize=&quot;13sp&quot; /&gt;<br>            &lt;TextView<br>                android:id=&quot;@+id/msgtime&quot;<br>                android:layout_width=&quot;wrap_content&quot;<br>                android:layout_height=&quot;wrap_content&quot;<br>                android:layout_marginRight=&quot;10dp&quot;<br>                android:layout_gravity=&quot;left&quot;<br>                android:textColor=&quot;#FFFFFFFF&quot;<br>                android:textSize=&quot;13sp&quot; /&gt;<br>            &lt;TextView<br>                android:id=&quot;@+id/msgaddr&quot;<br>                android:layout_width=&quot;wrap_content&quot;<br>                android:layout_height=&quot;wrap_content&quot;<br>                android:layout_gravity=&quot;left&quot;<br>                 android:layout_marginRight=&quot;10dp&quot;<br>                android:textColor=&quot;#FFFFFFFF&quot;<br>                android:textSize=&quot;13sp&quot; /&gt;<br>            &lt;TextView<br>                android:id=&quot;@+id/comment&quot;<br>                android:layout_width=&quot;wrap_content&quot;<br>                android:layout_height=&quot;wrap_content&quot;<br>                android:layout_gravity=&quot;left&quot;<br>                android:textColor=&quot;#FFFFFFFF&quot;<br>                android:textSize=&quot;13sp&quot; /&gt;<br>        &lt;/LinearLayout&gt;<br>    &lt;/LinearLayout&gt;<br>&lt;/LinearLayout&gt;<br></pre><br>改写后的是：<pre class="brush: xml; gutter: true; first-line: 1; highlight: []; html-script: false"><br>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<br>&lt;RelativeLayout<br>  xmlns:android=&quot;<a href="http://schemas.android.com/apk/res/android&amp;quot" target="_blank" rel="external">http://schemas.android.com/apk/res/android&amp;quot</a>;<br>  android:layout_width=&quot;fill_parent&quot;<br>  android:layout_height=&quot;fill_parent&quot;<br>  &gt;<br>  &lt;LinearLayout android:orientation=&quot;vertical&quot;<br>                android:layout_width=&quot;fill_parent&quot;<br>                android:layout_height=&quot;fill_parent&quot;<br>                android:background=&quot;#000000&quot;&gt;<br>        &lt;com.wjy.message.MsgListView<br>        android:id=&quot;@android:id/list&quot;<br>        android:layout_height=&quot;wrap_content&quot;<br>        android:layout_width=&quot;fill_parent&quot;<br>        android:layout_weight=&quot;1.0&quot;<br>        android:drawSelectorOnTop=&quot;false&quot;<br>        android:scrollbars=&quot;vertical&quot;<br>        android:fadingEdgeLength=&quot;0dip&quot;<br>        android:divider=&quot;@drawable/line&quot;<br>        android:dividerHeight=&quot;3.0dip&quot;<br>        android:cacheColorHint=&quot;#00000000&quot;<br>        android:paddingBottom=&quot;40dp&quot;/&gt;<br>  &lt;/LinearLayout&gt;<br>  &lt;LinearLayout<br>    android:layout_width=&quot;fill_parent&quot;<br>    android:layout_height=&quot;fill_parent&quot;<br>    android:orientation=&quot;horizontal&quot; &gt;<br>    &lt;LinearLayout<br>        android:layout_width=&quot;wrap_content&quot;<br>        android:layout_height=&quot;wrap_content&quot;<br>        android:orientation=&quot;vertical&quot;<br>        android:id=&quot;@+id/hehe&quot;&gt;<br>        &lt;ImageView<br>            android:id=&quot;@+id/img&quot;<br>            android:layout_width=&quot;100dp&quot;<br>            android:layout_height=&quot;wrap_content&quot;<br>            android:layout_margin=&quot;5dp&quot; /&gt;<br>        &lt;TextView<br>            android:id=&quot;@+id/msgname&quot;<br>            android:layout_width=&quot;wrap_content&quot;<br>            android:layout_height=&quot;wrap_content&quot;<br>            android:layout_gravity=&quot;center&quot;<br>            android:layout_marginBottom=&quot;4dp&quot;<br>            android:textColor=&quot;#FFFFFFFF&quot;<br>            android:textSize=&quot;12sp&quot; /&gt;<br>    &lt;/LinearLayout&gt;<br>    &lt;LinearLayout<br>        android:layout_width=&quot;wrap_content&quot;<br>        android:layout_height=&quot;wrap_content&quot;<br>        android:orientation=&quot;vertical&quot; &gt;<br>        &lt;TextView<br>            android:id=&quot;@+id/msgtext&quot;<br>            android:layout_width=&quot;wrap_content&quot;<br>            android:layout_height=&quot;100dp&quot;<br>            android:textColor=&quot;#FFFFFFFF&quot;<br>            android:textSize=&quot;22sp&quot; /&gt;</pre></p>
+<pre><code>    &amp;lt;LinearLayout
+        android:layout_width=&amp;quot;wrap_content&amp;quot;
+        android:layout_height=&amp;quot;wrap_content&amp;quot;
+        android:orientation=&amp;quot;horizontal&amp;quot;
+        android:layout_gravity=&amp;quot;left&amp;quot; &amp;gt;
+
+        &amp;lt;TextView
+            android:id=&amp;quot;@+id/topic&amp;quot;
+            android:layout_width=&amp;quot;wrap_content&amp;quot;
+            android:layout_height=&amp;quot;wrap_content&amp;quot;
+            android:layout_gravity=&amp;quot;left&amp;quot;
+            android:layout_marginRight=&amp;quot;10dp&amp;quot;
+            android:textColor=&amp;quot;#FFFFFFFF&amp;quot;
+            android:textSize=&amp;quot;13sp&amp;quot; /&amp;gt;
+        &amp;lt;TextView
+            android:id=&amp;quot;@+id/msgtime&amp;quot;
+            android:layout_width=&amp;quot;wrap_content&amp;quot;
+            android:layout_height=&amp;quot;wrap_content&amp;quot;
+            android:layout_marginRight=&amp;quot;10dp&amp;quot;
+            android:layout_gravity=&amp;quot;left&amp;quot;
+            android:textColor=&amp;quot;#FFFFFFFF&amp;quot;
+            android:textSize=&amp;quot;13sp&amp;quot; /&amp;gt;
+
+        &amp;lt;TextView
+            android:id=&amp;quot;@+id/msgaddr&amp;quot;
+            android:layout_width=&amp;quot;wrap_content&amp;quot;
+            android:layout_height=&amp;quot;wrap_content&amp;quot;
+            android:layout_gravity=&amp;quot;left&amp;quot;
+             android:layout_marginRight=&amp;quot;10dp&amp;quot;
+            android:textColor=&amp;quot;#FFFFFFFF&amp;quot;
+            android:textSize=&amp;quot;13sp&amp;quot; /&amp;gt;
+        &amp;lt;TextView
+            android:id=&amp;quot;@+id/comment&amp;quot;
+            android:layout_width=&amp;quot;wrap_content&amp;quot;
+            android:layout_height=&amp;quot;wrap_content&amp;quot;
+            android:layout_gravity=&amp;quot;left&amp;quot;
+            android:textColor=&amp;quot;#FFFFFFFF&amp;quot;
+            android:textSize=&amp;quot;13sp&amp;quot; /&amp;gt;
+    &amp;lt;/LinearLayout&amp;gt;
+&amp;lt;/LinearLayout&amp;gt;
+</code></pre><p>&lt;/LinearLayout&gt;<br>&lt;/RelativeLayout&gt;<br><br>这其中加入了一个ImageView，一些textview的横横竖竖的布局。效果如图，<img src="http://i1061.photobucket.com/albums/t476/ov_beeshoot/635583B7-2.jpg" alt=""><br>另一种是针对这个demo的<a href="http://pull-to-refresh-view.googlecode.com/svn/trunk/PullToRefreshView" target="_blank" rel="external">PullToRefreshView</a>这个托管在googlecode的资源非常完满的解决了很多问题，其中关于样式的xml有两个分别是：<br>grid_item.xml</p>
+<p><pre class="brush: xml; gutter: true; first-line: 1; highlight: []; html-script: false"><br>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<br>&lt;LinearLayout xmlns:android=&quot;<a href="http://schemas.android.com/apk/res/android&amp;quot" target="_blank" rel="external">http://schemas.android.com/apk/res/android&amp;quot</a>;<br>    android:layout_width=&quot;wrap_content&quot;<br>    android:layout_height=&quot;wrap_content&quot;<br>    android:orientation=&quot;vertical&quot; &gt;<br>    &lt;TextView<br>        android:id=&quot;@+id/text&quot;<br>        android:drawableTop=&quot;@drawable/ic_launcher&quot;<br>        android:layout_width=&quot;wrap_content&quot;<br>        android:layout_height=&quot;wrap_content&quot;<br>        android:gravity=&quot;center_horizontal&quot;<br>        android:text=&quot;test&quot;/&gt;<br>&lt;/LinearLayout&gt;<br></pre><br>其中就是放入了一个固定的图片和固定的文字<br>可以随意替换。另一个是<br>test_listview.xml</p>
+<p><pre class="brush: xml; gutter: true; first-line: 1; highlight: []; html-script: false"><br>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<br>&lt;com.miloisbadboy.view.PullToRefreshView xmlns:android=&quot;<a href="http://schemas.android.com/apk/res/android&amp;quot" target="_blank" rel="external">http://schemas.android.com/apk/res/android&amp;quot</a>;<br>    android:id=&quot;@+id/main_pull_refresh_view&quot;<br>    android:background=&quot;@android:color/white&quot;<br>    android:layout_width=&quot;fill_parent&quot;<br>    android:layout_height=&quot;fill_parent&quot;<br>    android:orientation=&quot;vertical&quot;&gt;<br>    &lt;!– 这里放置listview,gridview或者scrollview的布局 ,PullToRefreshView<br>    要设置android:orientation=&quot;vertical&quot;属性<br>    否则,显示不正确–&gt;<br>    &lt;ListView<br>        android:id=&quot;@android:id/list&quot;<br>        android:cacheColorHint=&quot;#00000000&quot;<br>        android:layout_width=&quot;fill_parent&quot;<br>        android:layout_height=&quot;fill_parent&quot; /&gt;</pre></p>
+<p>&lt;/com.miloisbadboy.view.PullToRefreshView&gt;<br><br>这里和上边的一样都调用的私有的一个下拉刷新的头样式的view文件。这里都可以直接用。这个demo几乎不用改动xml，就是在Adapter适配器getView中<br>convertView = mInflater.inflate(R.layout.你的list样式名字, null);不同罢了。</p>
+<p>最后一个问题是下拉刷新中list数据改变的情况。这里不能在额外的thread进行数据的更改，这样会异常。另外在非主线程调用Adapter的notifyDataSetChanged方法也会抱错。这里可以参考<a href="http://www.cnblogs.com/wangjianhui/archive/2011/06/15/2081705.html" target="_blank" rel="external">notifyDataSetChanged() 动态更新ListView</a>的例子，两种方法：1利用Handler处理2利用AsyncTask异步处理。这里图鉴第二种，这里加载图片，加载大数据方面AsyncTask非常管用。 可以参考这里<a href="http://www.pin5i.com/showtopic-android-asynctask-sample.html" target="_blank" rel="external">Android中AsyncTask的用法实例</a>以及这个例子：<a href="http://pan.baidu.com/share/link?shareid=464708&amp;uk=4195521600" target="_blank" rel="external">异步下载图片</a>。<br>这是最后的效果：<br><img src="http://i1061.photobucket.com/albums/t476/ov_beeshoot/635583B7-3.jpg" alt=""><br>BaseAdapter使用好可以搭配出很多用户体验很好的列表，嵌入别的linerlayout也是很不错的。</p>  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-tags">
+  
+  <span></span> <a href="/tags/Android/">Android</a><a href="/tags/java/">java</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/代码狗/">代码狗</a>►<a class="article-category-link" href="/categories/代码狗/学习log/">学习log</a>
+</div>
+<div class="article-share" id="share">
+
+  <div data-url="http://ovjaywang.github.io/2013/06/02/android-listview-push-update/" data-title="Android中listview使用baseAdapter的下拉刷新和加载更多功能 | ov智商捉急" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	<nav class="article-nav clearfix">
+ 
+ <div class="prev">
+ <a href="/2013/06/09/e5-9b-bd-e5-86-85-e4-b8-bb-e8-a6-81-e7-a7-91-e6-8a-80-e5-8d-9a-e5-ae-a2-e7-b1-bb-e5-9e-8b-e8-a1-a8/" title="国内主要科技博客类型表">
+  <strong>PREVIOUS:</strong><br>
+  <span>
+  国内主要科技博客类型表</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2013/05/26/android-listview-initpics-and-update/" title="android的ListView自定义样式 下拉刷新上拉加载 远程图片加载">
+ <strong>NEXT:</strong><br> 
+ <span>android的ListView自定义样式 下拉刷新上拉加载 远程图片加载
+</span>
+</a>
+</div>
+
+</nav>
+	<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+</div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  <div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/App强推/" title="App强推">App强推<sup>8</sup></a></li>
+		
+			<li><a href="/categories/tucao/" title="tucao">tucao<sup>1</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/" title="什么都学一下">什么都学一下<sup>21</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/代码狗/" title="代码狗">代码狗<sup>1</sup></a></li>
+		
+			<li><a href="/categories/代码狗/" title="代码狗">代码狗<sup>23</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/学习log/" title="学习log">学习log<sup>20</sup></a></li>
+		
+			<li><a href="/categories/代码狗/学习log/" title="学习log">学习log<sup>23</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/代码狗/学习log/" title="学习log">学习log<sup>1</sup></a></li>
+		
+			<li><a href="/categories/槽/" title="槽">槽<sup>65</sup></a></li>
+		
+			<li><a href="/categories/软件测评/" title="软件测评">软件测评<sup>5</sup></a></li>
+		
+			<li><a href="/categories/软件测评/软文/" title="软文">软文<sup>5</sup></a></li>
+		
+			<li><a href="/categories/App强推/软文/" title="软文">软文<sup>8</sup></a></li>
+		
+		</ul>
+</div>
+
+  <div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Android/" title="Android">Android<sup>14</sup></a></li>
+		
+			<li><a href="/tags/ICP/" title="ICP">ICP<sup>1</sup></a></li>
+		
+			<li><a href="/tags/MMC/" title="MMC">MMC<sup>1</sup></a></li>
+		
+			<li><a href="/tags/MME/" title="MME">MME<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SPark/" title="SPark">SPark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/bae/" title="bae">bae<sup>1</sup></a></li>
+		
+			<li><a href="/tags/dbscan/" title="dbscan">dbscan<sup>1</sup></a></li>
+		
+			<li><a href="/tags/demo/" title="demo">demo<sup>1</sup></a></li>
+		
+			<li><a href="/tags/erdas/" title="erdas">erdas<sup>1</sup></a></li>
+		
+			<li><a href="/tags/gms/" title="gms">gms<sup>1</sup></a></li>
+		
+			<li><a href="/tags/hadoop/" title="hadoop">hadoop<sup>3</sup></a></li>
+		
+			<li><a href="/tags/hello/" title="hello">hello<sup>1</sup></a></li>
+		
+			<li><a href="/tags/java/" title="java">java<sup>5</sup></a></li>
+		
+			<li><a href="/tags/jena/" title="jena">jena<sup>2</sup></a></li>
+		
+			<li><a href="/tags/juddi/" title="juddi">juddi<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mark/" title="mark">mark<sup>5</sup></a></li>
+		
+			<li><a href="/tags/mfc/" title="mfc">mfc<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mysql/" title="mysql">mysql<sup>1</sup></a></li>
+		
+			<li><a href="/tags/nba/" title="nba">nba<sup>2</sup></a></li>
+		
+			<li><a href="/tags/ontology/" title="ontology">ontology<sup>3</sup></a></li>
+		
+		</ul>
+</div>
+
+  <div class="rsspart">
+	<a href="null" target="_blank" title="rss">RSS</a>
+</div>
+
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/Android/" style="font-size: 17.5px">Android</a> <a href="/tags/ICP/" style="font-size: 10px">ICP</a> <a href="/tags/MMC/" style="font-size: 10px">MMC</a> <a href="/tags/MME/" style="font-size: 10px">MME</a> <a href="/tags/SPark/" style="font-size: 10px">SPark</a> <a href="/tags/bae/" style="font-size: 10px">bae</a> <a href="/tags/dbscan/" style="font-size: 10px">dbscan</a> <a href="/tags/demo/" style="font-size: 10px">demo</a> <a href="/tags/erdas/" style="font-size: 10px">erdas</a> <a href="/tags/gms/" style="font-size: 10px">gms</a> <a href="/tags/hadoop/" style="font-size: 12.5px">hadoop</a> <a href="/tags/hello/" style="font-size: 10px">hello</a> <a href="/tags/java/" style="font-size: 15px">java</a> <a href="/tags/jena/" style="font-size: 11.25px">jena</a> <a href="/tags/juddi/" style="font-size: 10px">juddi</a> <a href="/tags/mark/" style="font-size: 15px">mark</a> <a href="/tags/mfc/" style="font-size: 10px">mfc</a> <a href="/tags/mysql/" style="font-size: 10px">mysql</a> <a href="/tags/nba/" style="font-size: 11.25px">nba</a> <a href="/tags/ontology/" style="font-size: 12.5px">ontology</a> <a href="/tags/opencv/" style="font-size: 10px">opencv</a> <a href="/tags/python/" style="font-size: 11.25px">python</a> <a href="/tags/recommend/" style="font-size: 12.5px">recommend</a> <a href="/tags/sublimetext/" style="font-size: 10px">sublimetext</a> <a href="/tags/test/" style="font-size: 11.25px">test</a> <a href="/tags/后方交会/" style="font-size: 15px">后方交会</a> <a href="/tags/吐槽/" style="font-size: 20px">吐槽</a> <a href="/tags/呵呵/" style="font-size: 18.75px">呵呵</a> <a href="/tags/呵呵哒/" style="font-size: 10px">呵呵哒</a> <a href="/tags/寂寞寂寞就好/" style="font-size: 12.5px">寂寞寂寞就好</a> <a href="/tags/年度总结/" style="font-size: 11.25px">年度总结</a> <a href="/tags/我失恋了/" style="font-size: 10px">我失恋了</a> <a href="/tags/控制台/" style="font-size: 10px">控制台</a> <a href="/tags/无线传输/" style="font-size: 10px">无线传输</a> <a href="/tags/本体/" style="font-size: 11.25px">本体</a> <a href="/tags/本体论/" style="font-size: 11.25px">本体论</a> <a href="/tags/机器学习/" style="font-size: 10px">机器学习</a> <a href="/tags/梯子/" style="font-size: 10px">梯子</a> <a href="/tags/检校/" style="font-size: 16.25px">检校</a> <a href="/tags/测评/" style="font-size: 11.25px">测评</a> <a href="/tags/游记/" style="font-size: 10px">游记</a> <a href="/tags/点云/" style="font-size: 10px">点云</a> <a href="/tags/热点/" style="font-size: 10px">热点</a> <a href="/tags/电影/" style="font-size: 12.5px">电影</a> <a href="/tags/算法/" style="font-size: 10px">算法</a> <a href="/tags/精度/" style="font-size: 10px">精度</a> <a href="/tags/翔/" style="font-size: 13.75px">翔</a> <a href="/tags/考研/" style="font-size: 16.25px">考研</a> <a href="/tags/航空摄影测量/" style="font-size: 10px">航空摄影测量</a> <a href="/tags/装机/" style="font-size: 10px">装机</a> <a href="/tags/计算机视觉/" style="font-size: 10px">计算机视觉</a> <a href="/tags/语义网/" style="font-size: 11.25px">语义网</a> <a href="/tags/足球/" style="font-size: 10px">足球</a> <a href="/tags/静态ip/" style="font-size: 10px">静态ip</a> <a href="/tags/音乐/" style="font-size: 10px">音乐</a> <a href="/tags/马克/" style="font-size: 15px">马克</a>
+    </div>
+  </div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer">
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> 这里是ov的站 <br>
+			多多留言交流技术问题阿</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/302060345" target="_blank" title="weibo"></a>
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2016 
+		
+		<a href="http://ovjaywang.github.io" target="_blank" title="Jay Wang">Jay Wang</a>
+		
+		</p>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"dooby"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax --><!-- hexo-inject:end -->
+  </body>

@@ -1,0 +1,454 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>后方交会检校(5)--多片后方交会&amp;相对绝对定向 | ov智商捉急</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=3,minimum-scale=1">
+    
+    <meta name="author" content="Jay Wang">
+    
+    <meta name="description" content="多片检校方程&amp;nbsp;相对定向完成标志&amp;nbsp;&amp;nbsp;相对定向解答的两种方式&amp;nbsp;图解连续像片和单独像对
+单片检校主要目的是精确测量相机的内方位元素和检校相机镜头畸变。由于只使用一幅影像进行参数的解算，使用了较少的几何约束条件和观测值，最容易产生内方位元素x0 y0 与外方位元素Xs">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/touxiang.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/touxiang.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head></html>
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/xiaozaizi.png" alt="ov智商捉急" title="ov智商捉急"></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="ov智商捉急">ov智商捉急</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">dooby.me</a></li>
+					
+						<li><a href="/me">关于我</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/instagram">Ig</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search">
+						<input type="hidden" name="q" value="site:ovjaywang.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/11/04/e5-90-8e-e6-96-b9-e4-ba-a4-e4-bc-9a-e6-a3-80-e6-a0-a14-e7-95-b8-e5-8f-98-e7-9f-ab-e6-ad-a3/" title="后方交会检校(5)--多片后方交会&amp;相对绝对定向" itemprop="url">后方交会检校(5)--多片后方交会&amp;相对绝对定向</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://ovjaywang.github.io" title="Jay Wang">Jay Wang</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2015-11-04T04:00:00.000Z" itemprop="datePublished">2015-11-04</time>
+    Updated:<time datetime="2016-04-11T14:09:45.581Z" itemprop="dateModified">2016-04-11</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+		</div>
+		
+		<p><a href="#多片交会">多片检校方程</a>&nbsp;<a href="#相对定向完成标志">相对定向完成标志</a>&nbsp;&nbsp;<a href="#两种方式">相对定向解答的两种方式</a>&nbsp;<a href="#图解">图解连续像片和单独像对</a></p>
+<p>单片检校主要目的是精确测量相机的内方位元素和检校相机镜头畸变。由于只使用一幅影像进行参数的解算，使用了较少的几何约束条件和观测值，最容易产生内方位元素x0 y0 与外方位元素Xs Ys的不定解或强相关，使检校结果稳定性和可靠性受到影响。多片后方交会则可以更精确的解算这些参数，尤其是<font color="#FF0000">主点位置的精度</font>问题。多片空间后方交会与单片空间后方交会的根本区别是：在不同的位置拍摄多张照片，由于各像片在同一主距条件下拍摄，因而解算所得的各相片的<font color="#FF0000">外方位元素不同</font>，解算的<font color="#FF0000">内方位元素和畸变参数被认为相同</font>。</p>
+<p>这样，就可以用下式方程表达<a name="多片交会">多片交会</a>：</p>
+<p>$$!\begin{bmatrix}A<em>{I}&amp;0&amp;\cdot&amp;\cdot&amp;\cdot&amp;0&amp;B</em>{I}&amp;C<em>{I}\0&amp;A</em>{II}&amp;.&amp;.&amp;.&amp;0&amp;B<em>{II}&amp;C</em>{II}\.&amp;.&amp; &amp; &amp; &amp;0&amp;.&amp;.\.&amp;.&amp; &amp; &amp; &amp;0&amp;.&amp;.\0&amp;.&amp;.&amp;.&amp;.&amp;A<em>{n}&amp;B</em>{n}&amp;C<em>{n}\end{bmatrix}</em>{2n\times (6n+7)}\begin{bmatrix}X<em>{out</em>{I}}\X<em>{out</em>{II}}\.\.\.\X<em>{out</em>{n}}\X<em>{in}\X</em>{res}\end{bmatrix}<em>{(6n+7)\times1}-\begin{bmatrix}xy</em>{res 1}\xy<em>{res 2}\.\.\.\xy</em>{res n}\end{bmatrix}_{2\times1}=0$$</p>
+<p>这一点与图像配准极其相似，用一副影像作为参考影像去配准多幅图像的结果显然没有用周边多幅图像组为参考标准的结果令人信服。由于每张相片的外方位元素不同（一般都是围绕检校场左中右进行拍摄），所以良好的消除了外方位元素和内方位元素的强相关性。</p>
+<p>针对多片，提出了相对定向和绝对定向的概念，绝对定向即利用共线方程检校计算出的外方位元素绝对值，这是以物方坐标系的原点作为参考值；而相对定向则是以被检校出的某一张像片为参考，计算出其余像片在其坐标系的坐标值，即相对关系。相对关系的求取的精度对图像拼接有至关重要的影像。</p>
+<p><a name="相对定向完成标志"><font color="#FF0000">相对定向完成的标志</font></a>：同名光线对对相交。所有点在其承影面上的上下视差为零。即通过矩阵变换改变投影器的相对位置，使光线相交。<font color="#FF0000">&nbsp;&nbsp;&nbsp;</font></p>
+<p><a name="两种方式"><font color="#FF0000">相对定向有两种方式</font></a>：①根据单片分别解算出的不同像片（可以使同相机可以不同）物方坐标系下的外方位元素绝对值，计算相对定向的五个元素，By,Bz,φ2，ω2，k2;或多片解算的某一相机的物方绝对值（必须统一相机，保证内方位元素相同），同样计算相对定向元素。可以作为航拍的连续拍摄的相对方位的确定，也可以作为立体固定的某些相机之间的相对方位的确定②直接根据同名点的像点坐标（6组以上），计算相对定向的旋转矩阵[R|t]，<font color="#FF0000">不需要地面控制点！</font>。</p>
+<p><a name="图解">图解①方式的连续像对和单独像对</a></p>
+<p>上面提到的连续像对，如下图所示，By Bz决定了摄影基线（即摄影中心移动的向量），φ2，ω2，k2决定了右片光束对于左光束的旋转。固定一个光束，旋转和移动第二个，便可以确定两个光束之间的相对方位，第三张相片可以和第二张相片确定相对方位，一次类推，所形成的相对方位元素称为连续像对系统。</p>
+<p><img src="http://ww4.sinaimg.cn/large/68eb7c93gw1eyb8jft5rpj20ln0fmgoj.jpg" alt=""></p>
+<p>而单独相对，即可以取左片摄影中心XZ平面为主核面，摄影基线为X轴的右手空间直角坐标系。由φ1，ω1，k1,φ2，ω2，k2组成。</p>
+<p><img src="http://ww3.sinaimg.cn/large/68eb7c93gw1eyb93i6vwcj20lg0d0dii.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>相对定向共面条件</p>
+<p>在相对定向中，答解相对元素的重要依据就是共面条件，当光线相交时，易知B（摄影基线，即S1S2）,S1a1,S2a2共面。如图可以看到，解求相对定向元素就是解求两个摄影中心的像方辅助坐标系的转换。共面条件方程形式为：</p>
+<p>$$!\overrightarrow{S<em>{1}S</em>{2}}\cdot (\overrightarrow{S<em>{1}a</em>{1}}\times \overrightarrow{S<em>{2}a</em>{2}})=0$$</p>
+<p>共面条件方程无需地面控制点，一个同名点列一个方程。必须有5个以上定向点。</p>
+<p><img src="http://ww4.sinaimg.cn/large/68eb7c93gw1eyb9drztouj20lz0ig782.jpg" alt=""></p>
+<p>如图，设像点a1、a2在大地坐标系坐标分别为(X1,Y1,Z1)、(X2,Y2,Z2).摄站S1、S2在大地坐标系坐标分别为$$(X<em>{S1},Y</em>{S1},Z<em>{S1}),(X</em>{S2},Y<em>{S2},Z</em>{S2})$$,则上式在即可表示为向量形式的行列式。</p>
+<p>$$!\begin{vmatrix}X<em>{S2}-X</em>{S1}&amp;Y<em>{S2}-Y</em>{S1}&amp;Z<em>{S2}-Z</em>{S1}\X<em>{1}-X</em>{S1}&amp;Y<em>{1}-Y</em>{S1}&amp;Z<em>{1}-Z</em>{S1}\X<em>{2}-X</em>{S2}&amp;Y<em>{2}-Y</em>{S2}&amp;Z<em>{2}-Z</em>{S2}\end{vmatrix}$$</p>
+<p>又令(X,Y,Z)、(Bx,By,Bz)为a1,S2在S1的像辅系S1-XYZ中的坐标，(X’,Y’,Z’)为a2在S2像辅系S2-XYZ中的坐标。由三点共面的方程，</p>
+<p>$$!\begin{vmatrix}B<em>{X}&amp;B</em>{Y}&amp;B_{Z}\X&amp;Y&amp;Z\X’&amp;Y’&amp;Z’\end{vmatrix}=0$$上式可改写为：</p>
+<p>$$!\begin{bmatrix}B<em>{X}&amp;B</em>{Y}&amp;B_{Z}\end{bmatrix}\begin{bmatrix}0&amp;-Z&amp;Y\Z&amp;0&amp;-X\-Y&amp;X&amp;0\end{bmatrix}\begin{bmatrix}X’\Y’\Z’\end{bmatrix}=0$$</p>
+<p>光线是否成对相交与摄影测量坐标系的选择无关，但可以<font color="#FF0000">选择适当的像辅系</font>，改变共面条件便于实际应用。</p>
+<p>（1）<font color="#FF0000">选择左侧像空系</font>——连续像对系统。此时R1=E，即左系的旋转矩阵为0，像平面的z坐标均为-f；或为右片的旋转矩阵。则，公式未改变。</p>
+<p>$$!\begin{vmatrix}B<em>{X}&amp;B</em>{Y}&amp;B_{Z}\X&amp;Y&amp;Z\X’&amp;Y’&amp;Z’\end{vmatrix}=0$$</p>
+<p>（2）选择基线坐标系——单独像对系统。此时，$$B<em>{Y}=B</em>{Z}=0$$，即需要求取两个像片对基线坐标系的旋转。</p>
+<div class="PoweredByWebStory" style="margin-top:15px;margin-bottom:10px"><a href="http://sns.juziyue.com/webinvite.php?u=94887" target="_blank" rel="external"></a>&nbsp;今天你<a href="http://sns.juziyue.com/webinvite.php?u=94887" target="_blank" rel="external">菊子曰</a>了么？</div>  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-tags">
+  
+  <span></span> <a href="/tags/后方交会/">后方交会</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/什么都学一下/">什么都学一下</a>►<a class="article-category-link" href="/categories/什么都学一下/学习log/">学习log</a>
+</div>
+<div class="article-share" id="share">
+
+  <div data-url="http://ovjaywang.github.io/2015/11/04/e5-90-8e-e6-96-b9-e4-ba-a4-e4-bc-9a-e6-a3-80-e6-a0-a14-e7-95-b8-e5-8f-98-e7-9f-ab-e6-ad-a3/" data-title="后方交会检校(5)--多片后方交会&amp;相对绝对定向 | ov智商捉急" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	<nav class="article-nav clearfix">
+ 
+ <div class="prev">
+ <a href="/2015/11/04/e5-90-8e-e6-96-b9-e4-ba-a4-e4-bc-9a-e6-a3-80-e6-a0-a16-dlt-e5-92-8c-e8-a7-92-e9-94-a5-e4-bd-93-e6-b3-95/" title="后方交会检校(6)--后方交会的补充及DLT和角锥体法">
+  <strong>PREVIOUS:</strong><br>
+  <span>
+  后方交会检校(6)--后方交会的补充及DLT和角锥体法</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/10/28/e5-90-8e-e6-96-b9-e4-ba-a4-e4-bc-9a-e6-a3-80-e6-a0-a14-e5-a4-9a-e7-89-87-e5-90-8e-e6-96-b9-e4-ba-a4-e4-bc-9a/" title="后方交会检校(4)--畸变差矫正">
+ <strong>NEXT:</strong><br> 
+ <span>后方交会检校(4)--畸变差矫正
+</span>
+</a>
+</div>
+
+</nav>
+	<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+</div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  <div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/App强推/" title="App强推">App强推<sup>8</sup></a></li>
+		
+			<li><a href="/categories/tucao/" title="tucao">tucao<sup>1</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/" title="什么都学一下">什么都学一下<sup>21</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/代码狗/" title="代码狗">代码狗<sup>1</sup></a></li>
+		
+			<li><a href="/categories/代码狗/" title="代码狗">代码狗<sup>23</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/学习log/" title="学习log">学习log<sup>20</sup></a></li>
+		
+			<li><a href="/categories/代码狗/学习log/" title="学习log">学习log<sup>23</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/代码狗/学习log/" title="学习log">学习log<sup>1</sup></a></li>
+		
+			<li><a href="/categories/槽/" title="槽">槽<sup>65</sup></a></li>
+		
+			<li><a href="/categories/软件测评/" title="软件测评">软件测评<sup>5</sup></a></li>
+		
+			<li><a href="/categories/软件测评/软文/" title="软文">软文<sup>5</sup></a></li>
+		
+			<li><a href="/categories/App强推/软文/" title="软文">软文<sup>8</sup></a></li>
+		
+		</ul>
+</div>
+
+  <div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Android/" title="Android">Android<sup>14</sup></a></li>
+		
+			<li><a href="/tags/ICP/" title="ICP">ICP<sup>1</sup></a></li>
+		
+			<li><a href="/tags/MMC/" title="MMC">MMC<sup>1</sup></a></li>
+		
+			<li><a href="/tags/MME/" title="MME">MME<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SPark/" title="SPark">SPark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/bae/" title="bae">bae<sup>1</sup></a></li>
+		
+			<li><a href="/tags/dbscan/" title="dbscan">dbscan<sup>1</sup></a></li>
+		
+			<li><a href="/tags/demo/" title="demo">demo<sup>1</sup></a></li>
+		
+			<li><a href="/tags/erdas/" title="erdas">erdas<sup>1</sup></a></li>
+		
+			<li><a href="/tags/gms/" title="gms">gms<sup>1</sup></a></li>
+		
+			<li><a href="/tags/hadoop/" title="hadoop">hadoop<sup>3</sup></a></li>
+		
+			<li><a href="/tags/hello/" title="hello">hello<sup>1</sup></a></li>
+		
+			<li><a href="/tags/java/" title="java">java<sup>5</sup></a></li>
+		
+			<li><a href="/tags/jena/" title="jena">jena<sup>2</sup></a></li>
+		
+			<li><a href="/tags/juddi/" title="juddi">juddi<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mark/" title="mark">mark<sup>5</sup></a></li>
+		
+			<li><a href="/tags/mfc/" title="mfc">mfc<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mysql/" title="mysql">mysql<sup>1</sup></a></li>
+		
+			<li><a href="/tags/nba/" title="nba">nba<sup>2</sup></a></li>
+		
+			<li><a href="/tags/ontology/" title="ontology">ontology<sup>3</sup></a></li>
+		
+		</ul>
+</div>
+
+  <div class="rsspart">
+	<a href="null" target="_blank" title="rss">RSS</a>
+</div>
+
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/Android/" style="font-size: 17.5px">Android</a> <a href="/tags/ICP/" style="font-size: 10px">ICP</a> <a href="/tags/MMC/" style="font-size: 10px">MMC</a> <a href="/tags/MME/" style="font-size: 10px">MME</a> <a href="/tags/SPark/" style="font-size: 10px">SPark</a> <a href="/tags/bae/" style="font-size: 10px">bae</a> <a href="/tags/dbscan/" style="font-size: 10px">dbscan</a> <a href="/tags/demo/" style="font-size: 10px">demo</a> <a href="/tags/erdas/" style="font-size: 10px">erdas</a> <a href="/tags/gms/" style="font-size: 10px">gms</a> <a href="/tags/hadoop/" style="font-size: 12.5px">hadoop</a> <a href="/tags/hello/" style="font-size: 10px">hello</a> <a href="/tags/java/" style="font-size: 15px">java</a> <a href="/tags/jena/" style="font-size: 11.25px">jena</a> <a href="/tags/juddi/" style="font-size: 10px">juddi</a> <a href="/tags/mark/" style="font-size: 15px">mark</a> <a href="/tags/mfc/" style="font-size: 10px">mfc</a> <a href="/tags/mysql/" style="font-size: 10px">mysql</a> <a href="/tags/nba/" style="font-size: 11.25px">nba</a> <a href="/tags/ontology/" style="font-size: 12.5px">ontology</a> <a href="/tags/opencv/" style="font-size: 10px">opencv</a> <a href="/tags/python/" style="font-size: 11.25px">python</a> <a href="/tags/recommend/" style="font-size: 12.5px">recommend</a> <a href="/tags/sublimetext/" style="font-size: 10px">sublimetext</a> <a href="/tags/test/" style="font-size: 11.25px">test</a> <a href="/tags/后方交会/" style="font-size: 15px">后方交会</a> <a href="/tags/吐槽/" style="font-size: 20px">吐槽</a> <a href="/tags/呵呵/" style="font-size: 18.75px">呵呵</a> <a href="/tags/呵呵哒/" style="font-size: 10px">呵呵哒</a> <a href="/tags/寂寞寂寞就好/" style="font-size: 12.5px">寂寞寂寞就好</a> <a href="/tags/年度总结/" style="font-size: 11.25px">年度总结</a> <a href="/tags/我失恋了/" style="font-size: 10px">我失恋了</a> <a href="/tags/控制台/" style="font-size: 10px">控制台</a> <a href="/tags/无线传输/" style="font-size: 10px">无线传输</a> <a href="/tags/本体/" style="font-size: 11.25px">本体</a> <a href="/tags/本体论/" style="font-size: 11.25px">本体论</a> <a href="/tags/机器学习/" style="font-size: 10px">机器学习</a> <a href="/tags/梯子/" style="font-size: 10px">梯子</a> <a href="/tags/检校/" style="font-size: 16.25px">检校</a> <a href="/tags/测评/" style="font-size: 11.25px">测评</a> <a href="/tags/游记/" style="font-size: 10px">游记</a> <a href="/tags/点云/" style="font-size: 10px">点云</a> <a href="/tags/热点/" style="font-size: 10px">热点</a> <a href="/tags/电影/" style="font-size: 12.5px">电影</a> <a href="/tags/算法/" style="font-size: 10px">算法</a> <a href="/tags/精度/" style="font-size: 10px">精度</a> <a href="/tags/翔/" style="font-size: 13.75px">翔</a> <a href="/tags/考研/" style="font-size: 16.25px">考研</a> <a href="/tags/航空摄影测量/" style="font-size: 10px">航空摄影测量</a> <a href="/tags/装机/" style="font-size: 10px">装机</a> <a href="/tags/计算机视觉/" style="font-size: 10px">计算机视觉</a> <a href="/tags/语义网/" style="font-size: 11.25px">语义网</a> <a href="/tags/足球/" style="font-size: 10px">足球</a> <a href="/tags/静态ip/" style="font-size: 10px">静态ip</a> <a href="/tags/音乐/" style="font-size: 10px">音乐</a> <a href="/tags/马克/" style="font-size: 15px">马克</a>
+    </div>
+  </div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer">
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> 这里是ov的站 <br>
+			多多留言交流技术问题阿</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/302060345" target="_blank" title="weibo"></a>
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2016 
+		
+		<a href="http://ovjaywang.github.io" target="_blank" title="Jay Wang">Jay Wang</a>
+		
+		</p>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"dooby"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax --><!-- hexo-inject:end -->
+  </body>
