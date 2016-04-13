@@ -102,9 +102,9 @@
     <link href="http://ovjaywang.github.io/2016/04/10/Hello-Hexo/"/>
     <id>http://ovjaywang.github.io/2016/04/10/Hello-Hexo/</id>
     <published>2016-04-10T14:51:49.000Z</published>
-    <updated>2016-04-13T12:09:59.000Z</updated>
+    <updated>2016-04-13T12:42:15.572Z</updated>
     
-    <content type="html">&lt;p&gt;感谢&lt;a href=&quot;http://zipperary.com/2013/05/28/hexo-guide-2/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个教程&lt;/a&gt;&lt;br&gt;还有&lt;a href=&quot;http://ibruce.info/2013/11/22/hexo-your-blog/?utm_source=tuicool&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个&lt;/a&gt;&lt;br&gt;解决了好多bugs的&lt;a href=&quot;http://www.jianshu.com/p/35e197cb1273&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://www.dute.me/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个&lt;/a&gt;让我找到了便宜的狗爹优惠码&lt;/p&gt;
+    <content type="html">&lt;p&gt;感谢&lt;a href=&quot;http://zipperary.com/2013/05/28/hexo-guide-2/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个教程&lt;/a&gt;&lt;br&gt;还有&lt;a href=&quot;http://ibruce.info/2013/11/22/hexo-your-blog/?utm_source=tuicool&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个&lt;/a&gt;&lt;br&gt;解决了好多bugs的&lt;a href=&quot;http://www.jianshu.com/p/35e197cb1273&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个&lt;/a&gt;&lt;br&gt;优化cdn图床缓冲的&lt;a href=&quot;http://lukang.me/2015/optimization-of-hexo-2.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://www.dute.me/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个&lt;/a&gt;让我找到了便宜的狗爹优惠码&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;从一开始的阵地wp搬到这里来了。后会有期了dooby.me 再见了WordPress 默默的是有些不舍。虽然push很慢虽然被墙了大半 4年光阴不复返啊。从一个逗比成长为大逗比了。
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;hexo坑还是挺多的。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;WordPress迁移&lt;/strong&gt;&lt;br&gt;这个使用hexo-migrate-wordpress插件还不错 但是切记导出的xml是文章 tag和category会自动建好。否则使用hexo migrate wordpress 会报错&lt;/p&gt;
