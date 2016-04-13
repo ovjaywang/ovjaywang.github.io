@@ -102,7 +102,7 @@
     <link href="http://ovjaywang.github.io/2016/04/10/Hello-Hexo/"/>
     <id>http://ovjaywang.github.io/2016/04/10/Hello-Hexo/</id>
     <published>2016-04-10T14:51:49.000Z</published>
-    <updated>2016-04-13T12:42:15.572Z</updated>
+    <updated>2016-04-13T13:29:47.854Z</updated>
     
     <content type="html">&lt;p&gt;感谢&lt;a href=&quot;http://zipperary.com/2013/05/28/hexo-guide-2/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个教程&lt;/a&gt;&lt;br&gt;还有&lt;a href=&quot;http://ibruce.info/2013/11/22/hexo-your-blog/?utm_source=tuicool&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个&lt;/a&gt;&lt;br&gt;解决了好多bugs的&lt;a href=&quot;http://www.jianshu.com/p/35e197cb1273&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个&lt;/a&gt;&lt;br&gt;优化cdn图床缓冲的&lt;a href=&quot;http://lukang.me/2015/optimization-of-hexo-2.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://www.dute.me/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个&lt;/a&gt;让我找到了便宜的狗爹优惠码&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;从一开始的阵地wp搬到这里来了。后会有期了dooby.me 再见了WordPress 默默的是有些不舍。虽然push很慢虽然被墙了大半 4年光阴不复返啊。从一个逗比成长为大逗比了。
@@ -116,6 +116,7 @@
       coding: https://git.coding.net/{YOUR_ID}/{BLOG　NAME}.git,master
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;当然也需要先将ssh的key添加上去（同一个码即可），Coding不需要同一个名字..然而最近发现Coding的项目展示页面收费了……虽说是注重团队协作和代码交易 但是个人用户的托管真的完全要丢掉了吗？差不多1块钱1天的样子 相当不划算&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;SEO是极好的&lt;/strong&gt;&lt;br&gt;切莫贪杯 google就好 但是 切记！标题不要带有‘&amp;amp;’。年少无知，这个符号不能正常解析出xml会报错&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;域名绑定&lt;/strong&gt;&lt;br&gt;切记@解析的是{YOUR_ID}.github.io的地址而不是github.com的 CNAME需要放在source下才能被generate。dnspod被企鹅注资后ui变得相当土了&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;专注写作&lt;/strong&gt;&lt;br&gt;放弃各种挂饰 插件 统计吧 seo和评论就足够了。多写作多讨论 当然很想适时的学一发nodejs因为折腾了好久ig的照片还是没能get进来。&lt;/p&gt;
 &lt;p&gt;2016.04.11&lt;/p&gt;</content>
