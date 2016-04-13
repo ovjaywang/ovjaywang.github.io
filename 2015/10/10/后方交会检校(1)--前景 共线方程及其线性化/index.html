@@ -1,0 +1,518 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>后方交会检校(1)--前景 共线方程及其线性化 | ov智商捉急</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=3,minimum-scale=1">
+    
+    <meta name="author" content="Jay Wang">
+    
+    <meta name="description" content="各种文档看得累。条理不清结构不明缺斤少两。决定自己总结一个。（公式较多，墙外浏览更顺哟）
+ 一些注意
+   后方交会是为了获取影像的内外方位数据，其中外方位数据可以通过GPS、INS（惯性导航系统）、雷达、星相摄像机来获取；然而由于穷穷穷，只能利用影响覆盖范围内的一定控制点来计算空间坐标与影响坐标之">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/touxiang.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/touxiang.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head></html>
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/xiaozaizi.png" alt="ov智商捉急" title="ov智商捉急"></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="ov智商捉急">ov智商捉急</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">dooby.me</a></li>
+					
+						<li><a href="/me">关于我</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索">
+						<input type="hidden" name="q" value="site:ovjaywang.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/10/10/后方交会检校(1)--前景 共线方程及其线性化/" title="后方交会检校(1)--前景 共线方程及其线性化" itemprop="url">后方交会检校(1)--前景 共线方程及其线性化</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://ovjaywang.github.io" title="Jay Wang">Jay Wang</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2015-10-10T15:29:57.000Z" itemprop="datePublished">2015-10-10</time>
+    更新日期:<time datetime="2016-04-11T14:09:45.581Z" itemprop="dateModified">2016-04-11</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+		</div>
+		
+		<p>各种文档看得累。条理不清结构不明缺斤少两。决定自己总结一个。（公式较多，墙外浏览更顺哟）</p>
+<p> 一些注意</p>
+<p><strong>   后方交会是为了获取影像的内外方位数据，其中外方位数据可以通过GPS、INS（惯性导航系统）、雷达、星相摄像机来获取；然而由于穷穷穷，只能利用影响覆盖范围内的一定控制点来计算空间坐标与影响坐标之间的关系，来反算外方位元素。
+</strong>   多片检校基于单片检校。在矩阵组合时分别解算外方位元素。但使用同一组内方位元素。在一个大矩阵内进行。<br><strong>   后方交会可以只检校外方位元素。当需要进行畸变差校正时（即畸变差不可忽略时），可在方程中加入畸变差项进行迭代；当需要进行内方位元素检校时（即内方位元素精度没有达到需求），可在方程中加入内方位元素进行迭代。
+</strong>   对于畸变差校正，包括径向畸变、切向畸变、薄棱镜畸变，其中多数情况考察径向畸变的前两项系数k1 k2和切向畸变p1 p2 ，在某些组合相机的畸变模型中，还包括α像素非正方形比例和βccd非正交性畸变系数。<br><strong>   对于内方位元素检校，有的地方将f分为fx和fy即f在坐标两个方向上的像素值（由于有的xy不是同一比例尺即不是正方形）
+</strong>   检校，就是纠正相机各个方面的误差和精度，可以得到相机内部的主点、焦距、畸变的客观信息，这些信息在大部分情况下不会轻易改变；而相机外部的空间位置时时刻刻都在改变，但一些论文指出，在焦距变化、空间位置变化、移轴、高空拍摄情况下，相机的焦距、主点位置也会随之或多或少的改变，因此迭代时最好能带上这些参数一起进行平差。<br>*</p>
+<p> 一些重要概念</p>
+<p><strong>   后方交会基于<span style="COLOR: #ff0000"></span></strong>共线方程<em>*，物理含义为同一个三维坐标系中投影中心、物方点、像平面投影的点在同一条直线上。
+</em></p>
+<p> $$!x-x<em>{0}=-f\cdot \frac{a</em>{1}(X-X<em>{s})+b</em>{1}(Y-Y<em>{s})+c</em>{1}(Z-Z<em>{s})}{a</em>{3}(X-X<em>{s})+b</em>{3}(Y-Y<em>{s})+c</em>{3}(Z-Z_{s})}$$</p>
+<p> $$!y-y<em>{0}=-f\cdot \frac{a</em>{2}(X-X<em>{s})+b</em>{2}(Y-Y<em>{s})+c</em>{2}(Z-Z<em>{s})}{a</em>{3}(X-X<em>{s})+b</em>{3}(Y-Y<em>{s})+c</em>{3}(Z-Z_{s})}$$</p>
+<p> 上式中，包含留个外方位元素，即Xs、Ys、Zs、φ、Ω、k。只有确定了六个外方位元素，才能确定摄影中心在物方空间的位置。a1、a2、a3、b1、b2、b3、c1、c2、c3是需要计算的直线方程的系数，其物理性质是3个外方位角元素组成的9个方向余弦。该方程利用了相似三角形的性质；f是焦距长，X Y Z均值控制点的测量坐标，默认为精确的，因此物方控制点测量的精度很大程度上决定了最后检校的精度；x y是X Y Z对应的像平面的坐标，x0，y0是主点在像平面的坐标，有时当作已知并不再改变，有时也参与迭代计算。</p>
+<p> 共线条件方程用途有：</p>
+<p>1.2.  单像、多像空间后方交会；多像空间前方交会<br>3.4.  解析空中三角测量的光束法平差<br>5.6.  数字投影的基础<br>7.8.  计算模拟影像数据（已知内外方位元素和物方坐标点求像点）<br>9.10.  DEM与共线方程制作正射影像<br>11.12.  DEM与共线方程进行单幅影像测图<br>13.</p>
+<blockquote>
+<p><strong>注意 一个方程代表一个点在像平面和物方世界的关系，因此一个点对应两个方程，若有n个控制点，则对应2n个方程</strong></p>
+</blockquote>
+<p> 若f x0 y0当作已知，则有外方位元素6个未知数，因此需要6个方程，即3个控制点的方程；若f x0 y0当作位置，则有9个未知数，因此需要至少5个控制点的方程。当然，很多文章也指出，<strong>越多的冗余数据</strong>参与计算得到的结果也越精确；<strong>越多的像片</strong>参与计算，得到的结果越精确；<strong>更均匀的控制点分布</strong>，能更多的控制整张像片，均匀的分布在边缘，得到的结果更精确。</p>
+<p> 一般情况下，令<br> $$!\overline{X}=a<em>{1}(X-X</em>{s})+b<em>{1}(Y-Y</em>{s})+c<em>{1}(Z-Z</em>{s})$$</p>
+<p>$$!\overline{Y}=a<em>{2}(X-X</em>{s})+b<em>{2}(Y-Y</em>{s})+c<em>{2}(Z-Z</em>{s})$$</p>
+<p>$$!\overline{Z}=a<em>{3}(X-X</em>{s})+b<em>{3}(Y-Y</em>{s})+c<em>{3}(Z-Z</em>{s})$$</p>
+<p> 而用矩阵的形式可以表示为：</p>
+<p> $$!\begin{pmatrix}\overline{X}\ \overline{Y}\ \overline{Z}\end{pmatrix}=\begin{pmatrix}a<em>{1}&amp;b</em>{1}&amp;c<em>{1}\a</em>{2}&amp;b<em>{2}&amp;c</em>{2}\a<em>{3}&amp;b</em>{3}&amp;c_{3}\end{pmatrix}\cdot\begin{pmatrix}X-Xs\Y-Ys\Z-Zs\end{pmatrix}=R^{T}\begin{pmatrix}X-Xs\Y-Ys\Z-Zs\end{pmatrix}$$</p>
+<p>这里R是旋转矩阵，且$$R^{T}=R^{-1}$$,行列式的值为0，即任意元素等于其代数余子式的值.则共线方程变为：</p>
+<p> $$!x-x_{0}=-f\cdot \frac{\overline{X}}{\overline{Z}}$$</p>
+<p>$$!y-y_{0}=-f\cdot \frac{\overline{Y}}{\overline{Z}}$$</p>
+<p> 由于上式是共线方程的变形，因此Fx和Fy是六个外方位元素为参数的函数。由于方程是非线性的，因此不能解求数值，<strong>需要对方程进行线性化</strong>。思路是，对上式按泰勒级数在初值处展开并保留一次项，将非线性方程转化为各参数<span style="COLOR: #ff0000"><strong>改正数</strong></span>的线性方程</p>
+<p> 设<span style="COLOR: #ff0000">初值</span>为$$!X<em>{S}^{0},X</em>{S}^{0},Z<em>{S}^{0},\varphi^{0},\omega^{0},\kappa {0},X^{0},Y^{0},Z^{0},x</em>{0}^{0},y_{0}^{0},f^{0}$$</p>
+<p> 相应的<span style="COLOR: #ff0000">改正数</span>为</p>
+<p> $$!dXs=\triangle Xs=Xs-Xs^{0},dYs=\triangle Ys=Ys-Ys^{0},dZs=\triangle Zs=Zs-Zs^{0}$$</p>
+<p> $$!d\varphi=\triangle \varphi=\varphi-\varphi^{0},d\omega=\triangle \omega=\omega-\omega^{0},d\kappa=\triangle \kappa=\kappa-\kappa^{0}$$</p>
+<p> $$!dX=\triangle X=X-X^{0},dY=\triangle Y=Y-Y^{0},dZ=\triangle Z=Z-Z^{0}$$</p>
+<p> &nbsp;则<font color="#FF0000" size="5">共线方程的泰勒一次展开一般式</font>为<font color="#FF0000" size="5">①</font></p>
+<p> $$!x=(x)+\frac{\partial x}{\partial Xs}dXs+\frac{\partial x}{\partial Ys}dYs+\frac{\partial x}{\partial Zs}dZs+\frac{\partial x}{\partial \varphi }d\varphi +\frac{\partial x}{\partial \omega }d\omega +\frac{\partial x}{\partial \kappa }d\kappa +\frac{\partial x}{\partial X}dX+\frac{\partial x}{\partial Y}dY+\frac{\partial x}{\partial x<em>{0}}dx</em>{0}+\frac{\partial x}{\partial y<em>{0}}dy</em>{0}+\frac{\partial x}{\partial f}df$$</p>
+<p>$$!y=(y)+\frac{\partial y}{\partial Xs}dXs+\frac{\partial y}{\partial Ys}dYs+\frac{\partial y}{\partial Zs}dZs+\frac{\partial y}{\partial \varphi }d\varphi +\frac{\partial y}{\partial \omega }d\omega +\frac{\partial y}{\partial \kappa }d\kappa +\frac{\partial y}{\partial X}dX+\frac{\partial y}{\partial Y}dY+\frac{\partial y}{\partial x<em>{0}}dx</em>{0}+\frac{\partial y}{\partial y<em>{0}}dy</em>{0}+\frac{\partial y}{\partial f}df$$</p>
+<p>这是一个重要的总结性公式。(x)(y)分别是内方位元素x，y的初值。式中包含了所有内外元素和物放测量点。当进行不同矩阵运算时，可以选择需要的精度不足够的进行迭代计算。</p>
+<p>其中，对x和y求各未知项的偏导：</p>
+<p> $$!\frac{\partial x}{\partial Xs}=-f\cdot \frac{\frac{\partial \overline{X}}{\partial Xs}\overline{Z}-\frac{\partial \overline{Z}}{\partial Xs}\overline{X}}{\overline{Z}^{2}}=-\frac{f}{\overline{Z}^{2}}(-a<em>{1}\overline{Z}+a</em>{3}\overline{X})=\frac{1}{\overline{Z}}[a<em>{1}f-a</em>{3}f\frac{\overline{X}}{\overline{Z}}]=\frac{1}{\overline{Z}}[a<em>{1}f+a</em>{3}(x-x_{0})]$$</p>
+<p> 同理，其他的偏导为</p>
+<p> $$!\frac{\partial x}{\partial Ys}=\frac{1}{\overline{Z}}[b<em>{1}f+b</em>{3}(x-x_{0})]$$</p>
+<p> $$!\frac{\partial x}{\partial Zs}=\frac{1}{\overline{Z}}[c<em>{1}f+b</em>{3}(x-x_{0})]$$</p>
+<p> $$!\frac{\partial y}{\partial Xs}=\frac{1}{\overline{Z}}[a<em>{2}f+a</em>{3}(x-x_{0})]$$</p>
+<p> $$!\frac{\partial y}{\partial Ys}=\frac{1}{\overline{Z}}[b<em>{2}f+b</em>{3}(x-x_{0})]$$</p>
+<p> $$!\frac{\partial y}{\partial Zs}=\frac{1}{\overline{Z}}[c<em>{2}f+c</em>{3}(x-x_{0})]$$</p>
+<p> $$!\frac{\partial x}{\partial f}=\frac{x-x_{0}}{f}=-\frac{\overline{X}}{\overline{Z}}$$</p>
+<p>$$!\frac{\partial y}{\partial f}=\frac{y-y_{0}}{f}=-\frac{\overline{Y}}{\overline{Z}}$$</p>
+<p>$$!\frac{\partial x}{\partial x<em>{0}}=1,\frac{\partial x}{\partial y</em>{0}}=0$$</p>
+<p>$$!\frac{\partial y}{\partial x<em>{0}}=0,\frac{\partial y}{\partial y</em>{0}}=1$$</p>
+<p> 这里相对比较难解决的是角元素的偏导，关于角度的问题可以参考第三篇。</p>
+<p> 角度的变换在这里不再详述，两个坐标系之间的转换可以归结为变换矩阵的求取。三个角元素共同构成了矩阵的元素确定。</p>
+<p> 由于</p>
+<p>$$!R^{T}=R<em>{\kappa }^{T}R</em>{\omega }^{T}R_{\varphi }^{T} $$</p>
+<p>因而，难度转到求取$$\overline{X}\overline{Y} \overline{Z} $$对角元素的偏导上。对角元素求偏导可以分为三个步骤：</p>
+<p>①求各个方向余弦$$a<em>{i},b</em>{i},c_{i}$$对ω、k、φ的偏导数。共27个。</p>
+<p>②求$$\overline{X},\overline{Y},\overline{Z}$$对ω、k、φ的偏导数，共9个。</p>
+<p>③求x、y对ω、k、φ的偏导数，共6个。</p>
+<p>如下是$$\overline{X},\overline{Y},\overline{Z}$$对φ的偏导，三个参数写在矩阵中，有的地方也展开写成每一项的等式形式。</p>
+<p>$$!\frac{\partial }{\partial \varphi }\begin{pmatrix}\overline{X}\\overline{Y}\\overline{Z}\end{pmatrix}=R<em>{\kappa }^{T}R</em>{\omega }^{T}\frac{\partial R<em>{\varphi }^{T}}{\partial \varphi }\begin{pmatrix}X-Xs\ Y-Ys\ Z-Zs\end{pmatrix}=R</em>{\kappa }^{T}R<em>{\omega }^{T}\frac{\partial R</em>{\varphi }^{T}}{\partial \varphi }(R^{T})^{-1}\begin{pmatrix}\overline{X}\ \overline{Y}\ \overline{Z}\end{pmatrix}=R<em>{\kappa }^{T}R</em>{\omega }^{T}\frac{\partial R<em>{\varphi }^{T}}{\partial \varphi }R\begin{pmatrix}\overline{X}\ \overline{Y}\ \overline{Z}\end{pmatrix}=R</em>{\kappa }^{T}R<em>{\omega }^{T}(R</em>{\varphi }^{T}R<em>{\varphi })\frac{\partial R</em>{\varphi }^{T}}{\partial \varphi }R\begin{pmatrix}\overline{X}\ \overline{Y}\ \overline{Z}\end{pmatrix}=R^{T}R<em>{\varphi }\frac{\partial R</em>{\varphi }^{T}}{\partial \varphi }R\begin{pmatrix}\overline{X}\ \overline{Y}\ \overline{Z}\end{pmatrix}$$</p>
+<p>带入具体系数，上式可变形为</p>
+<p>$$!\begin{pmatrix}a<em>{1} &amp; b</em>{1} &amp; c<em>{1}\a</em>{2} &amp; b<em>{2} &amp; c</em>{2}\a<em>{3} &amp; b</em>{3} &amp; c<em>{3}\end{pmatrix}\begin{pmatrix}0 &amp; 0 &amp;1\0 &amp; 0 &amp; 0\-1 &amp; 0 &amp; 0\end{pmatrix}\begin{pmatrix}a</em>{1} &amp; a<em>{2} &amp; a</em>{3}\b<em>{1} &amp; b</em>{2} &amp; b<em>{3}\c</em>{1} &amp; c<em>{2}&amp;c</em>{3} \end{pmatrix}\begin{pmatrix}\overline{X}\\overline{Y}\\overline{Z} \end{pmatrix}=\begin{pmatrix}0 &amp;-a<em>{2}c</em>{1}+a<em>{1}c</em>{2}&amp;-a<em>{3}c</em>{1}+a<em>{1}c</em>{3}\-a<em>{1}c</em>{2}+a<em>{2}c</em>{1} &amp; 0 &amp; -a<em>{3}c</em>{2}+a<em>{2}c</em>{3}\ -a<em>{1}c</em>{3}+a<em>{3}c</em>{1}&amp; -a<em>{2}c</em>{3}+a<em>{3}c</em>{2} &amp;0\end{pmatrix}\begin{pmatrix}\overline{X}\\overline{Y}\\overline{Z} \end{pmatrix}=\begin{pmatrix}0 &amp; -b<em>{3} &amp; b</em>{2}\b<em>{3}&amp;0&amp;-b</em>{1}\-b<em>{2}&amp;b</em>{1}&amp;0\end{pmatrix}\begin{pmatrix}\overline{X}\\overline{Y}\\overline{Z} \end{pmatrix}$$</p>
+<p>其中利用了旋转矩阵一个元素的值<font color="#FF0000">等于代数余子式的值</font>。如下是$$\overline{X},\overline{Y},\overline{Z}$$对ω的偏导。</p>
+<p>$$!\frac{\partial }{\partial \omega }\begin{pmatrix}\overline{X}\\overline{Y}\\overline{Z}\end{pmatrix}=R<em>{\kappa }^{T}\frac{\partial R</em>{\omega}^{T}}{\partial \omega }R<em>{\varphi }^{T}\begin{pmatrix}X-Xs\Y-Ys\Z-Zs\end{pmatrix}=R</em>{\kappa}^{T}\frac{\partial R<em>{\omega }^{T}}{\partial \omega }R</em>{\varphi }^{T}(R<em>{\varphi }R</em>{\omega }R<em>{\kappa })\begin{pmatrix}\overline{X}\ \overline{Y}\ \overline{Z}\end{pmatrix}=R</em>{\kappa }^{T}\frac{\partial R<em>{\omega }^{T}}{\partial \omega}R</em>{\omega }R_{\kappa }\begin{pmatrix}\overline{X}\ \overline{Y}\ \overline{Z}\end{pmatrix}=\begin{pmatrix}0&amp;0&amp;sin\kappa\ 0&amp;0&amp;cos\kappa\-sin\kappa&amp;-cos \kappa&amp;0\end{pmatrix}\begin{pmatrix}\overline{X}\ \overline{Y}\ \overline{Z}\end{pmatrix}$$其中，这里用到了</p>
+<p>$$!\begin{pmatrix}\overline{X}\\overline{Y}\\overline{Z}\end{pmatrix}=R^{T}\begin{pmatrix}X-Xs\Y-Ys\Z-Zs\end{pmatrix}=(R<em>{\varphi}R</em>{\omega}R<em>{\kappa })^{T}\begin{pmatrix}X-Xs\Y-Ys\Z-Zs\end{pmatrix}=R</em>{\kappa }^{T}R<em>{\omega }^{T}R</em>{\varphi }^{T}\begin{pmatrix}X-Xs\Y-Ys\Z-Zs\end{pmatrix}$$</p>
+<p>$$!\begin{pmatrix}X-Xs\Y-Ys\Z-Zs\end{pmatrix}=(R^{T})^{-1}\begin{pmatrix}\overline{X}\\overline{Y}\\overline{Z}\end{pmatrix}=R\begin{pmatrix}\overline{X}\\overline{Y}\\overline{Z}\end{pmatrix}=R<em>{\varphi }R</em>{\omega }R_{\kappa }\begin{pmatrix}\overline{X}\\overline{Y}\\overline{Z}\end{pmatrix}$$</p>
+<p>如下是$$\overline{X},\overline{Y},\overline{Z}$$对k的偏导。</p>
+<p>$$!\frac{\partial }{\partial \kappa }\begin{pmatrix}\overline{X}\ \overline{Y}\ \overline{Z}\end{pmatrix}=\frac{\partial R<em>{\kappa }^{T}}{\partial \kappa }R</em>{\omega }^{T}R<em>{\varphi }^{T}\begin{pmatrix}X-Xs\Y-Ys\Z-Zs\end{pmatrix}=\frac{\partial R</em>{\kappa }^{T}}{\partial \kappa }(R<em>{\kappa }R</em>{\kappa }^{T})R<em>{\omega }^{T}R</em>{\varphi }^{T}\begin{pmatrix}X-Xs\Y-Ys\Z-Zs\end{pmatrix}=\frac{\partial R<em>{\kappa }^{T}}{\partial \kappa }R</em>{\kappa }\begin{pmatrix}\overline{X}\ \overline{Y}\ \overline{Z}\end{pmatrix}=\begin{pmatrix}\overline{Y}\ -\overline{X}\0\end{pmatrix}$$<br> 通过以上三式可得到x和y对各角元素未知数的偏导。有的地方，将x，y先分别除以$$\overline{Z}$$,</p>
+<p>这样可以在求取偏导的时候减少计算量。</p>
+<p>$$!\frac{\partial x}{\partial \varphi }=-\frac{f}{\overline{Z}^{2}}(\frac{\partial \overleftarrow{X}}{\partial \varphi }\overline{Z}-\frac{\partial \overline{Z}}{\partial \varphi }\overline{X})=-\frac{f}{\overline{Z}^{2}}(-b<em>{3}\overline{Y}+b</em>{2}\overline{Z})\overline{Z}+\frac{f}{\overline{Z}^{2}}(b<em>{2}\overline{X}-b</em>{1}\overline{Y})\overline{X}=-(y-y<em>{0})b</em>{3}-fb<em>{2}-\frac{(x-x</em>{0})^{2}}{f}b<em>{2}+\frac{(x-x</em>{0})(y-y<em>{0})}{f}b</em>{1}=\frac{(x-x<em>{0})(y-y</em>{0})}{f}b<em>{1}-(f+\frac{(x-x</em>{0})^{2}}{f})b<em>{2}-(y-y</em>{0})b_{3}$$其他一次类推</p>
+<p>$$!\frac{\partial x}{\partial \omega }=\frac{(x-x<em>{0})^{2}}{f}sin\kappa-\frac{(x-x</em>{0})(y-y_{0})}{f}cos\kappa -fsin\kappa $$</p>
+<p>$$!\frac{\partial x}{\partial \kappa }=y-y_{0}$$</p>
+<p>$$!\frac{\partial y}{\partial \varphi }=(f+\frac{(y-y<em>{0}^{2})}{f})b</em>{1}-\frac{(x-x<em>{0})(y-y</em>{0})}{f}b<em>{2}-(x-x</em>{0})b_{3}$$</p>
+<p>$$!\frac{\partial y}{\partial \omega }=-\frac{(x-x<em>{0})(y-y</em>{0})}{f}sin\kappa -\frac{(y-y_{0})^{2}}{f}cos\kappa -fcos\kappa $$</p>
+<p>$$!\frac{\partial y}{\partial \kappa }=-(x-x_{0})$$</p>
+<p>以上求出了所有的偏导，则①式的公式可变为<font color="#FF0000" size="5">更重要的</font>式<font color="#FF0000">②</font></p>
+<p>$$!c<em>{11}dXs+c</em>{12}dYs+c<em>{13}dZs+c</em>{14}d\phi +c<em>{15}d\omega +c</em>{16}d\kappa -c<em>{11}dX-c</em>{12}dY-c<em>{13}dZ+c</em>{17}df+c<em>{18}dx</em>{0}+c<em>{19}dy</em>{0}-lx=0$$</p>
+<p>$$!c<em>{21}dXs+c</em>{22}dYs+c<em>{23}dZs+c</em>{24}d\phi +c<em>{25}d\omega +c</em>{26}d\kappa -c<em>{21}dX-c</em>{22}dY-c<em>{23}dZ+c</em>{27}df+c<em>{28}dx</em>{0}+c<em>{29}dy</em>{0}-ly=0$$这里可以看到，Xs和X Ys和Y Zs和Z的偏导互为相反数，因此12个未知数只需要求解9个。 其中c的系数分别为：</p>
+<p>$$!c<em>{11}=\frac{1}{\overline{Z}}(a</em>{1}f+a<em>{3}(x-x</em>{0}))$$</p>
+<p>$$!c<em>{12}=\frac{1}{\overline{Z}}(b</em>{1}f+b<em>{3}(x-x</em>{0}))$$</p>
+<p>$$!c<em>{13}=\frac{1}{\overline{Z}}(c</em>{1}f+c<em>{3}(x-x</em>{0}))$$</p>
+<p>$$!c<em>{14}=\frac{(x-x</em>{0})(y-y<em>{0})}{f}b</em>{1}-(f+\frac{(x-x<em>{0})^{2}}{f})b</em>{2}-(y-y<em>{0})b</em>{3}$$</p>
+<p>$$!c<em>{15}=-\frac{(x-x</em>{0})^{2}}{f}sin\kappa -\frac{(x-x<em>{0})(y-y</em>{0})}{f}cos\kappa -fsin\kappa$$</p>
+<p>$$!c<em>{16}=y-y</em>{0}$$</p>
+<p>$$!c<em>{17}=\frac{x-x</em>{0}}{f},c<em>{18}=1,c</em>{19}=0,lx=x-x_{cal}$$</p>
+<p>&nbsp;</p>
+<p>$$!c<em>{21}=\frac{1}{\overline{Z}}(a</em>{2}f+a<em>{3}(y-y</em>{0}))$$</p>
+<p>$$!c<em>{22}=\frac{1}{\overline{Z}}(b</em>{2}f+b<em>{3}(y-y</em>{0}))$$</p>
+<p>$$!c<em>{23}=\frac{1}{\overline{Z}}(c</em>{2}f+c<em>{3}(y-y</em>{0}))$$</p>
+<p>$$!c<em>{24}=(f+\frac{(y-y</em>{0})^{2}}{f})b<em>{1}-\frac{(x-x</em>{0})(y-y<em>{0})}{f}b</em>{2}+(x-x<em>{0})b</em>{3}$$</p>
+<p>$$!c<em>{25}=-\frac{(x-x</em>{0})(y-y<em>{0})}{f}sin\kappa -\frac{(y-y</em>{0})^{2}}{f}cos\kappa -fcos\kappa ,c<em>{26}=-(x-x</em>{0})$$</p>
+<p>$$!c<em>{17}=\frac{y-y</em>{0}}{f},c<em>{28}=0,c</em>{29}=1,ly=y-y_{cal}$$</p>
+<p>在正摄影像近似垂直时，可以采用φ≈ω≈k≈0,$$\overline{Z}\approx -H$$的取值带入系数中，则②式可化简为<font color="#FF0000">本篇最终的结果式③</font>：</p>
+<p>$$!\left{\begin{matrix}v<em>{x}=-\frac{f}{H}dXs-\frac{x-x</em>{0}}{H}dZs-[f+\frac{(x-x<em>{0})^{2}}{f}]d\varphi-\frac{(x-x</em>{0})(y-y<em>{0})}{f}d\omega+(y-y</em>{0})d\kappa+\frac{f}{H}dX+\frac{x-x<em>{0}}{H}dZ+\frac{x-x</em>{0}}{f}df+dx<em>{0}-(x-x</em>{cal})\v<em>{y}=-\frac{f}{H}dYs-\frac{y-y</em>{0}}{H}dZs-\frac{(x-x<em>{0})(y-y</em>{0})}{f}d\varphi-[f+\frac{(y-y<em>{0})^{2}}{f}]d\omega+(x-x</em>{0})d\kappa+\frac{f}{H}dY+\frac{y-y<em>{0}}{H}dZ+\frac{y-y</em>{0}}{f}df+dy<em>{0}-(y-y</em>{cal})\end{matrix}\right.$$</p>
+<p>式中相对①式添加了改正项，为了平衡一次项以下的展开式对结果的影响，是平差方程中重要的一部。误差方程将在下文提到。</p>
+<div class="PoweredByWebStory" style="margin-top:15px;margin-bottom:10px"><a href="http://sns.juziyue.com/webinvite.php?u=94887" target="_blank" rel="external"></a>&nbsp;今天你<a href="http://sns.juziyue.com/webinvite.php?u=94887" target="_blank" rel="external">菊子曰</a>了么？</div>  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-tags">
+  
+  <span></span> <a href="/tags/后方交会/">后方交会</a><a href="/tags/检校/">检校</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/什么都学一下/">什么都学一下</a>►<a class="article-category-link" href="/categories/什么都学一下/学习log/">学习log</a>
+</div>
+<div class="article-share" id="share">
+
+  <div data-url="http://ovjaywang.github.io/2015/10/10/后方交会检校(1)--前景 共线方程及其线性化/" data-title="后方交会检校(1)--前景 共线方程及其线性化 | ov智商捉急" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	<nav class="article-nav clearfix">
+ 
+ <div class="prev">
+ <a href="/2015/10/12/后方交会检校(2)--误差方程及各项系数解求及精度/" title="后方交会检校(2)--误差方程及各项系数解求及精度">
+  <strong>PREVIOUS:</strong><br>
+  <span>
+  后方交会检校(2)--误差方程及各项系数解求及精度</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/10/09/红包在哪里/" title="红包在哪里">
+ <strong>NEXT:</strong><br> 
+ <span>红包在哪里
+</span>
+</a>
+</div>
+
+</nav>
+	<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+</div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  <div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/App强推/" title="App强推">App强推<sup>8</sup></a></li>
+		
+			<li><a href="/categories/tucao/" title="tucao">tucao<sup>1</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/" title="什么都学一下">什么都学一下<sup>21</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/代码狗/" title="代码狗">代码狗<sup>1</sup></a></li>
+		
+			<li><a href="/categories/代码狗/" title="代码狗">代码狗<sup>24</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/学习log/" title="学习log">学习log<sup>20</sup></a></li>
+		
+			<li><a href="/categories/代码狗/学习log/" title="学习log">学习log<sup>24</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/代码狗/学习log/" title="学习log">学习log<sup>1</sup></a></li>
+		
+			<li><a href="/categories/槽/" title="槽">槽<sup>40</sup></a></li>
+		
+			<li><a href="/categories/软件测评/" title="软件测评">软件测评<sup>5</sup></a></li>
+		
+			<li><a href="/categories/软件测评/软文/" title="软文">软文<sup>5</sup></a></li>
+		
+			<li><a href="/categories/App强推/软文/" title="软文">软文<sup>8</sup></a></li>
+		
+		</ul>
+</div>
+
+  <div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Android/" title="Android">Android<sup>14</sup></a></li>
+		
+			<li><a href="/tags/ICP/" title="ICP">ICP<sup>1</sup></a></li>
+		
+			<li><a href="/tags/MMC/" title="MMC">MMC<sup>1</sup></a></li>
+		
+			<li><a href="/tags/MME/" title="MME">MME<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SPark/" title="SPark">SPark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/bae/" title="bae">bae<sup>1</sup></a></li>
+		
+			<li><a href="/tags/cmake/" title="cmake">cmake<sup>1</sup></a></li>
+		
+			<li><a href="/tags/dbscan/" title="dbscan">dbscan<sup>1</sup></a></li>
+		
+			<li><a href="/tags/demo/" title="demo">demo<sup>1</sup></a></li>
+		
+			<li><a href="/tags/erdas/" title="erdas">erdas<sup>1</sup></a></li>
+		
+			<li><a href="/tags/gms/" title="gms">gms<sup>1</sup></a></li>
+		
+			<li><a href="/tags/hadoop/" title="hadoop">hadoop<sup>3</sup></a></li>
+		
+			<li><a href="/tags/hello/" title="hello">hello<sup>1</sup></a></li>
+		
+			<li><a href="/tags/java/" title="java">java<sup>5</sup></a></li>
+		
+			<li><a href="/tags/jena/" title="jena">jena<sup>2</sup></a></li>
+		
+			<li><a href="/tags/juddi/" title="juddi">juddi<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mark/" title="mark">mark<sup>4</sup></a></li>
+		
+			<li><a href="/tags/mfc/" title="mfc">mfc<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mysql/" title="mysql">mysql<sup>1</sup></a></li>
+		
+			<li><a href="/tags/nba/" title="nba">nba<sup>0</sup></a></li>
+		
+		</ul>
+</div>
+
+  <div class="rsspart">
+	<a href="null" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/Android/" style="font-size: 18.57px">Android</a> <a href="/tags/ICP/" style="font-size: 10px">ICP</a> <a href="/tags/MMC/" style="font-size: 10px">MMC</a> <a href="/tags/MME/" style="font-size: 10px">MME</a> <a href="/tags/SPark/" style="font-size: 10px">SPark</a> <a href="/tags/bae/" style="font-size: 10px">bae</a> <a href="/tags/cmake/" style="font-size: 10px">cmake</a> <a href="/tags/dbscan/" style="font-size: 10px">dbscan</a> <a href="/tags/demo/" style="font-size: 10px">demo</a> <a href="/tags/erdas/" style="font-size: 10px">erdas</a> <a href="/tags/gms/" style="font-size: 10px">gms</a> <a href="/tags/hadoop/" style="font-size: 12.86px">hadoop</a> <a href="/tags/hello/" style="font-size: 10px">hello</a> <a href="/tags/java/" style="font-size: 15.71px">java</a> <a href="/tags/jena/" style="font-size: 11.43px">jena</a> <a href="/tags/juddi/" style="font-size: 10px">juddi</a> <a href="/tags/mark/" style="font-size: 14.29px">mark</a> <a href="/tags/mfc/" style="font-size: 10px">mfc</a> <a href="/tags/mysql/" style="font-size: 10px">mysql</a> <a href="/tags/ontology/" style="font-size: 12.86px">ontology</a> <a href="/tags/opencv/" style="font-size: 10px">opencv</a> <a href="/tags/python/" style="font-size: 11.43px">python</a> <a href="/tags/recommend/" style="font-size: 12.86px">recommend</a> <a href="/tags/sublimetext/" style="font-size: 10px">sublimetext</a> <a href="/tags/test/" style="font-size: 12.86px">test</a> <a href="/tags/后方交会/" style="font-size: 15.71px">后方交会</a> <a href="/tags/吐槽/" style="font-size: 20px">吐槽</a> <a href="/tags/呵呵/" style="font-size: 10px">呵呵</a> <a href="/tags/呵呵哒/" style="font-size: 10px">呵呵哒</a> <a href="/tags/寂寞寂寞就好/" style="font-size: 12.86px">寂寞寂寞就好</a> <a href="/tags/年度总结/" style="font-size: 11.43px">年度总结</a> <a href="/tags/我失恋了/" style="font-size: 10px">我失恋了</a> <a href="/tags/控制台/" style="font-size: 10px">控制台</a> <a href="/tags/无线传输/" style="font-size: 10px">无线传输</a> <a href="/tags/本体/" style="font-size: 11.43px">本体</a> <a href="/tags/本体论/" style="font-size: 11.43px">本体论</a> <a href="/tags/机器学习/" style="font-size: 10px">机器学习</a> <a href="/tags/梯子/" style="font-size: 10px">梯子</a> <a href="/tags/检校/" style="font-size: 17.14px">检校</a> <a href="/tags/测评/" style="font-size: 11.43px">测评</a> <a href="/tags/游记/" style="font-size: 10px">游记</a> <a href="/tags/点云/" style="font-size: 10px">点云</a> <a href="/tags/热点/" style="font-size: 10px">热点</a> <a href="/tags/电影/" style="font-size: 12.86px">电影</a> <a href="/tags/算法/" style="font-size: 10px">算法</a> <a href="/tags/精度/" style="font-size: 10px">精度</a> <a href="/tags/翔/" style="font-size: 10px">翔</a> <a href="/tags/考研/" style="font-size: 15.71px">考研</a> <a href="/tags/航空摄影测量/" style="font-size: 10px">航空摄影测量</a> <a href="/tags/装机/" style="font-size: 10px">装机</a> <a href="/tags/计算机视觉/" style="font-size: 10px">计算机视觉</a> <a href="/tags/语义网/" style="font-size: 11.43px">语义网</a> <a href="/tags/足球/" style="font-size: 10px">足球</a> <a href="/tags/静态ip/" style="font-size: 10px">静态ip</a> <a href="/tags/音乐/" style="font-size: 10px">音乐</a> <a href="/tags/马克/" style="font-size: 15.71px">马克</a>
+    </div>
+  </div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer">
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> 这里是ov的站 <br>
+			多多留言交流技术问题阿</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/302060345" target="_blank" title="weibo"></a>
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2016 
+		
+		<a href="http://ovjaywang.github.io" target="_blank" title="Jay Wang">Jay Wang</a>
+		
+		</p>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"dooby"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax --><!-- hexo-inject:end -->
+  </body>

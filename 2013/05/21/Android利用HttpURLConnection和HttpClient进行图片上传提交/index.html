@@ -1,0 +1,510 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>Android利用HttpURLConnection和HttpClient进行图片上传提交 | ov智商捉急</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=3,minimum-scale=1">
+    
+    <meta name="author" content="Jay Wang">
+    
+    <meta name="description" content="Android进行图片提交大多数用的是HttpURLConnection 但是我的大半天的试验只成功了一次。参考了绝大多数主流的代码，不论是Base64还是Json还是URLEncode能换过的包都换过了，但都是上传成功，上传的效果要么图裂要么只有顶部的几条扫描进去了。由于是服务器在国外甚至还考虑了翻墙的做法。但收效甚微，最终都是没达到上传到效果。首先了解一下Android图片提交的普遍方案：将图像转换成二进制的Bitmap数据然后进行Base64加密通过字符串进行传输。但是这里有个问题就是安卓的图片上传原则上是不能直接在机子的内存直接操作的，一般情况是先将图片一边写入缓存放入sd卡里，一边利用HttpURLConnection 进行上传。（但这个方法从始至终只成功过一次。。。然后我就崩溃决然了）">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/touxiang.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/touxiang.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head></html>
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/xiaozaizi.png" alt="ov智商捉急" title="ov智商捉急"></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="ov智商捉急">ov智商捉急</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">dooby.me</a></li>
+					
+						<li><a href="/me">关于我</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索">
+						<input type="hidden" name="q" value="site:ovjaywang.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2013/05/21/Android利用HttpURLConnection和HttpClient进行图片上传提交/" title="Android利用HttpURLConnection和HttpClient进行图片上传提交" itemprop="url">Android利用HttpURLConnection和HttpClient进行图片上传提交</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://ovjaywang.github.io" title="Jay Wang">Jay Wang</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2013-05-21T06:43:00.000Z" itemprop="datePublished">2013-05-21</time>
+    更新日期:<time datetime="2016-04-11T14:09:45.580Z" itemprop="dateModified">2016-04-11</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+		</div>
+		
+		<p>Android进行图片提交大多数用的是HttpURLConnection 但是我的大半天的试验只成功了一次。参考了绝大多数主流的代码，不论是Base64还是Json还是URLEncode能换过的包都换过了，但都是上传成功，上传的效果要么图裂要么只有顶部的几条扫描进去了。<br>由于是服务器在国外甚至还考虑了翻墙的做法。但收效甚微，最终都是没达到上传到效果。<br>首先了解一下Android图片提交的普遍方案：<br><img src="http://blog.sptechnolab.com/wp-content/uploads/2011/03/phpad1.png" alt="图片提交的流程"><br>将图像转换成二进制的Bitmap数据然后进行Base64加密通过字符串进行传输。但是这里有个问题就是安卓的图片上传原则上是不能直接在机子的内存直接操作的，一般情况是先将图片一边写入缓存放入sd卡里，一边利用HttpURLConnection 进行上传。（但这个方法从始至终只成功过一次。。。然后我就崩溃决然了）<a id="more"></a></p>
+<p><span style="color: #cc99ff">普通java程序的图片上传</span></p>
+<p>如果不考虑内存的影响，普通java程序下可以利用HttpClient在参数中加入格式化过的图像数据进行传输。或者如找到的一个Demo里一样，利用ImageIO进行流的输入输出。以下是关键代码</p>
+<pre class="brush: java; gutter: true"> ByteArrayOutputStream baos = new ByteArrayOutputStream();//字节数组输出流
+    ImageIO.write(ImageIO.read(new File(SAMPLE_PIC_FILE)), &quot;jpg&quot;, baos);
+        //利用ImageIO将图片一次性转换成二进制数据写入baos里
+    URL url = new URL(YOUR URL);
+        //服务器地址
+    String data = URLEncoder.encode(&quot;image&quot;, &quot;UTF-8&quot;) + &quot;=&quot; 
+        + URLEncoder.encode(Base64.encodeBase64String(baos.toByteArray()).toString(), &quot;UTF-8&quot;);
+        //写入数据，这里传入服务器接受的名字，如果是自己的服务器可以进行更改，利用到了URLEncode转换成以URL编码的格式
+        //Base64进行加密处理注意输入的字符尽可能的进行URLencode编码以防止出错 这里写入的数据与地址栏中?后面的参数格式一致
+     data += &quot;&amp;&quot; + URLEncoder.encode(&quot;key&quot;, &quot;UTF-8&quot;) + &quot;=&quot; + URLEncoder.encode(IMGUR_KEY, &quot;UTF-8&quot;);
+        //添加别的数据 流入title description等
+    URLConnection conn = url.openConnection();//建立连接
+    conn.setDoOutput(true);//设置可以使用输出流
+    conn.addRequestProperty(&quot;Authorization&quot;, &quot;Client-ID &quot;+IMGUR_CLIENT_ID);
+        //添加头文件参数这里还可以添加Content-type connection等
+    OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+        //getoutputstream这一步建立输出流的写入
+    //System.out.println(&quot;Sending data...&quot;);
+    wr.write(data);//将缓存写入输出流
+    wr.flush();//刷新缓冲区确保数据都写入
+        String reply = &quot;&quot;;
+    StringBuffer sb = new StringBuffer();
+    InputStream inStream = conn.getInputStream();//这一步才进行关键的上传操作，创建输入流
+    Scanner input = new Scanner(inStream);将输入流写入scanner当作参数
+    while (input.hasNextLine()) {
+    String nextLine = input.nextLine();
+    sb.append(nextLine); }
+    reply = sb.toString();//最后获得响应的html代码</pre>
+
+<!--more--><span style="color: #cc99ff">利用HttpURLConnection的android图片提交</span><br><br>android的图片提交保险起见应该是利用HttpURLConnection的 因为内存小的关系所以做到一次性提交抱错的风险比较大。<br><br>这里关键的步骤就是分多次将数据写入缓冲区域，并且常见的就是添加BOUNDARY PREFIX LINE_END等识别信息（这里主要是为了自己开发的服务器识别，例子很多就不赘述了）关键代码如下<br><br><pre class="brush: java; gutter: true">                        URL url = new URL(RequestURL);//请求地址<br>            HttpURLConnection conn = (HttpURLConnection) url.openConnection();//获取connection<br>            conn.setReadTimeout(TIME_OUT);//可选<br>            conn.setConnectTimeout(TIME_OUT);//可选<br>            conn.setDoInput(true); //必要<br>            conn.setDoOutput(true); //必要<br>            conn.setUseCaches(false);  //必要<br>            conn.setRequestMethod(&quot;POST&quot;);  //必要<br>            conn.setRequestProperty(&quot;Charset&quot;, &quot;UTF-8&quot;);//可选<br>            conn.setRequestProperty(&quot;connection&quot;, &quot;keep-alive&quot;);//可选<br>            conn.setRequestProperty(&quot;Content-Type&quot;, CONTENT_TYPE + &quot;;boundary=&quot; + BOUNDARY); //可选<br>                        //一上几步分别是设置读取超时时间 传输超时时间 是否可以进行输入 是否可以进行输出 是否可用缓存<br>                        //确认上传方式 设置编码格式 设置传输的保持连接 这是各种识别信息<br><br>            if(file!=null)<br>            {<br>                DataOutputStream dos = new DataOutputStream( conn.getOutputStream());<br>                //从连接的输出流获取数据输出流<br>                                StringBuffer sb = new StringBuffer();<br>                sb.append(PREFIX+BOUNDARY+BOUNDARY);//设置各种标识符<br>                sb.append(&quot;Content-Type: application/octet-stream; charset=&quot;+CHARSET+LINE_END);<br>                                //像写http豹纹一样添加各种<br>                sb.append(LINE_END);<br>                dos.write(sb.toString().getBytes());//将以上豹纹头写入dos数据输出流中<br>                InputStream is = new FileInputStream(file);//写入图片文件<br>                byte[] bytes = new byte[1024];//设置每次读取1024byte<br>                int len = 0;//这里0和-1都见过 主要是0<br>                while((len=is.read(bytes))!=-1)//一边赋值给长度一边确认是否不为负数<br>                {<br>                    dos.write(bytes, 0, len);//只要没读完反复的输入到数据输出流中<br>                }<br>                is.close();//关闭图片的输入流<br>                dos.write(LINE_END.getBytes());//各种标识符<br>                byte[] end_data = (PREFIX+BOUNDARY+PREFIX+LINE_END).getBytes();<br>                dos.write(end_data);<br>                dos.flush();//刷新缓存 这不很重要<br>                                 InputStream is = conn.getInputStream();<br>                int res =   conn.getResponseCode();//获取响应代码 最后就可以抓到Entity了</pre><br><br>但是，但是，但是，非常的，极其的，很生气的，只成功了一次，不知道是我的平板没有sd卡的缘故还是网络的缘故，都不能进行完整的图片操作。。。以上代码经过千万次的筛选确保无误，全中国的帖子都在用这个方法。<br><br><!--more-->
+<p><span style="color: #cc99ff">利用HttpClient进行Android的图片提交</span></p>
+<p>HttpClient非常常用，客户端模拟登录是经常用到，鉴别输入的参数和请求地址就可以进行模拟Post和Get操作。夙愿完成了。</p>
+<p>首先提一下我主要利用的不是本地的服务器，采用了叫做Imgur的网站的无限上传的图床，主要优势是有方便的上传可以利用，地址也好抓，但就是外国的服务器，网络不是非常的稳定。首先注册账号，然后添加一个application获取key’和secret这是它提供的上传功能的参数[caption width=”674” align=”alignnone”]<img src="http://i1061.photobucket.com/albums/t476/ov_beeshoot/635583B7-1.jpg" alt=""> upload参数[/caption]</p>
+<pre class="brush: java; gutter: true">private String pic(File fff) 
+    {   InputStream inputStream=null;
+                InputStream is;
+                String reply=&quot;&quot;;
+    try {
+        inputStream = new FileInputStream(fff);//同样将图片写入输入流
+        Bitmap bitmapOrg = BitmapFactory.decodeStream(inputStream);
+                //这一步将输入流抓换成Bitmap格式的二进制数据
+        ByteArrayOutputStream bao = new ByteArrayOutputStream();
+                //创建字节数组输出流，将数据写入它来上传
+        bitmapOrg.compress(Bitmap.CompressFormat.JPEG, 90, bao);
+                //这一步是重中之重，千辛万苦才在国外找到了这个很少人用的方法，将二进制的Bitmap数据进行压缩，
+                //传入的参数是图片格式，压缩率和输出的字节流 很给力啊!
+        byte [] ba = bao.toByteArray();//将字节流抓换成字节数组
+        String ba1=Base64.encodeBytes(ba);//Base64加密
+        ArrayList&lt;NameValuePair&gt; nameValuePairs = new
+                ArrayList&lt;NameValuePair&gt;();
+                nameValuePairs.add(new BasicNameValuePair(
+                                                URLEncoder.encode(&quot;image&quot;, &quot;UTF-8&quot;),ba1));//添加参数
+                nameValuePairs.add(new BasicNameValuePair(URLEncoder.encode(&quot;key&quot;, &quot;UTF-8&quot;),
+                                                   URLEncoder.encode(IMGUR_KEY, &quot;UTF-8&quot;)));//添加第二个参数
+            try{
+                HttpClient httpclient = new DefaultHttpClient();//创建HttpClient
+                HttpPost httppost = new
+                HttpPost(&quot;https://api.imgur.com/3/image&quot;);//请求地址
+                httppost.setHeader(&quot;Authorization&quot;,&quot;Client-ID &quot;+IMGUR_CLIENT_ID);//设置请求的header
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));//参数写入Entity中
+                HttpResponse response = httpclient.execute(httppost);//解析提交获取响应
+                HttpEntity entity = response.getEntity();//响应的文本
+                is = entity.getContent();
+                StringBuffer sb = new StringBuffer();
+                 Scanner input = new Scanner(is);
+                   while (input.hasNextLine()) {
+                    String nextLine = input.nextLine();
+                    sb.append(nextLine);
+                    // System.out.println(nextLine);
+                   }
+                   reply = sb.toString();
+                }catch(Exception e){
+                //Log.e(&quot;log_tag&quot;, &quot;Error in http connection &quot;+e.toString());
+                }
+    } catch (FileNotFoundException e) {
+        // TODO 自动生成的 catch 块
+        e.printStackTrace();
+    } catch (UnsupportedEncodingException e1) {
+        // TODO 自动生成的 catch 块
+        e1.printStackTrace();
+    }       
+        return reply;
+    }</pre>
+
+<p><a href="http://blog.sptechnolab.com/2011/03/09/android/android-upload-image-to-server/" target="_blank" rel="external">参考代码</a></p>  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-tags">
+  
+  <span></span> <a href="/tags/Android/">Android</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/代码狗/">代码狗</a>►<a class="article-category-link" href="/categories/代码狗/学习log/">学习log</a>
+</div>
+<div class="article-share" id="share">
+
+  <div data-url="http://ovjaywang.github.io/2013/05/21/Android利用HttpURLConnection和HttpClient进行图片上传提交/" data-title="Android利用HttpURLConnection和HttpClient进行图片上传提交 | ov智商捉急" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	<nav class="article-nav clearfix">
+ 
+ <div class="prev">
+ <a href="/2013/05/24/最近的一些推荐拉/" title="最近的一些推荐拉">
+  <strong>PREVIOUS:</strong><br>
+  <span>
+  最近的一些推荐拉</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2013/05/20/Android 丢lib/" title="Android 丢lib">
+ <strong>NEXT:</strong><br> 
+ <span>Android 丢lib
+</span>
+</a>
+</div>
+
+</nav>
+	<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+</div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  <div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/App强推/" title="App强推">App强推<sup>8</sup></a></li>
+		
+			<li><a href="/categories/tucao/" title="tucao">tucao<sup>1</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/" title="什么都学一下">什么都学一下<sup>21</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/代码狗/" title="代码狗">代码狗<sup>1</sup></a></li>
+		
+			<li><a href="/categories/代码狗/" title="代码狗">代码狗<sup>24</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/学习log/" title="学习log">学习log<sup>20</sup></a></li>
+		
+			<li><a href="/categories/代码狗/学习log/" title="学习log">学习log<sup>24</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/代码狗/学习log/" title="学习log">学习log<sup>1</sup></a></li>
+		
+			<li><a href="/categories/槽/" title="槽">槽<sup>40</sup></a></li>
+		
+			<li><a href="/categories/软件测评/" title="软件测评">软件测评<sup>5</sup></a></li>
+		
+			<li><a href="/categories/软件测评/软文/" title="软文">软文<sup>5</sup></a></li>
+		
+			<li><a href="/categories/App强推/软文/" title="软文">软文<sup>8</sup></a></li>
+		
+		</ul>
+</div>
+
+  <div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Android/" title="Android">Android<sup>14</sup></a></li>
+		
+			<li><a href="/tags/ICP/" title="ICP">ICP<sup>1</sup></a></li>
+		
+			<li><a href="/tags/MMC/" title="MMC">MMC<sup>1</sup></a></li>
+		
+			<li><a href="/tags/MME/" title="MME">MME<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SPark/" title="SPark">SPark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/bae/" title="bae">bae<sup>1</sup></a></li>
+		
+			<li><a href="/tags/cmake/" title="cmake">cmake<sup>1</sup></a></li>
+		
+			<li><a href="/tags/dbscan/" title="dbscan">dbscan<sup>1</sup></a></li>
+		
+			<li><a href="/tags/demo/" title="demo">demo<sup>1</sup></a></li>
+		
+			<li><a href="/tags/erdas/" title="erdas">erdas<sup>1</sup></a></li>
+		
+			<li><a href="/tags/gms/" title="gms">gms<sup>1</sup></a></li>
+		
+			<li><a href="/tags/hadoop/" title="hadoop">hadoop<sup>3</sup></a></li>
+		
+			<li><a href="/tags/hello/" title="hello">hello<sup>1</sup></a></li>
+		
+			<li><a href="/tags/java/" title="java">java<sup>5</sup></a></li>
+		
+			<li><a href="/tags/jena/" title="jena">jena<sup>2</sup></a></li>
+		
+			<li><a href="/tags/juddi/" title="juddi">juddi<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mark/" title="mark">mark<sup>4</sup></a></li>
+		
+			<li><a href="/tags/mfc/" title="mfc">mfc<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mysql/" title="mysql">mysql<sup>1</sup></a></li>
+		
+			<li><a href="/tags/nba/" title="nba">nba<sup>0</sup></a></li>
+		
+		</ul>
+</div>
+
+  <div class="rsspart">
+	<a href="null" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/Android/" style="font-size: 18.57px">Android</a> <a href="/tags/ICP/" style="font-size: 10px">ICP</a> <a href="/tags/MMC/" style="font-size: 10px">MMC</a> <a href="/tags/MME/" style="font-size: 10px">MME</a> <a href="/tags/SPark/" style="font-size: 10px">SPark</a> <a href="/tags/bae/" style="font-size: 10px">bae</a> <a href="/tags/cmake/" style="font-size: 10px">cmake</a> <a href="/tags/dbscan/" style="font-size: 10px">dbscan</a> <a href="/tags/demo/" style="font-size: 10px">demo</a> <a href="/tags/erdas/" style="font-size: 10px">erdas</a> <a href="/tags/gms/" style="font-size: 10px">gms</a> <a href="/tags/hadoop/" style="font-size: 12.86px">hadoop</a> <a href="/tags/hello/" style="font-size: 10px">hello</a> <a href="/tags/java/" style="font-size: 15.71px">java</a> <a href="/tags/jena/" style="font-size: 11.43px">jena</a> <a href="/tags/juddi/" style="font-size: 10px">juddi</a> <a href="/tags/mark/" style="font-size: 14.29px">mark</a> <a href="/tags/mfc/" style="font-size: 10px">mfc</a> <a href="/tags/mysql/" style="font-size: 10px">mysql</a> <a href="/tags/ontology/" style="font-size: 12.86px">ontology</a> <a href="/tags/opencv/" style="font-size: 10px">opencv</a> <a href="/tags/python/" style="font-size: 11.43px">python</a> <a href="/tags/recommend/" style="font-size: 12.86px">recommend</a> <a href="/tags/sublimetext/" style="font-size: 10px">sublimetext</a> <a href="/tags/test/" style="font-size: 12.86px">test</a> <a href="/tags/后方交会/" style="font-size: 15.71px">后方交会</a> <a href="/tags/吐槽/" style="font-size: 20px">吐槽</a> <a href="/tags/呵呵/" style="font-size: 10px">呵呵</a> <a href="/tags/呵呵哒/" style="font-size: 10px">呵呵哒</a> <a href="/tags/寂寞寂寞就好/" style="font-size: 12.86px">寂寞寂寞就好</a> <a href="/tags/年度总结/" style="font-size: 11.43px">年度总结</a> <a href="/tags/我失恋了/" style="font-size: 10px">我失恋了</a> <a href="/tags/控制台/" style="font-size: 10px">控制台</a> <a href="/tags/无线传输/" style="font-size: 10px">无线传输</a> <a href="/tags/本体/" style="font-size: 11.43px">本体</a> <a href="/tags/本体论/" style="font-size: 11.43px">本体论</a> <a href="/tags/机器学习/" style="font-size: 10px">机器学习</a> <a href="/tags/梯子/" style="font-size: 10px">梯子</a> <a href="/tags/检校/" style="font-size: 17.14px">检校</a> <a href="/tags/测评/" style="font-size: 11.43px">测评</a> <a href="/tags/游记/" style="font-size: 10px">游记</a> <a href="/tags/点云/" style="font-size: 10px">点云</a> <a href="/tags/热点/" style="font-size: 10px">热点</a> <a href="/tags/电影/" style="font-size: 12.86px">电影</a> <a href="/tags/算法/" style="font-size: 10px">算法</a> <a href="/tags/精度/" style="font-size: 10px">精度</a> <a href="/tags/翔/" style="font-size: 10px">翔</a> <a href="/tags/考研/" style="font-size: 15.71px">考研</a> <a href="/tags/航空摄影测量/" style="font-size: 10px">航空摄影测量</a> <a href="/tags/装机/" style="font-size: 10px">装机</a> <a href="/tags/计算机视觉/" style="font-size: 10px">计算机视觉</a> <a href="/tags/语义网/" style="font-size: 11.43px">语义网</a> <a href="/tags/足球/" style="font-size: 10px">足球</a> <a href="/tags/静态ip/" style="font-size: 10px">静态ip</a> <a href="/tags/音乐/" style="font-size: 10px">音乐</a> <a href="/tags/马克/" style="font-size: 15.71px">马克</a>
+    </div>
+  </div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer">
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> 这里是ov的站 <br>
+			多多留言交流技术问题阿</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/302060345" target="_blank" title="weibo"></a>
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2016 
+		
+		<a href="http://ovjaywang.github.io" target="_blank" title="Jay Wang">Jay Wang</a>
+		
+		</p>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"dooby"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax --><!-- hexo-inject:end -->
+  </body>

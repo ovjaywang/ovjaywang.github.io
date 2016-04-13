@@ -1,0 +1,468 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>最近demo 模块 算法总结 | ov智商捉急</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=3,minimum-scale=1">
+    
+    <meta name="author" content="Jay Wang">
+    
+    <meta name="description" content="http://ju.outofmemory.cn/entry/106397 【坑妹填完】
+最近各种乱整。。文章妹时间管光顾着折腾手头派下来的事情了。再加上每天固定的复习提高一下。小论文完全没有头绪。
+最近get到的实用方法还是很多阿。DBScan（Density-Based Spatial Clus">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/touxiang.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/touxiang.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head></html>
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/xiaozaizi.png" alt="ov智商捉急" title="ov智商捉急"></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="ov智商捉急">ov智商捉急</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">dooby.me</a></li>
+					
+						<li><a href="/me">关于我</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索">
+						<input type="hidden" name="q" value="site:ovjaywang.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/03/08/最近demo 模块 算法总结/" title="最近demo 模块 算法总结" itemprop="url">最近demo 模块 算法总结</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://ovjaywang.github.io" title="Jay Wang">Jay Wang</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-03-08T09:43:56.000Z" itemprop="datePublished">2016-03-08</time>
+    更新日期:<time datetime="2016-04-11T14:09:45.583Z" itemprop="dateModified">2016-04-11</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+		</div>
+		
+		<p><a href="http://ju.outofmemory.cn/entry/106397" title="http://ju.outofmemory.cn/entry/106397" target="_blank" rel="external">http://ju.outofmemory.cn/entry/106397</a> 【坑妹填完】</p>
+<p>最近各种乱整。。文章妹时间管光顾着折腾手头派下来的事情了。再加上每天固定的复习提高一下。小论文完全没有头绪。</p>
+<p>最近get到的实用方法还是很多阿。<br><strong>DBScan</strong>（Density-Based Spatial Clustering of Applications with Noise）<strong>基于密度的含噪空间聚类</strong></p>
+<p>最大特点是：多维、任何形状聚类、聚类数任意、噪声可控、对输入不敏感；缺点很明显，需要提前知道2个参数（一般实验多了，根据经验对同一类型聚类可以不用改。），时间复杂度和空间复杂度都很大，需要计算点两两之间距离[这里需要优化，否则算法超出一般忍受时间] 不对密度变化做出选择。<br>输入参数2个，单一点半径范围R及其最小包含的点数N。算法本质是遍历所有点并计算邻域内的点数并拓展该类（以R范围内是否达到N来判断）。被分类的点将会标记并不再被检测到。因此耗时表现在邻域查找和拓展聚类上。但解算效果相当良好。<br>算法的优化方案相当多：kdtree的、基于网格计算的、基于适应性解算阈值的、局部敏感哈希。主要解决的都是如何加快求解邻域解求速度。诚然它的算法复杂度有n^3显然想要加快并不是那么容易。深入研讨了一番发现计算距离时有的不止一遍，因此写入硬盘或许是个好的方案，但是I/O读取的效率就要考虑进来了；还有一种方式是限制深入迭代次数，即做多在第几层nearestpoint()这个数组中进行聚类的拓展。这种做法的危害是使得同一个点集很可能多次才并入，或者完全没有并到一块，因此需要一个后手，将聚类中心相近的再次组合，其实在kdtree中也有类似的做法。参考<a href="https://github.com/alitouka/spark_dbscan" target="_blank" rel="external">基于SPark的DBSCAN的图解</a>，KDTree建立时，按区域分割好数据后，同一类的点集亦可能先分散于个个区间。各自区间先进行小聚类后，再进行大聚类。</p>
+<p><img src="http://ooo.0o0.ooo/2016/03/30/56fb7e092b350.png" alt=""></p>
+<p>（中了SPark的毒，后面会进行测试）<br>demo很好的展示了算法的原理。</p>
+<p><a href="http://www.naftaliharris.com/blog/visualizing-dbscan-clustering/" title="http://www.naftaliharris.com/blog/visualizing-dbscan-clustering/" target="_blank" rel="external">http://www.naftaliharris.com/blog/visualizing-dbscan-clustering/</a> 在线666可视化理解dbscan过程。不同的实例可以看到，对不同图形的检测相当准确；同时聚类精度亦相当高。</p>
+<p><a href="http://stackoverflow.com/questions/6621630/dbscan-code-in-c-sharp-or-vb-net-for-cluster-analysis" title="http://stackoverflow.com/questions/6621630/dbscan-code-in-c-sharp-or-vb-net-for-cluster-analysis" target="_blank" rel="external">http://stackoverflow.com/questions/6621630/dbscan-code-in-c-sharp-or-vb-net-for-cluster-analysis</a>stackoverflow图解dbscan</p>
+<p><a href="https://www.yzuzun.com/2015/07/dbscan-clustering-algorithm-and-c-implementation/" title="https://www.yzuzun.com/2015/07/dbscan-clustering-algorithm-and-c-implementation/" target="_blank" rel="external">https://www.yzuzun.com/2015/07/dbscan-clustering-algorithm-and-c-implementation/</a> dbscan的C#实现和作者的gayhub项目</p>
+<p><a href="http://download.csdn.net/detail/f112122/7482303" title="http://download.csdn.net/detail/f112122/7482303" target="_blank" rel="external">http://download.csdn.net/detail/f112122/7482303 </a>c#简易可视化工程例子</p>
+<p>诚然，boost把很多常用的算法都写进去了。但c++使用起来才比较顺。这是c++环境下使用dbscan的正确方式：上boost。比如下面这个</p>
+<p><a href="https://github.com/yusufuzun/dbscan" title="https://github.com/yusufuzun/dbscan" target="_blank" rel="external">https://github.com/yusufuzun/dbscan</a>（C# 以算法原理为基准 不是很快）</p>
+<p>或这个<a href="https://github.com/Terranlee/DBSCAN" title="https://github.com/Terranlee/DBSCAN" target="_blank" rel="external">https://github.com/Terranlee/DBSCAN</a>（C++&amp;boost&amp;KDTree&nbsp; 至今没有明白第一个参数ire的含义啊。一般都2个参数就好了啊 而且结果貌似也不太对 等待修正）</p>
+<p><strong>boost的使用</strong></p>
+<p>上边两个github的例子都基于c++开发，其中都使用到了流行的c++高性能计算类库boost。</p>
+<p>linux下的编译和安装遵循这个帖比较顺 </p>
+<p><a href="http://ju.outofmemory.cn/entry/106397" title="http://ju.outofmemory.cn/entry/106397" target="_blank" rel="external">http://ju.outofmemory.cn/entry/106397</a></p>
+<hr>
+<p>KDTree </p>
+<p>KDTree作为一种数据结构的拓展，其实是一种变异的二叉排序树，其最最最原始的构造就是，在二叉树左小右大的基础上，对多维数据，第一层比较第一个维度，第二层比较第二个维度，以此类推…………排到最后一维又返回第一位继续排，当然，而已设定排序的次数，到多少维就懒得排了。这个数据结构的好处是，寻找欧几里得空间（也就是任意维度的两个对象的连线长度&amp;有的地方也使用该值当做两个对象相似度）的最邻近点（集）复杂度大大降低，不用迭代整个数就能找到最近的点。</p>
+<p>上面说的DBSCAN、后面的ICP、图像匹配中的SIFT算子比较相似度（128维），使用KDTree可以很好的解决时间太长的问题。</p>
+<p>来一波树形结合，</p>
+<p>KDTree的改进方法有Best Bin Fisrt、Best First Search。它主要的临近查找是基于路径和回路的，但没有考虑节点的一些性质，BBF则根据查询路径上的节点进行排序，排序原则是按照超平面的最短距离。另外还可设置超时，优先级队列中的所有节点都经过检查或者超出时间限制时，返回当前最好结果当做近似的最近邻。这种方式在高维上效率提升很大。（尤其sift）</p>
+<p>&nbsp;</p>
+<hr>
+<p><font color="#555555"></font>&nbsp;</p>
+<p><strong>ICP</strong>（<a href="https://en.wikipedia.org/wiki/Iterative_closest_point" target="_blank" rel="external">Iterative closest point</a>）</p>
+<p>点集匹配算法——两组有部分重叠区域的点集，进行拟合和对应点匹配。匹配中如果模式重复程度过高可能陷入局部最小值，因此需要对模式进行了良好的解析。</p>
+<p>算法原理：①算法先解算归一两组点集比例尺、解算质心，将质心重合②对其中一个点集，寻找每个另一点集的最近点，解算梯度和旋转平移量③再次计算最近点，若旋转量小于阈值则停止，若大于阈值则继续②步骤。④按照对应点计算H矩阵（单映矩阵）。</p>
+<p>第二部中的关键步骤其实就是解算每一步的迭代旋转和平移量，用到的是最小二乘法；其次，输入模式及输入顺序对匹配影像也比较大。一般的，停止迭代可以设置限差或者迭代次数。</p>
+<p>VTK5.8的C#dll中有包含ICP最新的算法，但算法较旧，效率较低，但新版6.0+在C#上未开源，忧伤。算法中，求取最近点有三种做法，一点对点，直接找最近点，常用kd-tree实现；二点对面，求取最近的切面的一个切点，主要针对点集和曲面匹配；三点做发现与另一曲面交点，主要针对面与面配准。</p>
+<p>mrpt类库中关于ICP的例子</p>
+<p><a href="http://www.mrpt.org/Iterative_Closest_Point_%28ICP%29_and_other_matching_algorithms" title="http://www.mrpt.org/Iterative_Closest_Point_%28ICP%29_and_other_matching_algorithms" target="_blank" rel="external">http://www.mrpt.org/Iterative_Closest<em>Point</em>%28ICP%29_and_other_matching_algorithms</a></p>
+<p>结合NUnit的ICP算法</p>
+<p><a href="http://www.codeproject.com/Articles/865830/Point-cloud-alignment-ICP-methods-compared" title="http://www.codeproject.com/Articles/865830/Point-cloud-alignment-ICP-methods-compared" target="_blank" rel="external">http://www.codeproject.com/Articles/865830/Point-cloud-alignment-ICP-methods-compared</a></p>
+<p>&nbsp;</p>
+<p>适应性：对自由形状的曲面适应性较好，VTK算法在LiDar数据扫描配准中应用较好。</p>
+<hr>
+<p><font color="#555555"><strong>convex hull of a set of points</strong></font> 点集的凸包</p>
+<p>没啥特点。但相当基础。在外接圆计算、外接矩形计算的时候必须首先解算。demo相当完美。可直接改了用了。能把demo做的这么直白这么易用相当666了(c#)</p>
+<p><a href="http://csharphelper.com/blog/2014/07/find-the-convex-hull-of-a-set-of-points-in-c/" target="_blank" rel="external">查找点集外包圆</a></p>
+<p>&nbsp;</p>
+<p><strong>minimal bounding rectangle for a polygon </strong>凸包的最小外接矩形。这个算法在解求聚类、数据形态方面有很多利用。前提是前面提到的点集凸包以及点集是否按顺时针排序。同样的网站，给的demo我只能说酷炸了。（c#）包含了两种模式：最小面积和最小周长，两者相差不会很大。demo的计算原则是面积。</p>
+<p><a href="http://csharphelper.com/blog/2014/07/find-minimal-bounding-rectangle-polygon-c/" target="_blank" rel="external">计算凸多边形最小外接矩形</a></p>  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-tags">
+  
+  <span></span> <a href="/tags/dbscan/">dbscan</a><a href="/tags/demo/">demo</a><a href="/tags/ICP/">ICP</a><a href="/tags/MMC/">MMC</a><a href="/tags/MME/">MME</a><a href="/tags/SPark/">SPark</a><a href="/tags/算法/">算法</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/代码狗/">代码狗</a>►<a class="article-category-link" href="/categories/代码狗/学习log/">学习log</a>
+</div>
+<div class="article-share" id="share">
+
+  <div data-url="http://ovjaywang.github.io/2016/03/08/最近demo 模块 算法总结/" data-title="最近demo 模块 算法总结 | ov智商捉急" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	<nav class="article-nav clearfix">
+ 
+ <div class="prev">
+ <a href="/2016/04/01/记静态ip的坑/" title="记静态ip的坑">
+  <strong>PREVIOUS:</strong><br>
+  <span>
+  记静态ip的坑</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/01/25/opencv-findhomography-findfundanmentalmat/" title="由opencv中findFundamentalMat和findHomography区别的引申">
+ <strong>NEXT:</strong><br> 
+ <span>由opencv中findFundamentalMat和findHomography区别的引申
+</span>
+</a>
+</div>
+
+</nav>
+	<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+</div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  <div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/App强推/" title="App强推">App强推<sup>8</sup></a></li>
+		
+			<li><a href="/categories/tucao/" title="tucao">tucao<sup>1</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/" title="什么都学一下">什么都学一下<sup>21</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/代码狗/" title="代码狗">代码狗<sup>1</sup></a></li>
+		
+			<li><a href="/categories/代码狗/" title="代码狗">代码狗<sup>24</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/学习log/" title="学习log">学习log<sup>20</sup></a></li>
+		
+			<li><a href="/categories/代码狗/学习log/" title="学习log">学习log<sup>24</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/代码狗/学习log/" title="学习log">学习log<sup>1</sup></a></li>
+		
+			<li><a href="/categories/槽/" title="槽">槽<sup>40</sup></a></li>
+		
+			<li><a href="/categories/软件测评/" title="软件测评">软件测评<sup>5</sup></a></li>
+		
+			<li><a href="/categories/软件测评/软文/" title="软文">软文<sup>5</sup></a></li>
+		
+			<li><a href="/categories/App强推/软文/" title="软文">软文<sup>8</sup></a></li>
+		
+		</ul>
+</div>
+
+  <div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Android/" title="Android">Android<sup>14</sup></a></li>
+		
+			<li><a href="/tags/ICP/" title="ICP">ICP<sup>1</sup></a></li>
+		
+			<li><a href="/tags/MMC/" title="MMC">MMC<sup>1</sup></a></li>
+		
+			<li><a href="/tags/MME/" title="MME">MME<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SPark/" title="SPark">SPark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/bae/" title="bae">bae<sup>1</sup></a></li>
+		
+			<li><a href="/tags/cmake/" title="cmake">cmake<sup>1</sup></a></li>
+		
+			<li><a href="/tags/dbscan/" title="dbscan">dbscan<sup>1</sup></a></li>
+		
+			<li><a href="/tags/demo/" title="demo">demo<sup>1</sup></a></li>
+		
+			<li><a href="/tags/erdas/" title="erdas">erdas<sup>1</sup></a></li>
+		
+			<li><a href="/tags/gms/" title="gms">gms<sup>1</sup></a></li>
+		
+			<li><a href="/tags/hadoop/" title="hadoop">hadoop<sup>3</sup></a></li>
+		
+			<li><a href="/tags/hello/" title="hello">hello<sup>1</sup></a></li>
+		
+			<li><a href="/tags/java/" title="java">java<sup>5</sup></a></li>
+		
+			<li><a href="/tags/jena/" title="jena">jena<sup>2</sup></a></li>
+		
+			<li><a href="/tags/juddi/" title="juddi">juddi<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mark/" title="mark">mark<sup>4</sup></a></li>
+		
+			<li><a href="/tags/mfc/" title="mfc">mfc<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mysql/" title="mysql">mysql<sup>1</sup></a></li>
+		
+			<li><a href="/tags/nba/" title="nba">nba<sup>0</sup></a></li>
+		
+		</ul>
+</div>
+
+  <div class="rsspart">
+	<a href="null" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/Android/" style="font-size: 18.57px">Android</a> <a href="/tags/ICP/" style="font-size: 10px">ICP</a> <a href="/tags/MMC/" style="font-size: 10px">MMC</a> <a href="/tags/MME/" style="font-size: 10px">MME</a> <a href="/tags/SPark/" style="font-size: 10px">SPark</a> <a href="/tags/bae/" style="font-size: 10px">bae</a> <a href="/tags/cmake/" style="font-size: 10px">cmake</a> <a href="/tags/dbscan/" style="font-size: 10px">dbscan</a> <a href="/tags/demo/" style="font-size: 10px">demo</a> <a href="/tags/erdas/" style="font-size: 10px">erdas</a> <a href="/tags/gms/" style="font-size: 10px">gms</a> <a href="/tags/hadoop/" style="font-size: 12.86px">hadoop</a> <a href="/tags/hello/" style="font-size: 10px">hello</a> <a href="/tags/java/" style="font-size: 15.71px">java</a> <a href="/tags/jena/" style="font-size: 11.43px">jena</a> <a href="/tags/juddi/" style="font-size: 10px">juddi</a> <a href="/tags/mark/" style="font-size: 14.29px">mark</a> <a href="/tags/mfc/" style="font-size: 10px">mfc</a> <a href="/tags/mysql/" style="font-size: 10px">mysql</a> <a href="/tags/ontology/" style="font-size: 12.86px">ontology</a> <a href="/tags/opencv/" style="font-size: 10px">opencv</a> <a href="/tags/python/" style="font-size: 11.43px">python</a> <a href="/tags/recommend/" style="font-size: 12.86px">recommend</a> <a href="/tags/sublimetext/" style="font-size: 10px">sublimetext</a> <a href="/tags/test/" style="font-size: 12.86px">test</a> <a href="/tags/后方交会/" style="font-size: 15.71px">后方交会</a> <a href="/tags/吐槽/" style="font-size: 20px">吐槽</a> <a href="/tags/呵呵/" style="font-size: 10px">呵呵</a> <a href="/tags/呵呵哒/" style="font-size: 10px">呵呵哒</a> <a href="/tags/寂寞寂寞就好/" style="font-size: 12.86px">寂寞寂寞就好</a> <a href="/tags/年度总结/" style="font-size: 11.43px">年度总结</a> <a href="/tags/我失恋了/" style="font-size: 10px">我失恋了</a> <a href="/tags/控制台/" style="font-size: 10px">控制台</a> <a href="/tags/无线传输/" style="font-size: 10px">无线传输</a> <a href="/tags/本体/" style="font-size: 11.43px">本体</a> <a href="/tags/本体论/" style="font-size: 11.43px">本体论</a> <a href="/tags/机器学习/" style="font-size: 10px">机器学习</a> <a href="/tags/梯子/" style="font-size: 10px">梯子</a> <a href="/tags/检校/" style="font-size: 17.14px">检校</a> <a href="/tags/测评/" style="font-size: 11.43px">测评</a> <a href="/tags/游记/" style="font-size: 10px">游记</a> <a href="/tags/点云/" style="font-size: 10px">点云</a> <a href="/tags/热点/" style="font-size: 10px">热点</a> <a href="/tags/电影/" style="font-size: 12.86px">电影</a> <a href="/tags/算法/" style="font-size: 10px">算法</a> <a href="/tags/精度/" style="font-size: 10px">精度</a> <a href="/tags/翔/" style="font-size: 10px">翔</a> <a href="/tags/考研/" style="font-size: 15.71px">考研</a> <a href="/tags/航空摄影测量/" style="font-size: 10px">航空摄影测量</a> <a href="/tags/装机/" style="font-size: 10px">装机</a> <a href="/tags/计算机视觉/" style="font-size: 10px">计算机视觉</a> <a href="/tags/语义网/" style="font-size: 11.43px">语义网</a> <a href="/tags/足球/" style="font-size: 10px">足球</a> <a href="/tags/静态ip/" style="font-size: 10px">静态ip</a> <a href="/tags/音乐/" style="font-size: 10px">音乐</a> <a href="/tags/马克/" style="font-size: 15.71px">马克</a>
+    </div>
+  </div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer">
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> 这里是ov的站 <br>
+			多多留言交流技术问题阿</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/302060345" target="_blank" title="weibo"></a>
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2016 
+		
+		<a href="http://ovjaywang.github.io" target="_blank" title="Jay Wang">Jay Wang</a>
+		
+		</p>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"dooby"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax --><!-- hexo-inject:end -->
+  </body>

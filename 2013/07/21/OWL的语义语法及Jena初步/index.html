@@ -1,0 +1,582 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>OWL的语义语法及Jena初步 | ov智商捉急</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=3,minimum-scale=1">
+    
+    <meta name="author" content="Jay Wang">
+    
+    <meta name="description" content="OWL演化
+
+OWL是语义WEB的层级结构核心，在语义层次上解决WEB信息共享和交换的基础。它是RDFS的衍伸，并基于DAML+OIL的拓展。RDFS相当于二元谓词，相当于类和属性的层级体系，但是存在以下几点局限性：
+
+属性的局部范围——rdfs：range对所有的类定义了属性的值，但是不能仅仅对某">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/touxiang.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/touxiang.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head></html>
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/xiaozaizi.png" alt="ov智商捉急" title="ov智商捉急"></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="ov智商捉急">ov智商捉急</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">dooby.me</a></li>
+					
+						<li><a href="/me">关于我</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索">
+						<input type="hidden" name="q" value="site:ovjaywang.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2013/07/21/OWL的语义语法及Jena初步/" title="OWL的语义语法及Jena初步" itemprop="url">OWL的语义语法及Jena初步</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://ovjaywang.github.io" title="Jay Wang">Jay Wang</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2013-07-20T21:07:26.000Z" itemprop="datePublished">2013-07-21</time>
+    更新日期:<time datetime="2016-04-11T14:09:45.580Z" itemprop="dateModified">2016-04-11</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+		</div>
+		
+		<ol>
+<li><strong>OWL演化</strong></li>
+</ol>
+<p>OWL是语义WEB的层级结构核心，在语义层次上解决WEB信息共享和交换的基础。它是RDFS的衍伸，并基于DAML+OIL的拓展。RDFS相当于二元谓词，相当于类和属性的层级体系，但是存在以下几点局限性：</p>
+<ul>
+<li>属性的局部范围——rdfs：range对所有的类定义了属性的值，但是不能仅仅对某几个类进行约束。eg.不能描述牛吃草，而别的动物也可能吃肉。</li>
+<li>不相交——有些类是不相交的。eg.例如男人和女人是不相交的，但是在RDFS中只能声明为“人”的子类。</li>
+<li>类的布尔组合——可以通过类的布尔组合，如并、交、补来定义新类。eg.将“人”定义为“男人”和“女人”的并。</li>
+<li>基数约束——可以对属性值的数量进行限制。eg.一个人有一个人的父亲和一个母亲；一门课至少由一位老师任教等。</li>
+<li><p>属性性质——可以声明一个属性是传递的（如大于）或者一个属性的值是唯一的（母亲），或者一个属性是另一个属性的逆（吃与被吃）<br>OWL支持一下三种描述本体的条件</p>
+</li>
+<li><p>良定义语法</p>
+</li>
+<li>形式化语义</li>
+<li>有效的推理支持，包括：</li>
+</ul>
+<ol>
+<li><span style="color: #ff0000">类成员关系的推理</span>-x是类C的实例，类C是类D子类，则x也是D的一个实例</li>
+<li><span style="color: #ff0000">类的等价关系推理</span>-A等价于B，B等价于C，则A等价于C</li>
+<li><span style="color: #ff0000">一致性推理</span>-x是A类的一个实例，类A是类B与类C的交的子集，类A是类D的一个子类，而B与D不相交。这里出现了不一致性。因为A为空，却又实例x</li>
+<li><span style="color: #ff0000">分类推理</span>-如果已经声明“属性-值”对是实例属于类A的充分条件，则如果x满足该条件，即具有这样的“属性-值”对，则x一定是A的实例</li>
+</ol>
+<p><strong>2.OWL三种分类</strong></p>
+<ul>
+<li><span style="line-height: 15px"><span style="color: #ff0000">OWL-FULL</span>：提供了最强大的表达能力和使用RDF语法的最大自由，但是没有可计算性的保证。OWL FULL中类即是<span style="color: #ff0000">个体的集合<span style="color: #000000">也可以是<span style="color: #ff0000">个体<span style="color: #000000">。与OWL DL和Lite相比，个体和类是分离的集合，即一个资源不能同时是个体和类，但在Full中可以。OWL FULL允许本体对预定义的RDF或OWL词汇表的增强，但是难以实现OWL FULL中所有构子的推理。</span></span></span></span></span></li>
+</ul>
+<p>它的优点是和RDF完全兼容，所有合法的RDF文档都是合法的OWL FULL文档，所有RDF(S)结论都是OWL FULL结论。OWL FULL的缺点是该语言的表达能力太强，以致推理变得不可判定。如果将保持对RDF的兼容性作为主要目标，则应该选择FULL。OWL FULL将RDF拓展为一个完备的本体语言，克服了OWL DL和RDFS在语义上的冲突，但是OWL FULL消除了基数限制中对传递型属性的约束，因此不能保证推理是可判定的。</p>
+<ul>
+<li><span style="line-height: 15px"><span style="color: #ff0000">OWL DL</span>：OWL保留了强大表达能力的同时，也具有<span style="color: #ff0000">计算完备性</span>（所有结论都是可以判定的）和<span style="color: #ff0000">可判定性</span>（所有的计算都在有限时间内终止）。DL对应于描述逻辑（Description Logic），而描述逻辑是OWL的形式化基础。</span></li>
+</ul>
+<p><span style="line-height: 15px">OWL DL的特点是它支持有效的推理，缺点和Lite一样，失去了RDF的兼容性。一个RDF文档在成为OWL DL文档之前必须进行适当的拓展和约束，一个合法的OWL DL文档是一个RDF文档。如果用户保证推理的可判定型和本体语言的强表达能力作为主要目标，则可以选用OWL DL。OWL DL忽略了对RDFS的兼容性，它主要针对概念，属性，个体之间关系的描述，以保证强大的语义表达能力。DL采用了RDFS的数据类型机制和内嵌的XMLSchema数据类型。</span></p>
+<ul>
+<li><span style="line-height: 15px"><span style="color: #ff0000">OWL Lite</span>：它是支持分类体系和简单约束的owl语言，例如基数约束，但是基数的值只能是1和0。虽然它的表达能力较弱，但是提供了词典和分类体系提升为本体的快速解决方案。可以通过对OWL DL子语言进行限制，得到OWL Lite子语言，OWL Lite的计算复杂度比DL低。Lite除去了DL中的枚举类、不相交声明和任意基数约束。</span></li>
+</ul>
+<p><span style="line-height: 15px"> OWL Lite的特点是易学易用，如果关注的重点是一个简洁的本体语言，就可以选用OWL Lite。OWL Lite增强了OWl DL中的公理约束，可以保证快速高效的推理。OWL Lite可以利用已经实现的逻辑推理系统进行推理。</span></p>
+<p><a href="http://www.flickr.com/photos/ovbeeshoot/9335813301/" title="Flickr 上 Liar1992 的 owl11" target="_blank" rel="external"><img src="http://farm6.staticflickr.com/5461/9335813301_870c4db228.jpg" alt="owl11"></a></p>
+<p><strong>3.OWL的类</strong></p>
+<p>-类提供了对具有相似特性的资源进行分组的抽象机制，和RDFS的类相似。</p>
+<p>-类包括<span style="color: #ff0000">类的内涵</span>和<span style="color: #ff0000">类的外延</span>，内涵是类的描述和类的公理的总和，外延是类的实例的集合体。</p>
+<p>-OWL Lite和OWL DL中，个体不能为类，类和个体属于不相交的论域，属性和数据值也是如此。但是在owl FULL中允许自由使用RDFS，一个类或者元类可能同时为另一个类的实例。</p>
+<p>OWL的类通过<span style="color: #ff0000">类描述<span style="color: #000000">进行描述并使用</span><span style="color: #000000"><span style="color: #ff0000">类公理</span>进行结合。</span></span></p>
+<ul>
+<li><p><strong><span style="line-height: 28px">本体的头部</span></strong></p>
+<pre><code>OWL本体是一个RDF文档，包含在一个&lt;span style=&quot;color: #ff0000;&quot;&gt;rdf:RDF&lt;/span&gt;元素中。一个OWL本体可能以一系列的关于本体的声明作为开始，包含注释、版本控制以及导入其他本体等内容，称为本体头部。
+</code></pre><p><span style="color: #ff0000">owl:Ontology</span>元素是用来声明关于当前文档的OWL元数据的，可以记录版本信息和导入文档所依赖的一些定义。rdf:about属性为本体提供名称和引用，一般取值为空表示本体的名称是owl:Ontology元素的基准URI，即本体所在的文档URI或上下文中<span style="color: #ff0000">xml:base</span>指定的URI。<span style="color: #ff0000">rdfs:coment</span>和<span style="color: #ff0000">rdfs:label</span>为本体提供自然语言注释和标签。<span style="color: #ff0000">owl:priorVersion</span>为本体版本控制提供相关信息。owl:imports用于导入其他一些文体，将内容引入为当前文档的一部分。</p>
+</li>
+</ul>
+<p>因此一个标注OWL文档的模式如下：</p>
+<pre class="brush: xml; gutter: true">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;rdf:RDF
+    xmlns:foaf=&quot;http://xmlns.com/foaf/0.1/&quot;
+    xmlns:rdf=&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;
+  xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema#&quot;
+    xmlns:rdfs=&quot;http://www.w3.org/2000/01/rdf-schema#&quot;
+    xmlns:aaa=&quot;http://www.w3.org/2002/07/aaa#&quot;
+    xmlns:abc=&quot;http://www.w3.org/2003/01/geo/abc#&quot;
+    xmlns=&quot;http://geoontology.altervista.org/abc.owl#&quot;
+  xml:base=&quot;http://geoontology.altervista.org/bbb.owl&quot;&gt;
+  &lt;owl:Ontology rdf:about=&quot;&quot;&gt;
+    &lt;rdfs:comment xml:lang=&quot;en&quot;&gt;Hi&lt;/rdfs:comment&gt;
+    &lt;rdfs:comment xml:lang=&quot;it&quot;&gt;Hello.&lt;/rdfs:comment&gt;
+    &lt;owl:versionInfo rdf:datatype=&quot;http://www.w3.org/2001/XMLSchema#string&quot;
+    &gt;0.0.2&lt;/owl:versionInfo&gt;
+    &lt;rdfs:label rdf:datatype=&quot;http://www.w3.org/2001/XMLSchema#string&quot;
+    &gt;……&lt;/rdfs:label&gt;
+  &lt;/owl:Ontology&gt;
+
+&lt;owl:DatatypeProperty rdf:ID=&quot;……&quot;&gt;
+             ……
+  &lt;/owl:DatatypeProperty&gt;
+ &lt;owl:ObjectProperty rdf:about=&quot;……&quot;&gt;
+             ……
+  &lt;/owl:ObjectProperty&gt;
+&lt;/rdf:RDF&gt;</pre>
+
+<ul>
+<li><strong><span style="line-height: 15px">类描述</span></strong></li>
+</ul>
+<p>类描述是类公理的基本构造模块，也成为类定义。类描述通过类的名称，或者通过指定一个匿名类的外延来描述一个OWL类。以下是类描述的六种类型：</p>
+<p><span style="color: #ff0000">—简单类描述</span>：<span style="color: #ff0000"> owl：Class</span>命名实例，是rdfs：Class的子类。如：</p>
+<p>&lt;owl:Class rdf:ID=”Human”&gt;</p>
+<p>又如：</p>
+<pre class="brush: xml; gutter: true">&lt;owl:Class rdf:ID=&quot;Person&quot;/&gt;
+    &lt;owl:Class rdf:ID=&quot;Male&quot;/&gt;
+    &lt;owl:Class rdf:ID=&quot;Man&quot;&gt;
+    &lt;rdfs:subClassOf rdf:resource=&quot;#Person&quot;/&gt;
+&lt;/owl:Class&gt;
+&lt;owl:Class rdf:about=&quot;#Man&quot;/&gt;
+    &lt;rdfs:subClassOf rdf:resource=&quot;#Male&quot;/&gt;
+&lt;/owl:Class&gt;</pre>
+
+<p>这里定义了Person、Man、Male三个类，并且声明了Man是Person和Male的子类。</p>
+<p>需要注意的是Lite和DL中，所有类的声明都<span style="color: #ff0000">必须</span>采用<span style="color: #ff0000">owl:Class</span>或<span style="color: #ff0000">owl：Restriction</span>。如果对于枚举、交、并、补的类描述赋予一个RDF标识符，则这并不是一个描述类，而是一个完全类的类公理。</p>
+<p>owl中保留了两个预定义的类，分别是<span style="color: #ff0000">owl：Thing</span>和<span style="color: #ff0000">owl：Nothing</span>。前者是所有个体的集合，后者是空集。所有的owl类都是owl：Thing的子类，而owl：Nothing是所有类的子类。owl子类的概念和rdfs：subClassOf相同。</p>
+<p><span style="color: #ff0000">—枚举类</span>：采用<span style="color: #ff0000">owl：oneOf</span>进行类描述，该内置OWL属性的值必须是一个个体或类的实例的列表。因此可以通过枚举实例的方法来描述类。该类的外延就是所有枚举类的个体。如下RDF/XML语法定义了一个包括地球大洲的类</p>
+<pre class="brush: xml; gutter: true">&lt;owl:Class&gt;
+    &lt;owl:oneOf rdf:parseType=&quot;Collection&quot;&gt;
+        &lt;owl:Thing rdf:about=&quot;#Eurasia&quot;/&gt;
+        &lt;owl:Thing rdf:about=&quot;#Africa&quot;/&gt;
+        &lt;owl:Thing rdf:about=&quot;#NorthAmerica&quot;/&gt;
+        &lt;owl:Thing rdf:about=&quot;#SouthAmerica&quot;/&gt;
+        &lt;owl:Thing rdf:about=&quot;#Australia&quot;/&gt;
+        &lt;owl:Thing rdf:about=&quot;#Antarctica&quot;/&gt;    
+    &lt;/owl:oneOf&gt;
+&lt;/owl:Class&gt;</pre>
+
+<p>其中，&lt;owl:Thing rdf:about=”…”/&gt;引用的是个体。</p>
+<p>又如：</p>
+<pre class="brush: xml; gutter: true"> &lt;owl:Class rdf:ID=&quot;RGBColor&quot;&gt;
+      &lt;owl:oneOf rdf:parseType=&quot;Collection&quot;&gt;
+           &lt;owl:Thing rdf:about=&quot;#Red&quot;/&gt;
+           &lt;owl:Thing rdf:about=&quot;#Green&quot;/&gt;
+           &lt;owl:Thing rdf:about=&quot;#Blue&quot;/&gt;
+      &lt;/owl:oneOf&gt;
+&lt;/owl:Class&gt;</pre>
+
+<p>这里定义了颜色类，根据定义，所有的个体都是owl：Thing的实例OWL Lite不能使用枚举类。</p>
+<p>—属性限制<span style="color: #ff0000">owl：Restriction</span>，是特殊类型的类描述。它描述了匿名类，即满足限制的所有个体的类，包括值约束（value constraint）和基数约束（cardinality constraint）。</p>
+<p>值约束是当属性作用于特定的类描述时对其值进行约束，如可能引起某些个体，它们的属性adjacentTo 的值应该是Region，相当于定义域或者值域的概念，并将其应用于类公理内，甚至就是Region的类公理内。OW中的值约束不仅仅类似rdfs：range只在类描述中起作用，也在使用该属性的所有场合有效。</p>
+<p>基数约束在特定类的描述中对属性值的数量进行限制，例如hasPlayer在足球队有11个值，但是在篮球只有5个值。OWL还支持定义全局属性技术的构子，即owl：FunctionalProperty和owl：InverseFunctionalProperty。形式如下：</p>
+<pre class="brush: xml; gutter: true">&lt;owl:Restriction&gt;
+    &lt;owl:onProperty rdf:resource=&quot;(some property)&quot;&gt;
+&lt;/owl:Restriction&gt;</pre>
+
+<p>属性限制也可以作用于数值属性和对象属性，前者的值是数据字面量，后者的值为个体</p>
+<p>值约束包括：</p>
+<p><span style="color: #000000"><span style="color: #ff0000">owl：allValuesFrom</span>，连接约束类和类描述货数据范围。它特定属性的值（属性的值域）要么是类描述的成员，要么是指定数据范围内的数据值，一个简单的例子：</span></p>
+<pre class="brush: xml; gutter: true">&lt;owl:Restriction&gt;
+    &lt;owl:onProperty rdf:resouce=&quot;#hasParent&quot;/&gt;
+    &lt;owl:allValuesFrom rdf:resouce=&quot;#Human&quot;/&gt;
+&lt;/owl:Restriction&gt;</pre>
+
+<p>它描述了一个OWL的匿名类，对其所有的个体而言，如果它具有属性hasParent，则属性hasParent的值必须是类Human。在OWL Lite中owl：allValuesFrom和一阶谓词逻辑中的全称量词类似。</p>
+<p><span style="color: #ff0000">owl：someValuesFrom</span>，它连接约束类和描述类或者数据范围。它描述的类中至少有一个属性的值为描述类或者数据范围内的值。即可能存在部数据描述类或者数据范围的实例。以下例子描述了个体的类，这些个体的父母至少有一个属于Physician</p>
+<pre class="brush: actionscript3; gutter: true">&lt;owl:Restriction&gt;
+    &lt;owl:onProperty rdf:resouce=&quot;hasParent&quot;/&gt;
+    &lt;owl:someValuesFrom rdf:resouce=&quot;#Physician&quot;/&gt;
+&lt;/owl:Restriction&gt;</pre>
+
+<p><span style="color: #ff0000">owl:hasValue</span>它连接约束类和一个V，V可以为个体或者数据值，它描述所有个体的一个类，其属性最少有一个值在语义上等于V，类似AllvaluesFrom的唯一值定义。Lite中没有该值约束，示例如下，描述了一个类，个体Clinton是他/她们的父母亲：</p>
+<pre class="brush: xml; gutter: true">&lt;owl:Restriction&gt;
+     &lt;owl:onProperty rdf:resource=&quot;#hasParent&quot;/&gt;
+     &lt;owl:hasValue rdf:resouce=&quot;#Cliton&quot;/&gt;
+&lt;/owl:Restriction&gt;</pre>
+
+<p>基数约束包括：</p>
+<p><span style="color: #ff0000">owl:maxCardinality</span>：</p>
+<p><span style="color: #ff0000">owl:minCardinality</span>：</p>
+<p><span style="color: #ff0000">owl:cardinality</span>：</p>
+<p>—</p>
+<p>—</p>
+<p>—</p>
+<p>第一种类型通过类名描述一个类，其余通过对类的外延进行约束来描述匿名类。第二种不多不少枚举类的个体。第三种包括满足属性限制的所有类。四五六类型包括满足类描述布尔运算的类，可以看成是与、或、非。后面四中类描述可能导致嵌套结构，因此理论上可以构造任意复杂的类描述。</p>
+<p>参考资料</p>
+<p><a href="http://blog.sina.com.cn/s/blog_6c42aaa60100nhps.html" title="本体语言OWL" target="_blank" rel="external">本体语言OWL</a></p>
+<p><a href="http://www.amazon.cn/gp/product/B002NKMS7S/ref=as_li_qf_sp_asin_tl?ie=UTF8&amp;camp=536&amp;creative=3200&amp;creativeASIN=B002NKMS7S&amp;linkCode=as2&amp;tag=ovjaywang-23" target="_blank" rel="external">语义Web原理及应用</a><img src="http://ir-cn.amazon-adsystem.com/e/ir?t=ovjaywang-23&amp;l=as2&amp;o=28&amp;a=B002NKMS7S" alt=""></p>  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-tags">
+  
+  <span></span> <a href="/tags/jena/">jena</a><a href="/tags/语义网/">语义网</a><a href="/tags/本体/">本体</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/什么都学一下/">什么都学一下</a>►<a class="article-category-link" href="/categories/什么都学一下/代码狗/">代码狗</a>►<a class="article-category-link" href="/categories/什么都学一下/代码狗/学习log/">学习log</a>
+</div>
+<div class="article-share" id="share">
+
+  <div data-url="http://ovjaywang.github.io/2013/07/21/OWL的语义语法及Jena初步/" data-title="OWL的语义语法及Jena初步 | ov智商捉急" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	<nav class="article-nav clearfix">
+ 
+ <div class="prev">
+ <a href="/2013/07/24/owl jena owls ontology资料集合/" title="owl jena owls ontology资料集合">
+  <strong>PREVIOUS:</strong><br>
+  <span>
+  owl jena owls ontology资料集合</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2013/07/20/大巴黎&摩纳哥/" title="大巴黎&amp;摩纳哥">
+ <strong>NEXT:</strong><br> 
+ <span>大巴黎&amp;摩纳哥
+</span>
+</a>
+</div>
+
+</nav>
+	<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+</div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  <div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/App强推/" title="App强推">App强推<sup>8</sup></a></li>
+		
+			<li><a href="/categories/tucao/" title="tucao">tucao<sup>1</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/" title="什么都学一下">什么都学一下<sup>21</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/代码狗/" title="代码狗">代码狗<sup>1</sup></a></li>
+		
+			<li><a href="/categories/代码狗/" title="代码狗">代码狗<sup>24</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/学习log/" title="学习log">学习log<sup>20</sup></a></li>
+		
+			<li><a href="/categories/代码狗/学习log/" title="学习log">学习log<sup>24</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/代码狗/学习log/" title="学习log">学习log<sup>1</sup></a></li>
+		
+			<li><a href="/categories/槽/" title="槽">槽<sup>40</sup></a></li>
+		
+			<li><a href="/categories/软件测评/" title="软件测评">软件测评<sup>5</sup></a></li>
+		
+			<li><a href="/categories/软件测评/软文/" title="软文">软文<sup>5</sup></a></li>
+		
+			<li><a href="/categories/App强推/软文/" title="软文">软文<sup>8</sup></a></li>
+		
+		</ul>
+</div>
+
+  <div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Android/" title="Android">Android<sup>14</sup></a></li>
+		
+			<li><a href="/tags/ICP/" title="ICP">ICP<sup>1</sup></a></li>
+		
+			<li><a href="/tags/MMC/" title="MMC">MMC<sup>1</sup></a></li>
+		
+			<li><a href="/tags/MME/" title="MME">MME<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SPark/" title="SPark">SPark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/bae/" title="bae">bae<sup>1</sup></a></li>
+		
+			<li><a href="/tags/cmake/" title="cmake">cmake<sup>1</sup></a></li>
+		
+			<li><a href="/tags/dbscan/" title="dbscan">dbscan<sup>1</sup></a></li>
+		
+			<li><a href="/tags/demo/" title="demo">demo<sup>1</sup></a></li>
+		
+			<li><a href="/tags/erdas/" title="erdas">erdas<sup>1</sup></a></li>
+		
+			<li><a href="/tags/gms/" title="gms">gms<sup>1</sup></a></li>
+		
+			<li><a href="/tags/hadoop/" title="hadoop">hadoop<sup>3</sup></a></li>
+		
+			<li><a href="/tags/hello/" title="hello">hello<sup>1</sup></a></li>
+		
+			<li><a href="/tags/java/" title="java">java<sup>5</sup></a></li>
+		
+			<li><a href="/tags/jena/" title="jena">jena<sup>2</sup></a></li>
+		
+			<li><a href="/tags/juddi/" title="juddi">juddi<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mark/" title="mark">mark<sup>4</sup></a></li>
+		
+			<li><a href="/tags/mfc/" title="mfc">mfc<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mysql/" title="mysql">mysql<sup>1</sup></a></li>
+		
+			<li><a href="/tags/nba/" title="nba">nba<sup>0</sup></a></li>
+		
+		</ul>
+</div>
+
+  <div class="rsspart">
+	<a href="null" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/Android/" style="font-size: 18.57px">Android</a> <a href="/tags/ICP/" style="font-size: 10px">ICP</a> <a href="/tags/MMC/" style="font-size: 10px">MMC</a> <a href="/tags/MME/" style="font-size: 10px">MME</a> <a href="/tags/SPark/" style="font-size: 10px">SPark</a> <a href="/tags/bae/" style="font-size: 10px">bae</a> <a href="/tags/cmake/" style="font-size: 10px">cmake</a> <a href="/tags/dbscan/" style="font-size: 10px">dbscan</a> <a href="/tags/demo/" style="font-size: 10px">demo</a> <a href="/tags/erdas/" style="font-size: 10px">erdas</a> <a href="/tags/gms/" style="font-size: 10px">gms</a> <a href="/tags/hadoop/" style="font-size: 12.86px">hadoop</a> <a href="/tags/hello/" style="font-size: 10px">hello</a> <a href="/tags/java/" style="font-size: 15.71px">java</a> <a href="/tags/jena/" style="font-size: 11.43px">jena</a> <a href="/tags/juddi/" style="font-size: 10px">juddi</a> <a href="/tags/mark/" style="font-size: 14.29px">mark</a> <a href="/tags/mfc/" style="font-size: 10px">mfc</a> <a href="/tags/mysql/" style="font-size: 10px">mysql</a> <a href="/tags/ontology/" style="font-size: 12.86px">ontology</a> <a href="/tags/opencv/" style="font-size: 10px">opencv</a> <a href="/tags/python/" style="font-size: 11.43px">python</a> <a href="/tags/recommend/" style="font-size: 12.86px">recommend</a> <a href="/tags/sublimetext/" style="font-size: 10px">sublimetext</a> <a href="/tags/test/" style="font-size: 12.86px">test</a> <a href="/tags/后方交会/" style="font-size: 15.71px">后方交会</a> <a href="/tags/吐槽/" style="font-size: 20px">吐槽</a> <a href="/tags/呵呵/" style="font-size: 10px">呵呵</a> <a href="/tags/呵呵哒/" style="font-size: 10px">呵呵哒</a> <a href="/tags/寂寞寂寞就好/" style="font-size: 12.86px">寂寞寂寞就好</a> <a href="/tags/年度总结/" style="font-size: 11.43px">年度总结</a> <a href="/tags/我失恋了/" style="font-size: 10px">我失恋了</a> <a href="/tags/控制台/" style="font-size: 10px">控制台</a> <a href="/tags/无线传输/" style="font-size: 10px">无线传输</a> <a href="/tags/本体/" style="font-size: 11.43px">本体</a> <a href="/tags/本体论/" style="font-size: 11.43px">本体论</a> <a href="/tags/机器学习/" style="font-size: 10px">机器学习</a> <a href="/tags/梯子/" style="font-size: 10px">梯子</a> <a href="/tags/检校/" style="font-size: 17.14px">检校</a> <a href="/tags/测评/" style="font-size: 11.43px">测评</a> <a href="/tags/游记/" style="font-size: 10px">游记</a> <a href="/tags/点云/" style="font-size: 10px">点云</a> <a href="/tags/热点/" style="font-size: 10px">热点</a> <a href="/tags/电影/" style="font-size: 12.86px">电影</a> <a href="/tags/算法/" style="font-size: 10px">算法</a> <a href="/tags/精度/" style="font-size: 10px">精度</a> <a href="/tags/翔/" style="font-size: 10px">翔</a> <a href="/tags/考研/" style="font-size: 15.71px">考研</a> <a href="/tags/航空摄影测量/" style="font-size: 10px">航空摄影测量</a> <a href="/tags/装机/" style="font-size: 10px">装机</a> <a href="/tags/计算机视觉/" style="font-size: 10px">计算机视觉</a> <a href="/tags/语义网/" style="font-size: 11.43px">语义网</a> <a href="/tags/足球/" style="font-size: 10px">足球</a> <a href="/tags/静态ip/" style="font-size: 10px">静态ip</a> <a href="/tags/音乐/" style="font-size: 10px">音乐</a> <a href="/tags/马克/" style="font-size: 15.71px">马克</a>
+    </div>
+  </div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer">
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> 这里是ov的站 <br>
+			多多留言交流技术问题阿</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/302060345" target="_blank" title="weibo"></a>
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2016 
+		
+		<a href="http://ovjaywang.github.io" target="_blank" title="Jay Wang">Jay Wang</a>
+		
+		</p>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"dooby"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax --><!-- hexo-inject:end -->
+  </body>
