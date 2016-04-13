@@ -9,7 +9,9 @@
     <meta name="author" content="Jay Wang">
     
     <meta name="description" content="静态工厂1234public static Boolean valueOf (boolean b)&amp;#123;    return b?Boolean.True:Boolean.False;&amp;#125;
-静态工厂以其名字显见，以[类名.方法名]的方式调用，其静态函数主要返回其类的对象，一般是引用值。">
+
+
+    public static Boolean valueOf (boolean b){">
     
     
     
@@ -73,7 +75,7 @@
     </p>
   <p class="article-time">
     <time datetime="2016-04-13T07:15:14.000Z" itemprop="datePublished">2016-04-13</time>
-    Updated:<time datetime="2016-04-13T10:36:07.585Z" itemprop="dateModified">2016-04-13</time>
+    Updated:<time datetime="2016-04-13T10:41:59.923Z" itemprop="dateModified">2016-04-13</time>
     
   </p>
 </header>
@@ -86,6 +88,14 @@
 		</div>
 		
 		<h2 id="静态工厂"><a href="#静态工厂" class="headerlink" title="静态工厂"></a><strong>静态工厂</strong></h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Boolean <span class="title">valueOf</span> <span class="params">(<span class="keyword">boolean</span> b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> b?Boolean.True:Boolean.False;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>
+
+    public static Boolean valueOf (boolean b){
+        return b?Boolean.True:Boolean.False;
+    }
+
+</code></pre>
+
 <p>静态工厂以其名字显见，以[类名.方法名]的方式调用，其静态函数主要返回其类的对象，一般是引用值。返回什么东西，由参数决定，这个工厂给你产出来。其在API开发中使用广泛。</p>
 <p>静态工厂最有趣的地方在于把方法<strong>提供者</strong>同方法<strong>使用者</strong>剥离开来，使用者不能明细地看到对象构造的具体过程，而是可见可得地获得所需的对象。当然好处有很多，例如返回的对象可以是该类的子类，能让被调用静态工厂方法的类不成为公有；例如有效的降低了构造对象的成本，静态工厂<strong>「</strong>不生产对像，一般只是对象的搬运工<strong>」</strong>。使用静态方法返回对象的方式在单态中使用广泛。</p>
 <p>List、Set有着相似的方式。它们都继承自Collection，同时不能实例化为该类的对象，必须通过子类实现父类的方法来实例化不同属性的对象。ArrayList HashSet等都通过注册的方式进行映射。</p>
@@ -109,8 +119,8 @@
 <li>这种方式已经不推荐-工厂模式<br><a href="https://zh.wikipedia.org/wiki/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95" target="_blank" rel="external">工厂方法</a>  <a href="https://zh.wikipedia.org/wiki/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82" target="_blank" rel="external">抽象工厂</a></li>
 </ul>
 <p>参考文章:<a href="(http://liwenshui322.iteye.com/blog/1267202)">JAVA 服务提供者框架介绍</a>、<a href="(http://blog.csdn.net/csdn0123/article/details/7388445)">构造器和静态方法</a></p>
-<p><link href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">  </p>
-<script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>
+<p><link href="../css/monokai_sublime.min.css" rel="stylesheet">  </p>
+<script src="../js/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>  
 	</div>
 		<footer class="article-footer clearfix">
