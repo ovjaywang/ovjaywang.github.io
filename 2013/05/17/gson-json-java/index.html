@@ -8,9 +8,7 @@
     
     <meta name="author" content="Jay Wang">
     
-    <meta name="description" content="一直在使用json-lib包每次得到数据都得转换半天 除了实体类外还要写一个影射类 非常的麻烦利用Gson包就可以直接导入整个实体类以转换 不过需要的是json的数据名称与实体类的名称要一致首先是实体类
-public class User {
-    private String userName;">
+    <meta name="description" content="一直在使用json-lib包每次得到数据都得转换半天 除了实体类外还要写一个影射类 非常的麻烦利用Gson包就可以直接导入整个实体类以转换 不过需要的是json的数据名称与实体类的名称要一致首先是实体类1234567891011121314151617181920212223242526public">
     
     
     
@@ -36,7 +34,7 @@ public class User {
 				<h1 class="site-name"><a href="/" title="ov智商捉急">ov智商捉急</a></h1>
 				<h2 class="blog-motto"></h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -51,7 +49,7 @@ public class User {
 					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索">
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search">
 						<input type="hidden" name="q" value="site:ovjaywang.github.io">
 					</form>
 					
@@ -74,7 +72,7 @@ public class User {
     </p>
   <p class="article-time">
     <time datetime="2013-05-17T02:03:39.000Z" itemprop="datePublished">2013-05-17</time>
-    更新日期:<time datetime="2016-04-11T14:22:34.439Z" itemprop="dateModified">2016-04-11</time>
+    Updated:<time datetime="2016-04-11T14:22:34.439Z" itemprop="dateModified">2016-04-11</time>
     
   </p>
 </header>
@@ -82,91 +80,15 @@ public class User {
 		
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
+			<strong class="toc-title">Contents</strong>
 		
 		</div>
 		
-		<p>一直在使用json-lib包<br>每次得到数据都得转换半天 除了实体类外还要写一个影射类 非常的麻烦<br>利用Gson包就可以直接导入整个实体类以转换 不过需要的是json的数据名称与实体类的名称要一致<br>首先是实体类</p>
-<pre><code class="java">public class User {
-    private String userName;
-    private String psw;
-    public String getUserName() {
-        return userName;
-    }
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-    public String getPsw() {
-        return psw;
-    }
-    public void setPsw(String psw) {
-        this.psw = psw;
-    }
-    public User(String userName, String psw) {
-        super();
-        this.userName = userName;
-        this.psw = psw;
-    }
-    @Override
-    public String toString() {
-        return &amp;quot;userName= &amp;quot; + userName + &amp;quot; psw= &amp;quot; + psw;
-    }
-
-}
-</code></pre>
-<p>利用Gson输出Json数据<br>—-原版的利用影射类</p>
-<pre><code class="java">public class MyServlet extends HttpServlet {
-
-    private static final long serialVersionUID = 1L;
-    public MyServlet() {
-        super();
-    }
-    public void destroy() {
-        super.destroy(); 
-    }
-
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        this.doPost(request, response);
-    }
-
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType(&amp;quot;text/html;charset=UTF-8&amp;quot;);
-        PrintWriter out = response.getWriter();
-        JSONArray array = new JSONArray();
-         JdbcTemplate template=new JdbcTemplate();
-         List&amp;lt;User&amp;gt;  list=null;         
-         try {
-             list=(List&amp;lt;User&amp;gt;)template.findAll(&amp;quot;select * from User&amp;quot;, new UserMapping());
-//数据库已连接好的情况下...User是表 UserMapping是实体类
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-             for (int i = 0; i &amp;lt; list.size(); i++) 
-                 {
-                 JSONObject temp = new JSONObject()   
-                 .element( &amp;quot;Name&amp;quot;,list.get(i).getUserName() )  
-                 .element( &amp;quot;password&amp;quot;, list.get(i).getPsw() );           
-                 array.add(temp);    }
-            out.print(array.toString());
-            System.out.println(array.toString());
-        } 
-        }
-</code></pre>
+		<p>一直在使用json-lib包<br>每次得到数据都得转换半天 除了实体类外还要写一个影射类 非常的麻烦<br>利用Gson包就可以直接导入整个实体类以转换 不过需要的是json的数据名称与实体类的名称要一致<br>首先是实体类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> String userName;</span><br><span class="line">	<span class="keyword">private</span> String psw;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getUserName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> userName;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUserName</span><span class="params">(String userName)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.userName = userName;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getPsw</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> psw;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPsw</span><span class="params">(String psw)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.psw = psw;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">(String userName, String psw)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>();</span><br><span class="line">		<span class="keyword">this</span>.userName = userName;</span><br><span class="line">		<span class="keyword">this</span>.psw = psw;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> &amp;quot;userName= &amp;quot; + userName + &amp;quot; psw= &amp;quot; + psw;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>利用Gson输出Json数据<br>—-原版的利用影射类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MyServlet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.destroy(); </span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span><br><span class="line">			<span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.doPost(request, response);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span><br><span class="line">			<span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">		response.setContentType(&amp;quot;text/html;charset=UTF-<span class="number">8</span>&amp;quot;);</span><br><span class="line">		PrintWriter out = response.getWriter();</span><br><span class="line">		JSONArray array = <span class="keyword">new</span> JSONArray();</span><br><span class="line">		 JdbcTemplate template=<span class="keyword">new</span> JdbcTemplate();</span><br><span class="line">		 List&amp;lt;User&amp;gt;  list=<span class="keyword">null</span>;		 </span><br><span class="line">		 <span class="keyword">try</span> &#123;</span><br><span class="line">			 list=(List&amp;lt;User&amp;gt;)template.findAll(&amp;quot;select * from User&amp;quot;, <span class="keyword">new</span> UserMapping());</span><br><span class="line"><span class="comment">//数据库已连接好的情况下...User是表 UserMapping是实体类</span></span><br><span class="line">		&#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">			<span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		 	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt; list.size(); i++) </span><br><span class="line">		 		&#123;</span><br><span class="line">				 JSONObject temp = <span class="keyword">new</span> JSONObject()   </span><br><span class="line">		         .element( &amp;quot;Name&amp;quot;,list.get(i).getUserName() )  </span><br><span class="line">		         .element( &amp;quot;password&amp;quot;, list.get(i).getPsw() );		   </span><br><span class="line">				 array.add(temp);	&#125;</span><br><span class="line">			out.print(array.toString());</span><br><span class="line">			System.out.println(array.toString());</span><br><span class="line">		&#125; </span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure></p>
 <p>现在利用Gson就可以了</p>
-<pre><code class="java">                Gson gson = new Gson();
-        String msgJson = gson.toJson(list);
-</code></pre>
-<p>利用Gson转换json数据<br>转换单一字符串 如：<br>[{“userName”:”userName”,”pwd”:123}]<br>User user= gson.fromJson(str, User.class);<br>转换字符串组， 如：</p>
-<pre><code class="java">List&lt;User&gt; users = gson.fromJson(str, new TypeToken&lt;List&lt;User&gt;&gt;(){}.getType());
-for(int i = 0; i &lt; users.size() ; i++)
-{
-     User user = users.get(i);
-     System.out.println(user.toString());//这里想做什么都可以了 记住必须是实体类的名字和json中传送的名字相同
-}
-</code></pre>  
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">              Gson gson = <span class="keyword">new</span> Gson();</span><br><span class="line">String msgJson = gson.toJson(list);</span><br></pre></td></tr></table></figure>
+<p>利用Gson转换json数据<br>转换单一字符串 如：<br>[{“userName”:”userName”,”pwd”:123}]<br>User user= gson.fromJson(str, User.class);<br>转换字符串组， 如：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">List&lt;User&gt; users = gson.fromJson(str, <span class="keyword">new</span> TypeToken&lt;List&lt;User&gt;&gt;()&#123;&#125;.getType());</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; users.size() ; i++)</span><br><span class="line">&#123;</span><br><span class="line">     User user = users.get(i);</span><br><span class="line">     System.out.println(user.toString());<span class="comment">//这里想做什么都可以了 记住必须是实体类的名字和json中传送的名字相同</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-tags">
@@ -211,19 +133,19 @@ for(int i = 0; i &lt; users.size() ; i++)
 	<div class="ds-thread"></div>
 </section>
 </div>
-      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
   <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
+  <strong class="toc-title">Contents</strong>
   
   </div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
 <aside class="clearfix">
 
   <div class="categorieslist">
-	<p class="asidetitle">分类</p>
+	<p class="asidetitle">Categories</p>
 		<ul>
 		
 			<li><a href="/categories/App强推/" title="App强推">App强推<sup>8</sup></a></li>
@@ -238,9 +160,9 @@ for(int i = 0; i &lt; users.size() ; i++)
 		
 			<li><a href="/categories/什么都学一下/代码狗/学习log/" title="学习log">学习log<sup>1</sup></a></li>
 		
-			<li><a href="/categories/什么都学一下/学习log/" title="学习log">学习log<sup>20</sup></a></li>
-		
 			<li><a href="/categories/代码狗/学习log/" title="学习log">学习log<sup>25</sup></a></li>
+		
+			<li><a href="/categories/什么都学一下/学习log/" title="学习log">学习log<sup>20</sup></a></li>
 		
 			<li><a href="/categories/槽/" title="槽">槽<sup>39</sup></a></li>
 		
@@ -254,7 +176,7 @@ for(int i = 0; i &lt; users.size() ; i++)
 </div>
 
   <div class="tagslist">
-	<p class="asidetitle">标签</p>
+	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
 		
 			<li><a href="/tags/Android/" title="Android">Android<sup>14</sup></a></li>
@@ -301,11 +223,11 @@ for(int i = 0; i &lt; users.size() ; i++)
 </div>
 
   <div class="rsspart">
-	<a href="null" target="_blank" title="rss">RSS 订阅</a>
+	<a href="null" target="_blank" title="rss">RSS</a>
 </div>
 
   <div class="tagcloudlist">
-    <p class="asidetitle">标签云</p>
+    <p class="asidetitle">Tag Cloud</p>
     <div class="tagcloudlist clearfix">
        <a href="/tags/Android/" style="font-size: 18.57px">Android</a> <a href="/tags/ICP/" style="font-size: 10px">ICP</a> <a href="/tags/MMC/" style="font-size: 10px">MMC</a> <a href="/tags/MME/" style="font-size: 10px">MME</a> <a href="/tags/SPark/" style="font-size: 10px">SPark</a> <a href="/tags/bae/" style="font-size: 10px">bae</a> <a href="/tags/cmake/" style="font-size: 10px">cmake</a> <a href="/tags/dbscan/" style="font-size: 10px">dbscan</a> <a href="/tags/demo/" style="font-size: 10px">demo</a> <a href="/tags/erdas/" style="font-size: 10px">erdas</a> <a href="/tags/gms/" style="font-size: 10px">gms</a> <a href="/tags/hadoop/" style="font-size: 12.86px">hadoop</a> <a href="/tags/hello/" style="font-size: 10px">hello</a> <a href="/tags/java/" style="font-size: 15.71px">java</a> <a href="/tags/jena/" style="font-size: 11.43px">jena</a> <a href="/tags/juddi/" style="font-size: 10px">juddi</a> <a href="/tags/mark/" style="font-size: 14.29px">mark</a> <a href="/tags/mfc/" style="font-size: 10px">mfc</a> <a href="/tags/mysql/" style="font-size: 10px">mysql</a> <a href="/tags/ontology/" style="font-size: 12.86px">ontology</a> <a href="/tags/opencv/" style="font-size: 10px">opencv</a> <a href="/tags/python/" style="font-size: 11.43px">python</a> <a href="/tags/recommend/" style="font-size: 12.86px">recommend</a> <a href="/tags/sublimetext/" style="font-size: 10px">sublimetext</a> <a href="/tags/test/" style="font-size: 14.29px">test</a> <a href="/tags/后方交会/" style="font-size: 15.71px">后方交会</a> <a href="/tags/吐槽/" style="font-size: 20px">吐槽</a> <a href="/tags/呵呵/" style="font-size: 10px">呵呵</a> <a href="/tags/呵呵哒/" style="font-size: 10px">呵呵哒</a> <a href="/tags/寂寞寂寞就好/" style="font-size: 12.86px">寂寞寂寞就好</a> <a href="/tags/年度总结/" style="font-size: 11.43px">年度总结</a> <a href="/tags/我失恋了/" style="font-size: 10px">我失恋了</a> <a href="/tags/控制台/" style="font-size: 10px">控制台</a> <a href="/tags/无线传输/" style="font-size: 10px">无线传输</a> <a href="/tags/本体/" style="font-size: 11.43px">本体</a> <a href="/tags/本体论/" style="font-size: 11.43px">本体论</a> <a href="/tags/机器学习/" style="font-size: 10px">机器学习</a> <a href="/tags/梯子/" style="font-size: 10px">梯子</a> <a href="/tags/检校/" style="font-size: 17.14px">检校</a> <a href="/tags/测评/" style="font-size: 11.43px">测评</a> <a href="/tags/游记/" style="font-size: 10px">游记</a> <a href="/tags/点云/" style="font-size: 10px">点云</a> <a href="/tags/热点/" style="font-size: 10px">热点</a> <a href="/tags/电影/" style="font-size: 12.86px">电影</a> <a href="/tags/算法/" style="font-size: 10px">算法</a> <a href="/tags/精度/" style="font-size: 10px">精度</a> <a href="/tags/翔/" style="font-size: 10px">翔</a> <a href="/tags/考研/" style="font-size: 15.71px">考研</a> <a href="/tags/航空摄影测量/" style="font-size: 10px">航空摄影测量</a> <a href="/tags/装机/" style="font-size: 10px">装机</a> <a href="/tags/计算机视觉/" style="font-size: 10px">计算机视觉</a> <a href="/tags/语义网/" style="font-size: 11.43px">语义网</a> <a href="/tags/足球/" style="font-size: 10px">足球</a> <a href="/tags/静态ip/" style="font-size: 10px">静态ip</a> <a href="/tags/音乐/" style="font-size: 10px">音乐</a> <a href="/tags/马克/" style="font-size: 15.71px">马克</a>
     </div>
