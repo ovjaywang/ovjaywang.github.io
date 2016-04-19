@@ -251,7 +251,7 @@
     <link href="http://ovjaywang.github.io/2016/01/25/opencv-findhomography-findfundanmentalmat/"/>
     <id>http://ovjaywang.github.io/2016/01/25/opencv-findhomography-findfundanmentalmat/</id>
     <published>2016-01-24T16:54:26.000Z</published>
-    <updated>2016-04-19T09:22:53.624Z</updated>
+    <updated>2016-04-19T09:58:28.325Z</updated>
     
     <content type="html">&lt;p&gt;&lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default&quot;&gt;&lt;/script&gt;&lt;br&gt;opencv 中，进行&lt;strong&gt;图像拼接(全景拼接 航摄拼接 三维重建 街景地图)&lt;/strong&gt;，大致流程如下。&lt;/p&gt;
 &lt;ol&gt;
@@ -312,42 +312,7 @@
 
 &lt;p&gt;其中，$\widetilde{p}$是像片任意同名点相机坐标，$\widetilde{l}$是方程系数。又依据同名点公式，$$Ep&lt;em&gt;{l} =\widetilde{l&lt;/em&gt;{r}}$$，所以！对应外极线的方程系数可以直接由E矩阵和本侧同名点求出。其中，$\widetilde{l_{l}}$是左极点对应外极线方程。&lt;/p&gt;
 &lt;p&gt;当已知左侧点，其右侧对应点在直线&lt;/p&gt;
-&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/26/56d08c864e4a7.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
-
-&lt;p&gt;当已知右侧点，其左侧对应点在极线&lt;/p&gt;
-&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/26/56d01c07d68ed.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
-
-&lt;p&gt;&lt;strong&gt;极点&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;别忘了。极点也是在极线上，所以有&lt;/p&gt;
-&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/26/56d0673df0710.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
-
-&lt;p&gt;且，极点属于所有极线，因而&lt;/p&gt;
-&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/26/56d0678f1ddfc.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
-
-&lt;p&gt;上式可用来定位极点的坐标&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;#&lt;strong&gt; 2.第2个矩阵 Fundamental基础矩阵&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;另一个需要提到的概念是基础矩阵。&lt;/p&gt;
-&lt;p&gt;Essential矩阵使用CameraCoords相机坐标系。尽管其中可计算像素坐标，但仍然以摄影中心为原点，像平面所有点z值都是f。当考虑相机内参数时，这就是FundamentalMatrix基础矩阵&lt;/p&gt;
-&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/01/22/56a2556c54d1d.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
-
-&lt;p&gt;该图显示了fundamentalmatrix（基础矩阵）的基本内涵。p q分别为同名点。计算基础矩阵需要考虑到内参数的仿射变换。M为内参数的矩阵，包含6个参数的3*3矩阵。&lt;/p&gt;
-&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/26/56d069db39519.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
-
-&lt;p&gt;将上式中的Camera坐标提到一边，带入基本矩阵解求对极同名点的方程，即可得到F的表达式.&lt;/p&gt;
-&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/24/56ce7854f3d64.jpg&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
-
-&lt;p&gt;上式即为基础矩阵方程。其中，F是基础矩阵，x’x分别为同名点。而左右两个平面的两条极线为，显而易见，F由E和两个内参数矩阵决定。&lt;/p&gt;
-&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/26/56d06ae01c63d.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
-
-&lt;p&gt;类似的，F与E一样都能指同名点坐标在对应极线的关系。下图分别是已知左右点其对应极线的关系。&lt;/p&gt;
-&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/24/56ce78b202e41.jpg&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
-
-&lt;p&gt;一个简单的例子，如果从某种方式计算出基础矩阵，则在对应图中即可表示出像素点对应的极线。&lt;/p&gt;
-&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/28/56d3bee0758a5.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
-
-&lt;p&gt;计算出矩阵即为l的三个参数。一般的，调整比例 将前两项的平方和定为1.&lt;/p&gt;
-&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/28/56d3bf4cbf895.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/26/56d08c864e4a7.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;&lt;br&gt;当已知右侧点，其左侧对应点在极线&lt;br&gt;&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/26/56d01c07d68ed.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;&lt;br&gt;&lt;strong&gt;极点&lt;/strong&gt;&lt;br&gt;&lt;br&gt;别忘了。极点也是在极线上，所以有&lt;br&gt;&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/26/56d0673df0710.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;&lt;br&gt;且，极点属于所有极线，因而&lt;br&gt;&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/26/56d0678f1ddfc.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;&lt;br&gt;上式可用来定位极点的坐标&lt;br&gt;&lt;br&gt;&lt;em&gt; &lt;/em&gt; &lt;em&gt;&lt;br&gt;&lt;br&gt;# &lt;strong&gt; 2.第2个矩阵 Fundamental基础矩阵&lt;/strong&gt;&lt;br&gt;&lt;br&gt;另一个需要提到的概念是基础矩阵。&lt;br&gt;&lt;br&gt;Essential矩阵使用CameraCoords相机坐标系。尽管其中可计算像素坐标，但仍然以摄影中心为原点，像平面所有点z值都是f。当考虑相机内参数时，这就是FundamentalMatrix基础矩阵&lt;br&gt;&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/01/22/56a2556c54d1d.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;&lt;br&gt;该图显示了fundamentalmatrix（基础矩阵）的基本内涵。p q分别为同名点。计算基础矩阵需要考虑到内参数的仿射变换。M为内参数的矩阵，包含6个参数的3&lt;/em&gt;3矩阵。&lt;br&gt;&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/26/56d069db39519.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;&lt;br&gt;将上式中的Camera坐标提到一边，带入基本矩阵解求对极同名点的方程，即可得到F的表达式.&lt;br&gt;&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/24/56ce7854f3d64.jpg&quot; alt=&quot;&quot;&gt;&lt;/center&gt;&lt;br&gt;上式即为基础矩阵方程。其中，F是基础矩阵，x’x分别为同名点。而左右两个平面的两条极线为，显而易见，F由E和两个内参数矩阵决定。&lt;br&gt;&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/26/56d06ae01c63d.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;&lt;br&gt;类似的，F与E一样都能指同名点坐标在对应极线的关系。下图分别是已知左右点其对应极线的关系。&lt;br&gt;&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/24/56ce78b202e41.jpg&quot; alt=&quot;&quot;&gt;&lt;/center&gt;&lt;br&gt;一个简单的例子，如果从某种方式计算出基础矩阵，则在对应图中即可表示出像素点对应的极线。&lt;br&gt;&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/28/56d3bee0758a5.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;&lt;br&gt;计算出矩阵即为l的三个参数。一般的，调整比例 将前两项的平方和定为1.&lt;br&gt;&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/28/56d3bf4cbf895.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
 
 &lt;p&gt;findfundamentalmat()本意为基础矩阵，是假设两幅图像在同一三维场景中的不同视角。例如立体摄像机，从不同的角度拍摄同一个目标，它解算的是，两幅图像其中一个同名点，与其在外极线同名点的转换关系。它的映射基于三维场景，因此使用这个函数的时候，在不同的视角之间，应该有一个明显的基线。默认使用7点算法拟合数据。基础矩阵把左边图像的一个点的图像坐标与它右边图像中的对应点的图像联系起来，他是一个3x3的退化矩阵，描述了两个立体图像对的外极限几何关系，其计算依赖于在两个图像中相对应的一组点。&lt;/p&gt;
 &lt;p&gt;与Homography矩阵（下文提到）不同，它在每组对应点有两组约束：x、y同时作为x’y’的自变量，估算一组对应点只有一行的约束，因为极线约束是标量等式。因此至少需要8个点。所以一般使用8点算法计算F矩阵(8点算法)。&lt;/p&gt;
@@ -406,7 +371,7 @@
 &lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/24/56ce6cd71fc88.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
 
 &lt;p&gt;上图可以看到，将三维坐标点z值设为0，[p,q,0,1]即为三维齐次坐标。&lt;/p&gt;
-&lt;p&gt;$$\begin{bmatrix}x\y\1\end{bmatrix}\sim\begin{bmatrix}f&amp;amp;0&amp;amp;0&amp;amp;0\0&amp;amp;f&amp;amp;0&amp;amp;0\0&amp;amp;0&amp;amp;1&amp;amp;0\end{bmatrix}\begin{bmatrix}r&lt;em&gt;{11}&amp;amp;r&lt;/em&gt;{12}&amp;amp;r&lt;em&gt;{13}&amp;amp;t&lt;/em&gt;{x}\r&lt;em&gt;{21}&amp;amp;r&lt;/em&gt;{22}&amp;amp;r&lt;em&gt;{23}&amp;amp;t&lt;/em&gt;{y}\r&lt;em&gt;{31}&amp;amp;r&lt;/em&gt;{32}&amp;amp;r&lt;em&gt;{33}&amp;amp;t&lt;/em&gt;{z}\0&amp;amp;0&amp;amp;0&amp;amp;1\end{bmatrix}\begin{bmatrix}p\q\0\1\end{bmatrix}\sim\begin{bmatrix}fr&lt;em&gt;{11}&amp;amp;fr&lt;/em&gt;{12}&amp;amp;ft&lt;em&gt;{x}\fr&lt;/em&gt;{21}&amp;amp;fr&lt;em&gt;{22}&amp;amp;ft&lt;/em&gt;{y}\r&lt;em&gt;{31}&amp;amp;r&lt;/em&gt;{32}&amp;amp;t&lt;em&gt;{z}\end{bmatrix}\begin{bmatrix}p\q\1\end{bmatrix}\sim\begin{bmatrix}h&lt;/em&gt;{11}&amp;amp;h&lt;em&gt;{12}&amp;amp;h&lt;/em&gt;{13}\h&lt;em&gt;{21}&amp;amp;h&lt;/em&gt;{22}&amp;amp;h&lt;em&gt;{23}\h&lt;/em&gt;{31}&amp;amp;h&lt;em&gt;{32}&amp;amp;h&lt;/em&gt;{33}\end{bmatrix}\begin{bmatrix}p\q\1\end{bmatrix}$$&lt;/p&gt;
+&lt;p&gt;$$ \begin{bmatrix}x\y\1 \end{bmatrix} \sim \begin{bmatrix}f&amp;amp;0&amp;amp;0&amp;amp;0\0&amp;amp;f&amp;amp;0&amp;amp;0\0&amp;amp;0&amp;amp;1&amp;amp;0 \end{bmatrix} \begin{bmatrix}r&lt;em&gt;{11}&amp;amp;r&lt;/em&gt;{12}&amp;amp;r&lt;em&gt;{13}&amp;amp;t&lt;/em&gt;{x}\r&lt;em&gt;{21}&amp;amp;r&lt;/em&gt;{22}&amp;amp;r&lt;em&gt;{23}&amp;amp;t&lt;/em&gt;{y}\r&lt;em&gt;{31}&amp;amp;r&lt;/em&gt;{32}&amp;amp;r&lt;em&gt;{33}&amp;amp;t&lt;/em&gt;{z}\0&amp;amp;0&amp;amp;0&amp;amp;1\end{bmatrix}\begin{bmatrix}p\q\0\1\end{bmatrix} \sim \begin{bmatrix}fr&lt;em&gt;{11}&amp;amp;fr&lt;/em&gt;{12}&amp;amp;ft&lt;em&gt;{x}\fr&lt;/em&gt;{21}&amp;amp;fr&lt;em&gt;{22}&amp;amp;ft&lt;/em&gt;{y}\r&lt;em&gt;{31}&amp;amp;r&lt;/em&gt;{32}&amp;amp;t&lt;em&gt;{z} \end{bmatrix}\begin{bmatrix}p\q\1 \end{bmatrix} \sim \begin{bmatrix}h&lt;/em&gt;{11}&amp;amp;h&lt;em&gt;{12}&amp;amp;h&lt;/em&gt;{13}\h&lt;em&gt;{21}&amp;amp;h&lt;/em&gt;{22}&amp;amp;h&lt;em&gt;{23}\h&lt;/em&gt;{31}&amp;amp;h&lt;em&gt;{32}&amp;amp;h&lt;/em&gt;{33} \end{bmatrix}\begin{bmatrix}p\q\1 \end{bmatrix}$$&lt;/p&gt;
 &lt;p&gt;最终推到出，3D转2D的投影变换成为2D转2D的变换，该变化可逆！其特例是，当采用的物方坐标系z轴与主光轴平行，即正射影像，则上式R矩阵为&lt;/p&gt;
 &lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/24/56ce7aab1b305.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
 
@@ -425,8 +390,7 @@
 &lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/25/56ceb83e89a7b.png&quot; alt=&quot;&quot;&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/25/56cebcef9abd7.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
 
 &lt;hr&gt;
-&lt;p&gt;#&lt;strong&gt; 4. Homography（单映）矩阵的求取&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;参考&lt;a href=&quot;http://www.robots.ox.ac.uk/~vgg/presentations/bmvc97/criminispaper/node3.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;  只要大于4个匹配点，都认为是冗余测量，必须融合数据。文章里提到了三种解求二维面到面的单应矩阵的球法。&lt;/p&gt;
+&lt;h1 id=&quot;4-Homography（单映）矩阵的求取&quot;&gt;&lt;a href=&quot;#4-Homography（单映）矩阵的求取&quot; class=&quot;headerlink&quot; title=&quot; 4. Homography（单映）矩阵的求取&quot;&gt;&lt;/a&gt;&lt;strong&gt; 4. Homography（单映）矩阵的求取&lt;/strong&gt;&lt;/h1&gt;&lt;p&gt;参考&lt;a href=&quot;http://www.robots.ox.ac.uk/~vgg/presentations/bmvc97/criminispaper/node3.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;  只要大于4个匹配点，都认为是冗余测量，必须融合数据。文章里提到了三种解求二维面到面的单应矩阵的球法。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;非线性的解决办法，使用伪逆进行分解。当所解求值为0时会有bug。&lt;/li&gt;
 &lt;li&gt;线性最小二乘解法，通常使用SVD分解，V矩阵就对应了最小奇异值。&lt;a href=&quot;http://blog.chinaunix.net/uid-20761674-id-4040274.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个SVD的文章&lt;/a&gt;相当好的解释了SVD分解的意义。八个未知数对应八个特征向量，也对应八个线性方程的解。SVD能直接解求出这八个向量，即V中的特征向量。&lt;/li&gt;

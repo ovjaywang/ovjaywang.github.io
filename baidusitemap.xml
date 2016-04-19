@@ -4,14 +4,16 @@
 
     
   <url>
-    <loc>http://ovjaywang.github.io/2015/10/12/%E5%90%8E%E6%96%B9%E4%BA%A4%E4%BC%9A%E6%A3%80%E6%A0%A1(2)--%E8%AF%AF%E5%B7%AE%E6%96%B9%E7%A8%8B%E5%8F%8A%E5%90%84%E9%A1%B9%E7%B3%BB%E6%95%B0%E8%A7%A3%E6%B1%82%E5%8F%8A%E7%B2%BE%E5%BA%A6/</loc>
-    <lastmod>2016-04-19T09:37:40.732Z</lastmod>
+    <loc>http://ovjaywang.github.io/2016/01/25/opencv-findhomography-findfundanmentalmat/</loc>
+    <lastmod>2016-04-19T09:58:28.325Z</lastmod>
     <data>
         <display>
-        <title>后方交会检校(2)--误差方程及各项系数解求及精度</title>
-        <pubTime>2015-10-12T09:16:52.000Z</pubTime>
+        <title>由opencv中findFundamentalMat和findHomography区别的引申</title>
+        <pubTime>2016-01-24T16:54:26.000Z</pubTime>
         
-        <tag>检校</tag>
+        <tag>opencv</tag>
+         
+        <tag>计算机视觉</tag>
          
          
            
@@ -27,16 +29,14 @@
 
     
   <url>
-    <loc>http://ovjaywang.github.io/2016/01/25/opencv-findhomography-findfundanmentalmat/</loc>
-    <lastmod>2016-04-19T09:22:53.624Z</lastmod>
+    <loc>http://ovjaywang.github.io/2015/10/12/%E5%90%8E%E6%96%B9%E4%BA%A4%E4%BC%9A%E6%A3%80%E6%A0%A1(2)--%E8%AF%AF%E5%B7%AE%E6%96%B9%E7%A8%8B%E5%8F%8A%E5%90%84%E9%A1%B9%E7%B3%BB%E6%95%B0%E8%A7%A3%E6%B1%82%E5%8F%8A%E7%B2%BE%E5%BA%A6/</loc>
+    <lastmod>2016-04-19T09:37:40.732Z</lastmod>
     <data>
         <display>
-        <title>由opencv中findFundamentalMat和findHomography区别的引申</title>
-        <pubTime>2016-01-24T16:54:26.000Z</pubTime>
+        <title>后方交会检校(2)--误差方程及各项系数解求及精度</title>
+        <pubTime>2015-10-12T09:16:52.000Z</pubTime>
         
-        <tag>opencv</tag>
-         
-        <tag>计算机视觉</tag>
+        <tag>检校</tag>
          
          
            
