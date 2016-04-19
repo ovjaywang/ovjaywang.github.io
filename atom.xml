@@ -250,7 +250,7 @@
     <link href="http://ovjaywang.github.io/2016/01/25/opencv-findhomography-findfundanmentalmat/"/>
     <id>http://ovjaywang.github.io/2016/01/25/opencv-findhomography-findfundanmentalmat/</id>
     <published>2016-01-24T16:54:26.000Z</published>
-    <updated>2016-04-19T11:20:57.820Z</updated>
+    <updated>2016-04-19T11:25:40.274Z</updated>
     
     <content type="html">&lt;p&gt;&lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default&quot;&gt;&lt;/script&gt;&lt;br&gt;opencv 中，进行&lt;strong&gt;图像拼接(全景拼接 航摄拼接 三维重建 街景地图)&lt;/strong&gt;，大致流程如下。&lt;/p&gt;
 &lt;ol&gt;
@@ -317,7 +317,7 @@
 &lt;p&gt;与Homography矩阵（下文提到）不同，它在每组对应点有两组约束：x、y同时作为x’y’的自变量，估算一组对应点只有一行的约束，因为极线约束是标量等式。因此至少需要8个点。所以一般使用8点算法计算F矩阵(8点算法)。&lt;/p&gt;
 &lt;p&gt;$$\begin{bmatrix} x&lt;em&gt;{i}^{‘}&amp;amp;x&lt;/em&gt;{i}^{‘} &amp;amp; 1\end{bmatrix}\begin{bmatrix} f&lt;em&gt;{11} &amp;amp; f&lt;/em&gt;{12} &amp;amp; f&lt;em&gt;{13} \ f&lt;/em&gt;{21} &amp;amp; f&lt;em&gt;{22}&amp;amp;f&lt;/em&gt;{23}\ f&lt;em&gt;{31} &amp;amp; f&lt;/em&gt;{32} &amp;amp; f&lt;em&gt;{33}\end{bmatrix}\begin{bmatrix}x&lt;/em&gt;{i} \ y_{i} \ 1 \end{bmatrix}=0$$&lt;/p&gt;
 &lt;p&gt;可推到出方程：&lt;/p&gt;
-&lt;p&gt;$$x&lt;em&gt;{i}x&lt;/em&gt;{i}^{‘}f&lt;em&gt;{11}+x&lt;/em&gt;{i}y&lt;em&gt;{i}^{‘}f&lt;/em&gt;{21}+x&lt;em&gt;{i}f&lt;/em&gt;{31}+y&lt;em&gt;{i}x&lt;/em&gt;{i}^{‘}f&lt;em&gt;{12}+y&lt;/em&gt;{i}y&lt;em&gt;{i}^{‘}f&lt;/em&gt;{22}+y&lt;em&gt;{i}f&lt;/em&gt;{32}+x&lt;em&gt;{i}^{‘}f&lt;/em&gt;{13}+y&lt;em&gt;{i}^{‘}f&lt;/em&gt;{23}+f_{33}=0$$&lt;/p&gt;
+&lt;p&gt;$$ x_i x_i^’ f_11 + x_i y_i^’ f_21 + x_i f_31 + y_i x_i^’ f_12 + y_i y_i^’ f_22 + y_i f_32 + x_i^’ f_13 + y_i^’ f_23 + f_33 =0$$&lt;/p&gt;
 &lt;center&gt;&lt;img src=&quot;https://ooo.0o0.ooo/2016/02/29/56d3ed9679e76.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
 
 &lt;p&gt;最终目标是找到ATA的一个特征向量使得它的特征值最小。常用的解法是构造m*9的矩阵A（m是点对数），求解A的奇异值分解，即A=UDVT，&lt;/p&gt;
@@ -396,12 +396,12 @@
 &lt;/ul&gt;
 &lt;p&gt;Homograhy的计算：计算该矩阵当然不会上式f θ等值直接解算。由于是二维图像之间的关系，一般都已知二维对应点集，直接采用最小二乘的方式使用LM进行计算。在一般情况下的H矩阵可表示为&lt;/p&gt;
 &lt;p&gt;$$\begin{bmatrix} x^{‘} \\ y^{‘} \\1 \end{bmatrix} \sim \begin{bmatrix} h_11 &amp;amp; h_12 &amp;amp; h_13 \\ h_21 &amp;amp; h_22 &amp;amp; h_23 \\ h_31 &amp;amp; h_32 &amp;amp; h_33 \end{bmatrix} \begin{bmatrix} x \\ y \\1 \end{bmatrix}$$&lt;/p&gt;
-&lt;p&gt;其中，h31 h32 h33是为了配置相似比例，化简为&lt;/p&gt;
+&lt;p&gt;其中，$h_31 h_32 h_33$是为了配置相似比例，化简为&lt;/p&gt;
 &lt;p&gt;$$x^{‘}=\frac{h_11 x+h_12 y+h_13}{h_31 x+h_32 y+h_33}$$&lt;/p&gt;
 &lt;p&gt;$$y^{‘}=\frac{h_21 x+h_22 y+h_23}{h_31 x+h_32 y+h_33}$$&lt;/p&gt;
 &lt;p&gt;但可以看到，h所有元素同乘k 等式依旧成立。因而强制设为8自由度有两种方式，&lt;/p&gt;
-&lt;p&gt;①$$ h_33=1 $$&lt;/p&gt;
-&lt;p&gt;②$$ {h^2}&lt;em&gt;11&lt;/em&gt; + h_12^2 + h_13^2  + h_21^2 + h_22^2 + h_23^2 + h_31^2 + h_32^2+ h_33^2 = 1 $$&lt;/p&gt;
+&lt;p&gt;①$$ h_33 = 1 $$&lt;/p&gt;
+&lt;p&gt;②$$ {h^2}_11 + {h^2}_12 + {h^2}_13  + {h^2}_21 + {h^2}_22 + {h^2}_23 + {h^2}_31 + {h^2}_32+ h^2 = 1 $$&lt;/p&gt;
 &lt;p&gt;采用第一种方式较为常见。&lt;/p&gt;
 &lt;p&gt;当采用最小二乘解求H矩阵时，一般先用Ransac筛选最大集，然后利用下方程。&lt;/p&gt;
 &lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/25/56cf041a7c664.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
