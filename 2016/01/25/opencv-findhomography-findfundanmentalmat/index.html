@@ -76,7 +76,7 @@
     </p>
   <p class="article-time">
     <time datetime="2016-01-24T16:54:26.000Z" itemprop="datePublished">2016-01-25</time>
-    Updated:<time datetime="2016-04-19T11:05:12.120Z" itemprop="dateModified">2016-04-19</time>
+    Updated:<time datetime="2016-04-19T11:08:51.072Z" itemprop="dateModified">2016-04-19</time>
     
   </p>
 </header>
@@ -233,11 +233,11 @@
 <p>Homograhy的计算：计算该矩阵当然不会上式f θ等值直接解算。由于是二维图像之间的关系，一般都已知二维对应点集，直接采用最小二乘的方式使用LM进行计算。在一般情况下的H矩阵可表示为</p>
 <p>$$\begin{bmatrix} x^{‘} \\ y^{‘} \\1 \end{bmatrix} \sim \begin{bmatrix} h_11 &amp; h_12 &amp; h_13 \\ h_21 &amp; h_22 &amp; h_23 \\ h_31 &amp; h_32 &amp; h_33 \end{bmatrix} \begin{bmatrix} x \\ y \\1 \end{bmatrix}$$</p>
 <p>其中，h31 h32 h33是为了配置相似比例，化简为</p>
-<p>$$x^{‘}=\frac{h<em>{11}x+h</em>{12}y+h<em>{13}}{h</em>{31}x+h<em>{32}y+h</em>{33}}$$</p>
-<p>$$y^{‘}=\frac{h<em>{21}x+h</em>{22}y+h<em>{23}}{h</em>{31}x+h<em>{32}y+h</em>{33}}$$</p>
+<p>$$x^{‘}=\frac{h_11 x+h_12 y+h_13}{h_31 x+h_32 y+h_33}$$</p>
+<p>$$y^{‘}=\frac{h_21 x+h_22 y+h_23}{h_31 x+h_32 y+h_33}$$</p>
 <p>但可以看到，h所有元素同乘k 等式依旧成立。因而强制设为8自由度有两种方式，</p>
 <p>①$$ h_33=1 $$</p>
-<p>②$$ h_11^2+h_12^2+h_13^2+h_21^2+h_22^2+h_23^2+h_31^2+h_32^2+h_33^2=1$$</p>
+<p>②$$ {h_11}^2+h_12^2+h_13^2+h_21^2+h_22^2+h_23^2+h_31^2+h_32^2+h_33^2=1$$</p>
 <p>采用第一种方式较为常见。</p>
 <p>当采用最小二乘解求H矩阵时，一般先用Ransac筛选最大集，然后利用下方程。</p>
 <center><img src="http://ooo.0o0.ooo/2016/02/25/56cf041a7c664.png" alt=""></center>
