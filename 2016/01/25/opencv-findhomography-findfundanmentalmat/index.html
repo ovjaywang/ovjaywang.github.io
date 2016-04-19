@@ -76,7 +76,7 @@
     </p>
   <p class="article-time">
     <time datetime="2016-01-24T16:54:26.000Z" itemprop="datePublished">2016-01-25</time>
-    Updated:<time datetime="2016-04-19T10:59:43.290Z" itemprop="dateModified">2016-04-19</time>
+    Updated:<time datetime="2016-04-19T11:05:12.120Z" itemprop="dateModified">2016-04-19</time>
     
   </p>
 </header>
@@ -85,7 +85,7 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-第一个矩阵-Essential本质矩阵"><span class="toc-number">1.</span> <span class="toc-text">1. 第一个矩阵 Essential本质矩阵</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-第二个矩阵-Homography（单映）矩阵"><span class="toc-number">2.</span> <span class="toc-text"> 3. 第二个矩阵 Homography（单映）矩阵</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-Homography（单映）矩阵的求取"><span class="toc-number">3.</span> <span class="toc-text"> 4. Homography（单映）矩阵的求取</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#谨记三："><span class="toc-number">4.</span> <span class="toc-text">** 谨记三：</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-第一个矩阵Essential本质矩阵"><span class="toc-number">1.</span> <span class="toc-text">1. 第一个矩阵Essential本质矩阵</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-第二个矩阵-Homography（单映）矩阵"><span class="toc-number">2.</span> <span class="toc-text"> 3. 第二个矩阵 Homography（单映）矩阵</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-Homography（单映）矩阵的求取"><span class="toc-number">3.</span> <span class="toc-text"> 4. Homography（单映）矩阵的求取</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#谨记三："><span class="toc-number">4.</span> <span class="toc-text">** 谨记三：</span></a></li></ol>
 		</div>
 		
 		<p><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script><br>opencv 中，进行<strong>图像拼接(全景拼接 航摄拼接 三维重建 街景地图)</strong>，大致流程如下。</p>
@@ -114,7 +114,7 @@
 <p><strong>灭点vanishing </strong> point：平行线在二维图像中汇聚的地方，空间中每一组平行线都有自己的灭点。</p>
 <p><strong>灭线vanishing line（消隐线 ）</strong> ：不同的灭线连线，即灭线。如果两组不同的平行线，都平行于大地，则他们的连线就是地平线（horizon line）</p>
 <hr>
-<h1 id="1-第一个矩阵-Essential本质矩阵"><a href="#1-第一个矩阵-Essential本质矩阵" class="headerlink" title="1. 第一个矩阵 Essential本质矩阵"></a>1. 第一个矩阵 Essential本质矩阵</h1><p>由于拍摄物体时，摄影中并不能被反映在图像中。如果让第二个观察者同时拍摄下某摄影中心和它所拍的照片呢?</p>
+<h1 id="1-第一个矩阵Essential本质矩阵"><a href="#1-第一个矩阵Essential本质矩阵" class="headerlink" title="1. 第一个矩阵Essential本质矩阵"></a>1. 第一个矩阵Essential本质矩阵</h1><p>由于拍摄物体时，摄影中并不能被反映在图像中。如果让第二个观察者同时拍摄下某摄影中心和它所拍的照片呢?</p>
 <center><img src="http://ooo.0o0.ooo/2016/02/25/56cfbd34f3c9e.png" alt=""></center>
 
 <p>反映在第二个观察者的照片，摄影中心和物体分别投影在像片上，任意第一个摄影中心和它所拍摄物体的连线都可视为第二个摄影中心的极线。直观的理解，即为下图的erpr。</p>
@@ -231,7 +231,7 @@
 <li>非线性几何解法，使对应点和映射点差值欧几里得距离（或平方和）最小。</li>
 </ul>
 <p>Homograhy的计算：计算该矩阵当然不会上式f θ等值直接解算。由于是二维图像之间的关系，一般都已知二维对应点集，直接采用最小二乘的方式使用LM进行计算。在一般情况下的H矩阵可表示为</p>
-<p>$$\begin{bmatrix} x^’ \\ y^’ \\1 \end{bmatrix} \sim \begin{bmatrix} h_11 &amp; h_12 &amp; h_13\\ h_21 &amp; h_22 &amp; h_23\\ h_31&amp;h_32&amp;h_33 \end{bmatrix} \begin{bmatrix} x \\ y \\1 \end{bmatrix}$$</p>
+<p>$$\begin{bmatrix} x^{‘} \\ y^{‘} \\1 \end{bmatrix} \sim \begin{bmatrix} h_11 &amp; h_12 &amp; h_13 \\ h_21 &amp; h_22 &amp; h_23 \\ h_31 &amp; h_32 &amp; h_33 \end{bmatrix} \begin{bmatrix} x \\ y \\1 \end{bmatrix}$$</p>
 <p>其中，h31 h32 h33是为了配置相似比例，化简为</p>
 <p>$$x^{‘}=\frac{h<em>{11}x+h</em>{12}y+h<em>{13}}{h</em>{31}x+h<em>{32}y+h</em>{33}}$$</p>
 <p>$$y^{‘}=\frac{h<em>{21}x+h</em>{22}y+h<em>{23}}{h</em>{31}x+h<em>{32}y+h</em>{33}}$$</p>
@@ -319,7 +319,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
-  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-第一个矩阵-Essential本质矩阵"><span class="toc-number">1.</span> <span class="toc-text">1. 第一个矩阵 Essential本质矩阵</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-第二个矩阵-Homography（单映）矩阵"><span class="toc-number">2.</span> <span class="toc-text"> 3. 第二个矩阵 Homography（单映）矩阵</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-Homography（单映）矩阵的求取"><span class="toc-number">3.</span> <span class="toc-text"> 4. Homography（单映）矩阵的求取</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#谨记三："><span class="toc-number">4.</span> <span class="toc-text">** 谨记三：</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-第一个矩阵Essential本质矩阵"><span class="toc-number">1.</span> <span class="toc-text">1. 第一个矩阵Essential本质矩阵</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-第二个矩阵-Homography（单映）矩阵"><span class="toc-number">2.</span> <span class="toc-text"> 3. 第二个矩阵 Homography（单映）矩阵</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-Homography（单映）矩阵的求取"><span class="toc-number">3.</span> <span class="toc-text"> 4. Homography（单映）矩阵的求取</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#谨记三："><span class="toc-number">4.</span> <span class="toc-text">** 谨记三：</span></a></li></ol>
   </div>
 
 <div id="asidepart">
