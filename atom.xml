@@ -250,7 +250,7 @@
     <link href="http://ovjaywang.github.io/2016/01/25/opencv-findhomography-findfundanmentalmat/"/>
     <id>http://ovjaywang.github.io/2016/01/25/opencv-findhomography-findfundanmentalmat/</id>
     <published>2016-01-24T16:54:26.000Z</published>
-    <updated>2016-04-19T11:31:08.752Z</updated>
+    <updated>2016-04-19T11:41:03.349Z</updated>
     
     <content type="html">&lt;p&gt;&lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default&quot;&gt;&lt;/script&gt;&lt;br&gt;opencv 中，进行&lt;strong&gt;图像拼接(全景拼接 航摄拼接 三维重建 街景地图)&lt;/strong&gt;，大致流程如下。&lt;/p&gt;
 &lt;ol&gt;
@@ -315,7 +315,7 @@
 
 &lt;p&gt;findfundamentalmat()本意为基础矩阵，是假设两幅图像在同一三维场景中的不同视角。例如立体摄像机，从不同的角度拍摄同一个目标，它解算的是，两幅图像其中一个同名点，与其在外极线同名点的转换关系。它的映射基于三维场景，因此使用这个函数的时候，在不同的视角之间，应该有一个明显的基线。默认使用7点算法拟合数据。基础矩阵把左边图像的一个点的图像坐标与它右边图像中的对应点的图像联系起来，他是一个3x3的退化矩阵，描述了两个立体图像对的外极限几何关系，其计算依赖于在两个图像中相对应的一组点。&lt;/p&gt;
 &lt;p&gt;与Homography矩阵（下文提到）不同，它在每组对应点有两组约束：x、y同时作为x’y’的自变量，估算一组对应点只有一行的约束，因为极线约束是标量等式。因此至少需要8个点。所以一般使用8点算法计算F矩阵(8点算法)。&lt;/p&gt;
-&lt;p&gt;$$\begin{bmatrix} {x^{‘}}_i &amp;amp; x^{‘}_i &amp;amp; 1 \end{bmatrix} \begin{bmatrix} f_11 &amp;amp; f_12 &amp;amp; f_13 \\ f_21 &amp;amp; f_22 &amp;amp; f_23 \\ f_31 &amp;amp; f_32 &amp;amp; f_33 \end{bmatrix} \begin{bmatrix} x_i \\ y_i \\ 1 \end{bmatrix}=0$$&lt;/p&gt;
+&lt;p&gt;$$\begin{bmatrix} {x^{‘}}_i &amp;amp; y^{‘}&lt;em&gt;i &amp;amp; 1 \end{bmatrix} \begin{bmatrix} f&lt;/em&gt;{11} &amp;amp; f&lt;em&gt;{12} &amp;amp; f&lt;/em&gt;{13} \\ f&lt;em&gt;{21} &amp;amp; f&lt;/em&gt;{22} &amp;amp; f&lt;em&gt;{23} \\  f&lt;/em&gt;{31} &amp;amp; f&lt;em&gt;{32}  &amp;amp; f&lt;/em&gt;{33}  \end{bmatrix} \begin{bmatrix} x_i \\ y_i \\ 1 \end{bmatrix}=0$$&lt;/p&gt;
 &lt;p&gt;可推到出方程：&lt;/p&gt;
 &lt;p&gt;$$ x_i x^{‘}_i f_11 + x_i y^{‘}_i f_21 + x_i f_31 + y_i x^{‘}_i f_12 + y_i y^{‘}_i f_22 + y_i f_32 + {x_i}^{‘} f_13 + y^{‘}_i f_23 + f_33 =0$$&lt;/p&gt;
 &lt;center&gt;&lt;img src=&quot;https://ooo.0o0.ooo/2016/02/29/56d3ed9679e76.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
