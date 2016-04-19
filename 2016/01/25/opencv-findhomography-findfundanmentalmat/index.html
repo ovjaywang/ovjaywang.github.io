@@ -38,7 +38,7 @@
 				<h1 class="site-name"><a href="/" title="ov智商捉急">ov智商捉急</a></h1>
 				<h2 class="blog-motto"></h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -53,7 +53,7 @@
 					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search">
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索">
 						<input type="hidden" name="q" value="site:ovjaywang.github.io">
 					</form>
 					
@@ -76,7 +76,7 @@
     </p>
   <p class="article-time">
     <time datetime="2016-01-24T16:54:26.000Z" itemprop="datePublished">2016-01-25</time>
-    Updated:<time datetime="2016-04-19T11:44:39.788Z" itemprop="dateModified">2016-04-19</time>
+    更新日期:<time datetime="2016-04-19T11:50:17.218Z" itemprop="dateModified">2016-04-19</time>
     
   </p>
 </header>
@@ -84,11 +84,11 @@
 		
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">Contents</strong>
+			<strong class="toc-title">文章目錄</strong>
 		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-第一个矩阵Essential本质矩阵"><span class="toc-number">1.</span> <span class="toc-text">1. 第一个矩阵Essential本质矩阵</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-第二个矩阵-Homography（单映）矩阵"><span class="toc-number">2.</span> <span class="toc-text"> 3. 第二个矩阵 Homography（单映）矩阵</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-Homography（单映）矩阵的求取"><span class="toc-number">3.</span> <span class="toc-text"> 4. Homography（单映）矩阵的求取</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#谨记三："><span class="toc-number">4.</span> <span class="toc-text">** 谨记三：</span></a></li></ol>
 		</div>
 		
-		<p><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script><br>opencv 中，进行<strong>图像拼接(全景拼接 航摄拼接 三维重建 街景地图)</strong>，大致流程如下。</p>
+		<p><script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script><br>opencv 中，进行<strong>图像拼接(全景拼接 航摄拼接 三维重建 街景地图)</strong>，大致流程如下。</p>
 <ol>
 <li>利用opencv提供的各类型特征点检测方法（Fast Start SIFT SURF ORB SimpleBlobPyramidAdapter DynamicAdapter 等）在图像中将感兴趣的有独特标识的点找出来,其中orb 是最近提出效率较高的检测和描述算法，金字塔算法则是更高的提高效率的算法；</li>
 <li>利用不同的描述方式（SIFT SURF），对特征点的信息（周围的梯度、灰度相关性 二进制编码等）进行描述； </li>
@@ -153,7 +153,7 @@
 <p>与Homography矩阵（下文提到）不同，它在每组对应点有两组约束：x、y同时作为x’y’的自变量，估算一组对应点只有一行的约束，因为极线约束是标量等式。因此至少需要8个点。所以一般使用8点算法计算F矩阵(8点算法)。</p>
 <p>$$\begin{bmatrix} x^{‘}_i &amp; y^{‘}<em>i &amp; 1 \end{bmatrix} \begin{bmatrix} f</em>{11} &amp; f<em>{12} &amp; f</em>{13} \\ f<em>{21} &amp; f</em>{22} &amp; f<em>{23} \\  f</em>{31} &amp; f<em>{32}  &amp; f</em>{33}  \end{bmatrix} \begin{bmatrix} x_i \\ y_i \\ 1 \end{bmatrix}=0$$</p>
 <p>可推到出方程：</p>
-<p>$$ x_i x^{‘}<em>i f</em>(11) + x_i y^{‘}_i f_21 + x_i f_31 + y_i x^{‘}_i f_12 + y_i y^{‘}_i f_22 + y_i f_32 + {x_i}^{‘} f_13 + y^{‘}_i f_23 + f_33 =0$$</p>
+<p>$$ x_i x^{‘}_i {f_11} + x_i y^{‘}_i f_21 + x_i f_31 + y_i x^{‘}_i f_12 + y_i y^{‘}_i f_22 + y_i f_32 + {x_i}^{‘} f_13 + y^{‘}_i f_23 + f_33 =0$$</p>
 <center><img src="https://ooo.0o0.ooo/2016/02/29/56d3ed9679e76.png" alt=""></center>
 
 <p>最终目标是找到ATA的一个特征向量使得它的特征值最小。常用的解法是构造m*9的矩阵A（m是点对数），求解A的奇异值分解，即A=UDVT，</p>
@@ -315,19 +315,19 @@
 	<div class="ds-thread"></div>
 </section>
 </div>
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
 
   <div id="toc" class="toc-aside">
-  <strong class="toc-title">Contents</strong>
+  <strong class="toc-title">文章目錄</strong>
   <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-第一个矩阵Essential本质矩阵"><span class="toc-number">1.</span> <span class="toc-text">1. 第一个矩阵Essential本质矩阵</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-第二个矩阵-Homography（单映）矩阵"><span class="toc-number">2.</span> <span class="toc-text"> 3. 第二个矩阵 Homography（单映）矩阵</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-Homography（单映）矩阵的求取"><span class="toc-number">3.</span> <span class="toc-text"> 4. Homography（单映）矩阵的求取</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#谨记三："><span class="toc-number">4.</span> <span class="toc-text">** 谨记三：</span></a></li></ol>
   </div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
 <aside class="clearfix">
 
   <div class="categorieslist">
-	<p class="asidetitle">Categories</p>
+	<p class="asidetitle">分類</p>
 		<ul>
 		
 			<li><a href="/categories/App强推/" title="App强推">App强推<sup>8</sup></a></li>
@@ -356,7 +356,7 @@
 </div>
 
   <div class="tagslist">
-	<p class="asidetitle">Tags</p>
+	<p class="asidetitle">標簽</p>
 		<ul class="clearfix">
 		
 			<li><a href="/tags/Android/" title="Android">Android<sup>14</sup></a></li>
@@ -403,11 +403,11 @@
 </div>
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
 </div>
 
   <div class="tagcloudlist">
-    <p class="asidetitle">Tag Cloud</p>
+    <p class="asidetitle">標簽雲</p>
     <div class="tagcloudlist clearfix">
        <a href="/tags/Android/" style="font-size: 18.57px">Android</a> <a href="/tags/ICP/" style="font-size: 10px">ICP</a> <a href="/tags/MMC/" style="font-size: 10px">MMC</a> <a href="/tags/MME/" style="font-size: 10px">MME</a> <a href="/tags/SPark/" style="font-size: 10px">SPark</a> <a href="/tags/bae/" style="font-size: 10px">bae</a> <a href="/tags/cmake/" style="font-size: 10px">cmake</a> <a href="/tags/dbscan/" style="font-size: 10px">dbscan</a> <a href="/tags/demo/" style="font-size: 10px">demo</a> <a href="/tags/erdas/" style="font-size: 10px">erdas</a> <a href="/tags/gms/" style="font-size: 10px">gms</a> <a href="/tags/hadoop/" style="font-size: 12.86px">hadoop</a> <a href="/tags/hello/" style="font-size: 10px">hello</a> <a href="/tags/java/" style="font-size: 15.71px">java</a> <a href="/tags/jena/" style="font-size: 11.43px">jena</a> <a href="/tags/juddi/" style="font-size: 10px">juddi</a> <a href="/tags/mark/" style="font-size: 14.29px">mark</a> <a href="/tags/mfc/" style="font-size: 10px">mfc</a> <a href="/tags/mysql/" style="font-size: 10px">mysql</a> <a href="/tags/ontology/" style="font-size: 12.86px">ontology</a> <a href="/tags/opencv/" style="font-size: 10px">opencv</a> <a href="/tags/python/" style="font-size: 11.43px">python</a> <a href="/tags/recommend/" style="font-size: 12.86px">recommend</a> <a href="/tags/sublimetext/" style="font-size: 10px">sublimetext</a> <a href="/tags/test/" style="font-size: 12.86px">test</a> <a href="/tags/后方交会/" style="font-size: 15.71px">后方交会</a> <a href="/tags/吐槽/" style="font-size: 20px">吐槽</a> <a href="/tags/呵呵/" style="font-size: 10px">呵呵</a> <a href="/tags/呵呵哒/" style="font-size: 10px">呵呵哒</a> <a href="/tags/寂寞寂寞就好/" style="font-size: 12.86px">寂寞寂寞就好</a> <a href="/tags/年度总结/" style="font-size: 11.43px">年度总结</a> <a href="/tags/我失恋了/" style="font-size: 10px">我失恋了</a> <a href="/tags/控制台/" style="font-size: 10px">控制台</a> <a href="/tags/无线传输/" style="font-size: 10px">无线传输</a> <a href="/tags/本体/" style="font-size: 11.43px">本体</a> <a href="/tags/本体论/" style="font-size: 11.43px">本体论</a> <a href="/tags/机器学习/" style="font-size: 10px">机器学习</a> <a href="/tags/梯子/" style="font-size: 10px">梯子</a> <a href="/tags/检校/" style="font-size: 17.14px">检校</a> <a href="/tags/测评/" style="font-size: 11.43px">测评</a> <a href="/tags/游记/" style="font-size: 10px">游记</a> <a href="/tags/点云/" style="font-size: 10px">点云</a> <a href="/tags/热点/" style="font-size: 10px">热点</a> <a href="/tags/电影/" style="font-size: 12.86px">电影</a> <a href="/tags/算法/" style="font-size: 10px">算法</a> <a href="/tags/精度/" style="font-size: 10px">精度</a> <a href="/tags/翔/" style="font-size: 10px">翔</a> <a href="/tags/考研/" style="font-size: 15.71px">考研</a> <a href="/tags/航空摄影测量/" style="font-size: 10px">航空摄影测量</a> <a href="/tags/装机/" style="font-size: 10px">装机</a> <a href="/tags/计算机视觉/" style="font-size: 10px">计算机视觉</a> <a href="/tags/语义网/" style="font-size: 11.43px">语义网</a> <a href="/tags/足球/" style="font-size: 10px">足球</a> <a href="/tags/静态ip/" style="font-size: 10px">静态ip</a> <a href="/tags/音乐/" style="font-size: 10px">音乐</a> <a href="/tags/马克/" style="font-size: 15.71px">马克</a>
     </div>
