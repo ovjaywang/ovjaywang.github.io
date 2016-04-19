@@ -250,7 +250,7 @@
     <link href="http://ovjaywang.github.io/2016/01/25/opencv-findhomography-findfundanmentalmat/"/>
     <id>http://ovjaywang.github.io/2016/01/25/opencv-findhomography-findfundanmentalmat/</id>
     <published>2016-01-24T16:54:26.000Z</published>
-    <updated>2016-04-19T12:56:52.589Z</updated>
+    <updated>2016-04-19T13:01:08.923Z</updated>
     
     <content type="html">&lt;p&gt;opencv 中，进行&lt;strong&gt;图像拼接(全景拼接 航摄拼接 三维重建 街景地图)&lt;/strong&gt;，大致流程如下。&lt;/p&gt;
 &lt;ol&gt;
@@ -397,10 +397,10 @@
 &lt;p&gt;Homograhy的计算：计算该矩阵当然不会上式f θ等值直接解算。由于是二维图像之间的关系，一般都已知二维对应点集，直接采用最小二乘的方式使用LM进行计算。在一般情况下的H矩阵可表示为&lt;/p&gt;
 &lt;p&gt;$$ \begin{bmatrix} x^{‘} \\ y^{‘} \\ 1 \end{bmatrix} \sim \begin{bmatrix} h_11 &amp;amp; h_12 &amp;amp; h_13 \\ h_21 &amp;amp; h_22 &amp;amp; h_23 \\ h_31 &amp;amp; h_32 &amp;amp; h_33 \end{bmatrix} \begin{bmatrix} x \\ y \\ 1 \end{bmatrix}$$&lt;/p&gt;
 &lt;p&gt;其中，$h_31 h_32 h_33$是为了配置相似比例，化简为&lt;/p&gt;
-&lt;p&gt;$$x^{‘}=\frac{h_11 x + h_12 y + h_13 }{ h_31 x + h_32 y + h_33 }$$&lt;/p&gt;
-&lt;p&gt;$$y^{‘}=\frac{h_21 \cdot x + h_22 y + h_23 }{ h_31 x + h_32 y + h_33 }$$&lt;/p&gt;
+&lt;p&gt;$$x^{\’}=\frac{h_11 x + h_12 y + h_13 }{ h_31 x + h_32 y + h_33 }$$&lt;/p&gt;
+&lt;p&gt;$$y^{\’}=\frac{h_21 \cdot x + h_22 y + h_23 }{ h_31 x + h_32 y + h_33 }$$&lt;/p&gt;
 &lt;p&gt;但可以看到，h所有元素同乘k 等式依旧成立。因而强制设为8自由度有两种方式，&lt;/p&gt;
-&lt;p&gt;①$$ h&lt;em&gt;{33} = 1 $$&lt;br&gt;②$$ h\&lt;/em&gt;{11}^{2} + h_{12}^{2} = 1 $$&lt;br&gt;采用第一种方式较为常见。&lt;br&gt;当采用最小二乘解求H矩阵时，一般先用Ransac筛选最大集，然后利用下方程。&lt;/p&gt;
+&lt;p&gt;①$$ h&lt;em&gt;{33} = 1 $$&lt;br&gt;②$$ h&lt;/em&gt;{11}\^{2} + h_{12}\^{2} = 1 $$&lt;br&gt;采用第一种方式较为常见。&lt;br&gt;当采用最小二乘解求H矩阵时，一般先用Ransac筛选最大集，然后利用下方程。&lt;/p&gt;
 &lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/25/56cf041a7c664.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
 
 &lt;p&gt;以x y x’y’为A b矩阵参数，迭代解求H。由于是线性方程，因而可以直接使用$$h=(A^{T}A)^{-1}(A^{T}b)$$求取每次的残差。&lt;/p&gt;
