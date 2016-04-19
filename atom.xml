@@ -250,7 +250,7 @@
     <link href="http://ovjaywang.github.io/2016/01/25/opencv-findhomography-findfundanmentalmat/"/>
     <id>http://ovjaywang.github.io/2016/01/25/opencv-findhomography-findfundanmentalmat/</id>
     <published>2016-01-24T16:54:26.000Z</published>
-    <updated>2016-04-19T11:17:31.917Z</updated>
+    <updated>2016-04-19T11:19:28.548Z</updated>
     
     <content type="html">&lt;p&gt;&lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default&quot;&gt;&lt;/script&gt;&lt;br&gt;opencv 中，进行&lt;strong&gt;图像拼接(全景拼接 航摄拼接 三维重建 街景地图)&lt;/strong&gt;，大致流程如下。&lt;/p&gt;
 &lt;ol&gt;
@@ -401,7 +401,7 @@
 &lt;p&gt;$$y^{‘}=\frac{h_21 x+h_22 y+h_23}{h_31 x+h_32 y+h_33}$$&lt;/p&gt;
 &lt;p&gt;但可以看到，h所有元素同乘k 等式依旧成立。因而强制设为8自由度有两种方式，&lt;/p&gt;
 &lt;p&gt;①$$ h_33=1 $$&lt;/p&gt;
-&lt;p&gt;②$$ h_11^2 + h_12^2 + h_13^2  +h_21^2+ h_22^2 + h_23^2 + h_31^2 + h_32^2+ h_33^2 = 1 $$&lt;/p&gt;
+&lt;p&gt;②$$ h_{11}^2 + h_12^2 + h_13^2  + h_21^2 + h_22^2 + h_23^2 + h_31^2 + h_32^2+ h_33^2 = 1 $$&lt;/p&gt;
 &lt;p&gt;采用第一种方式较为常见。&lt;/p&gt;
 &lt;p&gt;当采用最小二乘解求H矩阵时，一般先用Ransac筛选最大集，然后利用下方程。&lt;/p&gt;
 &lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/25/56cf041a7c664.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
