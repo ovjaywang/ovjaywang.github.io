@@ -102,11 +102,11 @@
     <link href="http://ovjaywang.github.io/2016/04/10/Hello-Hexo/"/>
     <id>http://ovjaywang.github.io/2016/04/10/Hello-Hexo/</id>
     <published>2016-04-10T14:51:49.000Z</published>
-    <updated>2016-04-19T10:53:04.924Z</updated>
+    <updated>2016-04-19T10:54:09.980Z</updated>
     
     <content type="html">&lt;p&gt;感谢&lt;a href=&quot;http://zipperary.com/2013/05/28/hexo-guide-2/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个教程&lt;/a&gt;&lt;br&gt;还有&lt;a href=&quot;http://ibruce.info/2013/11/22/hexo-your-blog/?utm_source=tuicool&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个&lt;/a&gt;&lt;br&gt;解决了好多bugs的&lt;a href=&quot;http://www.jianshu.com/p/35e197cb1273&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个&lt;/a&gt;&lt;br&gt;优化cdn图床缓冲的&lt;a href=&quot;http://lukang.me/2015/optimization-of-hexo-2.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://www.dute.me/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个&lt;/a&gt;让我找到了便宜的狗爹优惠码&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;从一开始的阵地wp搬到这里来了。后会有期了dooby.me 再见了WordPress 默默的是有些不舍。虽然push很慢虽然被墙了大半 4年光阴不复返啊。从一个逗比成长为大逗比了。
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;hexo坑还是挺多的。&lt;br&gt;$$ \begin{bmatrix} x \\ y \\ 1&lt;br&gt;\end{bmatrix} \sim \begin{bmatrix} f &amp;amp; 0 &amp;amp; 0 &amp;amp; 0 \\ 0 &amp;amp; f &amp;amp; 0 &amp;amp; 0 \\ 0 &amp;amp; 0 &amp;amp; 1 &amp;amp; 0 \end{bmatrix} \begin{bmatrix} r_11 &amp;amp; r_12 &amp;amp; r_13 &amp;amp; t_x \\ r_21 &amp;amp; r_22 &amp;amp; r_23 &amp;amp; t_y \\ r_31 &amp;amp; r_32&amp;amp; r_33 &amp;amp; t_z \\ 0 &amp;amp; 0 &amp;amp; 0 &amp;amp; 1 \end{bmatrix} \begin{bmatrix} p \\ q \\ 0 \\ 1 \end{bmatrix} \sim \begin{bmatrix} fr_11 &amp;amp; fr_12 &amp;amp; ft_x \\ fr_21 &amp;amp; fr_22 &amp;amp; ft_y \\ r_31 &amp;amp; r_32 &amp;amp; t_z \end{bmatrix} \begin{bmatrix} p \\ q \\ 1 \end{bmatrix}&lt;br&gt;$$$$\sim \begin{bmatrix} h_11 &amp;amp; h_12&amp;amp;h_13 \ h_21 &amp;amp; h_22 &amp;amp; h_23 \ h_31 &amp;amp; h_32 &amp;amp; h_33 \end{bmatrix} \begin{bmatrix} p \\ q \\ 1 \end{bmatrix}$$&lt;br&gt;&lt;strong&gt;WordPress迁移&lt;/strong&gt;&lt;br&gt;这个使用hexo-migrate-wordpress插件还不错 但是切记导出的xml是文章 tag和category会自动建好。否则使用hexo migrate wordpress 会报错&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;hexo坑还是挺多的。&lt;br&gt;$$ \begin{bmatrix} x \\ y \\ 1&lt;br&gt;\end{bmatrix} \sim \begin{bmatrix} f &amp;amp; 0 &amp;amp; 0 &amp;amp; 0 \\ 0 &amp;amp; f &amp;amp; 0 &amp;amp; 0 \\ 0 &amp;amp; 0 &amp;amp; 1 &amp;amp; 0 \end{bmatrix} \begin{bmatrix} r_11 &amp;amp; r_12 &amp;amp; r_13 &amp;amp; t_x \\ r_21 &amp;amp; r_22 &amp;amp; r_23 &amp;amp; t_y \\ r_31 &amp;amp; r_32&amp;amp; r_33 &amp;amp; t_z \\ 0 &amp;amp; 0 &amp;amp; 0 &amp;amp; 1 \end{bmatrix} \begin{bmatrix} p \\ q \\ 0 \\ 1 \end{bmatrix} \sim \begin{bmatrix} fr_11 &amp;amp; fr_12 &amp;amp; ft_x \\ fr_21 &amp;amp; fr_22 &amp;amp; ft_y \\ r_31 &amp;amp; r_32 &amp;amp; t_z \end{bmatrix} \begin{bmatrix} p \\ q \\ 1 \end{bmatrix}&lt;br&gt;$$$$\sim \begin{bmatrix} h_11 &amp;amp; h_12&amp;amp;h_13 \\ h_21 &amp;amp; h_22 &amp;amp; h_23 \\ h_31 &amp;amp; h_32 &amp;amp; h_33 \end{bmatrix} \begin{bmatrix} p \\ q \\ 1 \end{bmatrix}$$&lt;br&gt;&lt;strong&gt;WordPress迁移&lt;/strong&gt;&lt;br&gt;这个使用hexo-migrate-wordpress插件还不错 但是切记导出的xml是文章 tag和category会自动建好。否则使用hexo migrate wordpress 会报错&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Github和Coding双备份&lt;/strong&gt;&lt;br&gt;按照一般的教程都能配置好Github的。但是Coding对国内线路速度相对较快（好蛋疼GitCafe已经被收了）配置文档差不多是这样&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;markdown&quot;&gt;deploy:
    type: git
@@ -250,7 +250,7 @@
     <link href="http://ovjaywang.github.io/2016/01/25/opencv-findhomography-findfundanmentalmat/"/>
     <id>http://ovjaywang.github.io/2016/01/25/opencv-findhomography-findfundanmentalmat/</id>
     <published>2016-01-24T16:54:26.000Z</published>
-    <updated>2016-04-19T10:39:23.808Z</updated>
+    <updated>2016-04-19T10:59:43.290Z</updated>
     
     <content type="html">&lt;p&gt;&lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default&quot;&gt;&lt;/script&gt;&lt;br&gt;opencv 中，进行&lt;strong&gt;图像拼接(全景拼接 航摄拼接 三维重建 街景地图)&lt;/strong&gt;，大致流程如下。&lt;/p&gt;
 &lt;ol&gt;
@@ -370,7 +370,7 @@
 &lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/24/56ce6cd71fc88.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
 
 &lt;p&gt;上图可以看到，将三维坐标点z值设为0，[p,q,0,1]即为三维齐次坐标。&lt;/p&gt;
-&lt;p&gt;$$ \begin{bmatrix} x \\ y \\ 1&lt;br&gt;\end{bmatrix} \sim \begin{bmatrix} f &amp;amp; 0 &amp;amp; 0 &amp;amp; 0 \\ 0 &amp;amp; f &amp;amp; 0 &amp;amp; 0 \\ 0 &amp;amp; 0 &amp;amp; 1 &amp;amp; 0 \end{bmatrix} \begin{bmatrix} r_11 &amp;amp; r_12 &amp;amp; r_13 &amp;amp; t_x \\ r_21 &amp;amp; r_22 &amp;amp; r_23 &amp;amp; t_y \\ r_31 &amp;amp; r_32&amp;amp; r_33 &amp;amp; t_z \\ 0 &amp;amp; 0 &amp;amp; 0 &amp;amp; 1 \end{bmatrix} \begin{bmatrix} p \\ q \\ 0 \\ 1 \end{bmatrix} \sim \begin{bmatrix} fr_11 &amp;amp; fr_12 &amp;amp; ft_x \\ fr_21 &amp;amp; fr_22 &amp;amp; ft_y \\ r_31 &amp;amp; r_32 &amp;amp; t_z \end{bmatrix} \begin{bmatrix} p \\ q \\ 1 \end{bmatrix} \sim \begin{bmatrix} h_11 &amp;amp; h_12&amp;amp;h_13 \ h_21 &amp;amp; h_22 &amp;amp; h_23 \ h_31 &amp;amp; h_32 &amp;amp; h_33 \end{bmatrix} \begin{bmatrix} p \\ q \\ 1 \end{bmatrix}$$&lt;br&gt;最终推到出，3D转2D的投影变换成为2D转2D的变换，该变化可逆！其特例是，当采用的物方坐标系z轴与主光轴平行，即正射影像，则上式R矩阵为&lt;/p&gt;
+&lt;p&gt;$$ \begin{bmatrix} x \\ y \\ 1&lt;br&gt;\end{bmatrix} \sim \begin{bmatrix} f &amp;amp; 0 &amp;amp; 0 &amp;amp; 0 \\ 0 &amp;amp; f &amp;amp; 0 &amp;amp; 0 \\ 0 &amp;amp; 0 &amp;amp; 1 &amp;amp; 0 \end{bmatrix} \begin{bmatrix} r_11 &amp;amp; r_12 &amp;amp; r_13 &amp;amp; t_x \\ r_21 &amp;amp; r_22 &amp;amp; r_23 &amp;amp; t_y \\ r_31 &amp;amp; r_32&amp;amp; r_33 &amp;amp; t_z \\ 0 &amp;amp; 0 &amp;amp; 0 &amp;amp; 1 \end{bmatrix} \begin{bmatrix} p \\ q \\ 0 \\ 1 \end{bmatrix} \sim \begin{bmatrix} fr_11 &amp;amp; fr_12 &amp;amp; ft_x \\ fr_21 &amp;amp; fr_22 &amp;amp; ft_y \\ r_31 &amp;amp; r_32 &amp;amp; t_z \end{bmatrix} \begin{bmatrix} p \\ q \\ 1 \end{bmatrix}&lt;br&gt;$$$$\sim \begin{bmatrix} h_11 &amp;amp; h_12&amp;amp;h_13 \\ h_21 &amp;amp; h_22 &amp;amp; h_23 \\ h_31 &amp;amp; h_32 &amp;amp; h_33 \end{bmatrix} \begin{bmatrix} p \\ q \\ 1 \end{bmatrix}$$&lt;br&gt;最终推到出，3D转2D的投影变换成为2D转2D的变换，该变化可逆！其特例是，当采用的物方坐标系z轴与主光轴平行，即正射影像，则上式R矩阵为&lt;/p&gt;
 &lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/24/56ce7aab1b305.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
 
 &lt;p&gt;则上式变形为：&lt;/p&gt;
@@ -395,13 +395,13 @@
 &lt;li&gt;非线性几何解法，使对应点和映射点差值欧几里得距离（或平方和）最小。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Homograhy的计算：计算该矩阵当然不会上式f θ等值直接解算。由于是二维图像之间的关系，一般都已知二维对应点集，直接采用最小二乘的方式使用LM进行计算。在一般情况下的H矩阵可表示为&lt;/p&gt;
-&lt;p&gt;$$\begin{bmatrix}x^{‘}\y^{‘}\1\end{bmatrix}\sim\begin{bmatrix}h&lt;em&gt;{11}&amp;amp;h&lt;/em&gt;{12}&amp;amp;h&lt;em&gt;{13}\h&lt;/em&gt;{21}&amp;amp;h&lt;em&gt;{22}&amp;amp;h&lt;/em&gt;{23}\h&lt;em&gt;{31}&amp;amp;h&lt;/em&gt;{32}&amp;amp;h_{33}\end{bmatrix}\begin{bmatrix}x\y\1\end{bmatrix}$$&lt;/p&gt;
+&lt;p&gt;$$\begin{bmatrix} x^’ \\ y^’ \\1 \end{bmatrix} \sim \begin{bmatrix} h_11 &amp;amp; h_12 &amp;amp; h_13\\ h_21 &amp;amp; h_22 &amp;amp; h_23\\ h_31&amp;amp;h_32&amp;amp;h_33 \end{bmatrix} \begin{bmatrix} x \\ y \\1 \end{bmatrix}$$&lt;/p&gt;
 &lt;p&gt;其中，h31 h32 h33是为了配置相似比例，化简为&lt;/p&gt;
 &lt;p&gt;$$x^{‘}=\frac{h&lt;em&gt;{11}x+h&lt;/em&gt;{12}y+h&lt;em&gt;{13}}{h&lt;/em&gt;{31}x+h&lt;em&gt;{32}y+h&lt;/em&gt;{33}}$$&lt;/p&gt;
 &lt;p&gt;$$y^{‘}=\frac{h&lt;em&gt;{21}x+h&lt;/em&gt;{22}y+h&lt;em&gt;{23}}{h&lt;/em&gt;{31}x+h&lt;em&gt;{32}y+h&lt;/em&gt;{33}}$$&lt;/p&gt;
 &lt;p&gt;但可以看到，h所有元素同乘k 等式依旧成立。因而强制设为8自由度有两种方式，&lt;/p&gt;
-&lt;p&gt;①$$!h_{33}=1$$&lt;/p&gt;
-&lt;p&gt;②$$!h&lt;em&gt;{11}^{2}+h&lt;/em&gt;{12}^{2}+h&lt;em&gt;{13}^{2}+h&lt;/em&gt;{21}^{2}+h&lt;em&gt;{22}^{2}+h&lt;/em&gt;{23}^{2}+h&lt;em&gt;{31}^{2}+h&lt;/em&gt;{32}^{2}+h_{33}^{2}=1$$&lt;/p&gt;
+&lt;p&gt;①$$ h_33=1 $$&lt;/p&gt;
+&lt;p&gt;②$$ h_11^2+h_12^2+h_13^2+h_21^2+h_22^2+h_23^2+h_31^2+h_32^2+h_33^2=1$$&lt;/p&gt;
 &lt;p&gt;采用第一种方式较为常见。&lt;/p&gt;
 &lt;p&gt;当采用最小二乘解求H矩阵时，一般先用Ransac筛选最大集，然后利用下方程。&lt;/p&gt;
 &lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/25/56cf041a7c664.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
