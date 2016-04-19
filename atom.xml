@@ -250,7 +250,7 @@
     <link href="http://ovjaywang.github.io/2016/01/25/opencv-findhomography-findfundanmentalmat/"/>
     <id>http://ovjaywang.github.io/2016/01/25/opencv-findhomography-findfundanmentalmat/</id>
     <published>2016-01-24T16:54:26.000Z</published>
-    <updated>2016-04-19T11:50:17.218Z</updated>
+    <updated>2016-04-19T11:52:47.242Z</updated>
     
     <content type="html">&lt;p&gt;&lt;script type=&quot;text/javascript&quot; src=&quot;http://latex.codecogs.com/latexit.js&quot;&gt;&lt;/script&gt;&lt;br&gt;opencv 中，进行&lt;strong&gt;图像拼接(全景拼接 航摄拼接 三维重建 街景地图)&lt;/strong&gt;，大致流程如下。&lt;/p&gt;
 &lt;ol&gt;
