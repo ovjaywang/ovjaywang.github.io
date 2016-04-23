@@ -82,22 +82,16 @@
 
 
 
-<meta name="description" content="一个实体类往往有不同的属性 属性有的用于构造器 视为构造时的必需参数 而有的可有可无 类似json和xml一般，有多少个属性，每个属性有多少个赋值都不确定 。e.g.动物 名称string name和是否有尾巴istail是必须的，是否吃草iseatgrass 多重weight 交配手段sexmethod 科目等为非必须字段。解决这一构造问题
-
-可以采用不同的构造函数，一般的，把调用最多的构造出来">
+<meta name="description" content="一个实体类往往有不同的属性 属性有的用于构造器 视为构造时的必需参数 而有的可有可无 类似json和xml一般，有多少个属性，每个属性有多少个赋值都不确定 。e.g.动物 名称string name和是否有尾巴istail是必须的，是否吃草iseatgrass 多重weight 交配手段sexmethod 科目等为非必须字段。解决这一构造问题一般有三种方式。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="builer构造器-java">
 <meta property="og:url" content="http://ovjaywang.github.io/2016/04/22/builer构造器-java/index.html">
 <meta property="og:site_name" content="ov智商捉急">
-<meta property="og:description" content="一个实体类往往有不同的属性 属性有的用于构造器 视为构造时的必需参数 而有的可有可无 类似json和xml一般，有多少个属性，每个属性有多少个赋值都不确定 。e.g.动物 名称string name和是否有尾巴istail是必须的，是否吃草iseatgrass 多重weight 交配手段sexmethod 科目等为非必须字段。解决这一构造问题
-
-可以采用不同的构造函数，一般的，把调用最多的构造出来">
-<meta property="og:updated_time" content="2016-04-23T09:20:51.535Z">
+<meta property="og:description" content="一个实体类往往有不同的属性 属性有的用于构造器 视为构造时的必需参数 而有的可有可无 类似json和xml一般，有多少个属性，每个属性有多少个赋值都不确定 。e.g.动物 名称string name和是否有尾巴istail是必须的，是否吃草iseatgrass 多重weight 交配手段sexmethod 科目等为非必须字段。解决这一构造问题一般有三种方式。">
+<meta property="og:updated_time" content="2016-04-23T11:08:39.037Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="builer构造器-java">
-<meta name="twitter:description" content="一个实体类往往有不同的属性 属性有的用于构造器 视为构造时的必需参数 而有的可有可无 类似json和xml一般，有多少个属性，每个属性有多少个赋值都不确定 。e.g.动物 名称string name和是否有尾巴istail是必须的，是否吃草iseatgrass 多重weight 交配手段sexmethod 科目等为非必须字段。解决这一构造问题
-
-可以采用不同的构造函数，一般的，把调用最多的构造出来">
+<meta name="twitter:description" content="一个实体类往往有不同的属性 属性有的用于构造器 视为构造时的必需参数 而有的可有可无 类似json和xml一般，有多少个属性，每个属性有多少个赋值都不确定 。e.g.动物 名称string name和是否有尾巴istail是必须的，是否吃草iseatgrass 多重weight 交配手段sexmethod 科目等为非必须字段。解决这一构造问题一般有三种方式。">
 
 
 
@@ -105,7 +99,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     scheme: 'Muse',
-    sidebar: {"position":"left","display":"post"},
+    sidebar: {"position":"left","display":"always"},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -140,7 +134,13 @@
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+    <div class="site-meta-headline">
+      <a>
+        <img class="custom-logo-image" src="images/xiaozaizi.png" alt="ov智商捉急">
+      </a>
+    </div>
   
 
   <div class="custom-logo-site-title">
@@ -297,6 +297,13 @@
 
           
             
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/22/builer构造器-java/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/22/builer构造器-java/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -321,7 +328,7 @@
       
 
       
-        <p>一个实体类往往有不同的属性 属性有的用于构造器 视为构造时的必需参数 而有的可有可无 类似json和xml一般，有多少个属性，每个属性有多少个赋值都不确定 。e.g.动物 名称string name和是否有尾巴istail是必须的，是否吃草iseatgrass 多重weight 交配手段sexmethod 科目等为非必须字段。解决这一构造问题</p>
+        <p>一个实体类往往有不同的属性 属性有的用于构造器 视为构造时的必需参数 而有的可有可无 类似json和xml一般，有多少个属性，每个属性有多少个赋值都不确定 。e.g.动物 名称string name和是否有尾巴istail是必须的，是否吃草iseatgrass 多重weight 交配手段sexmethod 科目等为非必须字段。解决这一构造问题一般有三种方式。<br><a id="more"></a></p>
 <ol>
 <li><p>可以采用不同的构造函数，一般的，把调用最多的构造出来，其余的按字段个数构造1-n个。诚然，有的字段并不需要，可能赋为空或者0。这样严重的影响了效率，同时字段多时构造函数也异常的多。</p>
 </li>
@@ -498,6 +505,9 @@ public interface Builder{
 
           
   <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/04/22/builer构造器-java/" data-title="builer构造器-java" data-url="http://ovjaywang.github.io/2016/04/22/builer构造器-java/">
+      </div>
     
   </div>
 
@@ -722,9 +732,28 @@ public interface Builder{
 
   
 
+  
+    
+  
 
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"dooby"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
 
   
+    
+  
+
+
 
 
 

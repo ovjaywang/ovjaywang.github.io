@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ovjaywang.github.io/"/>
-  <updated>2016-04-23T09:20:51.535Z</updated>
+  <updated>2016-04-23T11:08:39.037Z</updated>
   <id>http://ovjaywang.github.io/</id>
   
   <author>
@@ -20,9 +20,9 @@
     <link href="http://ovjaywang.github.io/2016/04/22/builer%E6%9E%84%E9%80%A0%E5%99%A8-java/"/>
     <id>http://ovjaywang.github.io/2016/04/22/builer构造器-java/</id>
     <published>2016-04-22T09:10:48.000Z</published>
-    <updated>2016-04-23T09:20:51.535Z</updated>
+    <updated>2016-04-23T11:08:39.037Z</updated>
     
-    <content type="html">&lt;p&gt;一个实体类往往有不同的属性 属性有的用于构造器 视为构造时的必需参数 而有的可有可无 类似json和xml一般，有多少个属性，每个属性有多少个赋值都不确定 。e.g.动物 名称string name和是否有尾巴istail是必须的，是否吃草iseatgrass 多重weight 交配手段sexmethod 科目等为非必须字段。解决这一构造问题&lt;/p&gt;
+    <content type="html">&lt;p&gt;一个实体类往往有不同的属性 属性有的用于构造器 视为构造时的必需参数 而有的可有可无 类似json和xml一般，有多少个属性，每个属性有多少个赋值都不确定 。e.g.动物 名称string name和是否有尾巴istail是必须的，是否吃草iseatgrass 多重weight 交配手段sexmethod 科目等为非必须字段。解决这一构造问题一般有三种方式。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;p&gt;可以采用不同的构造函数，一般的，把调用最多的构造出来，其余的按字段个数构造1-n个。诚然，有的字段并不需要，可能赋为空或者0。这样严重的影响了效率，同时字段多时构造函数也异常的多。&lt;/p&gt;
 &lt;/li&gt;
@@ -143,7 +143,7 @@ public interface Builder{
     
     <summary type="html">
     
-      &lt;p&gt;一个实体类往往有不同的属性 属性有的用于构造器 视为构造时的必需参数 而有的可有可无 类似json和xml一般，有多少个属性，每个属性有多少个赋值都不确定 。e.g.动物 名称string name和是否有尾巴istail是必须的，是否吃草iseatgrass 多重weig
+      &lt;p&gt;一个实体类往往有不同的属性 属性有的用于构造器 视为构造时的必需参数 而有的可有可无 类似json和xml一般，有多少个属性，每个属性有多少个赋值都不确定 。e.g.动物 名称string name和是否有尾巴istail是必须的，是否吃草iseatgrass 多重weight 交配手段sexmethod 科目等为非必须字段。解决这一构造问题一般有三种方式。&lt;br&gt;
     
     </summary>
     
@@ -276,12 +276,12 @@ public interface Builder{
     <link href="http://ovjaywang.github.io/2016/04/10/Hello-Hexo/"/>
     <id>http://ovjaywang.github.io/2016/04/10/Hello-Hexo/</id>
     <published>2016-04-10T14:51:49.000Z</published>
-    <updated>2016-04-23T11:00:35.381Z</updated>
+    <updated>2016-04-23T11:05:15.772Z</updated>
     
     <content type="html">&lt;p&gt;[TOC]&lt;br&gt;感谢&lt;a href=&quot;http://zipperary.com/2013/05/28/hexo-guide-2/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个教程&lt;/a&gt;&lt;br&gt;还有&lt;a href=&quot;http://ibruce.info/2013/11/22/hexo-your-blog/?utm_source=tuicool&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个&lt;/a&gt;&lt;br&gt;解决了好多bugs的&lt;a href=&quot;http://www.jianshu.com/p/35e197cb1273&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个&lt;/a&gt;&lt;br&gt;优化cdn图床缓冲的&lt;a href=&quot;http://lukang.me/2015/optimization-of-hexo-2.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://www.dute.me/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个&lt;/a&gt;让我找到了便宜的狗爹优惠码&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;从一开始的阵地wp搬到这里来了。后会有期了dooby.me 再见了WordPress 默默的是有些不舍。虽然push很慢虽然被墙了大半 4年光阴不复返啊。从一个逗比成长为大逗比了。
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;hexo坑还是挺多的。&lt;br&gt;$$ \begin{bmatrix} x \\ y \\ 1&lt;br&gt;\end{bmatrix} \sim \begin{bmatrix} f &amp;amp; 0 &amp;amp; 0 &amp;amp; 0 \\ 0 &amp;amp; f &amp;amp; 0 &amp;amp; 0 \\ 0 &amp;amp; 0 &amp;amp; 1 &amp;amp; 0 \end{bmatrix} \begin{bmatrix} r_11 &amp;amp; r_12 &amp;amp; r_13 &amp;amp; t_x \\ r_21 &amp;amp; r_22 &amp;amp; r_23 &amp;amp; t_y \\ r_31 &amp;amp; r_32&amp;amp; r_33 &amp;amp; t_z \\ 0 &amp;amp; 0 &amp;amp; 0 &amp;amp; 1 \end{bmatrix} \begin{bmatrix} p \\ q \\ 0 \\ 1 \end{bmatrix} \sim \begin{bmatrix} fr_11 &amp;amp; fr_12 &amp;amp; ft_x \\ fr_21 &amp;amp; fr_22 &amp;amp; ft_y \\ r_31 &amp;amp; r_32 &amp;amp; t_z \end{bmatrix} \begin{bmatrix} p \\ q \\ 1 \end{bmatrix}&lt;br&gt;$$$$\sim \begin{bmatrix} h_11 &amp;amp; h_12&amp;amp;h_13 \\ h_21 &amp;amp; h_22 &amp;amp; h_23 \\ h_31 &amp;amp; h_32 &amp;amp; h_33 \end{bmatrix} \begin{bmatrix} p \\ q \\ 1 \end{bmatrix}$$&lt;br&gt;&lt;strong&gt;WordPress迁移&lt;/strong&gt;&lt;br&gt;这个使用hexo-migrate-wordpress插件还不错 但是切记导出的xml是文章 tag和category会自动建好。否则使用hexo migrate wordpress 会报错&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Github和Coding双备份&lt;/strong&gt;&lt;br&gt;按照一般的教程都能配置好Github的。但是Coding对国内线路速度相对较快（好蛋疼GitCafe已经被收了）配置文档差不多是这样&lt;/p&gt;
+&lt;h1 id=&quot;Github和Coding双备份&quot;&gt;&lt;a href=&quot;#Github和Coding双备份&quot; class=&quot;headerlink&quot; title=&quot;Github和Coding双备份&quot;&gt;&lt;/a&gt;&lt;strong&gt;Github和Coding双备份&lt;/strong&gt;&lt;/h1&gt;&lt;p&gt;按照一般的教程都能配置好Github的。但是Coding对国内线路速度相对较快（好蛋疼GitCafe已经被收了）配置文档差不多是这样&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;markdown&quot;&gt;deploy:
    type: git
    repo: 
@@ -290,8 +290,8 @@ public interface Builder{
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;当然也需要先将ssh的key添加上去（同一个码即可），Coding不需要同一个名字..然而最近发现Coding的项目展示页面收费了……虽说是注重团队协作和代码交易 但是个人用户的托管真的完全要丢掉了吗？差不多1块钱1天的样子 相当不划算&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;SEO是极好的&lt;/strong&gt;&lt;br&gt;切莫贪杯 google就好 但是 切记！标题不要带有‘&amp;amp;’。年少无知，这个符号不能正常解析出xml会报错&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;域名绑定&lt;/strong&gt;&lt;br&gt;切记@解析的是{YOUR_ID}.github.io的地址而不是github.com的 CNAME需要放在source下才能被generate。dnspod被企鹅注资后ui变得相当土了&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;专注写作&lt;/strong&gt;&lt;br&gt;放弃各种挂饰 插件 统计吧 seo和评论就足够了。多写作多讨论 当然很想适时的学一发nodejs因为折腾了好久ig的照片还是没能get进来。&lt;/p&gt;
+&lt;h1 id=&quot;域名绑定&quot;&gt;&lt;a href=&quot;#域名绑定&quot; class=&quot;headerlink&quot; title=&quot;域名绑定&quot;&gt;&lt;/a&gt;&lt;strong&gt;域名绑定&lt;/strong&gt;&lt;/h1&gt;&lt;p&gt;切记@解析的是{YOUR_ID}.github.io的地址而不是github.com的 CNAME需要放在source下才能被generate。dnspod被企鹅注资后ui变得相当土了&lt;/p&gt;
+&lt;h1 id=&quot;专注写作&quot;&gt;&lt;a href=&quot;#专注写作&quot; class=&quot;headerlink&quot; title=&quot;专注写作&quot;&gt;&lt;/a&gt;&lt;strong&gt;专注写作&lt;/strong&gt;&lt;/h1&gt;&lt;p&gt;放弃各种挂饰 插件 统计吧 seo和评论就足够了。多写作多讨论 当然很想适时的学一发nodejs因为折腾了好久ig的照片还是没能get进来。&lt;/p&gt;
 &lt;p&gt;2016.04.11&lt;/p&gt;</content>
     
     <summary type="html">
