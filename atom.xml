@@ -193,14 +193,13 @@ public interface Builder{
     <link href="http://ovjaywang.github.io/2016/04/13/effective%20java--%E9%9D%99%E6%80%81%E5%B7%A5%E5%8E%82%E5%92%8CBuilder%E6%A8%A1%E5%BC%8F--%E7%AC%94%E8%AE%B0/"/>
     <id>http://ovjaywang.github.io/2016/04/13/effective java--静态工厂和Builder模式--笔记/</id>
     <published>2016-04-13T07:15:14.000Z</published>
-    <updated>2016-04-13T11:50:20.268Z</updated>
+    <updated>2016-04-23T11:37:06.026Z</updated>
     
     <content type="html">&lt;h1 id=&quot;静态工厂&quot;&gt;&lt;a href=&quot;#静态工厂&quot; class=&quot;headerlink&quot; title=&quot;静态工厂&quot;&gt;&lt;/a&gt;静态工厂&lt;/h1&gt;&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;    public static Boolean valueOf (boolean b){
         return b?Boolean.True:Boolean.False;
     }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;静态工厂以其名字显见，以[类名.方法名]的方式调用，其静态函数主要返回其类的对象，一般是引用值。返回什么东西，由参数决定，这个工厂给你产出来。其在API开发中使用广泛。&lt;/p&gt;
-&lt;p&gt;静态工厂最有趣的地方在于把方法&lt;strong&gt;提供者&lt;/strong&gt;同方法&lt;strong&gt;使用者&lt;/strong&gt;剥离开来，使用者不能明细地看到对象构造的具体过程，而是可见可得地获得所需的对象。当然好处有很多，例如返回的对象可以是该类的子类，能让被调用静态工厂方法的类不成为公有；例如有效的降低了构造对象的成本，静态工厂&lt;strong&gt;「&lt;/strong&gt;不生产对像，一般只是对象的搬运工&lt;strong&gt;」&lt;/strong&gt;。使用静态方法返回对象的方式在单态中使用广泛。&lt;/p&gt;
+&lt;p&gt;静态工厂以其名字显见，以[类名.方法名]的方式调用，其静态函数主要返回其类的对象，一般是引用值。返回什么东西，由参数决定，这个工厂给你产出来。其在API开发中使用广泛。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;br&gt;静态工厂最有趣的地方在于把方法&lt;strong&gt;提供者&lt;/strong&gt;同方法&lt;strong&gt;使用者&lt;/strong&gt;剥离开来，使用者不能明细地看到对象构造的具体过程，而是可见可得地获得所需的对象。当然好处有很多，例如返回的对象可以是该类的子类，能让被调用静态工厂方法的类不成为公有；例如有效的降低了构造对象的成本，静态工厂&lt;strong&gt;「&lt;/strong&gt;不生产对像，一般只是对象的搬运工&lt;strong&gt;」&lt;/strong&gt;。使用静态方法返回对象的方式在单态中使用广泛。&lt;/p&gt;
 &lt;p&gt;List、Set有着相似的方式。它们都继承自Collection，同时不能实例化为该类的对象，必须通过子类实现父类的方法来实例化不同属性的对象。ArrayList HashSet等都通过注册的方式进行映射。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;单态就是整个类能且只能有一个对象存在，为null则构造一个，不为null应返回该对象。例如购物车只能有一个、聊天平台只能有一个、饭馆的点菜平台只能有一个 这种类似的场景。&lt;/p&gt;
@@ -257,7 +256,11 @@ public interface Builder{
     
     <summary type="html">
     
-      &lt;h1 id=&quot;静态工厂&quot;&gt;&lt;a href=&quot;#静态工厂&quot; class=&quot;headerlink&quot; title=&quot;静态工厂&quot;&gt;&lt;/a&gt;静态工厂&lt;/h1&gt;&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;    public static Boolean valueOf (boolea
+      &lt;h1 id=&quot;静态工厂&quot;&gt;&lt;a href=&quot;#静态工厂&quot; class=&quot;headerlink&quot; title=&quot;静态工厂&quot;&gt;&lt;/a&gt;静态工厂&lt;/h1&gt;&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;    public static Boolean valueOf (boolean b){
+        return b?Boolean.True:Boolean.False;
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;静态工厂以其名字显见，以[类名.方法名]的方式调用，其静态函数主要返回其类的对象，一般是引用值。返回什么东西，由参数决定，这个工厂给你产出来。其在API开发中使用广泛。&lt;br&gt;
     
     </summary>
     

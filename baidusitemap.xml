@@ -4,6 +4,29 @@
 
     
   <url>
+    <loc>http://ovjaywang.github.io/2016/04/13/effective%20java--%E9%9D%99%E6%80%81%E5%B7%A5%E5%8E%82%E5%92%8CBuilder%E6%A8%A1%E5%BC%8F--%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2016-04-23T11:37:06.026Z</lastmod>
+    <data>
+        <display>
+        <title>effective java--静态工厂和Builder模式--笔记</title>
+        <pubTime>2016-04-13T07:15:14.000Z</pubTime>
+        
+        <tag>test</tag>
+         
+         
+           
+             
+              <breadCrumb title="代码狗" url="http://ovjaywang.github.io/categories/%E4%BB%A3%E7%A0%81%E7%8B%97/"/>
+          
+             
+              <breadCrumb title="学习log" url="http://ovjaywang.github.io/categories/%E4%BB%A3%E7%A0%81%E7%8B%97/%E5%AD%A6%E4%B9%A0log/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://ovjaywang.github.io/2016/04/22/what-the-hell-of-sdf/</loc>
     <lastmod>2016-04-23T11:30:49.994Z</lastmod>
     <data>
@@ -177,29 +200,6 @@
           
              
               <breadCrumb title="软文" url="http://ovjaywang.github.io/categories/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%84/%E8%BD%AF%E6%96%87/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://ovjaywang.github.io/2016/04/13/effective%20java--%E9%9D%99%E6%80%81%E5%B7%A5%E5%8E%82%E5%92%8CBuilder%E6%A8%A1%E5%BC%8F--%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2016-04-13T11:50:20.268Z</lastmod>
-    <data>
-        <display>
-        <title>effective java--静态工厂和Builder模式--笔记</title>
-        <pubTime>2016-04-13T07:15:14.000Z</pubTime>
-        
-        <tag>test</tag>
-         
-         
-           
-             
-              <breadCrumb title="代码狗" url="http://ovjaywang.github.io/categories/%E4%BB%A3%E7%A0%81%E7%8B%97/"/>
-          
-             
-              <breadCrumb title="学习log" url="http://ovjaywang.github.io/categories/%E4%BB%A3%E7%A0%81%E7%8B%97/%E5%AD%A6%E4%B9%A0log/"/>
           
         </display>
     </data>

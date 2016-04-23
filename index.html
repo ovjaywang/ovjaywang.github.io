@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion">
+<html class="theme-next pisces use-motion">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -71,7 +71,7 @@
 <script type="text/javascript" id="hexo.configuration">
   var NexT = window.NexT || {};
   var CONFIG = {
-    scheme: 'Mist',
+    scheme: 'Pisces',
     sidebar: {"position":"left","display":"always"},
     fancybox: true,
     motion: true,
@@ -138,7 +138,9 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-            Startseite
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br>
+            
+            Home
           </a>
         </li>
       
@@ -146,13 +148,17 @@
         <li class="menu-item menu-item-about">
           <a href="/me" rel="section">
             
-            Über
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br>
+            
+            About
           </a>
         </li>
       
         
         <li class="menu-item menu-item-归档">
           <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-question-circle fa-fw"></i> <br>
             
             menu.归档
           </a>
@@ -161,6 +167,8 @@
         
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br>
             
             Tags
           </a>
@@ -218,7 +226,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-o"></i>
             </span>
-            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <span class="post-meta-item-text">Posted on</span>
             <time itemprop="dateCreated" datetime="2016-04-22T17:10:48+08:00" content="2016-04-22">
               2016-04-22
             </time>
@@ -230,7 +238,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">in</span>
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/什么都学一下/" itemprop="url" rel="index">
@@ -240,7 +248,7 @@
 
                 
                 
-                  . 
+                  , 
                 
 
               
@@ -289,7 +297,7 @@
           <p>一个实体类往往有不同的属性 属性有的用于构造器 视为构造时的必需参数 而有的可有可无 类似json和xml一般，有多少个属性，每个属性有多少个赋值都不确定 。e.g.动物 名称string name和是否有尾巴istail是必须的，是否吃草iseatgrass 多重weight 交配手段sexmethod 科目等为非必须字段。解决这一构造问题一般有三种方式。<br>
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/04/22/builer构造器-java/#more" rel="contents">
-              Weiterlesen &raquo;
+              Read more &raquo;
             </a>
           </div>
         
@@ -352,7 +360,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-o"></i>
             </span>
-            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <span class="post-meta-item-text">Posted on</span>
             <time itemprop="dateCreated" datetime="2016-04-22T16:38:11+08:00" content="2016-04-22">
               2016-04-22
             </time>
@@ -364,7 +372,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">in</span>
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/什么都学一下/" itemprop="url" rel="index">
@@ -374,7 +382,7 @@
 
                 
                 
-                  . 
+                  , 
                 
 
               
@@ -425,7 +433,7 @@
 <p>预编译头是 c++下的.h和.hpp等需要调用的文件头<br>Intellisense是自动补齐和代码检测的文件。<br>
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/04/22/what-the-hell-of-sdf/#more" rel="contents">
-              Weiterlesen &raquo;
+              Read more &raquo;
             </a>
           </div>
         
@@ -488,7 +496,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-o"></i>
             </span>
-            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <span class="post-meta-item-text">Posted on</span>
             <time itemprop="dateCreated" datetime="2016-04-13T15:15:14+08:00" content="2016-04-13">
               2016-04-13
             </time>
@@ -500,7 +508,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">in</span>
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/代码狗/" itemprop="url" rel="index">
@@ -510,7 +518,7 @@
 
                 
                 
-                  . 
+                  , 
                 
 
               
@@ -556,70 +564,19 @@
 
       
         
-          
-            <h1 id="静态工厂"><a href="#静态工厂" class="headerlink" title="静态工厂"></a>静态工厂</h1><pre><code class="java">    public static Boolean valueOf (boolean b){
+          <h1 id="静态工厂"><a href="#静态工厂" class="headerlink" title="静态工厂"></a>静态工厂</h1><pre><code class="java">    public static Boolean valueOf (boolean b){
         return b?Boolean.True:Boolean.False;
     }
 </code></pre>
-<p>静态工厂以其名字显见，以[类名.方法名]的方式调用，其静态函数主要返回其类的对象，一般是引用值。返回什么东西，由参数决定，这个工厂给你产出来。其在API开发中使用广泛。</p>
-<p>静态工厂最有趣的地方在于把方法<strong>提供者</strong>同方法<strong>使用者</strong>剥离开来，使用者不能明细地看到对象构造的具体过程，而是可见可得地获得所需的对象。当然好处有很多，例如返回的对象可以是该类的子类，能让被调用静态工厂方法的类不成为公有；例如有效的降低了构造对象的成本，静态工厂<strong>「</strong>不生产对像，一般只是对象的搬运工<strong>」</strong>。使用静态方法返回对象的方式在单态中使用广泛。</p>
-<p>List、Set有着相似的方式。它们都继承自Collection，同时不能实例化为该类的对象，必须通过子类实现父类的方法来实例化不同属性的对象。ArrayList HashSet等都通过注册的方式进行映射。</p>
-<blockquote>
-<p>单态就是整个类能且只能有一个对象存在，为null则构造一个，不为null应返回该对象。例如购物车只能有一个、聊天平台只能有一个、饭馆的点菜平台只能有一个 这种类似的场景。</p>
-</blockquote>
-<p>与不同参数的构造函数不同，不同参数的静态工厂可能返回同一属性的该(子)类的对象。该方式抛弃了重复冗杂的new形式，在C#常见newInstance()构造新对象，而在Java里就比较少的出现，一般都是左右对等的。</p>
-<p>最上面这段代码最有趣的地方在于，它是Boolean的包装类，输入的是值类型而返回的是Boolean对象,当然Boolean只实例化了两个对象。但当新的子类构建，简单的静态工厂必须重写，常用的改进方法有：</p>
-<ul>
-<li>反射机制+配置<br>例如下面一段就是根据不同的类名，返回不同的对象</li>
-</ul>
-<pre><code class="java">    public static InterFace_Name staticFactory(String name)throws
-                                InstantiationException,
-                                IllegalAccessException,
-                                ClassNotFoundException{     
-        // 这边使用的是Java的Reflection机制来产生实例
-        // 以后就算改变了这边的程式，客户端程式是不用更改的
-        return (InterFace_Name) Class.forName(name).newInstance();
-    }
-</code></pre>
-<ul>
-<li>注册方式(Service Provider Framework)</li>
-</ul>
-<blockquote>
-<p>注册需要(服务提供者编写的)服务接口、(服务提供者创建服务的实例)而提供的接口(可选)、(服务提供者)注册API、(使用者编写的)服务访问API</p>
-</blockquote>
-<p>最常见的实例就是JDBC(Java DataBase Connection)。下面这段最常见的连接mysql的标准函数就很好的体现了注册的方式。</p>
-<pre><code class="java">    public synchronized static Connection getCon() 
-        throws ClassNotFoundException, SQLException
-    {
-        //服务提供者接口
-          String DRIVERNAME = &quot;com.mysql.jdbc.Driver&quot;;
-          //java.sql.Driver.class这个是服务提供者接口，服务提供者可以使mysql
-          //那就使用&quot;com.mysql.jdbc.Driver&quot;；
-          //如果是sql server，那就使用&quot;com.microsoft.sqlserver.jdbc.SQLServerDriver&quot;;
-          //如果是Oracle，那就要用&quot;oracle.jdbc.driver.OracleDriver&quot;...
-          String URL = &quot;jdbc:mysql://URL/DataBase_Names&quot;;
-          String USER = &quot;USER&quot;;
-          String PWD = &quot;PWD&quot;; 
-          Connection connection = null;//接口 由服务提供者提供并实现具体服务 
-          Class.forName(DRIVERNAME);//这里映射通过DriverManager判断获取的是哪个服务
-          connection = (Connection) DriverManager.getConnection(URL, USER,PWD);
-          //链接数据库  mysql已经在驱动管理注册了API(本机装mysql的时候)
-          //这里使用者编写的服务访问getConnection这个API，
-          if(connection!=null){return connection;}
-          else{return null;}//具体的数据库操作逻辑   
-    }
-</code></pre>
-<ul>
-<li>这种方式已经不推荐-工厂模式<br><a href="https://zh.wikipedia.org/wiki/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95" target="_blank" rel="external">工厂方法</a>  <a href="https://zh.wikipedia.org/wiki/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82" target="_blank" rel="external">抽象工厂</a></li>
-</ul>
-<h1 id="Builder-模式"><a href="#Builder-模式" class="headerlink" title="Builder 模式"></a>Builder 模式</h1><p>参考文章:<a href="(http://liwenshui322.iteye.com/blog/1267202)">JAVA 服务提供者框架介绍</a>、<a href="(http://blog.csdn.net/csdn0123/article/details/7388445)">构造器和静态方法</a></p>
-<script src="../../../../js/highlight.min.js"></script>
-<link href="../../../../css/monokai_sublime.min.css" rel="stylesheet">
-<script>hljs.initHighlightingOnLoad();</script>
-          
+<p>静态工厂以其名字显见，以[类名.方法名]的方式调用，其静态函数主要返回其类的对象，一般是引用值。返回什么东西，由参数决定，这个工厂给你产出来。其在API开发中使用广泛。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/04/13/effective java--静态工厂和Builder模式--笔记/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
         
       
-    </div>
+    </p></div>
     
     <div>
       
@@ -677,7 +634,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-o"></i>
             </span>
-            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <span class="post-meta-item-text">Posted on</span>
             <time itemprop="dateCreated" datetime="2016-04-10T22:51:49+08:00" content="2016-04-10">
               2016-04-10
             </time>
@@ -689,7 +646,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">in</span>
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/槽/" itemprop="url" rel="index">
@@ -810,7 +767,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-o"></i>
             </span>
-            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <span class="post-meta-item-text">Posted on</span>
             <time itemprop="dateCreated" datetime="2016-04-01T16:06:32+08:00" content="2016-04-01">
               2016-04-01
             </time>
@@ -822,7 +779,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">in</span>
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/什么都学一下/" itemprop="url" rel="index">
@@ -832,7 +789,7 @@
 
                 
                 
-                  . 
+                  , 
                 
 
               
@@ -948,7 +905,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-o"></i>
             </span>
-            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <span class="post-meta-item-text">Posted on</span>
             <time itemprop="dateCreated" datetime="2016-03-08T17:43:56+08:00" content="2016-03-08">
               2016-03-08
             </time>
@@ -960,7 +917,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">in</span>
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/代码狗/" itemprop="url" rel="index">
@@ -970,7 +927,7 @@
 
                 
                 
-                  . 
+                  , 
                 
 
               
@@ -1122,7 +1079,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-o"></i>
             </span>
-            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <span class="post-meta-item-text">Posted on</span>
             <time itemprop="dateCreated" datetime="2016-01-25T00:54:26+08:00" content="2016-01-25">
               2016-01-25
             </time>
@@ -1134,7 +1091,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">in</span>
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/什么都学一下/" itemprop="url" rel="index">
@@ -1144,7 +1101,7 @@
 
                 
                 
-                  . 
+                  , 
                 
 
               
@@ -1433,7 +1390,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-o"></i>
             </span>
-            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <span class="post-meta-item-text">Posted on</span>
             <time itemprop="dateCreated" datetime="2016-01-18T11:45:06+08:00" content="2016-01-18">
               2016-01-18
             </time>
@@ -1445,7 +1402,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">in</span>
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/槽/" itemprop="url" rel="index">
@@ -1600,7 +1557,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-o"></i>
             </span>
-            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <span class="post-meta-item-text">Posted on</span>
             <time itemprop="dateCreated" datetime="2016-01-04T00:35:49+08:00" content="2016-01-04">
               2016-01-04
             </time>
@@ -1612,7 +1569,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">in</span>
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/软件测评/" itemprop="url" rel="index">
@@ -1622,7 +1579,7 @@
 
                 
                 
-                  . 
+                  , 
                 
 
               
@@ -1768,7 +1725,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-o"></i>
             </span>
-            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <span class="post-meta-item-text">Posted on</span>
             <time itemprop="dateCreated" datetime="2016-01-01T23:32:08+08:00" content="2016-01-01">
               2016-01-01
             </time>
@@ -1780,7 +1737,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">in</span>
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/App强推/" itemprop="url" rel="index">
@@ -1790,7 +1747,7 @@
 
                 
                 
-                  . 
+                  , 
                 
 
               
@@ -2002,7 +1959,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-o"></i>
             </span>
-            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <span class="post-meta-item-text">Posted on</span>
             <time itemprop="dateCreated" datetime="2015-12-28T23:34:25+08:00" content="2015-12-28">
               2015-12-28
             </time>
@@ -2014,7 +1971,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">in</span>
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/App强推/" itemprop="url" rel="index">
@@ -2024,7 +1981,7 @@
 
                 
                 
-                  . 
+                  , 
                 
 
               
@@ -2283,7 +2240,7 @@ boolean isScreenOn = pm.isScreenOn();
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-o"></i>
             </span>
-            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <span class="post-meta-item-text">Posted on</span>
             <time itemprop="dateCreated" datetime="2015-11-18T23:17:39+08:00" content="2015-11-18">
               2015-11-18
             </time>
@@ -2295,7 +2252,7 @@ boolean isScreenOn = pm.isScreenOn();
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">in</span>
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/什么都学一下/" itemprop="url" rel="index">
@@ -2305,7 +2262,7 @@ boolean isScreenOn = pm.isScreenOn();
 
                 
                 
-                  . 
+                  , 
                 
 
               
@@ -2432,7 +2389,7 @@ boolean isScreenOn = pm.isScreenOn();
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-o"></i>
             </span>
-            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <span class="post-meta-item-text">Posted on</span>
             <time itemprop="dateCreated" datetime="2015-11-09T17:39:06+08:00" content="2015-11-09">
               2015-11-09
             </time>
@@ -2444,7 +2401,7 @@ boolean isScreenOn = pm.isScreenOn();
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">in</span>
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/什么都学一下/" itemprop="url" rel="index">
@@ -2454,7 +2411,7 @@ boolean isScreenOn = pm.isScreenOn();
 
                 
                 
-                  . 
+                  , 
                 
 
               
@@ -2570,7 +2527,7 @@ boolean isScreenOn = pm.isScreenOn();
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-o"></i>
             </span>
-            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <span class="post-meta-item-text">Posted on</span>
             <time itemprop="dateCreated" datetime="2015-11-08T23:53:53+08:00" content="2015-11-08">
               2015-11-08
             </time>
@@ -2582,7 +2539,7 @@ boolean isScreenOn = pm.isScreenOn();
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">in</span>
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/App强推/" itemprop="url" rel="index">
@@ -2592,7 +2549,7 @@ boolean isScreenOn = pm.isScreenOn();
 
                 
                 
-                  . 
+                  , 
                 
 
               
@@ -2720,7 +2677,7 @@ boolean isScreenOn = pm.isScreenOn();
           <div class="site-state-item site-state-posts">
             <a href="/">
               <span class="site-state-item-count">99</span>
-              <span class="site-state-item-name">Artikel</span>
+              <span class="site-state-item-name">posts</span>
             </a>
           </div>
 
@@ -2728,7 +2685,7 @@ boolean isScreenOn = pm.isScreenOn();
             <div class="site-state-item site-state-categories">
               
                 <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">Kategorien</span>
+                <span class="site-state-item-name">categories</span>
               
             </div>
           
@@ -2737,7 +2694,7 @@ boolean isScreenOn = pm.isScreenOn();
             <div class="site-state-item site-state-tags">
               <a href="/tags">
                 <span class="site-state-item-count">57</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               </a>
             </div>
           
@@ -2788,13 +2745,13 @@ boolean isScreenOn = pm.isScreenOn();
 </div>
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="http://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
   Theme -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
+    NexT.Pisces
   </a>
 </div>
 
@@ -2875,6 +2832,13 @@ boolean isScreenOn = pm.isScreenOn();
 
   
   
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
 
   
 

@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion">
+<html class="theme-next pisces use-motion">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -60,8 +60,7 @@
         return b?Boolean.True:Boolean.False;
     }
 
-静态工厂以其名字显见，以[类名.方法名]的方式调用，其静态函数主要返回其类的对象，一般是引用值。返回什么东西，由参数决定，这个工厂给你产出来。其在API开发中使用广泛。
-静态工厂最有趣的地方在于">
+静态工厂以其名字显见，以[类名.方法名]的方式调用，其静态函数主要返回其类的对象，一般是引用值。返回什么东西，由参数决定，这个工厂给你产出来。其在API开发中使用广泛。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="effective java--静态工厂和Builder模式--笔记">
 <meta property="og:url" content="http://ovjaywang.github.io/2016/04/13/effective java--静态工厂和Builder模式--笔记/index.html">
@@ -70,24 +69,22 @@
         return b?Boolean.True:Boolean.False;
     }
 
-静态工厂以其名字显见，以[类名.方法名]的方式调用，其静态函数主要返回其类的对象，一般是引用值。返回什么东西，由参数决定，这个工厂给你产出来。其在API开发中使用广泛。
-静态工厂最有趣的地方在于">
-<meta property="og:updated_time" content="2016-04-13T11:50:20.268Z">
+静态工厂以其名字显见，以[类名.方法名]的方式调用，其静态函数主要返回其类的对象，一般是引用值。返回什么东西，由参数决定，这个工厂给你产出来。其在API开发中使用广泛。">
+<meta property="og:updated_time" content="2016-04-23T11:37:06.026Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="effective java--静态工厂和Builder模式--笔记">
 <meta name="twitter:description" content="静态工厂    public static Boolean valueOf (boolean b){
         return b?Boolean.True:Boolean.False;
     }
 
-静态工厂以其名字显见，以[类名.方法名]的方式调用，其静态函数主要返回其类的对象，一般是引用值。返回什么东西，由参数决定，这个工厂给你产出来。其在API开发中使用广泛。
-静态工厂最有趣的地方在于">
+静态工厂以其名字显见，以[类名.方法名]的方式调用，其静态函数主要返回其类的对象，一般是引用值。返回什么东西，由参数决定，这个工厂给你产出来。其在API开发中使用广泛。">
 
 
 
 <script type="text/javascript" id="hexo.configuration">
   var NexT = window.NexT || {};
   var CONFIG = {
-    scheme: 'Mist',
+    scheme: 'Pisces',
     sidebar: {"position":"left","display":"always"},
     fancybox: true,
     motion: true,
@@ -154,7 +151,9 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-            Startseite
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br>
+            
+            Home
           </a>
         </li>
       
@@ -162,13 +161,17 @@
         <li class="menu-item menu-item-about">
           <a href="/me" rel="section">
             
-            Über
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br>
+            
+            About
           </a>
         </li>
       
         
         <li class="menu-item menu-item-归档">
           <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-question-circle fa-fw"></i> <br>
             
             menu.归档
           </a>
@@ -177,6 +180,8 @@
         
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br>
             
             Tags
           </a>
@@ -231,7 +236,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-o"></i>
             </span>
-            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <span class="post-meta-item-text">Posted on</span>
             <time itemprop="dateCreated" datetime="2016-04-13T15:15:14+08:00" content="2016-04-13">
               2016-04-13
             </time>
@@ -243,7 +248,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">in</span>
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/代码狗/" itemprop="url" rel="index">
@@ -253,7 +258,7 @@
 
                 
                 
-                  . 
+                  , 
                 
 
               
@@ -307,8 +312,7 @@
         return b?Boolean.True:Boolean.False;
     }
 </code></pre>
-<p>静态工厂以其名字显见，以[类名.方法名]的方式调用，其静态函数主要返回其类的对象，一般是引用值。返回什么东西，由参数决定，这个工厂给你产出来。其在API开发中使用广泛。</p>
-<p>静态工厂最有趣的地方在于把方法<strong>提供者</strong>同方法<strong>使用者</strong>剥离开来，使用者不能明细地看到对象构造的具体过程，而是可见可得地获得所需的对象。当然好处有很多，例如返回的对象可以是该类的子类，能让被调用静态工厂方法的类不成为公有；例如有效的降低了构造对象的成本，静态工厂<strong>「</strong>不生产对像，一般只是对象的搬运工<strong>」</strong>。使用静态方法返回对象的方式在单态中使用广泛。</p>
+<p>静态工厂以其名字显见，以[类名.方法名]的方式调用，其静态函数主要返回其类的对象，一般是引用值。返回什么东西，由参数决定，这个工厂给你产出来。其在API开发中使用广泛。<br><a id="more"></a><br>静态工厂最有趣的地方在于把方法<strong>提供者</strong>同方法<strong>使用者</strong>剥离开来，使用者不能明细地看到对象构造的具体过程，而是可见可得地获得所需的对象。当然好处有很多，例如返回的对象可以是该类的子类，能让被调用静态工厂方法的类不成为公有；例如有效的降低了构造对象的成本，静态工厂<strong>「</strong>不生产对像，一般只是对象的搬运工<strong>」</strong>。使用静态方法返回对象的方式在单态中使用广泛。</p>
 <p>List、Set有着相似的方式。它们都继承自Collection，同时不能实例化为该类的对象，必须通过子类实现父类的方法来实例化不同属性的对象。ArrayList HashSet等都通过注册的方式进行映射。</p>
 <blockquote>
 <p>单态就是整个类能且只能有一个对象存在，为null则构造一个，不为null应返回该对象。例如购物车只能有一个、聊天平台只能有一个、饭馆的点菜平台只能有一个 这种类似的场景。</p>
@@ -452,10 +456,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -470,7 +474,7 @@
           <div class="site-state-item site-state-posts">
             <a href="/">
               <span class="site-state-item-count">99</span>
-              <span class="site-state-item-name">Artikel</span>
+              <span class="site-state-item-name">posts</span>
             </a>
           </div>
 
@@ -478,7 +482,7 @@
             <div class="site-state-item site-state-categories">
               
                 <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">Kategorien</span>
+                <span class="site-state-item-name">categories</span>
               
             </div>
           
@@ -487,7 +491,7 @@
             <div class="site-state-item site-state-tags">
               <a href="/tags">
                 <span class="site-state-item-count">57</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               </a>
             </div>
           
@@ -549,13 +553,13 @@
 </div>
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="http://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
   Theme -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
+    NexT.Pisces
   </a>
 </div>
 
@@ -636,6 +640,13 @@
 
   
   
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
 
   
   <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
