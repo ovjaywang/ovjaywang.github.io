@@ -82,17 +82,17 @@
 
 
 
-<meta name="description" content="明明在hadoop配置被坑过一次 却完全想不起来怎么解决的 现在记下来1.原生linux+无线网卡/有线端口ubuntu改interface和fedora改eth0-XXXXX都是极好的 里面对应的netmask ipaddress gateway dns1dns2（dnsnameserver）在resolv.conf配置dns信息但是比较easy的纯粹做法直接在有线/无线的连接信息里面加这几个对">
+<meta name="description" content="明明在hadoop配置静态IP的时候被坑过一次，却完全想不起来怎么解决的。尤其是在ssh登录的时候需要记下host和ip的对应，才能直接输出主机名来访问局域网内的其他主机。现在记下来。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="记静态ip的坑">
 <meta property="og:url" content="http://ovjaywang.github.io/2016/04/01/记静态ip的坑/index.html">
 <meta property="og:site_name" content="ov智商捉急">
-<meta property="og:description" content="明明在hadoop配置被坑过一次 却完全想不起来怎么解决的 现在记下来1.原生linux+无线网卡/有线端口ubuntu改interface和fedora改eth0-XXXXX都是极好的 里面对应的netmask ipaddress gateway dns1dns2（dnsnameserver）在resolv.conf配置dns信息但是比较easy的纯粹做法直接在有线/无线的连接信息里面加这几个对">
+<meta property="og:description" content="明明在hadoop配置静态IP的时候被坑过一次，却完全想不起来怎么解决的。尤其是在ssh登录的时候需要记下host和ip的对应，才能直接输出主机名来访问局域网内的其他主机。现在记下来。">
 <meta property="og:image" content="https://ooo.0o0.ooo/2016/04/01/56fe2742cea08.png">
-<meta property="og:updated_time" content="2016-04-11T14:09:45.583Z">
+<meta property="og:updated_time" content="2016-04-23T12:21:11.330Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记静态ip的坑">
-<meta name="twitter:description" content="明明在hadoop配置被坑过一次 却完全想不起来怎么解决的 现在记下来1.原生linux+无线网卡/有线端口ubuntu改interface和fedora改eth0-XXXXX都是极好的 里面对应的netmask ipaddress gateway dns1dns2（dnsnameserver）在resolv.conf配置dns信息但是比较easy的纯粹做法直接在有线/无线的连接信息里面加这几个对">
+<meta name="twitter:description" content="明明在hadoop配置静态IP的时候被坑过一次，却完全想不起来怎么解决的。尤其是在ssh登录的时候需要记下host和ip的对应，才能直接输出主机名来访问局域网内的其他主机。现在记下来。">
 <meta name="twitter:image" content="https://ooo.0o0.ooo/2016/04/01/56fe2742cea08.png">
 
 
@@ -169,7 +169,7 @@
             
               <i class="menu-item-icon fa fa-home fa-fw"></i> <br>
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -179,7 +179,7 @@
             
               <i class="menu-item-icon fa fa-user fa-fw"></i> <br>
             
-            About
+            Über
           </a>
         </li>
       
@@ -252,7 +252,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-o"></i>
             </span>
-            <span class="post-meta-item-text">Posted on</span>
+            <span class="post-meta-item-text">Veröffentlicht am</span>
             <time itemprop="dateCreated" datetime="2016-04-01T16:06:32+08:00" content="2016-04-01">
               2016-04-01
             </time>
@@ -264,7 +264,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">in</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/什么都学一下/" itemprop="url" rel="index">
@@ -274,7 +274,7 @@
 
                 
                 
-                  , 
+                  . 
                 
 
               
@@ -324,7 +324,9 @@
       
 
       
-        <p>明明在hadoop配置被坑过一次 却完全想不起来怎么解决的 现在记下来<br>1.原生linux+无线网卡/有线端口<br>ubuntu改interface和fedora改eth0-XXXXX都是极好的 里面对应的netmask ipaddress gateway dns1dns2（dnsnameserver）在resolv.conf配置dns信息<br>但是<strong>比较easy</strong>的纯粹做法直接在有线/无线的连接信息里面加这几个对应信息</p>
+        <p>明明在hadoop配置静态IP的时候被坑过一次，却完全想不起来怎么解决的。尤其是在ssh登录的时候需要记下host和ip的对应，才能直接输出主机名来访问局域网内的其他主机。<br>现在记下来。</p>
+<a id="more"></a>
+<p>1.原生linux+无线网卡/有线端口<br>ubuntu改interface和fedora改eth0-XXXXX都是极好的 里面对应的netmask ipaddress gateway dns1dns2（dnsnameserver）在resolv.conf配置dns信息<br>但是<strong>比较easy</strong>的纯粹做法直接在有线/无线的连接信息里面加这几个对应信息</p>
 <p><img src="https://ooo.0o0.ooo/2016/04/01/56fe2742cea08.png" alt=""></p>
 <p>最最最easy的就是直接在路由器dhcp绑定mac静态分配，直接原生效果拔群。</p>
 <p>2.虚拟机+有线端口/原生无线网卡</p>
@@ -424,10 +426,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
+            Übersicht
           </li>
         </ul>
       
@@ -442,7 +444,7 @@
           <div class="site-state-item site-state-posts">
             <a href="/">
               <span class="site-state-item-count">99</span>
-              <span class="site-state-item-name">posts</span>
+              <span class="site-state-item-name">Artikel</span>
             </a>
           </div>
 
@@ -450,7 +452,7 @@
             <div class="site-state-item site-state-categories">
               
                 <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">categories</span>
+                <span class="site-state-item-name">Kategorien</span>
               
             </div>
           
@@ -459,7 +461,7 @@
             <div class="site-state-item site-state-tags">
               <a href="/tags">
                 <span class="site-state-item-count">57</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">Tags</span>
               </a>
             </div>
           
@@ -514,7 +516,7 @@
               
             
             
-              <p class="post-toc-empty">This post does not have a Table of Contents</p>
+              <p class="post-toc-empty">Dieser Artikel hat kein Inhaltsverzeichnis</p>
             
           </div>
         </section>
@@ -541,7 +543,7 @@
 </div>
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="http://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">

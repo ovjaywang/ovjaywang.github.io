@@ -4,14 +4,14 @@
 
     
   <url>
-    <loc>http://ovjaywang.github.io/2016/04/13/effective%20java--%E9%9D%99%E6%80%81%E5%B7%A5%E5%8E%82%E5%92%8CBuilder%E6%A8%A1%E5%BC%8F--%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2016-04-23T11:37:06.026Z</lastmod>
+    <loc>http://ovjaywang.github.io/2016/04/22/builer%E6%9E%84%E9%80%A0%E5%99%A8-java/</loc>
+    <lastmod>2016-04-23T12:22:58.859Z</lastmod>
     <data>
         <display>
-        <title>effective java--静态工厂和Builder模式--笔记</title>
-        <pubTime>2016-04-13T07:15:14.000Z</pubTime>
+        <title>builer构造器-java</title>
+        <pubTime>2016-04-22T09:10:48.000Z</pubTime>
         
-        <tag>test</tag>
+        <tag>java</tag>
          
          
            
@@ -27,8 +27,68 @@
 
     
   <url>
+    <loc>http://ovjaywang.github.io/2016/03/08/%E6%9C%80%E8%BF%91demo%20%E6%A8%A1%E5%9D%97%20%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/</loc>
+    <lastmod>2016-04-23T12:22:24.295Z</lastmod>
+    <data>
+        <display>
+        <title>最近demo 模块 算法总结</title>
+        <pubTime>2016-03-08T09:43:56.000Z</pubTime>
+        
+        <tag>dbscan</tag>
+         
+        <tag>demo</tag>
+         
+        <tag>ICP</tag>
+         
+        <tag>MMC</tag>
+         
+        <tag>MME</tag>
+         
+        <tag>SPark</tag>
+         
+        <tag>算法</tag>
+         
+         
+           
+             
+              <breadCrumb title="代码狗" url="http://ovjaywang.github.io/categories/%E4%BB%A3%E7%A0%81%E7%8B%97/"/>
+          
+             
+              <breadCrumb title="学习log" url="http://ovjaywang.github.io/categories/%E4%BB%A3%E7%A0%81%E7%8B%97/%E5%AD%A6%E4%B9%A0log/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://ovjaywang.github.io/2016/04/01/%E8%AE%B0%E9%9D%99%E6%80%81ip%E7%9A%84%E5%9D%91/</loc>
+    <lastmod>2016-04-23T12:21:11.330Z</lastmod>
+    <data>
+        <display>
+        <title>记静态ip的坑</title>
+        <pubTime>2016-04-01T08:06:32.000Z</pubTime>
+        
+        <tag>hadoop</tag>
+         
+        <tag>静态ip</tag>
+         
+         
+           
+             
+              <breadCrumb title="什么都学一下" url="http://ovjaywang.github.io/categories/%E4%BB%80%E4%B9%88%E9%83%BD%E5%AD%A6%E4%B8%80%E4%B8%8B/"/>
+          
+             
+              <breadCrumb title="学习log" url="http://ovjaywang.github.io/categories/%E4%BB%80%E4%B9%88%E9%83%BD%E5%AD%A6%E4%B8%80%E4%B8%8B/%E5%AD%A6%E4%B9%A0log/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://ovjaywang.github.io/2016/04/22/what-the-hell-of-sdf/</loc>
-    <lastmod>2016-04-23T11:30:49.994Z</lastmod>
+    <lastmod>2016-04-23T12:18:50.416Z</lastmod>
     <data>
         <display>
         <title>删除sdf文件导致转到定义失效</title>
@@ -50,22 +110,22 @@
 
     
   <url>
-    <loc>http://ovjaywang.github.io/2016/04/22/builer%E6%9E%84%E9%80%A0%E5%99%A8-java/</loc>
-    <lastmod>2016-04-23T11:08:39.037Z</lastmod>
+    <loc>http://ovjaywang.github.io/2016/04/13/effective%20java--%E9%9D%99%E6%80%81%E5%B7%A5%E5%8E%82%E5%92%8CBuilder%E6%A8%A1%E5%BC%8F--%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2016-04-23T11:37:06.026Z</lastmod>
     <data>
         <display>
-        <title>builer构造器-java</title>
-        <pubTime>2016-04-22T09:10:48.000Z</pubTime>
+        <title>effective java--静态工厂和Builder模式--笔记</title>
+        <pubTime>2016-04-13T07:15:14.000Z</pubTime>
         
-        <tag>java</tag>
+        <tag>test</tag>
          
          
            
              
-              <breadCrumb title="什么都学一下" url="http://ovjaywang.github.io/categories/%E4%BB%80%E4%B9%88%E9%83%BD%E5%AD%A6%E4%B8%80%E4%B8%8B/"/>
+              <breadCrumb title="代码狗" url="http://ovjaywang.github.io/categories/%E4%BB%A3%E7%A0%81%E7%8B%97/"/>
           
              
-              <breadCrumb title="学习log" url="http://ovjaywang.github.io/categories/%E4%BB%80%E4%B9%88%E9%83%BD%E5%AD%A6%E4%B8%80%E4%B8%8B/%E5%AD%A6%E4%B9%A0log/"/>
+              <breadCrumb title="学习log" url="http://ovjaywang.github.io/categories/%E4%BB%A3%E7%A0%81%E7%8B%97/%E5%AD%A6%E4%B9%A0log/"/>
           
         </display>
     </data>
@@ -439,66 +499,6 @@
         <tag>java</tag>
          
         <tag>bae</tag>
-         
-         
-           
-             
-              <breadCrumb title="代码狗" url="http://ovjaywang.github.io/categories/%E4%BB%A3%E7%A0%81%E7%8B%97/"/>
-          
-             
-              <breadCrumb title="学习log" url="http://ovjaywang.github.io/categories/%E4%BB%A3%E7%A0%81%E7%8B%97/%E5%AD%A6%E4%B9%A0log/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://ovjaywang.github.io/2016/04/01/%E8%AE%B0%E9%9D%99%E6%80%81ip%E7%9A%84%E5%9D%91/</loc>
-    <lastmod>2016-04-11T14:09:45.583Z</lastmod>
-    <data>
-        <display>
-        <title>记静态ip的坑</title>
-        <pubTime>2016-04-01T08:06:32.000Z</pubTime>
-        
-        <tag>hadoop</tag>
-         
-        <tag>静态ip</tag>
-         
-         
-           
-             
-              <breadCrumb title="什么都学一下" url="http://ovjaywang.github.io/categories/%E4%BB%80%E4%B9%88%E9%83%BD%E5%AD%A6%E4%B8%80%E4%B8%8B/"/>
-          
-             
-              <breadCrumb title="学习log" url="http://ovjaywang.github.io/categories/%E4%BB%80%E4%B9%88%E9%83%BD%E5%AD%A6%E4%B8%80%E4%B8%8B/%E5%AD%A6%E4%B9%A0log/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://ovjaywang.github.io/2016/03/08/%E6%9C%80%E8%BF%91demo%20%E6%A8%A1%E5%9D%97%20%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/</loc>
-    <lastmod>2016-04-11T14:09:45.583Z</lastmod>
-    <data>
-        <display>
-        <title>最近demo 模块 算法总结</title>
-        <pubTime>2016-03-08T09:43:56.000Z</pubTime>
-        
-        <tag>dbscan</tag>
-         
-        <tag>demo</tag>
-         
-        <tag>ICP</tag>
-         
-        <tag>MMC</tag>
-         
-        <tag>MME</tag>
-         
-        <tag>SPark</tag>
-         
-        <tag>算法</tag>
          
          
            

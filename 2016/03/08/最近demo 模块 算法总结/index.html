@@ -83,25 +83,19 @@
 
 
 <meta name="description" content="http://ju.outofmemory.cn/entry/106397 【坑妹填完】
-最近各种乱整。。文章妹时间管光顾着折腾手头派下来的事情了。再加上每天固定的复习提高一下。小论文完全没有头绪。
-最近get到的实用方法还是很多阿。DBScan（Density-Based Spatial Clustering of Applications with Noise）基于密度的含噪空间聚类
-最大特点">
+最近各种乱整。。文章妹时间管光顾着折腾手头派下来的事情了。再加上每天固定的复习提高一下。小论文完全没有头绪。最近get到的实用方法还是很多阿。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="最近demo 模块 算法总结">
 <meta property="og:url" content="http://ovjaywang.github.io/2016/03/08/最近demo 模块 算法总结/index.html">
 <meta property="og:site_name" content="ov智商捉急">
 <meta property="og:description" content="http://ju.outofmemory.cn/entry/106397 【坑妹填完】
-最近各种乱整。。文章妹时间管光顾着折腾手头派下来的事情了。再加上每天固定的复习提高一下。小论文完全没有头绪。
-最近get到的实用方法还是很多阿。DBScan（Density-Based Spatial Clustering of Applications with Noise）基于密度的含噪空间聚类
-最大特点">
+最近各种乱整。。文章妹时间管光顾着折腾手头派下来的事情了。再加上每天固定的复习提高一下。小论文完全没有头绪。最近get到的实用方法还是很多阿。">
 <meta property="og:image" content="http://ooo.0o0.ooo/2016/03/30/56fb7e092b350.png">
-<meta property="og:updated_time" content="2016-04-11T14:09:45.583Z">
+<meta property="og:updated_time" content="2016-04-23T12:22:24.295Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="最近demo 模块 算法总结">
 <meta name="twitter:description" content="http://ju.outofmemory.cn/entry/106397 【坑妹填完】
-最近各种乱整。。文章妹时间管光顾着折腾手头派下来的事情了。再加上每天固定的复习提高一下。小论文完全没有头绪。
-最近get到的实用方法还是很多阿。DBScan（Density-Based Spatial Clustering of Applications with Noise）基于密度的含噪空间聚类
-最大特点">
+最近各种乱整。。文章妹时间管光顾着折腾手头派下来的事情了。再加上每天固定的复习提高一下。小论文完全没有头绪。最近get到的实用方法还是很多阿。">
 <meta name="twitter:image" content="http://ooo.0o0.ooo/2016/03/30/56fb7e092b350.png">
 
 
@@ -178,7 +172,7 @@
             
               <i class="menu-item-icon fa fa-home fa-fw"></i> <br>
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -188,7 +182,7 @@
             
               <i class="menu-item-icon fa fa-user fa-fw"></i> <br>
             
-            About
+            Über
           </a>
         </li>
       
@@ -261,7 +255,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-o"></i>
             </span>
-            <span class="post-meta-item-text">Posted on</span>
+            <span class="post-meta-item-text">Veröffentlicht am</span>
             <time itemprop="dateCreated" datetime="2016-03-08T17:43:56+08:00" content="2016-03-08">
               2016-03-08
             </time>
@@ -273,7 +267,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">in</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/代码狗/" itemprop="url" rel="index">
@@ -283,7 +277,7 @@
 
                 
                 
-                  , 
+                  . 
                 
 
               
@@ -334,9 +328,8 @@
 
       
         <p><a href="http://ju.outofmemory.cn/entry/106397" title="http://ju.outofmemory.cn/entry/106397" target="_blank" rel="external">http://ju.outofmemory.cn/entry/106397</a> 【坑妹填完】</p>
-<p>最近各种乱整。。文章妹时间管光顾着折腾手头派下来的事情了。再加上每天固定的复习提高一下。小论文完全没有头绪。</p>
-<p>最近get到的实用方法还是很多阿。<br><strong>DBScan</strong>（Density-Based Spatial Clustering of Applications with Noise）<strong>基于密度的含噪空间聚类</strong></p>
-<p>最大特点是：多维、任何形状聚类、聚类数任意、噪声可控、对输入不敏感；缺点很明显，需要提前知道2个参数（一般实验多了，根据经验对同一类型聚类可以不用改。），时间复杂度和空间复杂度都很大，需要计算点两两之间距离[这里需要优化，否则算法超出一般忍受时间] 不对密度变化做出选择。<br>输入参数2个，单一点半径范围R及其最小包含的点数N。算法本质是遍历所有点并计算邻域内的点数并拓展该类（以R范围内是否达到N来判断）。被分类的点将会标记并不再被检测到。因此耗时表现在邻域查找和拓展聚类上。但解算效果相当良好。<br>算法的优化方案相当多：kdtree的、基于网格计算的、基于适应性解算阈值的、局部敏感哈希。主要解决的都是如何加快求解邻域解求速度。诚然它的算法复杂度有n^3显然想要加快并不是那么容易。深入研讨了一番发现计算距离时有的不止一遍，因此写入硬盘或许是个好的方案，但是I/O读取的效率就要考虑进来了；还有一种方式是限制深入迭代次数，即做多在第几层nearestpoint()这个数组中进行聚类的拓展。这种做法的危害是使得同一个点集很可能多次才并入，或者完全没有并到一块，因此需要一个后手，将聚类中心相近的再次组合，其实在kdtree中也有类似的做法。参考<a href="https://github.com/alitouka/spark_dbscan" target="_blank" rel="external">基于SPark的DBSCAN的图解</a>，KDTree建立时，按区域分割好数据后，同一类的点集亦可能先分散于个个区间。各自区间先进行小聚类后，再进行大聚类。</p>
+<p>最近各种乱整。。文章妹时间管光顾着折腾手头派下来的事情了。再加上每天固定的复习提高一下。小论文完全没有头绪。<br>最近get到的实用方法还是很多阿。<br><a id="more"></a></p>
+<h1 id="DBScan（Density-Based-Spatial-Clustering-of-Applications-with-Noise）基于密度的含噪空间聚类"><a href="#DBScan（Density-Based-Spatial-Clustering-of-Applications-with-Noise）基于密度的含噪空间聚类" class="headerlink" title="DBScan（Density-Based Spatial Clustering of Applications with Noise）基于密度的含噪空间聚类"></a><strong>DBScan</strong>（Density-Based Spatial Clustering of Applications with Noise）<strong>基于密度的含噪空间聚类</strong></h1><p>最大特点是：多维、任何形状聚类、聚类数任意、噪声可控、对输入不敏感；缺点很明显，需要提前知道2个参数（一般实验多了，根据经验对同一类型聚类可以不用改。），时间复杂度和空间复杂度都很大，需要计算点两两之间距离[这里需要优化，否则算法超出一般忍受时间] 不对密度变化做出选择。<br>输入参数2个，单一点半径范围R及其最小包含的点数N。算法本质是遍历所有点并计算邻域内的点数并拓展该类（以R范围内是否达到N来判断）。被分类的点将会标记并不再被检测到。因此耗时表现在邻域查找和拓展聚类上。但解算效果相当良好。<br>算法的优化方案相当多：kdtree的、基于网格计算的、基于适应性解算阈值的、局部敏感哈希。主要解决的都是如何加快求解邻域解求速度。诚然它的算法复杂度有n^3显然想要加快并不是那么容易。深入研讨了一番发现计算距离时有的不止一遍，因此写入硬盘或许是个好的方案，但是I/O读取的效率就要考虑进来了；还有一种方式是限制深入迭代次数，即做多在第几层nearestpoint()这个数组中进行聚类的拓展。这种做法的危害是使得同一个点集很可能多次才并入，或者完全没有并到一块，因此需要一个后手，将聚类中心相近的再次组合，其实在kdtree中也有类似的做法。参考<a href="https://github.com/alitouka/spark_dbscan" target="_blank" rel="external">基于SPark的DBSCAN的图解</a>，KDTree建立时，按区域分割好数据后，同一类的点集亦可能先分散于个个区间。各自区间先进行小聚类后，再进行大聚类。</p>
 <p><img src="http://ooo.0o0.ooo/2016/03/30/56fb7e092b350.png" alt=""></p>
 <p>（中了SPark的毒，后面会进行测试）<br>demo很好的展示了算法的原理。</p>
 <p><a href="http://www.naftaliharris.com/blog/visualizing-dbscan-clustering/" title="http://www.naftaliharris.com/blog/visualizing-dbscan-clustering/" target="_blank" rel="external">http://www.naftaliharris.com/blog/visualizing-dbscan-clustering/</a> 在线666可视化理解dbscan过程。不同的实例可以看到，对不同图形的检测相当准确；同时聚类精度亦相当高。</p>
@@ -346,8 +339,7 @@
 <p>诚然，boost把很多常用的算法都写进去了。但c++使用起来才比较顺。这是c++环境下使用dbscan的正确方式：上boost。比如下面这个</p>
 <p><a href="https://github.com/yusufuzun/dbscan" title="https://github.com/yusufuzun/dbscan" target="_blank" rel="external">https://github.com/yusufuzun/dbscan</a>（C# 以算法原理为基准 不是很快）</p>
 <p>或这个<a href="https://github.com/Terranlee/DBSCAN" title="https://github.com/Terranlee/DBSCAN" target="_blank" rel="external">https://github.com/Terranlee/DBSCAN</a>（C++&amp;boost&amp;KDTree&nbsp; 至今没有明白第一个参数ire的含义啊。一般都2个参数就好了啊 而且结果貌似也不太对 等待修正）</p>
-<p><strong>boost的使用</strong></p>
-<p>上边两个github的例子都基于c++开发，其中都使用到了流行的c++高性能计算类库boost。</p>
+<h1 id="boost的使用"><a href="#boost的使用" class="headerlink" title="boost的使用"></a><strong>boost的使用</strong></h1><p>上边两个github的例子都基于c++开发，其中都使用到了流行的c++高性能计算类库boost。</p>
 <p>linux下的编译和安装遵循这个帖比较顺 </p>
 <p><a href="http://ju.outofmemory.cn/entry/106397" title="http://ju.outofmemory.cn/entry/106397" target="_blank" rel="external">http://ju.outofmemory.cn/entry/106397</a></p>
 <hr>
@@ -359,8 +351,7 @@
 <p>&nbsp;</p>
 <hr>
 <p><font color="#555555"></font>&nbsp;</p>
-<p><strong>ICP</strong>（<a href="https://en.wikipedia.org/wiki/Iterative_closest_point" target="_blank" rel="external">Iterative closest point</a>）</p>
-<p>点集匹配算法——两组有部分重叠区域的点集，进行拟合和对应点匹配。匹配中如果模式重复程度过高可能陷入局部最小值，因此需要对模式进行了良好的解析。</p>
+<h1 id="ICP（Iterative-closest-point）"><a href="#ICP（Iterative-closest-point）" class="headerlink" title="ICP（Iterative closest point）"></a><strong>ICP</strong>（<a href="https://en.wikipedia.org/wiki/Iterative_closest_point" target="_blank" rel="external">Iterative closest point</a>）</h1><p>点集匹配算法——两组有部分重叠区域的点集，进行拟合和对应点匹配。匹配中如果模式重复程度过高可能陷入局部最小值，因此需要对模式进行了良好的解析。</p>
 <p>算法原理：①算法先解算归一两组点集比例尺、解算质心，将质心重合②对其中一个点集，寻找每个另一点集的最近点，解算梯度和旋转平移量③再次计算最近点，若旋转量小于阈值则停止，若大于阈值则继续②步骤。④按照对应点计算H矩阵（单映矩阵）。</p>
 <p>第二部中的关键步骤其实就是解算每一步的迭代旋转和平移量，用到的是最小二乘法；其次，输入模式及输入顺序对匹配影像也比较大。一般的，停止迭代可以设置限差或者迭代次数。</p>
 <p>VTK5.8的C#dll中有包含ICP最新的算法，但算法较旧，效率较低，但新版6.0+在C#上未开源，忧伤。算法中，求取最近点有三种做法，一点对点，直接找最近点，常用kd-tree实现；二点对面，求取最近的切面的一个切点，主要针对点集和曲面匹配；三点做发现与另一曲面交点，主要针对面与面配准。</p>
@@ -371,8 +362,7 @@
 <p>&nbsp;</p>
 <p>适应性：对自由形状的曲面适应性较好，VTK算法在LiDar数据扫描配准中应用较好。</p>
 <hr>
-<p><font color="#555555"><strong>convex hull of a set of points</strong></font> 点集的凸包</p>
-<p>没啥特点。但相当基础。在外接圆计算、外接矩形计算的时候必须首先解算。demo相当完美。可直接改了用了。能把demo做的这么直白这么易用相当666了(c#)</p>
+<h1 id="convex-hull-of-a-set-of-points-点集的凸包"><a href="#convex-hull-of-a-set-of-points-点集的凸包" class="headerlink" title="convex hull of a set of points 点集的凸包"></a><strong>convex hull of a set of points</strong> 点集的凸包</h1><p>没啥特点。但相当基础。在外接圆计算、外接矩形计算的时候必须首先解算。demo相当完美。可直接改了用了。能把demo做的这么直白这么易用相当666了(c#)</p>
 <p><a href="http://csharphelper.com/blog/2014/07/find-the-convex-hull-of-a-set-of-points-in-c/" target="_blank" rel="external">查找点集外包圆</a></p>
 <p>&nbsp;</p>
 <p><strong>minimal bounding rectangle for a polygon </strong>凸包的最小外接矩形。这个算法在解求聚类、数据形态方面有很多利用。前提是前面提到的点集凸包以及点集是否按顺时针排序。同样的网站，给的demo我只能说酷炸了。（c#）包含了两种模式：最小面积和最小周长，两者相差不会很大。demo的计算原则是面积。</p>
@@ -479,10 +469,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
+            Übersicht
           </li>
         </ul>
       
@@ -497,7 +487,7 @@
           <div class="site-state-item site-state-posts">
             <a href="/">
               <span class="site-state-item-count">99</span>
-              <span class="site-state-item-name">posts</span>
+              <span class="site-state-item-name">Artikel</span>
             </a>
           </div>
 
@@ -505,7 +495,7 @@
             <div class="site-state-item site-state-categories">
               
                 <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">categories</span>
+                <span class="site-state-item-name">Kategorien</span>
               
             </div>
           
@@ -514,7 +504,7 @@
             <div class="site-state-item site-state-tags">
               <a href="/tags">
                 <span class="site-state-item-count">57</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">Tags</span>
               </a>
             </div>
           
@@ -569,7 +559,7 @@
               
             
             
-              <p class="post-toc-empty">This post does not have a Table of Contents</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DBScan（Density-Based-Spatial-Clustering-of-Applications-with-Noise）基于密度的含噪空间聚类"><span class="nav-number">1.</span> <span class="nav-text">DBScan（Density-Based Spatial Clustering of Applications with Noise）基于密度的含噪空间聚类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#boost的使用"><span class="nav-number">2.</span> <span class="nav-text">boost的使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ICP（Iterative-closest-point）"><span class="nav-number">3.</span> <span class="nav-text">ICP（Iterative closest point）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#convex-hull-of-a-set-of-points-点集的凸包"><span class="nav-number">4.</span> <span class="nav-text">convex hull of a set of points 点集的凸包</span></a></li></ol></div>
             
           </div>
         </section>
@@ -596,7 +586,7 @@
 </div>
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="http://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
