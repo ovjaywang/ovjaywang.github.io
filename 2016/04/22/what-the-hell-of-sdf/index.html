@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion">
+<html class="theme-next mist use-motion">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -29,32 +29,6 @@
 
   <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
-
-
-
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
 
 
 
@@ -84,30 +58,21 @@
 
 <meta name="description" content="cmomit的时候发现一个.sdf的文件特别大，项目才不到2m，一个sdf就30多m了。吓哭谷歌了一下说是存放预编译头和Intellisense的。
 
-预编译头是 c++下的.h和.hpp等需要调用的文件头Intellisense是自动补齐和代码检测的文件。
-
-巨硬在这里也给出了Intellisense的强大功效。
-在工具-&amp;gt;选项-&amp;gt;文本编辑器-&amp;gt;C/C++-&amp;gt;高级-&amp;gt">
+预编译头是 c++下的.h和.hpp等需要调用的文件头Intellisense是自动补齐和代码检测的文件。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="删除sdf文件导致转到定义失效">
 <meta property="og:url" content="http://ovjaywang.github.io/2016/04/22/what-the-hell-of-sdf/index.html">
 <meta property="og:site_name" content="ov智商捉急">
 <meta property="og:description" content="cmomit的时候发现一个.sdf的文件特别大，项目才不到2m，一个sdf就30多m了。吓哭谷歌了一下说是存放预编译头和Intellisense的。
 
-预编译头是 c++下的.h和.hpp等需要调用的文件头Intellisense是自动补齐和代码检测的文件。
-
-巨硬在这里也给出了Intellisense的强大功效。
-在工具-&amp;gt;选项-&amp;gt;文本编辑器-&amp;gt;C/C++-&amp;gt;高级-&amp;gt">
+预编译头是 c++下的.h和.hpp等需要调用的文件头Intellisense是自动补齐和代码检测的文件。">
 <meta property="og:image" content="http://ooo.0o0.ooo/2016/04/22/5719e9865cfc6.png">
-<meta property="og:updated_time" content="2016-04-22T09:11:35.672Z">
+<meta property="og:updated_time" content="2016-04-23T11:30:49.994Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="删除sdf文件导致转到定义失效">
 <meta name="twitter:description" content="cmomit的时候发现一个.sdf的文件特别大，项目才不到2m，一个sdf就30多m了。吓哭谷歌了一下说是存放预编译头和Intellisense的。
 
-预编译头是 c++下的.h和.hpp等需要调用的文件头Intellisense是自动补齐和代码检测的文件。
-
-巨硬在这里也给出了Intellisense的强大功效。
-在工具-&amp;gt;选项-&amp;gt;文本编辑器-&amp;gt;C/C++-&amp;gt;高级-&amp;gt">
+预编译头是 c++下的.h和.hpp等需要调用的文件头Intellisense是自动补齐和代码检测的文件。">
 <meta name="twitter:image" content="http://ooo.0o0.ooo/2016/04/22/5719e9865cfc6.png">
 
 
@@ -115,7 +80,7 @@
 <script type="text/javascript" id="hexo.configuration">
   var NexT = window.NexT || {};
   var CONFIG = {
-    scheme: 'Muse',
+    scheme: 'Mist',
     sidebar: {"position":"left","display":"always"},
     fancybox: true,
     motion: true,
@@ -153,12 +118,6 @@
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-meta custom-logo">
   
-    <div class="site-meta-headline">
-      <a>
-        <img class="custom-logo-image" src="images/xiaozaizi.png" alt="ov智商捉急">
-      </a>
-    </div>
-  
 
   <div class="custom-logo-site-title">
     <a href="/" class="brand" rel="start">
@@ -188,9 +147,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-home fa-fw"></i> <br>
-            
-            Home
+            Startseite
           </a>
         </li>
       
@@ -198,17 +155,13 @@
         <li class="menu-item menu-item-about">
           <a href="/me" rel="section">
             
-              <i class="menu-item-icon fa fa-user fa-fw"></i> <br>
-            
-            About
+            Über
           </a>
         </li>
       
         
         <li class="menu-item menu-item-归档">
           <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-question-circle fa-fw"></i> <br>
             
             menu.归档
           </a>
@@ -217,8 +170,6 @@
         
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br>
             
             Tags
           </a>
@@ -273,7 +224,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-o"></i>
             </span>
-            <span class="post-meta-item-text">Posted on</span>
+            <span class="post-meta-item-text">Veröffentlicht am</span>
             <time itemprop="dateCreated" datetime="2016-04-22T16:38:11+08:00" content="2016-04-22">
               2016-04-22
             </time>
@@ -285,7 +236,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">in</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/什么都学一下/" itemprop="url" rel="index">
@@ -295,7 +246,7 @@
 
                 
                 
-                  , 
+                  . 
                 
 
               
@@ -347,9 +298,8 @@
       
         <p>cmomit的时候发现一个<strong>.sdf</strong>的文件特别大，项目才不到2m，一个sdf就30多m了。<br>吓哭谷歌了一下说是存放预编译头和Intellisense的。</p>
 <blockquote>
-<p>预编译头是 c++下的.h和.hpp等需要调用的文件头<br>Intellisense是自动补齐和代码检测的文件。</p>
+<p>预编译头是 c++下的.h和.hpp等需要调用的文件头<br>Intellisense是自动补齐和代码检测的文件。<br><a id="more"></a><br>巨硬在<a href="https://msdn.microsoft.com/en-us/library/hcw1s69b.aspx" target="_blank" rel="external">这里</a>也给出了Intellisense的强大功效。</p>
 </blockquote>
-<p>巨硬在<a href="https://msdn.microsoft.com/en-us/library/hcw1s69b.aspx" target="_blank" rel="external">这里</a>也给出了Intellisense的强大功效。</p>
 <p>在工具-&gt;选项-&gt;文本编辑器-&gt;C/C++-&gt;高级-&gt;禁用数据库改为true。的确就能不生成了。<br>怒删了。居然?调试的时候转到定义（F12）失效了。自动补全和错误更正失效了。该选项的第一个表单Intellisense居然全都不能改变了。。。那么问题来了。我每次commit都需要删掉。然后每次又给我生成。烦躁。</p>
 <p>search到很多F12失效和类名找不到的，都很有可能是这个问题。即使，再次把禁用数据库false掉、把 工具-&gt;选项-&gt;项目和解决方案-&gt;常规-&gt;在解决方案资源管理器中跟踪活动项 反复勾选也没有用。呵呵哒。好险回收站里的sdf文件没有删。同时，这一更改在别的工程不会影响，只要sdf在就没事。</p>
 <p>解决方案：尝试每次删简直繁琐。在选项禁用数据库上面，可以改正sdf文件的存放位置。将始终使用退回位置设为true，把sdf删掉。使用一个每次不需要同步的文件夹，编译调试时能使用，又不影响git速度，棒呆。<br><img src="http://ooo.0o0.ooo/2016/04/22/5719e9865cfc6.png" alt="haha"></p>
@@ -443,10 +393,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
+            Übersicht
           </li>
         </ul>
       
@@ -461,7 +411,7 @@
           <div class="site-state-item site-state-posts">
             <a href="/">
               <span class="site-state-item-count">99</span>
-              <span class="site-state-item-name">posts</span>
+              <span class="site-state-item-name">Artikel</span>
             </a>
           </div>
 
@@ -469,7 +419,7 @@
             <div class="site-state-item site-state-categories">
               
                 <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">categories</span>
+                <span class="site-state-item-name">Kategorien</span>
               
             </div>
           
@@ -478,7 +428,7 @@
             <div class="site-state-item site-state-tags">
               <a href="/tags">
                 <span class="site-state-item-count">57</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">Tags</span>
               </a>
             </div>
           
@@ -513,7 +463,7 @@
               
             
             
-              <p class="post-toc-empty">This post does not have a Table of Contents</p>
+              <p class="post-toc-empty">Dieser Artikel hat kein Inhaltsverzeichnis</p>
             
           </div>
         </section>
@@ -540,13 +490,13 @@
 </div>
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="http://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
   Theme -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
+    NexT.Mist
   </a>
 </div>
 

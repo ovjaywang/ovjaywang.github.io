@@ -161,13 +161,12 @@ public interface Builder{
     <link href="http://ovjaywang.github.io/2016/04/22/what-the-hell-of-sdf/"/>
     <id>http://ovjaywang.github.io/2016/04/22/what-the-hell-of-sdf/</id>
     <published>2016-04-22T08:38:11.000Z</published>
-    <updated>2016-04-22T09:11:35.672Z</updated>
+    <updated>2016-04-23T11:30:49.994Z</updated>
     
     <content type="html">&lt;p&gt;cmomit的时候发现一个&lt;strong&gt;.sdf&lt;/strong&gt;的文件特别大，项目才不到2m，一个sdf就30多m了。&lt;br&gt;吓哭谷歌了一下说是存放预编译头和Intellisense的。&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;预编译头是 c++下的.h和.hpp等需要调用的文件头&lt;br&gt;Intellisense是自动补齐和代码检测的文件。&lt;/p&gt;
+&lt;p&gt;预编译头是 c++下的.h和.hpp等需要调用的文件头&lt;br&gt;Intellisense是自动补齐和代码检测的文件。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;br&gt;巨硬在&lt;a href=&quot;https://msdn.microsoft.com/en-us/library/hcw1s69b.aspx&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;也给出了Intellisense的强大功效。&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;巨硬在&lt;a href=&quot;https://msdn.microsoft.com/en-us/library/hcw1s69b.aspx&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;也给出了Intellisense的强大功效。&lt;/p&gt;
 &lt;p&gt;在工具-&amp;gt;选项-&amp;gt;文本编辑器-&amp;gt;C/C++-&amp;gt;高级-&amp;gt;禁用数据库改为true。的确就能不生成了。&lt;br&gt;怒删了。居然?调试的时候转到定义（F12）失效了。自动补全和错误更正失效了。该选项的第一个表单Intellisense居然全都不能改变了。。。那么问题来了。我每次commit都需要删掉。然后每次又给我生成。烦躁。&lt;/p&gt;
 &lt;p&gt;search到很多F12失效和类名找不到的，都很有可能是这个问题。即使，再次把禁用数据库false掉、把 工具-&amp;gt;选项-&amp;gt;项目和解决方案-&amp;gt;常规-&amp;gt;在解决方案资源管理器中跟踪活动项 反复勾选也没有用。呵呵哒。好险回收站里的sdf文件没有删。同时，这一更改在别的工程不会影响，只要sdf在就没事。&lt;/p&gt;
 &lt;p&gt;解决方案：尝试每次删简直繁琐。在选项禁用数据库上面，可以改正sdf文件的存放位置。将始终使用退回位置设为true，把sdf删掉。使用一个每次不需要同步的文件夹，编译调试时能使用，又不影响git速度，棒呆。&lt;br&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/04/22/5719e9865cfc6.png&quot; alt=&quot;haha&quot;&gt;&lt;/p&gt;</content>
@@ -176,7 +175,7 @@ public interface Builder{
     
       &lt;p&gt;cmomit的时候发现一个&lt;strong&gt;.sdf&lt;/strong&gt;的文件特别大，项目才不到2m，一个sdf就30多m了。&lt;br&gt;吓哭谷歌了一下说是存放预编译头和Intellisense的。&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;预编译头是 c++下的.h和.hpp等需要
+&lt;p&gt;预编译头是 c++下的.h和.hpp等需要调用的文件头&lt;br&gt;Intellisense是自动补齐和代码检测的文件。&lt;br&gt;
     
     </summary>
     
