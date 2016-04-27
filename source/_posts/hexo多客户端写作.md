@@ -37,15 +37,17 @@ Hexo最大特点就是静态博客，即部署到服务器的博客内容是静�
 
 1. 在两地分别hexo init建立hexo博客目录，在_config.yml中都部署到同一个远程仓库，在每次generate时，都先将远程仓库的静态文件同步下来（新建一个单独的folder专门用于同步静态文件）。请勿使用hexo博客中的public文件夹用于同步，每次generate会覆盖同名文件。若另一台主机曾做过修改并提交，这次修改的静态文件将被本地未修改的静态文件覆盖。具体操作：
 第一次克隆远程hexo主分支：
-```
 
+```
 git clone git@github.com:user-name/user-name.github.io.git
 ```
-之后每次hexo仓库发布首先在静态文件仓库获取远程仓库最新静态文件(无条件merge)
-```
 
+之后每次hexo仓库发布首先在静态文件仓库获取远程仓库最新静态文件(无条件merge)
+
+```
 git pull origin master
 ```
+
 2. 在静态文件同步仓库中，将自上次部署后，本地修改过的静态文件**删掉**（不记得怪我咯┑(￣Д ￣)┍）；同时在hexo blog仓库中``hexo -g``生成本地静态文件。
 3. 将剔除过期静态文件的public仓库中文件复制到hexo的public中。
 4. 使用``hexo -d``部署
@@ -74,60 +76,68 @@ git pull origin master
 
 ##   同步远程仓库并初始化
 在本地（包含第一次所有源文件的主机）新建一个文件夹（就算已经写过博客的也这么搞）同步远程仓库并初始化
-```
 
+```
 git clone git@github.com:your-Id/your-Id.github.io.git    
 ```
+
 此时输入``git branch``可以看到两个分支，红色分支为主分支。
 若是非空白博客，同步后需要先删掉里面的静态文件.直接删光，把原博客的文件全部复制过来**（好像没有发现更换远程仓库主分支后本地同步更换的git bash。求解?）**;若是空白博客，那么需要再令建一个文件夹，（因为hexo init操作会覆盖原.git文件导致与远程仓库失联）在该文件夹git bash执行
-```
 
+```
 npm install -g hexo
 hexo init
 npm install
 hexo g
 npm install hexo-deployer-git--save
 ```
+
 好了，里面该有的差不多都有了。全部复制到源文件仓库。**注意把hello worl删掉啊。**关键的就是，config.yml里deployer的branch是master，而本地仓库关联的是hexo就对了。
 然后执行
+
 ```
 git add .
 git commit -m "init"
 git push -u origin hexo
 ```
+
 这就完成源文件的同步了！(￣▽￣)"" 执行``hexo d``操作将本地public静态文件部署。
 
-# 3. 发博日常
+#  发博日常
 
-## 3.1 更博
+##   更博
 如果你不能确定是否抽风需要经常换客户端，因此需要每次都要同步本地源文件；如果能忍住，，或者有规律的换客户端，那么平时更新不需要经常同步。  
 写博前操作(**特么狠重要啊**)：
-```
 
+```
 git pull origin hexo
 ```
-更新操作：(同步源文件到hexo分支)
-```
 
+更新操作：(同步源文件到hexo分支)
+
+```
 git add .
 git commit -m "hehe"
 git push origin hexo
 ```
+
 这样每次更博都需要多几个步骤，嫌麻烦就要忍住不手痒了。在手机、pad写md再同步到电脑也是个不错的习惯。
 
-## 3.2 换客户端
+##   换客户端
 easy.只要远程仓库存在了一份完整的源文件，那同步就很容易了。似上步第一次同步，使用``git clone git@github.com:your-Id/your-Id.github.io.git``拷贝仓库。然后执行
-```
 
+```
 npm install -g hexo
 npm install
 npm install hexo-deployer-git 
 ```
+
 **不用init!!!**
 
-##3.3 后记
+##  后记
 
 pacman的公式和代码支持好差啊~还有需要多地备份的可以尝试coding（page之前免费的现在要钱了 = =）.在站点部署文件中更改deploy：
+
 ```markdown
 deploy:
    type: git
