@@ -1,0 +1,259 @@
+---
+title: 后方交会检校(6)--后方交会的补充及DLT和角锥体法
+categories:
+  - 什么都学一下
+  - 学习log
+tags:
+  - 检校
+id: 813
+date: 2015-11-04 15:29:32
+---
+
+除了后方交会之外，常用的进行内外参数检校的方法还有DLT和角锥体法。
+
+写在前面：DLT可在<font color="#FF0000">未提供初值</font>的情况下推导内外方位元素，同时<font color="#FF0000">不需要迭代</font>，但精度相比后方交会较低；<font color="#FF0000">DLT与后方交会等价</font>。
+
+**<font color="#FF0000" size="5">内容提要</font>**
+
+[DLT基本原理与公式](#DLT基本原理与公式)&nbsp; [L的基本形式](#其中)&nbsp;&nbsp;[用Li表示内外参数](#根据求得的li计算各参数)&nbsp;
+
+[非正交与比例尺不一致因素](#非正交与比例尺不一致因素)&nbsp; [DLT的真正一般形式](#DLT的真正一般形式)&nbsp; [包含2项因素的Li表达内外参数](#包含2项因素的Li表达内外参数)&nbsp;
+
+[包含畸变参数校正的DLT](#包含畸变参数校正的DLT)
+
+<a name="DLT基本原理与公式">DLT基本原理与公式</a>
+
+基本原理：将物方点坐标（X,Y,Z）和(x,y)看做是空间中的某种线性变换，可以互为函数。一般地，将x,y用X,Y,Z表示。
+
+基本公式：
+
+$$!\left\{\begin{matrix}x+\frac{L_{1}X+L_{2}Y+L_{3}Z+L_{4}}{L_{9}X+L_{10}Y+L_{11}Z+1}=0\\y+\frac{L_{5}X+L_{6}Y+L_{7}Z+L_{8}}{L_{9}X+L_{10}Y+L_{11}Z+1}=0\end{matrix}\right.$$
+
+DLT误差方程：
+
+<font color="#FF0000">$$!\begin{pmatrix}v_{x}\\v_{y}\end{pmatrix}=\begin{pmatrix}X&amp;Y&amp;Z&amp;1&amp;0&amp;0&amp;0&amp;0&amp;xX&amp;xY&amp;xZ\\0&amp;0&amp;0&amp;0&amp;X&amp;Y&amp;Z&amp;1&amp;yX&amp;yY&amp;yZ\end{pmatrix}\begin{pmatrix}L_{1}\\L_{2}\\L_{3}\\L_{4}\\L_{5}\\L_{6}\\L_{7}\\L_{8}\\L_{9}\\L_{10}\\L_{11}\end{pmatrix}+\begin{pmatrix}l_{x}\\l_{y}\end{pmatrix}$$</font>
+
+与后方交会一样，若有n个控制点，则A矩阵有2n行。还是利用求改正数的公式求取。
+
+DLT推导过程如下：
+
+根据共线方程的后方交会形式：
+
+$$!x-x_{0}+f_{x}\frac{a_{1}(X-X_{s})+b_{1}(Y-Y_{s})+c_{1}(Z-Z_{s})}{a_{3}(X-X_{s})+b_{3}(Y-Y_{s})+c_{3}(Z-Z_{s})}=0$$
+
+$$!y-y_{0}+f_{y}\frac{a_{2}(X-X_{s})+b_{2}(Y-Y_{s})+c_{2}(Z-Z_{s})}{a_{3}(X-X_{s})+b_{3}(Y-Y_{s})+c_{3}(Z-Z_{s})}=0$$
+
+这里，f分为fx和fy，即主距在像空系中这两个分量的投影。因为有的单个ccd xy方向上的大小不一致，即不是正方形。
+
+将X，Y，Z和Xs，Ys，Zs分离，将之看作是摄影中心的变换坐标。
+
+<font color="#FF0000">$$!\left\{\begin{matrix}r_{1}=-(a_{1}X_{s}+b_{1}Y_{s}+c_{1}Z_{s})\\r_{2}=-(a_{2}X_{s}+b_{2}Y_{s}+c_{2}Z_{s})\\r_{3}=-(a_{3}X_{s}+b_{3}Y_{s}+c_{3}Z_{s})\end{matrix}\right.$$</font>
+
+化简可得
+
+$$!x-x_{0}+f_{x}\frac{a_{1}X+b_{1}Y+c_{1}Z+r_{1}}{a_{3}X+b_{3}Y+c_{3}Z+r_{3}}=0$$
+
+$$!y-y_{0}+f_{y}\frac{a_{2}X+b_{2}Y+c_{2}Z+r_{1}}{a_{3}X+b_{3}Y+c_{3}Z+r_{3}}=0$$
+
+将x0，y0通分。
+
+$$!x+\frac{(a_{1}f_{x}-a_{3}x_{0})X+(b_{1}f_{x}-b_{3}x_{0})Y+(c_{1}f_{x}-c_{3}x_{0})Z+(r_{1}f_{x}-r_{3}x_{0})}{a_{3}X+b_{3}Y+c_{3}Z+r_{3}}=0$$
+
+$$!y+\frac{(a_{2}f_{y}-a_{3}y_{0})X+(b_{2}f_{y}-b_{3}y_{0})Y+(c_{2}f_{y}-c_{3}y_{0})Z+(r_{2}f_{y}-r_{3}y_{0})}{a_{3}X+b_{3}Y+c_{3}Z+r_{3}}=0$$
+
+将X、Y、Z的系数简化为L，即
+
+$$!x+\frac{L_{1}X+L_{2}Y+L_{3}Z+L_{4}}{L_{9}X+L_{10}Y+L_{11}Z+1}=0$$
+
+$$!y+\frac{L_{5}X+L_{6}Y+L_{7}Z+L_{8}}{L_{9}X+L_{10}Y+L_{11}Z+1}=0$$
+
+<a name="其中">其中，L为：</a>
+
+<font color="#FF0000">$$!L=\begin{bmatrix}L_{1}&amp;L_{2}&amp;L_{3}&amp;L_{4}\\L_{5}&amp;L_{6}&amp;L_{7}&amp;L_{8}\\L_{9}&amp;L_{10}&amp;L_{11}&amp;L_{12}\end{bmatrix}$$</font>
+
+![](http://www.dooby.me/wp-content/uploads/2015/11/151C86750F1FFF17ECE621971610488CBAE13A81.jpg)
+
+该公式表示像点测量坐标与物方点坐标直接的变化，无需内方位元素。从另一个角度看，L矩阵其实是二维坐标通过三次矩阵变换得到的三维坐标，即：
+
+$$!L=\frac{1}{r_{3}}\begin{bmatrix}f_{x}&amp;0&amp;-x_{0}\\0&amp;f_{y}&amp;-y_{0}\\0&amp;0&amp;1\end{bmatrix}\begin{bmatrix}a_{1}&amp;b_{1}&amp;c_{1}\\a_{2}&amp;b_{2}&amp;c_{2}\\a_{3}&amp;b_{3}&amp;c_{3}\end{bmatrix}\begin{bmatrix}1&amp;0&amp;0&amp;X_{s}\\0&amp;1&amp;0&amp;Y_{s}\\0&amp;0&amp;1&amp;Z_{s}\end{bmatrix}=\frac{1}{r_{3}}\begin{bmatrix}f_{x}&amp;0&amp;-x_{0}\\0&amp;f_{y}&amp;-y_{0}\\0&amp;0&amp;1\end{bmatrix}\begin{bmatrix}R&amp;t\\0^{T}&amp;1\end{bmatrix}$$
+
+第一个矩阵由内方位元素组成，是辅助坐标和像平面坐标的平移和比例关系；第二个矩阵是外方位元素的角元素，表达物方系和地辅系的坐标旋转关系；第三个矩阵是外方位线元素，表达物方坐标和地辅系坐标的原点平移关系。
+
+由于计算机视觉中使用齐次坐标，即如下形式
+
+$$!\begin{pmatrix}x\\y\\1\end{pmatrix}=L\begin{pmatrix}X\\Y\\Z\\1\end{pmatrix}=\begin{bmatrix}L_{1}&amp;L_{2}&amp;L_{3}&amp;L_{4}\\L_{5}&amp;L_{6}&amp;L_{7}&amp;L_{8}\\L_{9}&amp;L_{10}&amp;L_{11}&amp;L_{12}\end{bmatrix}\begin{pmatrix}X\\Y\\Z\\1\end{pmatrix}$$因此形成了上红色式子。
+
+<a name="根据求得的li计算各参数">根据求得的li计算各参数</a>
+
+重要参数的求解：
+
+$$!r_{3}=\frac{1}{(L_{9}^{2}+L_{10}^{2}+L_{11}^{2})^{1/2}}$$
+
+(1)内方位元素
+
+$$!x_{0}=-(L_{1}L_{9}+L_{2}L_{10}+L_{3}L_{11})/(L_{9}^{2}+_{10}^{2}+L_{11}^{2})$$
+
+$$!y_{0}=-(L_{5}L_{9}+L_{6}L_{10}+L_{7}L_{11})/(L_{9}^{2}+_{10}^{2}+L_{11}^{2})$$
+
+$$!f_{x}^{2}=-x_{0}^{2}+(L_{1}^{2}+L_{2}^{2}+L_{3}^{2})/(L_{9}^{2}+_{10}^{2}+L_{11}^{2})$$
+
+$$!f_{y}^{2}=-y_{0}^{2}+(L_{4}^{2}+L_{5}^{2}+L_{6}^{2})/(L_{9}^{2}+_{10}^{2}+L_{11}^{2})$$
+
+$$!f=\frac{1}{2}(f_{x}+f_{y})$$
+
+(2)外方位角元素
+
+$$!\begin{bmatrix}a_{1}&amp;b_{1}&amp;c_{1}\end{bmatrix}=\frac{1}{f_{x}}\begin{bmatrix}\frac{L_{1}}{(L_{9}^{2}+L_{10}^{2}+L_{11}^{2})^{1/2}}+a_{3}x_{0}\frac{L_{2}}{(L_{9}^{2}+L_{10}^{2}+L_{11}^{2})^{1/2}}+b_{3}x_{0}\frac{L_{3}}{(L_{9}^{2}+L_{10}^{2}+L_{11}^{2})^{1/2}}+c_{3}x_{0}\end{bmatrix}$$
+
+$$!\begin{bmatrix}a_{2}&amp;b_{2}&amp;c_{2}\end{bmatrix}=\frac{1}{f_{y}}\begin{bmatrix}\frac{L_{5}}{(L_{9}^{2}+L_{10}^{2}+L_{11}^{2})^{1/2}}+a_{3}y_{0}\frac{L_{6}}{(L_{9}^{2}+L_{10}^{2}+L_{11}^{2})^{1/2}}+b_{3}y_{0}\frac{L_{7}}{(L_{9}^{2}+L_{10}^{2}+L_{11}^{2})^{1/2}}+c_{3}y_{0}\end{bmatrix}$$
+
+$$!\begin{bmatrix}a_{3}&amp;b_{3}&amp;c_{3}\end{bmatrix}=\frac{1}{(L_{9}^{2}+L_{10^{2}}+L_{11}^{2})^{1/2}}\begin{bmatrix}L_{9}&amp;L_{10}&amp;L_{11}\end{bmatrix}$$
+
+可以注意到的是，DLT解求内外方位元素是有次序的，因为外方位元素解求的公式中包含有所有的内方位元素。
+
+$$!\left\{\begin{matrix}\varphi =arctan(\frac{a_{3}}{c_{3}})=arctan(\frac{l_{9}}{l_{11}})\\\omega =arcsin(-b_{3})=arcsin(-\frac{l_{10}}{l_{9}^2+l_{10}^{2}+l_{11}^{2}})\\\kappa =arctan(\frac{b_{1}}{b_{2}})=arctan(\frac{f_{y}[x_{0}\frac{L_{2}}{(L_{9}^{2}+L_{10}^{2}+L_{11}^{2})^{1/2}}+b_{3}]}{f_{x}[y_{0}\frac{L_{6}}{(L_{9}^{2}+L_{10}^{2}+L_{11}^{2})^{1/2}}+b_{3}]})\end{matrix}\right.$$
+
+(3)外方位线元素
+ 则需要根据如下方程解出
+
+$$!a_{3}X_{s}+b_{3}Y_{s}+c_{3}Z_{s}+r_{3}$$
+
+$$!\frac{a_{1}f_{x}-a_{3}x_{0}}{r_{3}}X_{s}+\frac{b_{1}f_{x}-b_{3}x_{0}}{r_{3}}Y_{s}+\frac{c_{1}f_{x}-c_{3}x_{0}}{r_{3}}+L_{4}=0$$
+
+$$!\frac{a_{2}f_{y}-a_{3}y_{0}}{r_{3}}X_{s}+\frac{b_{2}f_{y}-b_{3}y_{0}}{r_{3}}Y_{s}+\frac{c_{2}f_{y}-c_{3}y_{0}}{r_{3}}+L_{8}=0$$
+
+&nbsp;
+
+DLT实质上与共线方程等价，Li之间的相关性，因为2个条件=11个参数-必要观测个数
+
+* * *
+
+以上是只解求内外方位元素的时候，Li与各参数的关系，如果加上光学畸变、非正交比例、比例尺不一致等误差，光学畸变在前文中提到。
+
+x轴方向上比例系数为1，y轴方向比例系数为(1+ds).则
+
+x轴方向上的主距为fx，y轴方向上的主距为fy=fx/(1+ds).
+
+对数字相机，比例尺不一致可认为是襄垣x、y方向长度不等引起的；而不正交性误差可认为是像元x、y方向排列不垂直引起的。
+
+<a name="非正交与比例尺不一致因素">如图展现了以上两种误差的原因。</a>
+
+![](http://www.dooby.me/wp-content/uploads/2015/11/C99CDEAA218715286FA9FE07A8E69B343C345FAA.jpg)
+
+以下表述中，小括号代表坐标系，中括号代表坐标值。
+
+$$!(\overline{x},\overline{y})[on_{2},on_{1}]$$——以像主点为原点（像平面坐标系的原点），不包含线性误差的<font color="#FF0000">某像点p的坐标</font>
+
+$$!(x,y)[om_{2},0m_{1}]$$——以像主点为原点，不包含正交性dβ误差的像点p坐标。
+
+$$!(x,y)[om_{2},om_{1}^{'}]$$——以像主点为原点，不包括正交性dβ误差及比例尺不一致误差ds的像点坐标p
+
+则从图中可知，$$!\delta x=on_{2}-om_{2}=m_{2}p\cdot sin d\beta=om_{1}\cdot sin d\beta=(1+ds)(y-y_{0})sind\beta\approx (y-y_{0})sind\beta$$
+
+$$!\delta y=on_{1}-om_{1}^{'}=om_{1}\cdot cosd\beta -om_{1}^{'}=(1+ds)(y-y_{0})\cdot cosd\beta-(y-y_{0})=[(1+ds)\cdot cosd\beta -1](y-y_{0})\approx (y-y_{0})\cdot ds$$
+
+将上式2值带入线性方程<font color="#FF0000">有线性误差的形式</font>：式中有11个独立参数，3个内方位x0,yo,fx6个外方位Xs，Ys，Zs，φ，ω，k，比例尺不一致系数ds，xy轴不正交系数dβ。
+
+$$!\left\{\begin{matrix}x-x_{0}+(1+ds)(y-y_{0})\cdot sind\beta +f_{x}\frac{a_{1}(X-X_{s}+b_{1}(Y-Y_{s})+c_{1}(Z-Z_{s})}{a_{3}(X-X_{s})+b_{3}(Y-Y_{s})+c_{3}(Z-Z_{s})}=0\\y-y_{0}+[(1+ds)\cdot cosd\beta-1] (y-y_{0})+f_{x}\frac{a_{1}(X-X_{s}+b_{1}(Y-Y_{s})+c_{1}(Z-Z_{s})}{a_{3}(X-X_{s})+b_{3}(Y-Y_{s})+c_{3}(Z-Z_{s})}=0\end{matrix}\right.$$
+
+通过一系列的化简，如前面介绍不带线性误差一样，提取出r1，r2，r3，<a name="DLT的真正一般形式">得到：</a>
+
+$$!x+\frac{\frac{1}{r_{3}}(a_{1}f_{x}-a_{2}f_{x}tand\beta -a_{3}x_{0})}{\frac{a_{3}}{r_{3}}X+\frac{b_{3}}{r_{3}}Y+\frac{c_{3}}{r_{3}}Z+1}\cdot X+\frac{\frac{1}{r_{3}}(b_{1}f_{x}-b_{2}f_{x}tand\beta -b_{3}x_{0})}{\frac{a_{3}}{r_{3}}X+\frac{b_{3}}{r_{3}}Y+\frac{c_{3}}{r_{3}}Z+1}\cdot Y+\frac{\frac{1}{r_{3}}(c_{1}f_{x}-c_{2}f_{x}tand\beta -c_{3}x_{0})}{\frac{a_{3}}{r_{3}}X+\frac{b_{3}}{r_{3}}Y+\frac{c_{3}}{r_{3}}Z+1}\cdot Z+\frac{\frac{1}{r_{3}}(r_{1}f_{x}-r_{2}f_{x}tand\beta -r_{3}x_{0})}{\frac{a_{3}}{r_{3}}X+\frac{b_{3}}{r_{3}}Y+\frac{c_{3}}{r_{3}}Z+1}=0$$
+
+$$!y+\frac{\frac{1}{r_{3}}[\frac{a_{2}f_{x}}{(1+ds)cosd\beta }-a_{3}\cdot y_{0}]}{\frac{a_{3}}{r_{3}}X+\frac{b_{3}}{r_{3}}Y+\frac{c_{3}}{r_{3}}Z+1}\cdot X+\frac{\frac{1}{r_{3}}[\frac{b_{2}f_{x}}{(1+ds)cosd\beta }-b_{3}\cdot y_{0}]}{\frac{a_{3}}{r_{3}}X+\frac{b_{3}}{r_{3}}Y+\frac{c_{3}}{r_{3}}Z+1}\cdot Y+\frac{\frac{1}{r_{3}}[\frac{c_{2}f}{(1+ds)cosd\beta }-c_{3}\cdot y_{0}]}{\frac{a_{3}}{r_{3}}X+\frac{b_{3}}{r_{3}}Y+\frac{c_{3}}{r_{3}}Z+1}\cdot Z+\frac{\frac{1}{r_{3}}[\frac{r_{2}f_{x}}{(1+ds)cosd\beta }-r_{3}\cdot y_{0}]}{\frac{a_{3}}{r_{3}}X+\frac{b_{3}}{r_{3}}Y+\frac{c_{3}}{r_{3}}Z+1}=0$$
+
+则上式即可化为基本式：
+
+$$!x+\frac{l_{1}X+l_{2}Y+l_{3}Z+l_{4}}{l_{9}X+l_{10}Y+l_{11}Z+1}=0$$
+
+$$!y+\frac{l_{5}X+l_{6}Y+l_{7}Z+l_{8}}{l_{9}X+l_{10}Y+l_{11}Z+1}=0$$
+
+其中，l4、l8可化简：
+
+$$!l_{8}=\frac{1}{r_{3}}[\frac{r_{2}f_{x}}{(1+ds)\cdot d\beta}-r_{3}\cdot y_{0}]=\frac{1}{r_{3}}[\frac{-(a_{2}Xs+b_{2}Y_{s}+c_{2}Z_{s})f_{x}}{(1+ds)\cdot cosd\beta }+(a_{3}X_{s}+b_{3}Y_{s}+c_{3}Z_{s})\cdot y_{0}]=-\frac{1}{r_{3}}[(\frac{a_{2}f_{x}}{(1+ds)\cdot cosd\beta }-a_{3}y_{0})X_{s}+(\frac{b_{2}f_{x}}{(1+ds)\cdot cosd\beta }-b_{3}y_{0})Y_{s}+(\frac{c_{2}f_{x}}{(1+ds)\cdot cosd\beta }-c_{3}y_{0})Z_{s}]=-(l_{5}X_{s}+l_{6}Y_{s}+l_{7}Z_{s})$$
+
+$$!l_{4}=\frac{1}{r_{3}}(r_{1}f_{x}-r_{2}f_{x}tand\beta -r_{3}x_{0})=-(l_{1}X_{s}+l_{2}Y_{s}+l_{3}Z_{s})$$
+
+由于未知数是11个，因此最少需要布置6个控制点。
+
+值得一提的是，像主点的求解公式与没有畸变参与<a name="包含2项因素的Li表达内外参数">相同</a>，
+
+$$!x_{0}=-(L_{1}L_{9}+L_{2}L_{10}+L_{3}L_{11})/(L_{9}^{2}+_{10}^{2}+L_{11}^{2})$$
+
+$$!y_{0}=-(L_{5}L_{9}+L_{6}L_{10}+L_{7}L_{11})/(L_{9}^{2}+_{10}^{2}+L_{11}^{2})$$
+
+最重要的ds和dβ，设：
+
+$$!\overline{A}=r_{3}^{2}(l_{1}^{2}+l_{2}^{2}+l_{3}^{2})-x_{0}^{2}=\frac{f_{x}^{2}}{cos^{2}d\beta }$$
+
+$$!B=r_{3}^{2}(l_{5}^{2}+l_{6}^{2}+l_{7}^{2})-y_{0}^{2}=\frac{f_{x}^{2}}{(1+ds)^{2}cos^{2}d\beta }$$
+
+$$!C=r_{3}^{2}(l_{1}l_{5}+l_{2}l_{6}+l_{3}l_{7})-x_{0}y_{0}=\frac{-f_{x}^{2}sind\beta }{(1+ds)cos^{2}d\beta }$$
+
+$$!ds=\sqrt{\frac{\overline{A}}{B}-1}$$
+
+$$!sind\beta =\pm \sqrt{\frac{C^{2}}{\overline{A}B}}$$
+
+而主距的公式变为：
+
+$$!f_{x}=\sqrt{\overline{A}}cosd\beta $$
+
+$$!f_{y}=\frac{f_{x}}{1+ds}$$
+
+外方位角元素：
+
+$$!tan\varphi =\frac{a_{3}}{c_{3}}$$
+
+$$!sin\omega =-b_{3}$$
+
+$$!tan\kappa =\frac{b_{1}}{b_{2}}$$
+
+其中，$$a_{3}=r_{3}l_{9},b_{3}=r_{3}l_{10},c_{3}=r_{3}l_{11}$$
+
+而外方位线元素由以下三个式子构成：
+
+$$!l_{1}X_{s}+l_{2}Y_{s}+l_{3}Z_{s}=-l_{4}$$
+
+$$!l_{5}X_{s}+l_{6}Y_{s}+l_{7}Z_{s}=-l_{8}$$
+
+$$!l_{9}X_{s}+l_{10}Y_{s}+l_{11}Z_{s}=\frac{a_{3}}{r_{3}}X_{s}+\frac{b_{3}}{r_{3}}Y_{s}+\frac{c_{3}}{r_{3}}Z_{s}=-\frac{a_{3}Xs+b_{3}Y_{s}+c_{3}Z_{s}}{a_{3}Xs+b_{3}Y_{s}+c_{3}Z_{s}}=-1$$
+
+到这里，能解求出包含非正交比例和xy不一致比例，但缺乏了对镜头畸变的改正。若将镜头畸变写入DLT方程式，则变为：
+
+$$!x+v_{x}+\Delta x+\frac{l_{1}X+l_{2}Y+l_{3}Z+l_{4}}{l_{9}X+l_{10}Y+l_{11}Z+1}=0$$
+
+$$!y+v_{y}+\Delta y+\frac{l_{5}X+l_{6}Y+l_{7}Z+l_{8}}{l_{9}X+l_{10}Y+l_{11}Z+1}=0$$
+
+其中，vx vy是残差，△x △y是畸变的改正数，若忽略切向畸变且只去一项径向畸变的参数作为例子，
+
+$$!\left\{\begin{matrix}\Delta x=(x-x_{0})r^{2}k_{1}\\\Delta y=(y-y_{0})r^{2}k_{1}\end{matrix}\right.$$
+
+再令$$A=l_{9}X+l_{10}Y+l_{11}Z+1$$
+
+以li为未知数，列误差方程，则DLT<a name="包含畸变参数校正的DLT">公式可化简为</a>：
+
+$$!v_{x}=-\frac{1}{A}[Xl_{1}+Yl_{2}+Zl_{3}+l_{4}+xXl_{9}+xYl_{10}+xZl_{11}+A(x-x_{0}^{2})r^{2}k_{1}+x]$$
+
+$$!v_{y}=-\frac{1}{A}[Xl_{5}+Yl_{6}+Zl_{7}+l_{8}+yXl_{9}+yYl_{10}+yZl_{11}+A(y-y_{0}^{2})r^{2}k_{1}+x]$$
+
+矩阵的形式则可写为（以物方坐标表示像点坐标）：
+
+<font color="#FF0000">$$!\begin{bmatrix}v_{x}\\v_{y}\end{bmatrix}=\begin{bmatrix}\frac{X}{A}&amp;\frac{Y}{A}&amp;\frac{Z}{A}&amp;\frac{1}{A}&amp;0&amp;0&amp;0&amp;0&amp;\frac{xX}{A}&amp;\frac{xY}{A}&amp;\frac{xZ}{A}&amp;(x-x_{0})r^{2}\\0&amp;0&amp;0&amp;0&amp;\frac{X}{A}&amp;\frac{Y}{A}&amp;\frac{Z}{A}&amp;\frac{1}{A}&amp;\frac{yX}{A}&amp;\frac{yY}{A}&amp;\frac{yZ}{A}&amp;(y-y_{0})r^{2}\end{bmatrix}\begin{bmatrix}l_{1}\\l_{2}\\l_{3}\\l_{4}\\l_{5}\\l_{6}\\l_{7}\\l_{8}\\l_{9}\\l_{10}\\l_{11}\\k_{1}\end{bmatrix}-\begin{bmatrix}\frac{x}{A}\\\frac{y}{A}\end{bmatrix}$$</font>
+
+可简写为:
+
+$$!V=AL+BX-W$$
+
+其中L是11个（二维DLT是可能是8个）li参数，X是单独提出来计算的畸变系数，在后交时通常加载改正数值里，当学要加入更多畸变参数时，需要确定更多的B矩阵中的形式。W一般是x/A,y/A.
+
+A和B的求取也是迭代计算，每次迭代A的值计算是通过控制点求得的。对不同控制点像点坐标列误差方程，A的值也不同。
+
+简单提一下以像方坐标表示物放坐标的DLT公式：
+
+$$!(l_{1}+\overline{x}l_{9})X+(l_{2}+\overline{x}l_{10})Y+(l_{3}+\overline{x}l_{11})Z+(l_{4}+\overline{x})=0$$
+
+$$!(l_{5}+\overline{y}l_{9})X+(l_{6}+\overline{y}l_{10})Y+(l_{7}+\overline{y}l_{11})Z+(l_{8}+\overline{y})=0$$
+
+直接线性变换的精度：可提供1/5000摄影距离精度的测量成果。影响DLT解法精度的是：控制点分布数量质量、像点坐标的测量精度、两张相片主光轴的交会角、像片张数、非线性畸变误差的改正数。
+
+<div class="PoweredByWebStory" style="margin-top:15px;margin-bottom:10px">[](http://sns.juziyue.com/webinvite.php?u=94887)&nbsp;今天你[菊子曰](http://sns.juziyue.com/webinvite.php?u=94887)了么？</div>
