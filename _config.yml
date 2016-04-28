@@ -87,5 +87,5 @@ baidusitemap:
 deploy:
    type: git
    repo: 
-      github: https://github.com/ovjaywang/ovjaywang.github.io.git,master
-      coding: https://git.coding.net/ovjaywang/ovjaywang.git,master
+      github: https://ovjaywang:wjy20051129@github.com/ovjaywang/ovjaywang.github.io.git,master
+      coding: https://ovjaywang:wjy20051129@git.coding.net/ovjaywang/ovjaywang.git,master

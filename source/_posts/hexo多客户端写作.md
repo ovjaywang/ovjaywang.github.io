@@ -154,5 +154,18 @@ deploy:
 ```
 同理也能部署到自己的ftp服务器上。
 
-###   <font color="red">bug1--file-name-too-long</font>  
+###   <font color="red">bug1 file-name-too-long</font>  
 在拷贝原始数据的时候，提交远程仓库时可能会报modules的文件夹无法同步。这个情况在windows下安装msysgit进行git bash会报这一问题。[这里](https://github.com/msysgit/git/pull/110)也提到了这个异常。但这并不是git的问题，而是msysgit的问题。使用其他git方式对文件路径较长的提交就不会报错。实测在github for windows下提交该modules文件就不会报错。
+
+###  <font color="red">bug2 could not read Username for  'https://XXX'</font>  
+当需要推送另一台设备的静态文件时，可能极少情况会碰上这个问题。有的说是bash的版本问题，不识别这种方式的推送。然而我用的同一版本的msysgit..
+
+在[这里]()也发现了这个问题，尝试了一下使用在https中加入用户名和密码的方式能够良好的推送。。当然配置文件别泄露了。。更改配置文件的deploy如下：
+
+```markdown
+deploy:
+   type: git
+   repo: 
+      github: https://{YOUR_ID}:{Your_Pwd}@github.com/{YOUR_ID}/{YOUR_ID}.github.io.git,master
+      coding: https://{YOUR_ID}:{Your_Pwd}@git.coding.net/{YOUR_ID}/{BLOG　NAME}.git,master
+```
