@@ -1,0 +1,1005 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.useso.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="opencv,计算机视觉,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ov智商捉急" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="openCV中有两个函数，findhomography和findfundamentalmat，长的很像。。一开始严重的弄混，以为都是求对应点投影矩阵的公式，万万没想到其实是两个完全不同的内涵。😒">
+<meta property="og:type" content="article">
+<meta property="og:title" content="由opencv中findFundamentalMat和findHomography区别的引申">
+<meta property="og:url" content="http://ovjaywang.github.io/2016/01/25/opencv-findhomography-findfundanmentalmat/index.html">
+<meta property="og:site_name" content="ov智商捉急">
+<meta property="og:description" content="openCV中有两个函数，findhomography和findfundamentalmat，长的很像。。一开始严重的弄混，以为都是求对应点投影矩阵的公式，万万没想到其实是两个完全不同的内涵。😒">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/24/56ce7786da1fa.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/24/56ce782a3235f.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/24/56ce77b362343.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/25/56cfbd34f3c9e.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/25/56cfc06a0ddc5.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/25/56cfc2d883aab.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/24/56ce77dc874bc.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/24/56ce77fc78812.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/25/56cfcab0b492e.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/26/56d00bc787259.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/26/56d01aa83d7d6.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/26/56d08c864e4a7.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/26/56d01c07d68ed.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/26/56d0673df0710.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/26/56d0678f1ddfc.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/01/22/56a2556c54d1d.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/26/56d069db39519.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/24/56ce7854f3d64.jpg">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/26/56d06ae01c63d.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/24/56ce78b202e41.jpg">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/28/56d3bee0758a5.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/28/56d3bf4cbf895.png">
+<meta property="og:image" content="https://ooo.0o0.ooo/2016/02/29/56d3ed9679e76.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/03/29/56fb45459399e.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/03/29/56fb506cb6765.png">
+<meta property="og:image" content="https://ooo.0o0.ooo/2016/02/29/56d3f1e8a7005.png">
+<meta property="og:image" content="https://ooo.0o0.ooo/2016/02/29/56d3f5a8ace5f.png">
+<meta property="og:image" content="https://ooo.0o0.ooo/2016/02/29/56d3f66d34abd.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/29/56d3f7afcf9ce.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/29/56d3f7745f920.png">
+<meta property="og:image" content="https://ooo.0o0.ooo/2016/01/23/56a3baf462830.png">
+<meta property="og:image" content="https://ooo.0o0.ooo/2016/01/23/56a3bf63f1be0.png">
+<meta property="og:image" content="https://ooo.0o0.ooo/2016/01/23/56a3c1dd3035a.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/24/56ce6ba16113c.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/24/56ce6cd71fc88.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/24/56ce7aab1b305.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/24/56ce7b0376427.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/25/56cf114fc872a.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/25/56cf117891dbb.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/25/56ceb1181fa03.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/25/56ceb83e89a7b.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/25/56cebcef9abd7.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/25/56cf041a7c664.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/25/56cf051be79bc.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/25/56cf08c613352.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/25/56cf0b53675d9.png">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/02/25/56cf0eb50a41b.png">
+<meta property="og:updated_time" content="2016-04-28T17:41:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="由opencv中findFundamentalMat和findHomography区别的引申">
+<meta name="twitter:description" content="openCV中有两个函数，findhomography和findfundamentalmat，长的很像。。一开始严重的弄混，以为都是求对应点投影矩阵的公式，万万没想到其实是两个完全不同的内涵。😒">
+<meta name="twitter:image" content="http://ooo.0o0.ooo/2016/02/24/56ce7786da1fa.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 由opencv中findFundamentalMat和findHomography区别的引申 | ov智商捉急 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+    <div class="site-meta-headline">
+      <a>
+        <img class="custom-logo-image" src="/images/touxiang.jpg" alt="ov智商捉急">
+      </a>
+    </div>
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">ov智商捉急</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/me" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sth">
+          <a href="/sth" rel="section">
+            
+              <i class="menu-item-icon fa fa-child fa-fw"></i> <br>
+            
+            有料
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ZtWPUvzBjdXDQ7iNrTbW','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                由opencv中findFundamentalMat和findHomography区别的引申
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-01-25T00:54:26+08:00" content="2016-01-25">
+              2016-01-25
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/什么都学一下/" itemprop="url" rel="index">
+                    <span itemprop="name">什么都学一下</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/什么都学一下/学习log/" itemprop="url" rel="index">
+                    <span itemprop="name">学习log</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/01/25/opencv-findhomography-findfundanmentalmat/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/25/opencv-findhomography-findfundanmentalmat/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>openCV中有两个函数，findhomography和findfundamentalmat，长的很像。。一开始严重的弄混，以为都是求对应点投影矩阵的公式，万万没想到其实是两个完全不同的内涵。😒<br><a id="more"></a></p>
+<p>opencv 中，进行<strong>图像拼接(全景拼接 航摄拼接 三维重建 街景地图)</strong>，大致流程如下。</p>
+<ol>
+<li>利用opencv提供的各类型特征点检测方法（Fast Start SIFT SURF ORB SimpleBlobPyramidAdapter DynamicAdapter 等）在图像中将感兴趣的有独特标识的点找出来,其中orb 是最近提出效率较高的检测和描述算法，金字塔算法则是更高的提高效率的算法；</li>
+<li>利用不同的描述方式（SIFT SURF），对特征点的信息（周围的梯度、灰度相关性 二进制编码等）进行描述； </li>
+<li>利用不同原则的匹配方式（BF Flann-based等），对这些描述子（一般是多维矩阵）进行匹配（匹配中数据的输入参数的筛选Ransac方法），对匹配结果反向计算进一步的筛查，选择更健壮更有代表性的数据（knn Ransac），</li>
+<li>最后利用findhomography找到映射矩阵，再利用affine将该坐标映射关系对其中一幅图贴到其中一幅图中。 完成拼接。拼接区域涉及融合平滑。</li>
+</ol>
+<p>这其中，<strong>findfundamentalmat()</strong>和<strong>findhomography()</strong>都是用来查找两组匹配坐标点的映射关系的（两组坐标几何 数目相同 同一<strong>数组位</strong>为同一对匹配点）试着运行了一下homography生成的矩阵拼接效果良好。而findfundamentalmat就不太6.找了一些相关资料，其实这是两个相似但不相同的函数。so开始之前科普几个概念：</p>
+<hr>
+<p><strong>核点（极点）</strong>：摄影中心连线（基线）ss’延长线，与左右影像的交点，分为左右核点（极点）。（注：下图两影像接近平行，则ss’连线与影像无交点，而在下下图中，el er分别为左右核点【极点】）亦可理解为左右摄影中心分别在对方像片的像点</p>
+<p><strong>核面（极面）</strong> ：过摄影基线与物方任意一点组成的平面。（所以缩，物方点不同，核面一般也不同 任意一个下图的PO1O2都是核面）</p>
+<p><strong>核线（极线）：立体像对中，同名光线与摄影基线所组成核面与左右像片的交线。</strong> （不同同名点极线不同，因而有很多很多条） </p>
+<p><strong>极线约束</strong> ：同一个点在两幅图像上的映射，已知左图映射点p1，那么右图映射点p2一定在p1的外极线上，这样可以减少匹配点数量。</p>
+<center><img src="http://ooo.0o0.ooo/2016/02/24/56ce7786da1fa.png" alt=""></center>
+
+<p>上图中，红线即为极线，物方点P（X,Y,Z）分别在左右两图留下了同名点（xl，yl）、（xr,yr）。Tx即为基线长。但上图为两个平面接近平行且z方向接近0，但一般情况下，两像平面以任意角度成像同时内参数并不相同，因此上图中的极线呈现出共线的情况，更多的情况是下面这个图，两图像成任意角度。</p>
+<center><img src="http://ooo.0o0.ooo/2016/02/24/56ce782a3235f.png" alt=""></center>
+
+<p>下图中，O1O2连线与左右像平面交点el和er即为左右极点(极点亦可理解为左右摄影中心在另一像平面的像)，而极线则为plel和prer。可以看到，这两条线显然就不平行了。 </p>
+<center><img src="http://ooo.0o0.ooo/2016/02/24/56ce77b362343.png" alt=""></center>
+
+<p><strong>基线</strong> ：相邻两摄站点（摄影中心 一般标为s）之间的连线。</p>
+<p><strong>主核面</strong> ：左右像主点分别与基线构成的平面，分别称为左主核面和右主核面。</p>
+<p><strong>灭点vanishing </strong> point：平行线在二维图像中汇聚的地方，空间中每一组平行线都有自己的灭点。</p>
+<p><strong>灭线vanishing line（消隐线 ）</strong> ：不同的灭线连线，即灭线。如果两组不同的平行线，都平行于大地，则他们的连线就是地平线（horizon line）</p>
+<hr>
+<h1 id="1-第一个矩阵Essential本质矩阵"><a href="#1-第一个矩阵Essential本质矩阵" class="headerlink" title="1. 第一个矩阵Essential本质矩阵"></a>1. 第一个矩阵Essential本质矩阵</h1><p>由于拍摄物体时，摄影中并不能被反映在图像中。如果让第二个观察者同时拍摄下某摄影中心和它所拍的照片呢?</p>
+<center><img src="http://ooo.0o0.ooo/2016/02/25/56cfbd34f3c9e.png" alt=""></center>
+
+<p>反映在第二个观察者的照片，摄影中心和物体分别投影在像片上，任意第一个摄影中心和它所拍摄物体的连线都可视为第二个摄影中心的极线。直观的理解，即为下图的erpr。</p>
+<center><img src="http://ooo.0o0.ooo/2016/02/25/56cfc06a0ddc5.png" alt=""></center>
+
+<p><strong>极线约束的理论就是左侧的物体成像在右侧的同名点一定在erpr上。</strong>反映左右极线关系的就是表达向量和右向量之间的约束关系的——<strong>本质矩阵**</strong>Eseential Matrix<strong>**。</strong>但大多数情况下，别的摄影中心并不一定会被成像，即极点不在相片中。如下图</p>
+<center><img src="http://ooo.0o0.ooo/2016/02/25/56cfc2d883aab.png" alt=""></center>
+
+<p>具体的矩阵运算参考<strong>  </strong><a href="http://www.cnblogs.com/gemstone/archive/2011/12/20/2294551.html" target="_blank" rel="external"><strong>计算机视觉基础4——对极几何(Epipolar Geometry)</strong></a> ，原理为三线同面（下图蓝色区域三边）  </p>
+<center><img src="http://ooo.0o0.ooo/2016/02/24/56ce77dc874bc.png" alt=""> </center>
+
+<p><strong>其中，E是本质矩阵（Essential Matrix），R是像平面旋转矩阵，T是摄影中心平移矩阵，Pl和Pr分别为左右摄影中心指向同名点P的向量。S由矩阵T决定，具体形式为</strong></p>
+<center><img src="http://ooo.0o0.ooo/2016/02/24/56ce77fc78812.png" alt=""></center>
+
+<p><strong>本质矩阵</strong> 采用的是相机的外部参数，也就是说采用相机坐标(The essential matrix uses CAMERA coordinates)，不涉及相机内参数，如果要分析数字图像，则要考虑坐标(u,v)，此时需要用到内部参数(To use image coordinates we must consider the INTRINSIC camera parameters)</p>
+<p><strong> 谨记1：Essential Matrix是连结两个摄影中心指向同名点的向量的矩阵，秩为2。</strong></p>
+<p><strong> 左向量·E·右向量=0！！！</strong></p>
+<p><strong> E由两部分组成！E=R·S  E仅由外方位元素决定！一张图记住E!!!</strong></p>
+<p><strong><center><img src="http://ooo.0o0.ooo/2016/02/25/56cfcab0b492e.png" alt=""></center></strong></p>
+<p>由向量引申而出的，是同名点的像素坐标，原理是共线方程。</p>
+<p><strong>二维同名点</strong></p>
+<center><img src="http://ooo.0o0.ooo/2016/02/26/56d00bc787259.png" alt=""></center>
+
+<p>上图中推导出对极几何中相当重要的公式，E矩阵作为连接同名点像素坐标而出现，这就意味着，已知求取E的外方位参数，就能求取出左右同名点的对应关系。然而，其中隐含的条件是在共线方程的化简中，默认忽略了镜头畸变。然而这已足够重要，在镜头畸变在拼接中影响不大时，该公式在仅仅知道外方位元素的情况就能解算corresponding point</p>
+<p><strong>极线方程</strong></p>
+<p>同理，由于极点、同名点都位于极线上，因此亦可通过E求得极线的方程（采用相机坐标系）。</p>
+<p>设极线方程为 au + bv + c = 0</p>
+<p>使用齐次坐标，矩阵表示为：</p>
+<center><img src="http://ooo.0o0.ooo/2016/02/26/56d01aa83d7d6.png" alt=""></center>
+
+<p>其中，$\widetilde{p}$是像片任意同名点相机坐标，$\widetilde{l}$是方程系数。又依据同名点公式，$$Ep<em>{l} =\widetilde{l</em>{r}}$$，所以！对应外极线的方程系数可以直接由E矩阵和本侧同名点求出。其中，$\widetilde{l_{l}}$是左极点对应外极线方程。</p>
+<p>当已知左侧点，其右侧对应点在直线</p>
+<center><img src="http://ooo.0o0.ooo/2016/02/26/56d08c864e4a7.png" alt=""></center><br>当已知右侧点，其左侧对应点在极线<br><center><img src="http://ooo.0o0.ooo/2016/02/26/56d01c07d68ed.png" alt=""></center><br><strong>极点</strong><br><br>别忘了。极点也是在极线上，所以有<br><center><img src="http://ooo.0o0.ooo/2016/02/26/56d0673df0710.png" alt=""></center><br>且，极点属于所有极线，因而<br><center><img src="http://ooo.0o0.ooo/2016/02/26/56d0678f1ddfc.png" alt=""></center><br>上式可用来定位极点的坐标<br><br><em> </em> <em><br><br># <strong> 2.第2个矩阵 Fundamental基础矩阵</strong><br><br>另一个需要提到的概念是基础矩阵。<br><br>Essential矩阵使用CameraCoords相机坐标系。尽管其中可计算像素坐标，但仍然以摄影中心为原点，像平面所有点z值都是f。当考虑相机内参数时，这就是FundamentalMatrix基础矩阵<br><center><img src="http://ooo.0o0.ooo/2016/01/22/56a2556c54d1d.png" alt=""></center><br>该图显示了fundamentalmatrix（基础矩阵）的基本内涵。p q分别为同名点。计算基础矩阵需要考虑到内参数的仿射变换。M为内参数的矩阵，包含6个参数的3</em>3矩阵。<br><center><img src="http://ooo.0o0.ooo/2016/02/26/56d069db39519.png" alt=""></center><br>将上式中的Camera坐标提到一边，带入基本矩阵解求对极同名点的方程，即可得到F的表达式.<br><center><img src="http://ooo.0o0.ooo/2016/02/24/56ce7854f3d64.jpg" alt=""></center><br>上式即为基础矩阵方程。其中，F是基础矩阵，x’x分别为同名点。而左右两个平面的两条极线为，显而易见，F由E和两个内参数矩阵决定。<br><center><img src="http://ooo.0o0.ooo/2016/02/26/56d06ae01c63d.png" alt=""></center><br>类似的，F与E一样都能指同名点坐标在对应极线的关系。下图分别是已知左右点其对应极线的关系。<br><center><img src="http://ooo.0o0.ooo/2016/02/24/56ce78b202e41.jpg" alt=""></center><br>一个简单的例子，如果从某种方式计算出基础矩阵，则在对应图中即可表示出像素点对应的极线。<br><center><img src="http://ooo.0o0.ooo/2016/02/28/56d3bee0758a5.png" alt=""></center><br>计算出矩阵即为l的三个参数。一般的，调整比例 将前两项的平方和定为1.<br><center><img src="http://ooo.0o0.ooo/2016/02/28/56d3bf4cbf895.png" alt=""></center>
+
+<p>findfundamentalmat()本意为基础矩阵，是假设两幅图像在同一三维场景中的不同视角。例如立体摄像机，从不同的角度拍摄同一个目标，它解算的是，两幅图像其中一个同名点，与其在外极线同名点的转换关系。它的映射基于三维场景，因此使用这个函数的时候，在不同的视角之间，应该有一个明显的基线。默认使用7点算法拟合数据。基础矩阵把左边图像的一个点的图像坐标与它右边图像中的对应点的图像联系起来，他是一个3x3的退化矩阵，描述了两个立体图像对的外极限几何关系，其计算依赖于在两个图像中相对应的一组点。</p>
+<p>与Homography矩阵（下文提到）不同，它在每组对应点有两组约束：x、y同时作为x’y’的自变量，估算一组对应点只有一行的约束，因为极线约束是标量等式。因此至少需要8个点。所以一般使用8点算法计算F矩阵(8点算法)。</p>
+<p>$$\begin{bmatrix} x^{‘}_i &amp; y^{‘}<em>i &amp; 1 \end{bmatrix} \begin{bmatrix} f</em>{11} &amp; f<em>{12} &amp; f</em>{13} \\ f<em>{21} &amp; f</em>{22} &amp; f<em>{23} \\  f</em>{31} &amp; f<em>{32}  &amp; f</em>{33}  \end{bmatrix} \begin{bmatrix} x_i \\ y_i \\ 1 \end{bmatrix}=0$$</p>
+<p>可推到出方程：</p>
+<p>$$ x_i x^{‘}_i {f_11} + x_i y^{‘}_i f_21 + x_i f_31 + y_i x^{‘}_i f_12 + y_i y^{‘}_i f_22 + y_i f_32 + {x_i}^{‘} f_13 + y^{‘}_i f_23 + f_33 =0$$</p>
+<center><img src="https://ooo.0o0.ooo/2016/02/29/56d3ed9679e76.png" alt=""></center>
+
+<p>最终目标是找到ATA的一个特征向量使得它的特征值最小。常用的解法是构造m*9的矩阵A（m是点对数），求解A的奇异值分解，即A=UDVT，</p>
+<blockquote>
+<p>U是m*m正交矩阵，其列为AAT特征向量</p>
+<p>V是m*n正交阵，其列为ATA的特征向量</p>
+<p>D是m*n对角阵，对角元素为奇异值，平方值为AAT和ATA的特征值。</p>
+</blockquote>
+<p>然而F是由7个自由度构成的3*3矩阵，其秩为2，因此，讲道理，9个表达式由7个参数构成，因此只用7对对应点理应也能解算出F矩阵（7点算法）。使用此方法计算F矩阵时，需要加上秩为2的限制，以保证计算结果唯一。该方法亦叫做奇异约束。该约束限制假设以F’替代F矩阵，计算时以<a href="https://zh.wikipedia.org/wiki/%E7%9F%A9%E9%99%A3%E7%AF%84%E6%95%B8#.E5.BC.97.E7.BD.97.E8.B4.9D.E5.B0.BC.E4.B9.8C.E6.96.AF.E7.AF.84.E6.95.B0" target="_blank" rel="external">F范式</a>作为标准。</p>
+<center><img src="http://ooo.0o0.ooo/2016/03/29/56fb45459399e.png" alt=""></center><br>其中，$\sigma$是M矩阵的奇异值（A*·A的n个特征值的非负平方根叫作A的奇异值），M=F-F’,可以通过SVD分解解出该奇异值。<br><br><center><img src="http://ooo.0o0.ooo/2016/03/29/56fb506cb6765.png" alt=""></center>
+
+<p>F由于秩为2的限制可以以以下形式表示：</p>
+<p>F=αF1+(1-α)F2.其中，F1和F2分别Fx=0的两个解。</p>
+<p>由于秩=2，因此det(F=αF1+(1-α)F2)=0,通过该式即可求出α的值。</p>
+<p>更多内容可以看计算机视觉Trifocal tensor三角点张量的部分。</p>
+<p>Caution!</p>
+<p>对图像进行匹配的一个重要步骤就是把两幅图像的极线平行于基线，使得极点处在正无穷，这样的拼接结果效果才能更好。这一重要步骤即为重投影。如下图将黑线投影为蓝线。</p>
+<center><img src="https://ooo.0o0.ooo/2016/02/29/56d3f1e8a7005.png" alt=""></center>
+
+<p>对图像进行矫正。需要一个单映矩阵，作两步旋转。其第一步是将极点旋转到无穷远，第二部是将极线平行。其中，左右图像均需要应用该单映聚阵R将极点无穷远化；而右图像需要应用旋转矩阵（E=RS中的R）。最后比例一致化。</p>
+<p>上文中需要构造的矫正矩阵形式为：</p>
+<center><img src="https://ooo.0o0.ooo/2016/02/29/56d3f5a8ace5f.png" alt=""></center>
+
+<p>T是单位矩阵，代表左图的极点，可由E计算。其余的参数：</p>
+<center><img src="https://ooo.0o0.ooo/2016/02/29/56d3f66d34abd.png" alt=""></center>
+
+<p>整理一下步骤即为：</p>
+<center><img src="http://ooo.0o0.ooo/2016/02/29/56d3f7afcf9ce.png" alt=""></center>
+
+<p>下图即为矫正的例子（两幅图的变化很小，但是从边缘还是可以看到细微的变化），最后把图像的极点都化为无穷远，两幅图基于基线平行。</p>
+<center><img src="http://ooo.0o0.ooo/2016/02/29/56d3f7745f920.png" alt=""></center>
+
+<hr>
+<h1 id="3-第二个矩阵-Homography（单映）矩阵"><a href="#3-第二个矩阵-Homography（单映）矩阵" class="headerlink" title=" 3. 第二个矩阵 Homography（单映）矩阵"></a><strong> 3. 第二个矩阵 Homography（单映）矩阵</strong></h1><p>findhomography的前提是2D的转换，本意为单映（包含平移、仿射、尺度三种变换），试图找到一个3*3的投影矩阵，能够把1图中所有的点，通过某种形变，匹配到2图中去。当基线很小的时候(视差变化小，扭曲形变也少)，这个方法能够计算出精度极高的解。<br>当然可以首先参考opencv的<a href="http://docs.opencv.org/2.4/modules/calib3d/doc/camera_calibration_and_3d_reconstruction.html?highlight=findhomography" target="_blank" rel="external">文档</a> 这里首先介绍二维映射的单映（homography）矩阵</p>
+<center><img src="https://ooo.0o0.ooo/2016/01/23/56a3baf462830.png" alt=""></center>
+
+<p>该式反应了像点齐次坐标的单映变换的方程。（u v）(u’ v’)分别是左右图像的同名像点坐标。通过一个8个自由度的矩阵P来解算两者之间的关系。p02 p12与平移相关，p00,p01,p10,p11与旋转 尺度和仿射（平行变换）变换有关，p20,p21与拉伸扭曲有关。</p>
+<p>一般的，单映矩阵的计算由以下几个参数构成</p>
+<center><img src="https://ooo.0o0.ooo/2016/01/23/56a3bf63f1be0.png" alt=""></center>
+
+<p>其中，K是相机的内矩阵，由焦距决定；R是主光轴朝向，一般由3个方向余弦决定；C是摄影中心的物方位置。当在原地旋转时，C1-C2为0，因此方程可简化为</p>
+<center><img src="https://ooo.0o0.ooo/2016/01/23/56a3c1dd3035a.png" alt=""></center>
+
+<p>由相机纯粹旋转而形成的单映，自由度3-5（根据是否已知焦距决定）。</p>
+<p>Caution！应该注意到的是，上式中的H3*3矩阵的最后一个元素为1。这里使用到的是计算H矩阵最常用的一种方法，4点算法，即使用4个点即可解算一组H中的8个未知数。在ransac验证外点的过程中，也采用随机4点为一组构建8个方程解算H。</p>
+<p>尽管homography是处理二维点集之间的关系，但倘若三维物体中某些点都处于一个平面，即可设该面的z方向值为0，以三维物方xy值作为像素值与所成像片进行homography的变换。</p>
+<center><img src="http://ooo.0o0.ooo/2016/02/24/56ce6ba16113c.png" alt=""></center>
+
+<p>上图是几种坐标系之间的关系，Mext是外参数矩阵，包含旋转和平移；Mproj是投影矩阵，主要由焦距决定，原理是共线方程；Maff是内参数仿射变换矩阵，由内参数决定。普通的homography是两幅图像像素坐标间或相片坐标间的变换，但上文提到，当三维物体某些点处于一个平面，亦可在World坐标和Film坐标之间进行homography矩阵变换。</p>
+<center><img src="http://ooo.0o0.ooo/2016/02/24/56ce6cd71fc88.png" alt=""></center>
+
+<p>上图可以看到，将三维坐标点z值设为0，[p,q,0,1]即为三维齐次坐标。</p>
+<p>$$ \begin{bmatrix} x \\ y \\ 1<br>\end{bmatrix} \sim \begin{bmatrix} f &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; f &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; 0 \end{bmatrix} \begin{bmatrix} r_11 &amp; r_12 &amp; r_13 &amp; t_x \\ r_21 &amp; r_22 &amp; r_23 &amp; t_y \\ r_31 &amp; r_32&amp; r_33 &amp; t_z \\ 0 &amp; 0 &amp; 0 &amp; 1 \end{bmatrix} \begin{bmatrix} p \\ q \\ 0 \\ 1 \end{bmatrix} \sim \begin{bmatrix} fr_11 &amp; fr_12 &amp; ft_x \\ fr_21 &amp; fr_22 &amp; ft_y \\ r_31 &amp; r_32 &amp; t_z \end{bmatrix} \begin{bmatrix} p \\ q \\ 1 \end{bmatrix}<br>$$$$\sim \begin{bmatrix} h_11 &amp; h_12&amp;h_13 \\ h_21 &amp; h_22 &amp; h_23 \\ h_31 &amp; h_32 &amp; h_33 \end{bmatrix} \begin{bmatrix} p \\ q \\ 1 \end{bmatrix}$$<br>最终推到出，3D转2D的投影变换成为2D转2D的变换，该变化可逆！其特例是，当采用的物方坐标系z轴与主光轴平行，即正射影像，则上式R矩阵为</p>
+<center><img src="http://ooo.0o0.ooo/2016/02/24/56ce7aab1b305.png" alt=""></center>
+
+<p>则上式变形为：</p>
+<center><img src="http://ooo.0o0.ooo/2016/02/24/56ce7b0376427.png" alt=""></center>
+
+<p>该式与相似变换的形式一样，只有4个自由度（tz可化为1），因而正射影像不会产生拉伸形变。（前提是拍摄物体几乎没有深度，几乎处在一个平面）。下图是依照三维中某平面进行拼接，会造成除平面部分其余图像的虚影。</p>
+<center><img src="http://ooo.0o0.ooo/2016/02/25/56cf114fc872a.png" alt=""></center>
+
+<center><img src="http://ooo.0o0.ooo/2016/02/25/56cf117891dbb.png" alt=""></center>
+
+<p>上文中一直讨论的是从物方坐标系到像片坐标系的转换，倘若再加上内方位参数的内矩阵，则可直接导出从物方坐标到像素坐标的公式，如下图示意。内方位参数为仿射变换（Affine 6自由度 保持平行结构的变换）</p>
+<center><img src="http://ooo.0o0.ooo/2016/02/25/56ceb1181fa03.png" alt=""></center>
+
+<p>将world-&gt;film-&gt;pixel结合起来，对于同一个物体，在某位置某台相机拍摄的照片就可以认为是一个单映H。当然，不同的位置拍摄的像片，各自对应物体的单映是不同的。但由于单映是可逆的，拍摄同一物体的两幅图像，也可以用使用$$H=H<em>{1}H</em>{2}^{-1}$$</p>
+<center><img src="http://ooo.0o0.ooo/2016/02/25/56ceb83e89a7b.png" alt=""><img src="http://ooo.0o0.ooo/2016/02/25/56cebcef9abd7.png" alt=""></center>
+
+<hr>
+<h1 id="4-Homography（单映）矩阵的求取"><a href="#4-Homography（单映）矩阵的求取" class="headerlink" title=" 4. Homography（单映）矩阵的求取"></a><strong> 4. Homography（单映）矩阵的求取</strong></h1><p>参考<a href="http://www.robots.ox.ac.uk/~vgg/presentations/bmvc97/criminispaper/node3.html" target="_blank" rel="external">这里</a>  只要大于4个匹配点，都认为是冗余测量，必须融合数据。文章里提到了三种解求二维面到面的单应矩阵的球法。</p>
+<ul>
+<li>非线性的解决办法，使用伪逆进行分解。当所解求值为0时会有bug。</li>
+<li>线性最小二乘解法，通常使用SVD分解，V矩阵就对应了最小奇异值。<a href="http://blog.chinaunix.net/uid-20761674-id-4040274.html" target="_blank" rel="external">这个SVD的文章</a>相当好的解释了SVD分解的意义。八个未知数对应八个特征向量，也对应八个线性方程的解。SVD能直接解求出这八个向量，即V中的特征向量。</li>
+<li>非线性几何解法，使对应点和映射点差值欧几里得距离（或平方和）最小。</li>
+</ul>
+<p>Homograhy的计算：计算该矩阵当然不会上式f θ等值直接解算。由于是二维图像之间的关系，一般都已知二维对应点集，直接采用最小二乘的方式使用LM进行计算。在一般情况下的H矩阵可表示为</p>
+<p>$$ \begin{bmatrix} x^{‘} \\ y^{‘} \\ 1 \end{bmatrix} \sim \begin{bmatrix} h_11 &amp; h_12 &amp; h_13 \\ h_21 &amp; h_22 &amp; h_23 \\ h_31 &amp; h_32 &amp; h_33 \end{bmatrix} \begin{bmatrix} x \\ y \\ 1 \end{bmatrix}$$</p>
+<p>其中，$h_31 h_32 h_33$是为了配置相似比例，化简为</p>
+<p>$$x^{‘}=\frac{h_11 x + h_12 y + h_13 }{ h_31 x + h_32 y + h_33 }$$</p>
+<p>$$y^{‘}=\frac{h_21 \cdot x + h_22 y + h_23 }{ h_31 x + h_32 y + h_33 }$$</p>
+<p>但可以看到，h所有元素同乘k 等式依旧成立。因而强制设为8自由度有两种方式，</p>
+<p>①$$ h_{33} = 1 $$</p>
+<p>②$ h<em>{11}\^{2} + h</em>{12}\^{2} = 1 $<br>采用第一种方式较为常见。<br>当采用最小二乘解求H矩阵时，一般先用Ransac筛选最大集，然后利用下方程。</p>
+<center><img src="http://ooo.0o0.ooo/2016/02/25/56cf041a7c664.png" alt=""></center>
+
+<p>以x y x’y’为A b矩阵参数，迭代解求H。由于是线性方程，因而可以直接使用$$h=(A^{T}A)^{-1}(A^{T}b)$$求取每次的残差。</p>
+<center><img src="http://ooo.0o0.ooo/2016/02/25/56cf051be79bc.png" alt=""></center>
+
+<p>&lt;font color=”#ff0000”&gt;Caution！应该注意到的是，该方法对噪声极其敏感，即使没有外点（outliers）,因而，在计算前对数据里筛选就非常重要。为更好的得到结果，Ransac时可以将该组数据质心重置到原点；然后缩放比例使得各点到原点的平均距离是根号二。如下图，H的表达式。T、S分别为平移和缩放的矩阵。</p>
+<center><img src="http://ooo.0o0.ooo/2016/02/25/56cf08c613352.png" alt=""></center>
+
+<p>如何判断这两幅图像确实匹配呢？记该区域的特征点总数为nf，而符合H的特征点（内点）数量为nj，如果两者比例足够大，说明两幅图像确实匹配。但一般拼接时都确认两幅图像有重叠面积才计算H。变换模型H计算时的误差可表述为Huber模型：</p>
+<center><img src="http://ooo.0o0.ooo/2016/02/25/56cf0b53675d9.png" alt=""></center>
+
+<p>同时，由于矩阵具有可逆性，因此图像12之间的H1和图像23之间的H2可以直接推导出图像13之间的H3。但大量的单映队列并不推荐，这样会造成误差成倍扩大。</p>
+<center><img src="http://ooo.0o0.ooo/2016/02/25/56cf0eb50a41b.png" alt=""></center>
+
+<p><strong> 谨记二 </strong>：homography处理的是纯粹的二维与二维之间的变换。即便特例是3D也是视为在2D的单映和相似变换。在旋转相机和正射拼接可以得到良好的二维拼接效果，在具有深度的三维物体，拼接会造成虚影！</p>
+<hr>
+<p>这两个函数都是基于特征点的变换模型求解，既然特征点已找出且筛查得到更正确的点，因此对图像外观的变化具有鲁棒性（尺度、光照、旋转等）。选择哪种函数基于图像间的关系，即立体场的观测使用fundamentalmatrix（视角矫正 三维全景 街景视角）,而相对平面化的则使用findhomography（全景拼接  航摄图像拼接 ）</p>
+<p>解求这个变换模型一般基于线性最小二乘的方式，与平差原理类似，利用冗余的数据（大量同名点）来解算参数。一般的，先通过Ransac筛查数据比较靠谱。</p>
+<h1 id="谨记三："><a href="#谨记三：" class="headerlink" title="** 谨记三："></a>** 谨记三：</h1><p>homography 单映处理二维坐标系与二维坐标系关系，特例情况下是三维物体某平面可视为二维平面。更特例的是正射影像（相似变换）和旋转摄影全景拼接（C1-C2=0）（处理对应点集与点集的关系）矩阵可逆，具有结合性。</p>
+<p>fundamental针对的是点和极线的关系（处理点集与极线集的关系），可用来在寻找匹配点的时候快速查找对应点。（以像素为坐标系）</p>
+<p>essential 本质是连结同名点向量的矩阵（以像空系为标准）</p>
+<p>参考。</p>
+<p><a href="http://blog.csdn.net/u010141025/article/details/16920567" target="_blank" rel="external">【opencv】特征点检测方法–GFTT，SIFT，FAST，SURF</a> </p>
+<p><a href="http://www.cse.psu.edu/~rtc12/CSE486/" title="http://www.cse.psu.edu/~rtc12/CSE486/" target="_blank" rel="external">http://www.cse.psu.edu/~rtc12/CSE486/</a> 宾州州立大学计算机视觉</p>
+<p><a href="http://opencv-users.1802565.n2.nabble.com/Difference-between-homography-and-fundamental-matrix-td6359087.html" title="http://opencv-users.1802565.n2.nabble.com/Difference-between-homography-and-fundamental-matrix-td6359087.html" target="_blank" rel="external">http://opencv-users.1802565.n2.nabble.com/Difference-between-homography-and-fundamental-matrix-td6359087.html</a> homography and fundamental matrix的讨论</p>
+<p><a href="http://homepages.inf.ed.ac.uk/rbf/CVonline/" title="http://homepages.inf.ed.ac.uk/rbf/CVonline/" target="_blank" rel="external">http://homepages.inf.ed.ac.uk/rbf/CVonline/</a> 爱丁堡大学计算机视觉在线课件</p>
+<p><a href="https://www.robots.ox.ac.uk/~vgg/hzbook/hzbook2/HZepipolar.pdf" title="https://www.robots.ox.ac.uk/~vgg/hzbook/hzbook2/HZepipolar.pdf" target="_blank" rel="external">https://www.robots.ox.ac.uk/~vgg/hzbook/hzbook2/HZepipolar.pdf</a> 牛津大学计算机视觉中的多视几何</p>
+<p><a href="http://120.52.72.36/www.umiacs.umd.edu/c3pr90ntcsf0/~ramani/cmsc828d/lecture27.pdf" title="http://120.52.72.36/www.umiacs.umd.edu/c3pr90ntcsf0/~ramani/cmsc828d/lecture27.pdf" target="_blank" rel="external">http://120.52.72.36/www.umiacs.umd.edu/c3pr90ntcsf0/~ramani/cmsc828d/lecture27.pdf</a></p>
+<p>马里兰大学高级计算机研究</p>
+<p><a href="http://www.cnblogs.com/gemstone/articles/2294551.html" title="http://www.cnblogs.com/gemstone/articles/2294551.html" target="_blank" rel="external">http://www.cnblogs.com/gemstone/articles/2294551.html</a></p>
+<p><a href="http://imagine.enpc.fr/~monasse/Stereo/4Fundamental.pdf" title="http://imagine.enpc.fr/~monasse/Stereo/4Fundamental.pdf" target="_blank" rel="external">http://imagine.enpc.fr/~monasse/Stereo/4Fundamental.pdf</a> 法国国立桥梁与公路学校Ecole Nationale des Ponts et Chaesses计算机视觉和图像</p>
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/opencv/" rel="tag">#opencv</a>
+          
+            <a href="/tags/计算机视觉/" rel="tag">#计算机视觉</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/01/18/社交app的2015/" rel="next" title="社交app的2015">
+                <i class="fa fa-chevron-left"></i> 社交app的2015
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/03/08/最近demo 模块 算法总结/" rel="prev" title="最近demo 模块 算法总结">
+                最近demo 模块 算法总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/01/25/opencv-findhomography-findfundanmentalmat/" data-title="由opencv中findFundamentalMat和findHomography区别的引申" data-content="" data-url="http://ovjaywang.github.io/2016/01/25/opencv-findhomography-findfundanmentalmat/">
+  <div class="ds-share-inline">
+    <ul class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/01/25/opencv-findhomography-findfundanmentalmat/" data-title="由opencv中findFundamentalMat和findHomography区别的引申" data-url="http://ovjaywang.github.io/2016/01/25/opencv-findhomography-findfundanmentalmat/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/xiaozaizi.png" alt="Jay Wang">
+          <p class="site-author-name" itemprop="name">Jay Wang</p>
+          <p class="site-description motion-element" itemprop="description">你猜?</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">102</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ovjaywang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/302060345" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-第一个矩阵Essential本质矩阵"><span class="nav-number">1.</span> <span class="nav-text">1. 第一个矩阵Essential本质矩阵</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-第二个矩阵-Homography（单映）矩阵"><span class="nav-number">2.</span> <span class="nav-text"> 3. 第二个矩阵 Homography（单映）矩阵</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Homography（单映）矩阵的求取"><span class="nav-number">3.</span> <span class="nav-text"> 4. Homography（单映）矩阵的求取</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#谨记三："><span class="nav-number">4.</span> <span class="nav-text">** 谨记三：</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jay Wang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"mimimomo"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax --><!-- hexo-inject:end -->
+
+
+</body>
+</html>

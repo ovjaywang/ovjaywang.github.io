@@ -1,0 +1,1718 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>ov智商捉急</title>
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://ovjaywang.github.io/"/>
+  <updated>2016-04-28T16:36:57.000Z</updated>
+  <id>http://ovjaywang.github.io/</id>
+  
+  <author>
+    <name>Jay Wang</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>svm初探</title>
+    <link href="http://ovjaywang.github.io/2016/04/28/svm%E5%88%9D%E6%8E%A2/"/>
+    <id>http://ovjaywang.github.io/2016/04/28/svm初探/</id>
+    <published>2016-04-28T14:26:41.000Z</published>
+    <updated>2016-04-28T16:36:57.000Z</updated>
+    
+    <content type="html">&lt;p&gt;待更……&lt;/p&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;待更……&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo多客户端写作</title>
+    <link href="http://ovjaywang.github.io/2016/04/27/hexo%E5%A4%9A%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%86%99%E4%BD%9C/"/>
+    <id>http://ovjaywang.github.io/2016/04/27/hexo多客户端写作/</id>
+    <published>2016-04-27T03:50:01.000Z</published>
+    <updated>2016-04-28T16:36:57.000Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;Hexo是很棒的静态博客，简单的安装配置即可专注写作。&lt;br&gt;但是强迫症就是很爱折腾。倘若：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;主机烧了数据备份怎么破？&lt;/li&gt;
+&lt;li&gt;换了系统想继续之前的写作怎么破?&lt;/li&gt;
+&lt;li&gt;纯粹就是想多客户端写作怎么破？&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;我就纯属蛋疼的。喜欢在办公和休息的地方都写作；或者我一win本&lt;br&gt;一mac 都想写文章。但Hexo的静态部署的原则不像WordPress一样，能关联博客地址，利用数据库进行博客更新。好了，这里就来解决这个问题。┑(￣Д ￣)┍&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h1 id=&quot;Hexo写作的部署逻辑-amp-其他&quot;&gt;&lt;a href=&quot;#Hexo写作的部署逻辑-amp-其他&quot; class=&quot;headerlink&quot; title=&quot;Hexo写作的部署逻辑&amp;amp;其他&quot;&gt;&lt;/a&gt;Hexo写作的部署逻辑&amp;amp;其他&lt;/h1&gt;&lt;h2 id=&quot;Hexo的写作特点&quot;&gt;&lt;a href=&quot;#Hexo的写作特点&quot; class=&quot;headerlink&quot; title=&quot;Hexo的写作特点&quot;&gt;&lt;/a&gt;Hexo的写作特点&lt;/h2&gt;&lt;p&gt;Hexo最大特点就是静态博客，即部署到服务器的博客内容是静态写好的html（由markdown转义），而不像类似wordpress的数据都存放在服务器端数据库，每次更新即一次读写数据库的操作。所以如果需要更改博客内容、发布新内容，必须&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;更改源文件source文件夹下_post及其他各页面文件夹的md文件&lt;/li&gt;
+&lt;li&gt;通过&lt;code&gt;hexo g&lt;/code&gt;或&lt;code&gt;hexo generate&lt;/code&gt;在public生成静态文件。&lt;/li&gt;
+&lt;li&gt;利用&lt;code&gt;hexo-deployer-git&lt;/code&gt;插件及&lt;code&gt;hexo d&lt;/code&gt;命令将public的文件自动的部署到创建好的&lt;code&gt;user-name.github.io&lt;/code&gt;项目中。&lt;blockquote&gt;
+&lt;p&gt;在github项目中可以看到，自动上传的只有public文件夹中的文件，包括以年份分类的静态页面文件夹、tag、categories及其他辅助css、js、img等，还有域名指引的CNAME和rss sitemap等。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;在博客中看到更新的内容。当然，本地目录中，即存放了md源文件，也包含了生成的public文件。其实，本地并不需要public里的内容，只要有写作的源文件，generate一下就能生成。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;Hexo的缺憾&quot;&gt;&lt;a href=&quot;#Hexo的缺憾&quot; class=&quot;headerlink&quot; title=&quot;Hexo的缺憾&quot;&gt;&lt;/a&gt;Hexo的缺憾&lt;/h2&gt;&lt;p&gt;那么问题来了，如果我在公司和贫民窟都想写作怎么办。总不能在两个本地仓库hexo init都部署到pages项目。在公司更新一篇blog里面全都是公司写的，然后回到地下室又写一篇更新又全是小黑屋的内容。  &lt;/p&gt;
+&lt;p&gt;尽管Hexo让人专注写作，随时随地用md写一篇博，等到来到同步的机器才更新一次也让人很不爽。对于远程仓库只存放静态文件的方案，就想到了两个思路&lt;/p&gt;
+&lt;h3 id=&quot;同步静态文件&quot;&gt;&lt;a href=&quot;#同步静态文件&quot; class=&quot;headerlink&quot; title=&quot;同步静态文件&quot;&gt;&lt;/a&gt;同步静态文件&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;新仓库同步静态文件-&amp;gt;hexo g生成静态文件-&amp;gt;合并静态文件-&amp;gt;hexo d部署&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;在两地分别hexo init建立hexo博客目录，在_config.yml中都部署到同一个远程仓库，在每次generate时，都先将远程仓库的静态文件同步下来（新建一个单独的folder专门用于同步静态文件）。请勿使用hexo博客中的public文件夹用于同步，每次generate会覆盖同名文件。若另一台主机曾做过修改并提交，这次修改的静态文件将被本地未修改的静态文件覆盖。具体操作：&lt;br&gt;第一次克隆远程hexo主分支：&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;git clone git@github.com:user-name/user-name.github.io.git
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;之后每次hexo仓库发布首先在静态文件仓库获取远程仓库最新静态文件(无条件merge)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git pull origin master
+&lt;/code&gt;&lt;/pre&gt;&lt;ol&gt;
+&lt;li&gt;在静态文件同步仓库中，将自上次部署后，本地修改过的静态文件&lt;strong&gt;删掉&lt;/strong&gt;（不记得怪我咯┑(￣Д ￣)┍）；同时在hexo blog仓库中&lt;code&gt;hexo -g&lt;/code&gt;生成本地静态文件。&lt;/li&gt;
+&lt;li&gt;将剔除过期静态文件的public仓库中文件复制到hexo的public中。&lt;/li&gt;
+&lt;li&gt;使用&lt;code&gt;hexo -d&lt;/code&gt;部署&lt;blockquote&gt;
+&lt;p&gt;以上步骤2中的删除操作是为了保证静态文件的数据都是最新的，保证博客内容的一致性。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;同步源文件（大招）&quot;&gt;&lt;a href=&quot;#同步源文件（大招）&quot; class=&quot;headerlink&quot; title=&quot;同步源文件（大招）&quot;&gt;&lt;/a&gt;同步源文件（大招）&lt;/h3&gt;&lt;p&gt;想到上述方式需要进行2步骤的主要原因就是本地的源文件不同步，只能通过生成的静态文件进行合并的方式，为毛不将源文件同步呢？！参考&lt;a href=&quot;http://crazymilk.github.io/2015/12/28/GitHub-Pages-Hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这篇文章&lt;/a&gt;的思路，同步源文件就是通过远程仓库对源文件融合统一。&lt;/p&gt;
+&lt;h2 id=&quot;呵呵哒&quot;&gt;&lt;a href=&quot;#呵呵哒&quot; class=&quot;headerlink&quot; title=&quot;呵呵哒&quot;&gt;&lt;/a&gt;呵呵哒&lt;/h2&gt;&lt;p&gt;本文为了完成多客户端的同Hexo博的管理和发布，对ssh、git安装、Hexo安装、配置插件主题管理、域名绑定&lt;strong&gt;不涉及&lt;/strong&gt;。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;系统不限制 &lt;/li&gt;
+&lt;li&gt;是否写过博部署过没差&lt;/li&gt;
+&lt;li&gt;最好Hexo3.X,2.X没试过出事自负&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;真·多客户端&quot;&gt;&lt;a href=&quot;#真·多客户端&quot; class=&quot;headerlink&quot; title=&quot;真·多客户端&quot;&gt;&lt;/a&gt;真·多客户端&lt;/h1&gt;&lt;h2 id=&quot;创建远程仓库&quot;&gt;&lt;a href=&quot;#创建远程仓库&quot; class=&quot;headerlink&quot; title=&quot;创建远程仓库&quot;&gt;&lt;/a&gt;创建远程仓库&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;对于没有进行创作的hexo博客，首先创建同名仓库，再创建一个hexo branch。此时俩分支都是空的  &lt;/li&gt;
+&lt;li&gt;对于已经进行创作的hexo博客，直接创建一个hexo 分支。此时，hexo clone了master的静态文件。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;设置主分支&quot;&gt;&lt;a href=&quot;#设置主分支&quot; class=&quot;headerlink&quot; title=&quot;设置主分支&quot;&gt;&lt;/a&gt;设置主分支&lt;/h2&gt;&lt;p&gt;将hexo branch设为主分支，用于同步源文件；master branch作为静态文件的存放。（由于github pages会检索master分支作为该域名下的部署分支，因此必须把master名字保留）&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/04/27/5720a2a70a238.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;同步远程仓库并初始化&quot;&gt;&lt;a href=&quot;#同步远程仓库并初始化&quot; class=&quot;headerlink&quot; title=&quot;同步远程仓库并初始化&quot;&gt;&lt;/a&gt;同步远程仓库并初始化&lt;/h2&gt;&lt;p&gt;在本地（包含第一次所有源文件的主机）新建一个文件夹（就算已经写过博客的也这么搞）同步远程仓库并初始化&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git clone git@github.com:your-Id/your-Id.github.io.git
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;此时输入&lt;code&gt;git branch&lt;/code&gt;可以看到两个分支，红色分支为主分支。&lt;br&gt;若是非空白博客，同步后需要先删掉里面的静态文件.直接删光，把原博客的文件全部复制过来&lt;strong&gt;（好像没有发现更换远程仓库主分支后本地同步更换的git bash。求解?）&lt;/strong&gt;;若是空白博客，那么需要再令建一个文件夹，（因为hexo init操作会覆盖原.git文件导致与远程仓库失联）在该文件夹git bash执行&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;npm install -g hexo
+hexo init
+npm install
+hexo g
+npm install hexo-deployer-git--save
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;好了，里面该有的差不多都有了。全部复制到源文件仓库。&lt;strong&gt;注意把hello worl删掉啊。&lt;/strong&gt;关键的就是，config.yml里deployer的branch是master，而本地仓库关联的是hexo就对了。&lt;br&gt;然后执行&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git add .
+git commit -m &amp;quot;init&amp;quot;
+git push -u origin hexo
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;值得注意的是，有的时候提示主题的文件夹并未加入同步操作，显示&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;shell&quot;&gt;
+Changes not staged for commit
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;即主题文件夹的内容尚未有之前版本，应该加入tracked。应在提交前输入&lt;code&gt;git add themes/themes_name/&lt;/code&gt;.最后那个斜杠别忘了加。&lt;br&gt;这就完成源文件的同步了！(￣▽￣)”” 执行&lt;code&gt;hexo d&lt;/code&gt;操作将本地public静态文件部署。&lt;/p&gt;
+&lt;h1 id=&quot;发博日常&quot;&gt;&lt;a href=&quot;#发博日常&quot; class=&quot;headerlink&quot; title=&quot;发博日常&quot;&gt;&lt;/a&gt;发博日常&lt;/h1&gt;&lt;h2 id=&quot;更博&quot;&gt;&lt;a href=&quot;#更博&quot; class=&quot;headerlink&quot; title=&quot;更博&quot;&gt;&lt;/a&gt;更博&lt;/h2&gt;&lt;p&gt;如果你不能确定是否抽风需要经常换客户端，因此需要每次都要同步本地源文件；如果能忍住，，或者有规律的换客户端，那么平时更新不需要经常同步。&lt;br&gt;写博前操作(&lt;strong&gt;特么狠重要啊&lt;/strong&gt;)：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git pull origin hexo
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;更新操作：(同步源文件到hexo分支)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git add .
+git commit -m &amp;quot;hehe&amp;quot;
+git push origin hexo
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这样每次更博都需要多几个步骤，嫌麻烦就要忍住不手痒了。在手机、pad写md再同步到电脑也是个不错的习惯。&lt;/p&gt;
+&lt;h2 id=&quot;换客户端&quot;&gt;&lt;a href=&quot;#换客户端&quot; class=&quot;headerlink&quot; title=&quot;换客户端&quot;&gt;&lt;/a&gt;换客户端&lt;/h2&gt;&lt;p&gt;easy.只要远程仓库存在了一份完整的源文件，那同步就很容易了。似上步第一次同步，使用&lt;code&gt;git clone git@github.com:your-Id/your-Id.github.io.git&lt;/code&gt;拷贝仓库。然后执行&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;npm install -g hexo
+npm install
+npm install hexo-deployer-git
+&lt;/code&gt;&lt;/pre&gt;&lt;font color=&quot;red&quot;&gt;&lt;strong&gt;不用hexo init!!!&lt;/strong&gt;&lt;/font&gt;
+
+&lt;h1 id=&quot;后记&quot;&gt;&lt;a href=&quot;#后记&quot; class=&quot;headerlink&quot; title=&quot;后记&quot;&gt;&lt;/a&gt;后记&lt;/h1&gt;&lt;h2 id=&quot;多地部署&quot;&gt;&lt;a href=&quot;#多地部署&quot; class=&quot;headerlink&quot; title=&quot;多地部署&quot;&gt;&lt;/a&gt;多地部署&lt;/h2&gt;&lt;p&gt;pacman的公式和代码支持好差啊~还有需要多地备份的可以尝试coding（page之前免费的现在要钱了 = =）.在站点部署文件中更改deploy：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;markdown&quot;&gt;deploy:
+   type: git
+   repo: 
+      github: https://github.com/{YOUR_ID}/{YOUR_ID}.github.io.git,master
+      coding: https://git.coding.net/{YOUR_ID}/{BLOG　NAME}.git,master
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;同理也能部署到自己的ftp服务器上。&lt;/p&gt;
+&lt;h2 id=&quot;bug1-file-name-too-long&quot;&gt;&lt;a href=&quot;#bug1-file-name-too-long&quot; class=&quot;headerlink&quot; title=&quot;bug1 file-name-too-long&quot;&gt;&lt;/a&gt;&lt;font color=&quot;red&quot;&gt;bug1 file-name-too-long&lt;/font&gt;&lt;/h2&gt;&lt;p&gt;在拷贝原始数据的时候，提交远程仓库时可能会报modules的文件夹无法同步。这个情况在windows下安装msysgit进行git bash会报这一问题。&lt;a href=&quot;https://github.com/msysgit/git/pull/110&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;也提到了这个异常。但这并不是git的问题，而是msysgit的问题。使用其他git方式对文件路径较长的提交就不会报错。实测在github for windows下提交该modules文件就不会报错。&lt;/p&gt;
+&lt;h2 id=&quot;bug2-could-not-read-Username-for-‘https-XXX‘&quot;&gt;&lt;a href=&quot;#bug2-could-not-read-Username-for-‘https-XXX‘&quot; class=&quot;headerlink&quot; title=&quot;bug2 could not read Username for ‘https://XXX‘&quot;&gt;&lt;/a&gt;&lt;font color=&quot;red&quot;&gt;bug2 could not read Username for ‘&lt;a href=&quot;https://XXX&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://XXX&lt;/a&gt;‘&lt;/font&gt;&lt;/h2&gt;&lt;p&gt;当需要推送另一台设备的静态文件时，可能极少情况会碰上这个问题。有的说是bash的版本问题，不识别这种方式的推送。然而我用的同一版本的msysgit..&lt;/p&gt;
+&lt;p&gt;在&lt;a href=&quot;http://stackoverflow.com/questions/20871549/error-when-push-commits-with-github-fatal-could-not-read-username&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;也发现了这个问题，尝试了一下使用在https中加入用户名和密码的方式能够良好的推送。。当然配置文件别泄露了。。更改配置文件的deploy如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;markdown&quot;&gt;deploy:
+   type: git
+   repo: 
+      github: https://{YOUR_ID}:{Your_Pwd}@github.com/{YOUR_ID}/{YOUR_ID}.github.io.git,master
+      coding: https://{YOUR_ID}:{Your_Pwd}@git.coding.net/{YOUR_ID}/{BLOG　NAME}.git,master
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Enjoy Hexo!&lt;/p&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;Hexo是很棒的静态博客，简单的安装配置即可专注写作。&lt;br&gt;但是强迫症就是很爱折腾。倘若：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;主机烧了数据备份怎么破？&lt;/li&gt;
+&lt;li&gt;换了系统想继续之前的写作怎么破?&lt;/li&gt;
+&lt;li&gt;纯粹就是想多客户端写作怎么破？&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;我就纯属蛋疼的。喜欢在办公和休息的地方都写作；或者我一win本&lt;br&gt;一mac 都想写文章。但Hexo的静态部署的原则不像WordPress一样，能关联博客地址，利用数据库进行博客更新。好了，这里就来解决这个问题。┑(￣Д ￣)┍&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>effective java 笔记--创建对象的几个tips</title>
+    <link href="http://ovjaywang.github.io/2016/04/27/effective%20java%20%E7%AC%94%E8%AE%B0--%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%87%A0%E4%B8%AAtips/"/>
+    <id>http://ovjaywang.github.io/2016/04/27/effective java 笔记--创建对象的几个tips/</id>
+    <published>2016-04-27T03:50:01.000Z</published>
+    <updated>2016-04-28T16:36:57.000Z</updated>
+    
+    <content type="html">&lt;p&gt;第一章-创建和销毁对象 的一些 小tips&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h1 id=&quot;不希望被实例化-又不想抽象化&quot;&gt;&lt;a href=&quot;#不希望被实例化-又不想抽象化&quot; class=&quot;headerlink&quot; title=&quot;不希望被实例化 又不想抽象化&quot;&gt;&lt;/a&gt;不希望被实例化 又不想抽象化&lt;/h1&gt;&lt;p&gt;某些类不希望被实例化出毫无意义的对象 但不编写显示构造器类会自定义一个隐式无参的构造器 因此可以用一下方式，编写不能实例化的类：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;
+  public class UtilityClass{
+    private UtilityClass(){
+      throw new AssertionError();//直接抛出assert验证异常 好坏
+    }
+  }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;该构造器是私有的。其他类不能过访问（即使同包）。&lt;/p&gt;
+&lt;h1 id=&quot;不要创建没必要的对象&quot;&gt;&lt;a href=&quot;#不要创建没必要的对象&quot; class=&quot;headerlink&quot; title=&quot;不要创建没必要的对象&quot;&gt;&lt;/a&gt;不要创建没必要的对象&lt;/h1&gt;&lt;p&gt;不可变的对象一定要重用（singleton）；重用绝逼不会变的对象（例如计时初始时间、例如物种的属性）。例如，实例化Person对象的时候判断是不是计划生育年代出生的，即判断出生年份是否在1983-2015年。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+class Person{
+   private final Date birthDate;
+   private static final Date BIRTH_START;
+   //这俩参数都是不变的 为了对比出生时间 
+   //没必要每次都创建一个日期对象，只在初始化时调用。
+   private static final Date BIRTH_END; 
+
+//静态块的方法 第一次声明Person对象时构建（不用实例化）
+// 后面占用一块内存 不用再次创建
+   static{
+        Calendar gmtCal = Calendar.getInstance(TimeZone.getTimeZone(&amp;quot;GMT&amp;quot;));
+        gmtCal.set(1983,Calendar.JANUARY,1,0,0,0);
+        //这里对日期做了时区判断 
+        //保证都是从某一客观时间点出生的
+        BIRTH_START = gmtCal.getTime();
+        gmtCal.set(2016,Calendar.JANUARY,1,0,0,0);
+        //截止2015年年底 所以取2016年年初
+        BIRTH_END = gmtCal.getTime();
+   }
+
+    public boolean isJiHuaShengYu(){
+        return birthDate.compareTo(BIRTH_START) &amp;gt;=0 &amp;amp;&amp;amp;
+            birthDate.compareTo(BIRTH_END) &amp;lt;=0;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;如果isJiHuaShengYu方法&lt;font color=&quot;red&quot;&gt;从未调用&lt;/font&gt;，这个方法就显得不合时宜了，这块静态块的内存就一直占着，因此，可以采用延时初始化的方式，在第一次调用该方法时调用。&lt;/p&gt;
+&lt;p&gt;adapter适配器模式可以提供一个后备对象，使实例化次数减少（包括类适配器和对象适配器）；autoboxing自动装箱模式能够自动创建多余对象，所以尽量少用，而使用基本数据类型。&lt;/p&gt;
+&lt;h2 id=&quot;适配器Adapter&quot;&gt;&lt;a href=&quot;#适配器Adapter&quot; class=&quot;headerlink&quot; title=&quot;适配器Adapter&quot;&gt;&lt;/a&gt;适配器Adapter&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;adapter工作场景&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;适配器模式工作场景是：给定的一个接口不满足需求，需要其一些功能与其他的接口或类配合使用.正如已经给了电压和充电插座，但是插座电压与设备工作电压，这是时候就需要一个转换接头。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;adapter分类 &lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;一般分为类适配器和对象适配器。&lt;strong&gt;类适配器&lt;/strong&gt;一般继承了给定接口的被适配类，同时拓展实现了标准的接口；而&lt;strong&gt;对象适配器&lt;/strong&gt;则直接关联，以委托的方式完成已知接口的特殊功能。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;类适配器实例：Adaptee（已知的待适配的类） Target（目标类） Adapter（适配器类）&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;可以看到，类适配器的方式通过继承或实现接口的方式，来传递某些功能或方法，以达到利用已知功能的目的。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;
+    // 已存在的、具有特殊功能、但不符合我们既有的标准接口的类
+class Adaptee {
+    public void specificRequest() {
+        System.out.println(&amp;quot;被适配类具有 特殊功能...&amp;quot;);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;
+// 目标接口，或称为标准接口
+interface Target {
+    public void request();
+}
+
+// 具体目标类，只提供普通功能
+class ConcreteTarget implements Target {
+    public void request() {
+        System.out.println(&amp;quot;普通类 具有 普通功能...&amp;quot;);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;
+// 适配器类，继承了被适配类，同时实现标准接口
+class Adapter extends Adaptee implements Target{
+    public void request() {
+        super.specificRequest();
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;
+// 测试类
+    public class Client {
+        public static void main(String[] args) {
+            // 使用普通功能类
+            Target concreteTarget = new ConcreteTarget();
+            concreteTarget.request();
+
+            // 使用特殊功能类，即适配类
+            Target adapter = new Adapter();
+            adapter.request();
+        }
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;对象适配器实例 Adapter适配器类 被适配器同上&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;对象适配器则通过对被适配类实例化，通过其对象获取其中部分功能，委托这一实例来完成想要传递的方法。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+// 适配器类，直接关联被适配类，同时实现标准接口
+class Adapter implements Target{
+    // 直接关联被适配类
+    private Adaptee adaptee;
+
+    // 可以通过构造函数传入具体需要适配的被适配类对象
+    public Adapter (Adaptee adaptee) {
+        this.adaptee = adaptee;
+    }
+
+    public void request() {
+        // 这里是使用委托的方式完成特殊功能
+        this.adaptee.specificRequest();
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;
+public class Client {
+    public static void main(String[] args) {
+        // 使用普通功能类
+        Target concreteTarget = new ConcreteTarget();
+        concreteTarget.request();
+
+        // 使用特殊功能类，即适配类，
+        // 需要先创建一个被适配类的对象作为参数
+        Target adapter = new Adapter(new Adaptee());
+        adapter.request();
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;参考&lt;a href=&quot;http://haolloyin.blog.51cto.com/1177454/346128&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;##&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;autoboxing方式&lt;/p&gt;
+&lt;/blockquote&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;第一章-创建和销毁对象 的一些 小tips&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>effective java--builer构造器</title>
+    <link href="http://ovjaywang.github.io/2016/04/22/effective%20java--builer%E6%9E%84%E9%80%A0%E5%99%A8/"/>
+    <id>http://ovjaywang.github.io/2016/04/22/effective java--builer构造器/</id>
+    <published>2016-04-22T09:10:48.000Z</published>
+    <updated>2016-04-28T16:36:57.000Z</updated>
+    
+    <content type="html">&lt;p&gt;一个实体类往往有不同的属性 属性有的用于构造器 视为构造时的必需参数 而有的可有可无 类似json和xml一般，有多少个属性，每个属性有多少个赋值都不确定 。e.g.动物 名称string name和是否有尾巴istail是必须的，是否吃草iseatgrass 多重weight 交配手段sexmethod 科目等为非必须字段。解决这一构造问题一般有三种方式。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;可以采用不同的构造函数，一般的，把调用最多的构造出来，其余的按字段个数构造1-n个。诚然，有的字段并不需要，可能赋为空或者0。这样严重的影响了效率，同时字段多时构造函数也异常的多。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;采用类似c#的方式 采用一个空字段构造器，使用setter和getter赋值和取值。这样的好处避免了过度的编写构造函数。但是在异步交互中，不能保证该对象的正确性和一致性。因此很可能需要冷冻。例如，名字叫草泥马的动物，是不具有排卵受精的性爱方式的。这样的setter不能及时维护数据的统一。又或者必须给予字段的动物名字和是否有尾巴在构造中并未赋值，造成的结果很可能在后面的调用中无法get到对应属性报异常。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;强悍的builder.在实体类中，再编写一个builder用于构造和赋值，必须的字段出现在构造函数中，需要赋值的字段在后面以.setter的方式调用，相当简洁高效，同时易于观察和修正。类似jQuery和python中一样。棒呆。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;最丑的长字段实体类原本是这么写的&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+class Animal{
+    private string name;//必须参数
+    private bool isTail;//必须参数
+    private bool isEatGrass;//可选参数
+    private double weight;//可选参数
+    privaet int sexMethod;//可选参数
+
+    Animal(string name,bool isTail)//这两个字段我特么就想要{
+        this.name = name;
+        this.isTail = isTail;
+    }
+    Animal(string name,bool isTail)//这两个字段我特么就想要{
+        this.name = name;
+        this.isTail = isTail;
+    }
+    Animal(string name,bool isTail,bool isEatGrass){
+        this.name = name;
+        this.isTail = isTail;
+        this.isEatGrass = isEatGrass;
+    }
+    Animal(string name,bool isTail,bool isEatGrass,double weight){
+        this.name = name;
+        this.isTail = isTail;
+        this.isEatGrass = isEatGrass;
+        this.weight = weight;
+    }
+    Animal(string name,bool isTail,bool isEatGrass,double weight,int sexMe){
+        this.name = name;
+        this.isTail = isTail;
+        this.isEatGrass = isEatGrass;
+        this.weight = weight;
+        this.sexMethon = sexMe;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;在某处调用就可能是这样&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;
+Animal animal = new Animal(&amp;quot;caonima&amp;quot;,true,true,-1,3);
+//由于我并不想知道体重，但又因为构造函数的关系不得不加上。
+//所以相当繁琐。当字段达到几十个时，调用构造函数都分不清参数是否对应上。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;​将上文的动物实体类以builder的方式写出来，大概是这样的&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+class Animal{
+    private final string name;
+    private final bool isTail;
+    private final bool isEatGrass;
+    private final double weight;
+    private final int sexMethod;
+
+    public static class Builder{//类内嵌套的静态类，可以通过类名的类名调用构造函数
+        private final string name;
+        //注意这里 final只对必需字段定义 表明不可修改 区分不同对象
+        private final bool isTail;
+        //给非必需字段设置默认值
+        private bool isEatGrass =false;
+        private double weight = 0.0;
+        privaet int sexMethod =1;
+        public Builder(string name,bool isTail){
+            //构造函数只取必需字段
+            this.name = name;
+            this.isTail = isTail;
+        }
+        public Builder setISEatGrass(bool isEatGrass){
+            this.isEatGrass = isEatGrass;
+            return this;
+        }
+        public Builder setISEatGrass(double weight){
+            this.weight = weight;
+            return this;
+        }
+        public Builder setSexMethod(int sexMetho){
+            this.sexMetho = sexMetho;
+            return this;
+        }
+
+        public Animal build(){//在builder类内声明一个构造器 返回animal对象
+            return new Animal(this);
+        }
+    }
+
+    //当然 在animal类的最后 也需要把builder的参数取出来
+    private Animal(Builder builder){
+        name = builder.name;
+        isTail = builder.isTail;
+        isEatGrass = builder.isEatGrass;
+        weigth = builder.weigth;
+        sexMethod = builder.sexMethod;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;在某处构造该类对象时，即可像下面一样声明&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+    Animal dog = new Animal.Builder(&amp;quot;旺财&amp;quot;,true).setIsEatGrass(false).setSexMethod(3).setWeight(20.0)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;builder类似一个抽象工厂 客户端可以将这样一个builder传给方法，在方法中生成需要数量的对象。1.5+版本可以使用泛型定义。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+public interface Builder{
+    public T build();
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;在类似生成二叉树，kd树的时候，往往用户只需要将数据push进入，然后调用一个builder整棵树就构造好了。这种方式往往类似于带限制通配符类型的builder.&lt;/p&gt;
+&lt;p&gt;​&lt;/p&gt;
+&lt;p&gt;还有一点值得注意的是，新增字段时，不比增加更多的构造函数 ！&lt;/p&gt;
+&lt;p&gt;caution!&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;增加了类长度，当字段较多时才较好的使用。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;创建对象首先得创建构造器，在强调性能的地方会比较麻烦。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;一个实体类往往有不同的属性 属性有的用于构造器 视为构造时的必需参数 而有的可有可无 类似json和xml一般，有多少个属性，每个属性有多少个赋值都不确定 。e.g.动物 名称string name和是否有尾巴istail是必须的，是否吃草iseatgrass 多重weight 交配手段sexmethod 科目等为非必须字段。解决这一构造问题一般有三种方式。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="代码狗" scheme="http://ovjaywang.github.io/categories/%E4%BB%A3%E7%A0%81%E7%8B%97/"/>
+    
+      <category term="学习log" scheme="http://ovjaywang.github.io/categories/%E4%BB%A3%E7%A0%81%E7%8B%97/%E5%AD%A6%E4%B9%A0log/"/>
+    
+    
+      <category term="java" scheme="http://ovjaywang.github.io/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>删除sdf文件导致转到定义失效</title>
+    <link href="http://ovjaywang.github.io/2016/04/22/what-the-hell-of-sdf/"/>
+    <id>http://ovjaywang.github.io/2016/04/22/what-the-hell-of-sdf/</id>
+    <published>2016-04-22T08:38:11.000Z</published>
+    <updated>2016-04-28T16:36:57.000Z</updated>
+    
+    <content type="html">&lt;p&gt;cmomit的时候发现一个&lt;strong&gt;.sdf&lt;/strong&gt;的文件特别大，项目才不到2m，一个sdf就30多m了。能不能删？&lt;br&gt;谷歌了一下，提示sdf文件和iph文件是存放预编译头和Intellisense的。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;预编译头是 c++下的.h和.hpp等需要调用的文件头&lt;br&gt;Intellisense是自动补齐和代码检测的文件。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;巨硬在&lt;a href=&quot;https://msdn.microsoft.com/en-us/library/hcw1s69b.aspx&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;也给出了Intellisense的强大功效。&lt;/p&gt;
+&lt;p&gt;在工具-&amp;gt;选项-&amp;gt;文本编辑器-&amp;gt;C/C++-&amp;gt;高级-&amp;gt;禁用数据库改为true。的确就能不生成了。&lt;br&gt;怒删了。居然?调试的时候转到定义（F12）失效了。自动补全和错误更正失效了。该选项的第一个表单Intellisense居然全都不能改变了。。。那么问题来了。我每次commit都需要删掉。然后每次又给我生成。烦躁。&lt;/p&gt;
+&lt;p&gt;search到很多F12失效和类名找不到的，都很有可能是这个问题。即使，再次把禁用数据库false掉、把 工具-&amp;gt;选项-&amp;gt;项目和解决方案-&amp;gt;常规-&amp;gt;在解决方案资源管理器中跟踪活动项 反复勾选也没有用。呵呵哒。好险回收站里的sdf文件没有删。同时，这一更改在别的工程不会影响，只要sdf在就没事。&lt;/p&gt;
+&lt;p&gt;解决方案：尝试每次删简直繁琐。在选项禁用数据库上面，可以改正sdf文件的存放位置。将始终使用退回位置设为true，把sdf删掉。使用一个每次不需要同步的文件夹，编译调试时能使用，又不影响git速度，棒呆。&lt;br&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/04/22/5719e9865cfc6.png&quot; alt=&quot;haha&quot;&gt;&lt;/p&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;cmomit的时候发现一个&lt;strong&gt;.sdf&lt;/strong&gt;的文件特别大，项目才不到2m，一个sdf就30多m了。能不能删？&lt;br&gt;谷歌了一下，提示sdf文件和iph文件是存放预编译头和Intellisense的。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="什么都学一下" scheme="http://ovjaywang.github.io/categories/%E4%BB%80%E4%B9%88%E9%83%BD%E5%AD%A6%E4%B8%80%E4%B8%8B/"/>
+    
+      <category term="学习log" scheme="http://ovjaywang.github.io/categories/%E4%BB%80%E4%B9%88%E9%83%BD%E5%AD%A6%E4%B8%80%E4%B8%8B/%E5%AD%A6%E4%B9%A0log/"/>
+    
+    
+      <category term="c++" scheme="http://ovjaywang.github.io/tags/c/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>effective java笔记--静态工厂和Builder模式</title>
+    <link href="http://ovjaywang.github.io/2016/04/13/effective%20java--%E9%9D%99%E6%80%81%E5%B7%A5%E5%8E%82/"/>
+    <id>http://ovjaywang.github.io/2016/04/13/effective java--静态工厂/</id>
+    <published>2016-04-13T07:15:14.000Z</published>
+    <updated>2016-04-28T16:36:57.000Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;静态工厂&quot;&gt;&lt;a href=&quot;#静态工厂&quot; class=&quot;headerlink&quot; title=&quot;静态工厂&quot;&gt;&lt;/a&gt;静态工厂&lt;/h1&gt;&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;    public static Boolean valueOf (boolean b){
+        return b?Boolean.True:Boolean.False;
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;静态工厂以其名字显见，以[类名.方法名]的方式调用，其静态函数主要返回其类的对象，一般是引用值。返回什么东西，由参数决定，这个工厂给你产出来。其在API开发中使用广泛。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;br&gt;静态工厂最有趣的地方在于把方法&lt;strong&gt;提供者&lt;/strong&gt;同方法&lt;strong&gt;使用者&lt;/strong&gt;剥离开来，使用者不能明细地看到对象构造的具体过程，而是可见可得地获得所需的对象。当然好处有很多，例如返回的对象可以是该类的子类，能让被调用静态工厂方法的类不成为公有；例如有效的降低了构造对象的成本，静态工厂&lt;strong&gt;「&lt;/strong&gt;不生产对像，一般只是对象的搬运工&lt;strong&gt;」&lt;/strong&gt;。使用静态方法返回对象的方式在单态中使用广泛。&lt;/p&gt;
+&lt;p&gt;List、Set有着相似的方式。它们都继承自Collection，同时不能实例化为该类的对象，必须通过子类实现父类的方法来实例化不同属性的对象。ArrayList HashSet等都通过注册的方式进行映射。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;单态就是整个类能且只能有一个对象存在，为null则构造一个，不为null应返回该对象。例如购物车只能有一个、聊天平台只能有一个、饭馆的点菜平台只能有一个 这种类似的场景。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;与不同参数的构造函数不同，不同参数的静态工厂可能返回同一属性的该(子)类的对象。该方式抛弃了重复冗杂的new形式，在C#常见newInstance()构造新对象，而在Java里就比较少的出现，一般都是左右对等的。&lt;/p&gt;
+&lt;p&gt;最上面这段代码最有趣的地方在于，它是Boolean的包装类，输入的是值类型而返回的是Boolean对象,当然Boolean只实例化了两个对象。但当新的子类构建，简单的静态工厂必须重写，常用的改进方法有：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;反射机制+配置&lt;br&gt;例如下面一段就是根据不同的类名，返回不同的对象&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;    public static InterFace_Name staticFactory(String name)throws
+                                InstantiationException,
+                                IllegalAccessException,
+                                ClassNotFoundException{     
+        // 这边使用的是Java的Reflection机制来产生实例
+        // 以后就算改变了这边的程式，客户端程式是不用更改的
+        return (InterFace_Name) Class.forName(name).newInstance();
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;注册方式(Service Provider Framework)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;注册需要(服务提供者编写的)服务接口、(服务提供者创建服务的实例)而提供的接口(可选)、(服务提供者)注册API、(使用者编写的)服务访问API&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;最常见的实例就是JDBC(Java DataBase Connection)。下面这段最常见的连接mysql的标准函数就很好的体现了注册的方式。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;    public synchronized static Connection getCon() 
+        throws ClassNotFoundException, SQLException
+    {
+        //服务提供者接口
+          String DRIVERNAME = &amp;quot;com.mysql.jdbc.Driver&amp;quot;;
+          //java.sql.Driver.class这个是服务提供者接口，服务提供者可以使mysql
+          //那就使用&amp;quot;com.mysql.jdbc.Driver&amp;quot;；
+          //如果是sql server，那就使用&amp;quot;com.microsoft.sqlserver.jdbc.SQLServerDriver&amp;quot;;
+          //如果是Oracle，那就要用&amp;quot;oracle.jdbc.driver.OracleDriver&amp;quot;...
+          String URL = &amp;quot;jdbc:mysql://URL/DataBase_Names&amp;quot;;
+          String USER = &amp;quot;USER&amp;quot;;
+          String PWD = &amp;quot;PWD&amp;quot;; 
+          Connection connection = null;//接口 由服务提供者提供并实现具体服务 
+          Class.forName(DRIVERNAME);//这里映射通过DriverManager判断获取的是哪个服务
+          connection = (Connection) DriverManager.getConnection(URL, USER,PWD);
+          //链接数据库  mysql已经在驱动管理注册了API(本机装mysql的时候)
+          //这里使用者编写的服务访问getConnection这个API，
+          if(connection!=null){return connection;}
+          else{return null;}//具体的数据库操作逻辑   
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;这种方式已经不推荐-工厂模式&lt;br&gt;&lt;a href=&quot;https://zh.wikipedia.org/wiki/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;工厂方法&lt;/a&gt;  &lt;a href=&quot;https://zh.wikipedia.org/wiki/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;抽象工厂&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;参考文章:&lt;a href=&quot;(http://liwenshui322.iteye.com/blog/1267202)&quot;&gt;JAVA 服务提供者框架介绍&lt;/a&gt;、&lt;a href=&quot;(http://blog.csdn.net/csdn0123/article/details/7388445)&quot;&gt;构造器和静态方法&lt;/a&gt;&lt;/p&gt;
+&lt;script src=&quot;../../../../js/highlight.min.js&quot;&gt;&lt;/script&gt;
+&lt;link href=&quot;../../../../css/monokai_sublime.min.css&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;静态工厂&quot;&gt;&lt;a href=&quot;#静态工厂&quot; class=&quot;headerlink&quot; title=&quot;静态工厂&quot;&gt;&lt;/a&gt;静态工厂&lt;/h1&gt;&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;    public static Boolean valueOf (boolean b){
+        return b?Boolean.True:Boolean.False;
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;静态工厂以其名字显见，以[类名.方法名]的方式调用，其静态函数主要返回其类的对象，一般是引用值。返回什么东西，由参数决定，这个工厂给你产出来。其在API开发中使用广泛。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="代码狗" scheme="http://ovjaywang.github.io/categories/%E4%BB%A3%E7%A0%81%E7%8B%97/"/>
+    
+      <category term="学习log" scheme="http://ovjaywang.github.io/categories/%E4%BB%A3%E7%A0%81%E7%8B%97/%E5%AD%A6%E4%B9%A0log/"/>
+    
+    
+      <category term="test" scheme="http://ovjaywang.github.io/tags/test/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo双备份Github和Coding&amp;域名绑定</title>
+    <link href="http://ovjaywang.github.io/2016/04/10/Hello-Hexo/"/>
+    <id>http://ovjaywang.github.io/2016/04/10/Hello-Hexo/</id>
+    <published>2016-04-10T14:51:49.000Z</published>
+    <updated>2016-04-28T16:36:57.000Z</updated>
+    
+    <content type="html">&lt;p&gt;感谢&lt;a href=&quot;http://zipperary.com/2013/05/28/hexo-guide-2/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个教程&lt;/a&gt;&lt;br&gt;还有&lt;a href=&quot;http://ibruce.info/2013/11/22/hexo-your-blog/?utm_source=tuicool&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个&lt;/a&gt;&lt;br&gt;解决了好多bugs的&lt;a href=&quot;http://www.jianshu.com/p/35e197cb1273&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个&lt;/a&gt;&lt;br&gt;优化cdn图床缓冲的&lt;a href=&quot;http://lukang.me/2015/optimization-of-hexo-2.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://www.dute.me/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个&lt;/a&gt;让我找到了便宜的狗爹优惠码&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;从一开始的阵地wp搬到这里来了。后会有期了dooby.me 再见了WordPress  
+默默的是有些不舍。虽然push很慢虽然被墙了大半  
+4年光阴不复返啊。从一个逗比成长为大逗比了。
+&lt;/code&gt;&lt;/pre&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;hexo坑还是挺多的。&lt;br&gt;$$ \begin{bmatrix} x \\ y \\ 1&lt;br&gt;\end{bmatrix} \sim \begin{bmatrix} f &amp;amp; 0 &amp;amp; 0 &amp;amp; 0 \\ 0 &amp;amp; f &amp;amp; 0 &amp;amp; 0 \\ 0 &amp;amp; 0 &amp;amp; 1 &amp;amp; 0 \end{bmatrix} \begin{bmatrix} r_11 &amp;amp; r_12 &amp;amp; r_13 &amp;amp; t_x \\ r_21 &amp;amp; r_22 &amp;amp; r_23 &amp;amp; t_y \\ r_31 &amp;amp; r_32&amp;amp; r_33 &amp;amp; t_z \\ 0 &amp;amp; 0 &amp;amp; 0 &amp;amp; 1 \end{bmatrix} \begin{bmatrix} p \\ q \\ 0 \\ 1 \end{bmatrix} \sim \begin{bmatrix} fr_11 &amp;amp; fr_12 &amp;amp; ft_x \\ fr_21 &amp;amp; fr_22 &amp;amp; ft_y \\ r_31 &amp;amp; r_32 &amp;amp; t_z \end{bmatrix} \begin{bmatrix} p \\ q \\ 1 \end{bmatrix}&lt;br&gt;$$$$\sim \begin{bmatrix} h_11 &amp;amp; h_12&amp;amp;h_13 \\ h_21 &amp;amp; h_22 &amp;amp; h_23 \\ h_31 &amp;amp; h_32 &amp;amp; h_33 \end{bmatrix} \begin{bmatrix} p \\ q \\ 1 \end{bmatrix}$$&lt;/p&gt;
+&lt;h1 id=&quot;WordPress迁移&quot;&gt;&lt;a href=&quot;#WordPress迁移&quot; class=&quot;headerlink&quot; title=&quot;WordPress迁移&quot;&gt;&lt;/a&gt;WordPress迁移&lt;/h1&gt;&lt;p&gt;这个使用hexo-migrate-wordpress插件还不错 但是切记导出的xml是文章 tag和category会自动建好。否则使用hexo migrate wordpress 会报错&lt;/p&gt;
+&lt;h1 id=&quot;Github和Coding双备份&quot;&gt;&lt;a href=&quot;#Github和Coding双备份&quot; class=&quot;headerlink&quot; title=&quot;Github和Coding双备份&quot;&gt;&lt;/a&gt;Github和Coding双备份&lt;/h1&gt;&lt;p&gt;按照一般的教程都能配置好Github的。但是Coding对国内线路速度相对较快（好蛋疼GitCafe已经被收了）配置文档差不多是这样&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;markdown&quot;&gt;deploy:
+   type: git
+   repo: 
+      github: https://github.com/{YOUR_ID}/{YOUR_ID}.github.io.git,master
+      coding: https://git.coding.net/{YOUR_ID}/{BLOG　NAME}.git,master
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;当然也需要先将ssh的key添加上去（同一个码即可），Coding不需要同一个名字..然而最近发现Coding的项目展示页面收费了……虽说是注重团队协作和代码交易 但是个人用户的托管真的完全要丢掉了吗？差不多1块钱1天的样子 相当不划算&lt;/p&gt;
+&lt;h1 id=&quot;SEO是极好的&quot;&gt;&lt;a href=&quot;#SEO是极好的&quot; class=&quot;headerlink&quot; title=&quot;SEO是极好的&quot;&gt;&lt;/a&gt;SEO是极好的&lt;/h1&gt;&lt;p&gt;切莫贪杯 google就好 但是 切记！标题不要带有‘&amp;amp;’。年少无知，这个符号不能正常解析出xml会报错&lt;/p&gt;
+&lt;h1 id=&quot;域名绑定&quot;&gt;&lt;a href=&quot;#域名绑定&quot; class=&quot;headerlink&quot; title=&quot;域名绑定&quot;&gt;&lt;/a&gt;域名绑定&lt;/h1&gt;&lt;p&gt;切记@解析的是{YOUR_ID}.github.io的地址而不是github.com的 CNAME需要放在source下才能被generate。dnspod被企鹅注资后ui变得相当土了&lt;/p&gt;
+&lt;h1 id=&quot;专注写作&quot;&gt;&lt;a href=&quot;#专注写作&quot; class=&quot;headerlink&quot; title=&quot;专注写作&quot;&gt;&lt;/a&gt;专注写作&lt;/h1&gt;&lt;p&gt;放弃各种挂饰 插件 统计吧 seo和评论就足够了。多写作多讨论 当然很想适时的学一发nodejs因为折腾了好久ig的照片还是没能get进来。&lt;/p&gt;
+&lt;p&gt;2016.04.11&lt;/p&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;感谢&lt;a href=&quot;http://zipperary.com/2013/05/28/hexo-guide-2/&quot;&gt;这个教程&lt;/a&gt;&lt;br&gt;还有&lt;a href=&quot;http://ibruce.info/2013/11/22/hexo-your-blog/?utm_source=tuicool&quot;&gt;这个&lt;/a&gt;&lt;br&gt;解决了好多bugs的&lt;a href=&quot;http://www.jianshu.com/p/35e197cb1273&quot;&gt;这个&lt;/a&gt;&lt;br&gt;优化cdn图床缓冲的&lt;a href=&quot;http://lukang.me/2015/optimization-of-hexo-2.html&quot;&gt;这个&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://www.dute.me/&quot;&gt;这个&lt;/a&gt;让我找到了便宜的狗爹优惠码&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;从一开始的阵地wp搬到这里来了。后会有期了dooby.me 再见了WordPress  
+默默的是有些不舍。虽然push很慢虽然被墙了大半  
+4年光阴不复返啊。从一个逗比成长为大逗比了。
+&lt;/code&gt;&lt;/pre&gt;
+    
+    </summary>
+    
+      <category term="槽" scheme="http://ovjaywang.github.io/categories/%E6%A7%BD/"/>
+    
+    
+      <category term="hello" scheme="http://ovjaywang.github.io/tags/hello/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>记静态ip的坑</title>
+    <link href="http://ovjaywang.github.io/2016/04/01/%E8%AE%B0%E9%9D%99%E6%80%81ip%E7%9A%84%E5%9D%91/"/>
+    <id>http://ovjaywang.github.io/2016/04/01/记静态ip的坑/</id>
+    <published>2016-04-01T08:06:32.000Z</published>
+    <updated>2016-04-28T16:36:57.000Z</updated>
+    
+    <content type="html">&lt;p&gt;明明在hadoop配置静态IP的时候被坑过一次，却完全想不起来怎么解决的。尤其是在ssh登录的时候需要记下host和ip的对应，才能直接输出主机名来访问局域网内的其他主机。&lt;br&gt;现在记下来。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;1.原生linux+无线网卡/有线端口&lt;br&gt;ubuntu改interface和fedora改eth0-XXXXX都是极好的 里面对应的netmask ipaddress gateway dns1dns2（dnsnameserver）在resolv.conf配置dns信息&lt;br&gt;但是&lt;strong&gt;比较easy&lt;/strong&gt;的纯粹做法直接在有线/无线的连接信息里面加这几个对应信息&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ooo.0o0.ooo/2016/04/01/56fe2742cea08.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;最最最easy的就是直接在路由器dhcp绑定mac静态分配，直接原生效果拔群。&lt;/p&gt;
+&lt;p&gt;2.虚拟机+有线端口/原生无线网卡&lt;/p&gt;
+&lt;p&gt;这种情况有点坑 虚拟机切记开启桥接模式 直接把主机和虚拟机按照局域网内的两台机器分配ip。这样当然也可以按照配置文件配置 切记写入MN_COTROLLED=yes 然后开启networkmanager管理网络，并使用&lt;/p&gt;
+&lt;pre class=&quot;brush: shell; gutter: true&quot;&gt;systemctl enable netwoekmanager&lt;/pre&gt;
+
+&lt;p&gt;开启开机启动。诚然，在连接信息直接配置也行。&lt;br&gt;3.虚拟机+外接无线网卡&lt;br&gt;呵呵 没找到解决方案。直接桥接驱动没法搞；直接nat不是我想要的结果。反正奏事上不了网ping不了局域网&lt;/p&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;明明在hadoop配置静态IP的时候被坑过一次，却完全想不起来怎么解决的。尤其是在ssh登录的时候需要记下host和ip的对应，才能直接输出主机名来访问局域网内的其他主机。&lt;br&gt;现在记下来。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="什么都学一下" scheme="http://ovjaywang.github.io/categories/%E4%BB%80%E4%B9%88%E9%83%BD%E5%AD%A6%E4%B8%80%E4%B8%8B/"/>
+    
+      <category term="学习log" scheme="http://ovjaywang.github.io/categories/%E4%BB%80%E4%B9%88%E9%83%BD%E5%AD%A6%E4%B8%80%E4%B8%8B/%E5%AD%A6%E4%B9%A0log/"/>
+    
+    
+      <category term="hadoop" scheme="http://ovjaywang.github.io/tags/hadoop/"/>
+    
+      <category term="静态ip" scheme="http://ovjaywang.github.io/tags/%E9%9D%99%E6%80%81ip/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>最近demo 模块 算法总结</title>
+    <link href="http://ovjaywang.github.io/2016/03/08/%E6%9C%80%E8%BF%91demo%20%E6%A8%A1%E5%9D%97%20%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/"/>
+    <id>http://ovjaywang.github.io/2016/03/08/最近demo 模块 算法总结/</id>
+    <published>2016-03-08T09:43:56.000Z</published>
+    <updated>2016-04-28T16:36:57.000Z</updated>
+    
+    <content type="html">&lt;p&gt;&lt;a href=&quot;http://ju.outofmemory.cn/entry/106397&quot; title=&quot;http://ju.outofmemory.cn/entry/106397&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://ju.outofmemory.cn/entry/106397&lt;/a&gt; 【坑妹填完】&lt;/p&gt;
+&lt;p&gt;最近各种乱整。。文章妹时间管光顾着折腾手头派下来的事情了。再加上每天固定的复习提高一下。小论文完全没有头绪。&lt;br&gt;最近get到的实用方法还是很多阿。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;DBScan（Density-Based-Spatial-Clustering-of-Applications-with-Noise）基于密度的含噪空间聚类&quot;&gt;&lt;a href=&quot;#DBScan（Density-Based-Spatial-Clustering-of-Applications-with-Noise）基于密度的含噪空间聚类&quot; class=&quot;headerlink&quot; title=&quot;DBScan（Density-Based Spatial Clustering of Applications with Noise）基于密度的含噪空间聚类&quot;&gt;&lt;/a&gt;&lt;strong&gt;DBScan&lt;/strong&gt;（Density-Based Spatial Clustering of Applications with Noise）&lt;strong&gt;基于密度的含噪空间聚类&lt;/strong&gt;&lt;/h1&gt;&lt;p&gt;最大特点是：多维、任何形状聚类、聚类数任意、噪声可控、对输入不敏感；缺点很明显，需要提前知道2个参数（一般实验多了，根据经验对同一类型聚类可以不用改。），时间复杂度和空间复杂度都很大，需要计算点两两之间距离[这里需要优化，否则算法超出一般忍受时间] 不对密度变化做出选择。&lt;br&gt;输入参数2个，单一点半径范围R及其最小包含的点数N。算法本质是遍历所有点并计算邻域内的点数并拓展该类（以R范围内是否达到N来判断）。被分类的点将会标记并不再被检测到。因此耗时表现在邻域查找和拓展聚类上。但解算效果相当良好。&lt;br&gt;算法的优化方案相当多：kdtree的、基于网格计算的、基于适应性解算阈值的、局部敏感哈希。主要解决的都是如何加快求解邻域解求速度。诚然它的算法复杂度有n^3显然想要加快并不是那么容易。深入研讨了一番发现计算距离时有的不止一遍，因此写入硬盘或许是个好的方案，但是I/O读取的效率就要考虑进来了；还有一种方式是限制深入迭代次数，即做多在第几层nearestpoint()这个数组中进行聚类的拓展。这种做法的危害是使得同一个点集很可能多次才并入，或者完全没有并到一块，因此需要一个后手，将聚类中心相近的再次组合，其实在kdtree中也有类似的做法。参考&lt;a href=&quot;https://github.com/alitouka/spark_dbscan&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;基于SPark的DBSCAN的图解&lt;/a&gt;，KDTree建立时，按区域分割好数据后，同一类的点集亦可能先分散于个个区间。各自区间先进行小聚类后，再进行大聚类。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/03/30/56fb7e092b350.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;（中了SPark的毒，后面会进行测试）&lt;br&gt;demo很好的展示了算法的原理。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.naftaliharris.com/blog/visualizing-dbscan-clustering/&quot; title=&quot;http://www.naftaliharris.com/blog/visualizing-dbscan-clustering/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.naftaliharris.com/blog/visualizing-dbscan-clustering/&lt;/a&gt; 在线666可视化理解dbscan过程。不同的实例可以看到，对不同图形的检测相当准确；同时聚类精度亦相当高。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://stackoverflow.com/questions/6621630/dbscan-code-in-c-sharp-or-vb-net-for-cluster-analysis&quot; title=&quot;http://stackoverflow.com/questions/6621630/dbscan-code-in-c-sharp-or-vb-net-for-cluster-analysis&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://stackoverflow.com/questions/6621630/dbscan-code-in-c-sharp-or-vb-net-for-cluster-analysis&lt;/a&gt;stackoverflow图解dbscan&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.yzuzun.com/2015/07/dbscan-clustering-algorithm-and-c-implementation/&quot; title=&quot;https://www.yzuzun.com/2015/07/dbscan-clustering-algorithm-and-c-implementation/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.yzuzun.com/2015/07/dbscan-clustering-algorithm-and-c-implementation/&lt;/a&gt; dbscan的C#实现和作者的gayhub项目&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://download.csdn.net/detail/f112122/7482303&quot; title=&quot;http://download.csdn.net/detail/f112122/7482303&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://download.csdn.net/detail/f112122/7482303 &lt;/a&gt;c#简易可视化工程例子&lt;/p&gt;
+&lt;p&gt;诚然，boost把很多常用的算法都写进去了。但c++使用起来才比较顺。这是c++环境下使用dbscan的正确方式：上boost。比如下面这个&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/yusufuzun/dbscan&quot; title=&quot;https://github.com/yusufuzun/dbscan&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/yusufuzun/dbscan&lt;/a&gt;（C# 以算法原理为基准 不是很快）&lt;/p&gt;
+&lt;p&gt;或这个&lt;a href=&quot;https://github.com/Terranlee/DBSCAN&quot; title=&quot;https://github.com/Terranlee/DBSCAN&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/Terranlee/DBSCAN&lt;/a&gt;（C++&amp;amp;boost&amp;amp;KDTree&amp;nbsp; 至今没有明白第一个参数ire的含义啊。一般都2个参数就好了啊 而且结果貌似也不太对 等待修正）&lt;/p&gt;
+&lt;h1 id=&quot;boost的使用&quot;&gt;&lt;a href=&quot;#boost的使用&quot; class=&quot;headerlink&quot; title=&quot;boost的使用&quot;&gt;&lt;/a&gt;&lt;strong&gt;boost的使用&lt;/strong&gt;&lt;/h1&gt;&lt;p&gt;上边两个github的例子都基于c++开发，其中都使用到了流行的c++高性能计算类库boost。&lt;/p&gt;
+&lt;p&gt;linux下的编译和安装遵循这个帖比较顺 &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://ju.outofmemory.cn/entry/106397&quot; title=&quot;http://ju.outofmemory.cn/entry/106397&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://ju.outofmemory.cn/entry/106397&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;KDTree &lt;/p&gt;
+&lt;p&gt;KDTree作为一种数据结构的拓展，其实是一种变异的二叉排序树，其最最最原始的构造就是，在二叉树左小右大的基础上，对多维数据，第一层比较第一个维度，第二层比较第二个维度，以此类推…………排到最后一维又返回第一位继续排，当然，而已设定排序的次数，到多少维就懒得排了。这个数据结构的好处是，寻找欧几里得空间（也就是任意维度的两个对象的连线长度&amp;amp;有的地方也使用该值当做两个对象相似度）的最邻近点（集）复杂度大大降低，不用迭代整个数就能找到最近的点。&lt;/p&gt;
+&lt;p&gt;上面说的DBSCAN、后面的ICP、图像匹配中的SIFT算子比较相似度（128维），使用KDTree可以很好的解决时间太长的问题。&lt;/p&gt;
+&lt;p&gt;来一波树形结合，&lt;/p&gt;
+&lt;p&gt;KDTree的改进方法有Best Bin Fisrt、Best First Search。它主要的临近查找是基于路径和回路的，但没有考虑节点的一些性质，BBF则根据查询路径上的节点进行排序，排序原则是按照超平面的最短距离。另外还可设置超时，优先级队列中的所有节点都经过检查或者超出时间限制时，返回当前最好结果当做近似的最近邻。这种方式在高维上效率提升很大。（尤其sift）&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;font color=&quot;#555555&quot;&gt;&lt;/font&gt;&amp;nbsp;&lt;/p&gt;
+&lt;h1 id=&quot;ICP（Iterative-closest-point）&quot;&gt;&lt;a href=&quot;#ICP（Iterative-closest-point）&quot; class=&quot;headerlink&quot; title=&quot;ICP（Iterative closest point）&quot;&gt;&lt;/a&gt;&lt;strong&gt;ICP&lt;/strong&gt;（&lt;a href=&quot;https://en.wikipedia.org/wiki/Iterative_closest_point&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Iterative closest point&lt;/a&gt;）&lt;/h1&gt;&lt;p&gt;点集匹配算法——两组有部分重叠区域的点集，进行拟合和对应点匹配。匹配中如果模式重复程度过高可能陷入局部最小值，因此需要对模式进行了良好的解析。&lt;/p&gt;
+&lt;p&gt;算法原理：①算法先解算归一两组点集比例尺、解算质心，将质心重合②对其中一个点集，寻找每个另一点集的最近点，解算梯度和旋转平移量③再次计算最近点，若旋转量小于阈值则停止，若大于阈值则继续②步骤。④按照对应点计算H矩阵（单映矩阵）。&lt;/p&gt;
+&lt;p&gt;第二部中的关键步骤其实就是解算每一步的迭代旋转和平移量，用到的是最小二乘法；其次，输入模式及输入顺序对匹配影像也比较大。一般的，停止迭代可以设置限差或者迭代次数。&lt;/p&gt;
+&lt;p&gt;VTK5.8的C#dll中有包含ICP最新的算法，但算法较旧，效率较低，但新版6.0+在C#上未开源，忧伤。算法中，求取最近点有三种做法，一点对点，直接找最近点，常用kd-tree实现；二点对面，求取最近的切面的一个切点，主要针对点集和曲面匹配；三点做发现与另一曲面交点，主要针对面与面配准。&lt;/p&gt;
+&lt;p&gt;mrpt类库中关于ICP的例子&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.mrpt.org/Iterative_Closest_Point_%28ICP%29_and_other_matching_algorithms&quot; title=&quot;http://www.mrpt.org/Iterative_Closest_Point_%28ICP%29_and_other_matching_algorithms&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.mrpt.org/Iterative_Closest&lt;em&gt;Point&lt;/em&gt;%28ICP%29_and_other_matching_algorithms&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;结合NUnit的ICP算法&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.codeproject.com/Articles/865830/Point-cloud-alignment-ICP-methods-compared&quot; title=&quot;http://www.codeproject.com/Articles/865830/Point-cloud-alignment-ICP-methods-compared&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.codeproject.com/Articles/865830/Point-cloud-alignment-ICP-methods-compared&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;适应性：对自由形状的曲面适应性较好，VTK算法在LiDar数据扫描配准中应用较好。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&quot;convex-hull-of-a-set-of-points-点集的凸包&quot;&gt;&lt;a href=&quot;#convex-hull-of-a-set-of-points-点集的凸包&quot; class=&quot;headerlink&quot; title=&quot;convex hull of a set of points 点集的凸包&quot;&gt;&lt;/a&gt;&lt;strong&gt;convex hull of a set of points&lt;/strong&gt; 点集的凸包&lt;/h1&gt;&lt;p&gt;没啥特点。但相当基础。在外接圆计算、外接矩形计算的时候必须首先解算。demo相当完美。可直接改了用了。能把demo做的这么直白这么易用相当666了(c#)&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://csharphelper.com/blog/2014/07/find-the-convex-hull-of-a-set-of-points-in-c/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;查找点集外包圆&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;minimal bounding rectangle for a polygon &lt;/strong&gt;凸包的最小外接矩形。这个算法在解求聚类、数据形态方面有很多利用。前提是前面提到的点集凸包以及点集是否按顺时针排序。同样的网站，给的demo我只能说酷炸了。（c#）包含了两种模式：最小面积和最小周长，两者相差不会很大。demo的计算原则是面积。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://csharphelper.com/blog/2014/07/find-minimal-bounding-rectangle-polygon-c/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;计算凸多边形最小外接矩形&lt;/a&gt;&lt;/p&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;http://ju.outofmemory.cn/entry/106397&quot; title=&quot;http://ju.outofmemory.cn/entry/106397&quot;&gt;http://ju.outofmemory.cn/entry/106397&lt;/a&gt; 【坑妹填完】&lt;/p&gt;
+&lt;p&gt;最近各种乱整。。文章妹时间管光顾着折腾手头派下来的事情了。再加上每天固定的复习提高一下。小论文完全没有头绪。&lt;br&gt;最近get到的实用方法还是很多阿。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="代码狗" scheme="http://ovjaywang.github.io/categories/%E4%BB%A3%E7%A0%81%E7%8B%97/"/>
+    
+      <category term="学习log" scheme="http://ovjaywang.github.io/categories/%E4%BB%A3%E7%A0%81%E7%8B%97/%E5%AD%A6%E4%B9%A0log/"/>
+    
+    
+      <category term="dbscan" scheme="http://ovjaywang.github.io/tags/dbscan/"/>
+    
+      <category term="demo" scheme="http://ovjaywang.github.io/tags/demo/"/>
+    
+      <category term="ICP" scheme="http://ovjaywang.github.io/tags/ICP/"/>
+    
+      <category term="MMC" scheme="http://ovjaywang.github.io/tags/MMC/"/>
+    
+      <category term="MME" scheme="http://ovjaywang.github.io/tags/MME/"/>
+    
+      <category term="SPark" scheme="http://ovjaywang.github.io/tags/SPark/"/>
+    
+      <category term="算法" scheme="http://ovjaywang.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>由opencv中findFundamentalMat和findHomography区别的引申</title>
+    <link href="http://ovjaywang.github.io/2016/01/25/opencv-findhomography-findfundanmentalmat/"/>
+    <id>http://ovjaywang.github.io/2016/01/25/opencv-findhomography-findfundanmentalmat/</id>
+    <published>2016-01-24T16:54:26.000Z</published>
+    <updated>2016-04-28T17:41:45.000Z</updated>
+    
+    <content type="html">&lt;p&gt;openCV中有两个函数，findhomography和findfundamentalmat，长的很像。。一开始严重的弄混，以为都是求对应点投影矩阵的公式，万万没想到其实是两个完全不同的内涵。😒&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;opencv 中，进行&lt;strong&gt;图像拼接(全景拼接 航摄拼接 三维重建 街景地图)&lt;/strong&gt;，大致流程如下。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;利用opencv提供的各类型特征点检测方法（Fast Start SIFT SURF ORB SimpleBlobPyramidAdapter DynamicAdapter 等）在图像中将感兴趣的有独特标识的点找出来,其中orb 是最近提出效率较高的检测和描述算法，金字塔算法则是更高的提高效率的算法；&lt;/li&gt;
+&lt;li&gt;利用不同的描述方式（SIFT SURF），对特征点的信息（周围的梯度、灰度相关性 二进制编码等）进行描述； &lt;/li&gt;
+&lt;li&gt;利用不同原则的匹配方式（BF Flann-based等），对这些描述子（一般是多维矩阵）进行匹配（匹配中数据的输入参数的筛选Ransac方法），对匹配结果反向计算进一步的筛查，选择更健壮更有代表性的数据（knn Ransac），&lt;/li&gt;
+&lt;li&gt;最后利用findhomography找到映射矩阵，再利用affine将该坐标映射关系对其中一幅图贴到其中一幅图中。 完成拼接。拼接区域涉及融合平滑。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这其中，&lt;strong&gt;findfundamentalmat()&lt;/strong&gt;和&lt;strong&gt;findhomography()&lt;/strong&gt;都是用来查找两组匹配坐标点的映射关系的（两组坐标几何 数目相同 同一&lt;strong&gt;数组位&lt;/strong&gt;为同一对匹配点）试着运行了一下homography生成的矩阵拼接效果良好。而findfundamentalmat就不太6.找了一些相关资料，其实这是两个相似但不相同的函数。so开始之前科普几个概念：&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;核点（极点）&lt;/strong&gt;：摄影中心连线（基线）ss’延长线，与左右影像的交点，分为左右核点（极点）。（注：下图两影像接近平行，则ss’连线与影像无交点，而在下下图中，el er分别为左右核点【极点】）亦可理解为左右摄影中心分别在对方像片的像点&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;核面（极面）&lt;/strong&gt; ：过摄影基线与物方任意一点组成的平面。（所以缩，物方点不同，核面一般也不同 任意一个下图的PO1O2都是核面）&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;核线（极线）：立体像对中，同名光线与摄影基线所组成核面与左右像片的交线。&lt;/strong&gt; （不同同名点极线不同，因而有很多很多条） &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;极线约束&lt;/strong&gt; ：同一个点在两幅图像上的映射，已知左图映射点p1，那么右图映射点p2一定在p1的外极线上，这样可以减少匹配点数量。&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/24/56ce7786da1fa.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;上图中，红线即为极线，物方点P（X,Y,Z）分别在左右两图留下了同名点（xl，yl）、（xr,yr）。Tx即为基线长。但上图为两个平面接近平行且z方向接近0，但一般情况下，两像平面以任意角度成像同时内参数并不相同，因此上图中的极线呈现出共线的情况，更多的情况是下面这个图，两图像成任意角度。&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/24/56ce782a3235f.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;下图中，O1O2连线与左右像平面交点el和er即为左右极点(极点亦可理解为左右摄影中心在另一像平面的像)，而极线则为plel和prer。可以看到，这两条线显然就不平行了。 &lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/24/56ce77b362343.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;&lt;strong&gt;基线&lt;/strong&gt; ：相邻两摄站点（摄影中心 一般标为s）之间的连线。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;主核面&lt;/strong&gt; ：左右像主点分别与基线构成的平面，分别称为左主核面和右主核面。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;灭点vanishing &lt;/strong&gt; point：平行线在二维图像中汇聚的地方，空间中每一组平行线都有自己的灭点。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;灭线vanishing line（消隐线 ）&lt;/strong&gt; ：不同的灭线连线，即灭线。如果两组不同的平行线，都平行于大地，则他们的连线就是地平线（horizon line）&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&quot;1-第一个矩阵Essential本质矩阵&quot;&gt;&lt;a href=&quot;#1-第一个矩阵Essential本质矩阵&quot; class=&quot;headerlink&quot; title=&quot;1. 第一个矩阵Essential本质矩阵&quot;&gt;&lt;/a&gt;1. 第一个矩阵Essential本质矩阵&lt;/h1&gt;&lt;p&gt;由于拍摄物体时，摄影中并不能被反映在图像中。如果让第二个观察者同时拍摄下某摄影中心和它所拍的照片呢?&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/25/56cfbd34f3c9e.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;反映在第二个观察者的照片，摄影中心和物体分别投影在像片上，任意第一个摄影中心和它所拍摄物体的连线都可视为第二个摄影中心的极线。直观的理解，即为下图的erpr。&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/25/56cfc06a0ddc5.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;&lt;strong&gt;极线约束的理论就是左侧的物体成像在右侧的同名点一定在erpr上。&lt;/strong&gt;反映左右极线关系的就是表达向量和右向量之间的约束关系的——&lt;strong&gt;本质矩阵**&lt;/strong&gt;Eseential Matrix&lt;strong&gt;**。&lt;/strong&gt;但大多数情况下，别的摄影中心并不一定会被成像，即极点不在相片中。如下图&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/25/56cfc2d883aab.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;具体的矩阵运算参考&lt;strong&gt;  &lt;/strong&gt;&lt;a href=&quot;http://www.cnblogs.com/gemstone/archive/2011/12/20/2294551.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;&lt;strong&gt;计算机视觉基础4——对极几何(Epipolar Geometry)&lt;/strong&gt;&lt;/a&gt; ，原理为三线同面（下图蓝色区域三边）  &lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/24/56ce77dc874bc.png&quot; alt=&quot;&quot;&gt; &lt;/center&gt;
+
+&lt;p&gt;&lt;strong&gt;其中，E是本质矩阵（Essential Matrix），R是像平面旋转矩阵，T是摄影中心平移矩阵，Pl和Pr分别为左右摄影中心指向同名点P的向量。S由矩阵T决定，具体形式为&lt;/strong&gt;&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/24/56ce77fc78812.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;&lt;strong&gt;本质矩阵&lt;/strong&gt; 采用的是相机的外部参数，也就是说采用相机坐标(The essential matrix uses CAMERA coordinates)，不涉及相机内参数，如果要分析数字图像，则要考虑坐标(u,v)，此时需要用到内部参数(To use image coordinates we must consider the INTRINSIC camera parameters)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt; 谨记1：Essential Matrix是连结两个摄影中心指向同名点的向量的矩阵，秩为2。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt; 左向量·E·右向量=0！！！&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt; E由两部分组成！E=R·S  E仅由外方位元素决定！一张图记住E!!!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/25/56cfcab0b492e.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;由向量引申而出的，是同名点的像素坐标，原理是共线方程。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;二维同名点&lt;/strong&gt;&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/26/56d00bc787259.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;上图中推导出对极几何中相当重要的公式，E矩阵作为连接同名点像素坐标而出现，这就意味着，已知求取E的外方位参数，就能求取出左右同名点的对应关系。然而，其中隐含的条件是在共线方程的化简中，默认忽略了镜头畸变。然而这已足够重要，在镜头畸变在拼接中影响不大时，该公式在仅仅知道外方位元素的情况就能解算corresponding point&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;极线方程&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;同理，由于极点、同名点都位于极线上，因此亦可通过E求得极线的方程（采用相机坐标系）。&lt;/p&gt;
+&lt;p&gt;设极线方程为 au + bv + c = 0&lt;/p&gt;
+&lt;p&gt;使用齐次坐标，矩阵表示为：&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/26/56d01aa83d7d6.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;其中，$\widetilde{p}$是像片任意同名点相机坐标，$\widetilde{l}$是方程系数。又依据同名点公式，$$Ep&lt;em&gt;{l} =\widetilde{l&lt;/em&gt;{r}}$$，所以！对应外极线的方程系数可以直接由E矩阵和本侧同名点求出。其中，$\widetilde{l_{l}}$是左极点对应外极线方程。&lt;/p&gt;
+&lt;p&gt;当已知左侧点，其右侧对应点在直线&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/26/56d08c864e4a7.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;&lt;br&gt;当已知右侧点，其左侧对应点在极线&lt;br&gt;&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/26/56d01c07d68ed.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;&lt;br&gt;&lt;strong&gt;极点&lt;/strong&gt;&lt;br&gt;&lt;br&gt;别忘了。极点也是在极线上，所以有&lt;br&gt;&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/26/56d0673df0710.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;&lt;br&gt;且，极点属于所有极线，因而&lt;br&gt;&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/26/56d0678f1ddfc.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;&lt;br&gt;上式可用来定位极点的坐标&lt;br&gt;&lt;br&gt;&lt;em&gt; &lt;/em&gt; &lt;em&gt;&lt;br&gt;&lt;br&gt;# &lt;strong&gt; 2.第2个矩阵 Fundamental基础矩阵&lt;/strong&gt;&lt;br&gt;&lt;br&gt;另一个需要提到的概念是基础矩阵。&lt;br&gt;&lt;br&gt;Essential矩阵使用CameraCoords相机坐标系。尽管其中可计算像素坐标，但仍然以摄影中心为原点，像平面所有点z值都是f。当考虑相机内参数时，这就是FundamentalMatrix基础矩阵&lt;br&gt;&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/01/22/56a2556c54d1d.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;&lt;br&gt;该图显示了fundamentalmatrix（基础矩阵）的基本内涵。p q分别为同名点。计算基础矩阵需要考虑到内参数的仿射变换。M为内参数的矩阵，包含6个参数的3&lt;/em&gt;3矩阵。&lt;br&gt;&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/26/56d069db39519.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;&lt;br&gt;将上式中的Camera坐标提到一边，带入基本矩阵解求对极同名点的方程，即可得到F的表达式.&lt;br&gt;&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/24/56ce7854f3d64.jpg&quot; alt=&quot;&quot;&gt;&lt;/center&gt;&lt;br&gt;上式即为基础矩阵方程。其中，F是基础矩阵，x’x分别为同名点。而左右两个平面的两条极线为，显而易见，F由E和两个内参数矩阵决定。&lt;br&gt;&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/26/56d06ae01c63d.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;&lt;br&gt;类似的，F与E一样都能指同名点坐标在对应极线的关系。下图分别是已知左右点其对应极线的关系。&lt;br&gt;&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/24/56ce78b202e41.jpg&quot; alt=&quot;&quot;&gt;&lt;/center&gt;&lt;br&gt;一个简单的例子，如果从某种方式计算出基础矩阵，则在对应图中即可表示出像素点对应的极线。&lt;br&gt;&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/28/56d3bee0758a5.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;&lt;br&gt;计算出矩阵即为l的三个参数。一般的，调整比例 将前两项的平方和定为1.&lt;br&gt;&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/28/56d3bf4cbf895.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;findfundamentalmat()本意为基础矩阵，是假设两幅图像在同一三维场景中的不同视角。例如立体摄像机，从不同的角度拍摄同一个目标，它解算的是，两幅图像其中一个同名点，与其在外极线同名点的转换关系。它的映射基于三维场景，因此使用这个函数的时候，在不同的视角之间，应该有一个明显的基线。默认使用7点算法拟合数据。基础矩阵把左边图像的一个点的图像坐标与它右边图像中的对应点的图像联系起来，他是一个3x3的退化矩阵，描述了两个立体图像对的外极限几何关系，其计算依赖于在两个图像中相对应的一组点。&lt;/p&gt;
+&lt;p&gt;与Homography矩阵（下文提到）不同，它在每组对应点有两组约束：x、y同时作为x’y’的自变量，估算一组对应点只有一行的约束，因为极线约束是标量等式。因此至少需要8个点。所以一般使用8点算法计算F矩阵(8点算法)。&lt;/p&gt;
+&lt;p&gt;$$\begin{bmatrix} x^{‘}_i &amp;amp; y^{‘}&lt;em&gt;i &amp;amp; 1 \end{bmatrix} \begin{bmatrix} f&lt;/em&gt;{11} &amp;amp; f&lt;em&gt;{12} &amp;amp; f&lt;/em&gt;{13} \\ f&lt;em&gt;{21} &amp;amp; f&lt;/em&gt;{22} &amp;amp; f&lt;em&gt;{23} \\  f&lt;/em&gt;{31} &amp;amp; f&lt;em&gt;{32}  &amp;amp; f&lt;/em&gt;{33}  \end{bmatrix} \begin{bmatrix} x_i \\ y_i \\ 1 \end{bmatrix}=0$$&lt;/p&gt;
+&lt;p&gt;可推到出方程：&lt;/p&gt;
+&lt;p&gt;$$ x_i x^{‘}_i {f_11} + x_i y^{‘}_i f_21 + x_i f_31 + y_i x^{‘}_i f_12 + y_i y^{‘}_i f_22 + y_i f_32 + {x_i}^{‘} f_13 + y^{‘}_i f_23 + f_33 =0$$&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;https://ooo.0o0.ooo/2016/02/29/56d3ed9679e76.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;最终目标是找到ATA的一个特征向量使得它的特征值最小。常用的解法是构造m*9的矩阵A（m是点对数），求解A的奇异值分解，即A=UDVT，&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;U是m*m正交矩阵，其列为AAT特征向量&lt;/p&gt;
+&lt;p&gt;V是m*n正交阵，其列为ATA的特征向量&lt;/p&gt;
+&lt;p&gt;D是m*n对角阵，对角元素为奇异值，平方值为AAT和ATA的特征值。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;然而F是由7个自由度构成的3*3矩阵，其秩为2，因此，讲道理，9个表达式由7个参数构成，因此只用7对对应点理应也能解算出F矩阵（7点算法）。使用此方法计算F矩阵时，需要加上秩为2的限制，以保证计算结果唯一。该方法亦叫做奇异约束。该约束限制假设以F’替代F矩阵，计算时以&lt;a href=&quot;https://zh.wikipedia.org/wiki/%E7%9F%A9%E9%99%A3%E7%AF%84%E6%95%B8#.E5.BC.97.E7.BD.97.E8.B4.9D.E5.B0.BC.E4.B9.8C.E6.96.AF.E7.AF.84.E6.95.B0&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;F范式&lt;/a&gt;作为标准。&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/03/29/56fb45459399e.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;&lt;br&gt;其中，$\sigma$是M矩阵的奇异值（A*·A的n个特征值的非负平方根叫作A的奇异值），M=F-F’,可以通过SVD分解解出该奇异值。&lt;br&gt;&lt;br&gt;&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/03/29/56fb506cb6765.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;F由于秩为2的限制可以以以下形式表示：&lt;/p&gt;
+&lt;p&gt;F=αF1+(1-α)F2.其中，F1和F2分别Fx=0的两个解。&lt;/p&gt;
+&lt;p&gt;由于秩=2，因此det(F=αF1+(1-α)F2)=0,通过该式即可求出α的值。&lt;/p&gt;
+&lt;p&gt;更多内容可以看计算机视觉Trifocal tensor三角点张量的部分。&lt;/p&gt;
+&lt;p&gt;Caution!&lt;/p&gt;
+&lt;p&gt;对图像进行匹配的一个重要步骤就是把两幅图像的极线平行于基线，使得极点处在正无穷，这样的拼接结果效果才能更好。这一重要步骤即为重投影。如下图将黑线投影为蓝线。&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;https://ooo.0o0.ooo/2016/02/29/56d3f1e8a7005.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;对图像进行矫正。需要一个单映矩阵，作两步旋转。其第一步是将极点旋转到无穷远，第二部是将极线平行。其中，左右图像均需要应用该单映聚阵R将极点无穷远化；而右图像需要应用旋转矩阵（E=RS中的R）。最后比例一致化。&lt;/p&gt;
+&lt;p&gt;上文中需要构造的矫正矩阵形式为：&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;https://ooo.0o0.ooo/2016/02/29/56d3f5a8ace5f.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;T是单位矩阵，代表左图的极点，可由E计算。其余的参数：&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;https://ooo.0o0.ooo/2016/02/29/56d3f66d34abd.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;整理一下步骤即为：&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/29/56d3f7afcf9ce.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;下图即为矫正的例子（两幅图的变化很小，但是从边缘还是可以看到细微的变化），最后把图像的极点都化为无穷远，两幅图基于基线平行。&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/29/56d3f7745f920.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;hr&gt;
+&lt;h1 id=&quot;3-第二个矩阵-Homography（单映）矩阵&quot;&gt;&lt;a href=&quot;#3-第二个矩阵-Homography（单映）矩阵&quot; class=&quot;headerlink&quot; title=&quot; 3. 第二个矩阵 Homography（单映）矩阵&quot;&gt;&lt;/a&gt;&lt;strong&gt; 3. 第二个矩阵 Homography（单映）矩阵&lt;/strong&gt;&lt;/h1&gt;&lt;p&gt;findhomography的前提是2D的转换，本意为单映（包含平移、仿射、尺度三种变换），试图找到一个3*3的投影矩阵，能够把1图中所有的点，通过某种形变，匹配到2图中去。当基线很小的时候(视差变化小，扭曲形变也少)，这个方法能够计算出精度极高的解。&lt;br&gt;当然可以首先参考opencv的&lt;a href=&quot;http://docs.opencv.org/2.4/modules/calib3d/doc/camera_calibration_and_3d_reconstruction.html?highlight=findhomography&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;文档&lt;/a&gt; 这里首先介绍二维映射的单映（homography）矩阵&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;https://ooo.0o0.ooo/2016/01/23/56a3baf462830.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;该式反应了像点齐次坐标的单映变换的方程。（u v）(u’ v’)分别是左右图像的同名像点坐标。通过一个8个自由度的矩阵P来解算两者之间的关系。p02 p12与平移相关，p00,p01,p10,p11与旋转 尺度和仿射（平行变换）变换有关，p20,p21与拉伸扭曲有关。&lt;/p&gt;
+&lt;p&gt;一般的，单映矩阵的计算由以下几个参数构成&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;https://ooo.0o0.ooo/2016/01/23/56a3bf63f1be0.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;其中，K是相机的内矩阵，由焦距决定；R是主光轴朝向，一般由3个方向余弦决定；C是摄影中心的物方位置。当在原地旋转时，C1-C2为0，因此方程可简化为&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;https://ooo.0o0.ooo/2016/01/23/56a3c1dd3035a.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;由相机纯粹旋转而形成的单映，自由度3-5（根据是否已知焦距决定）。&lt;/p&gt;
+&lt;p&gt;Caution！应该注意到的是，上式中的H3*3矩阵的最后一个元素为1。这里使用到的是计算H矩阵最常用的一种方法，4点算法，即使用4个点即可解算一组H中的8个未知数。在ransac验证外点的过程中，也采用随机4点为一组构建8个方程解算H。&lt;/p&gt;
+&lt;p&gt;尽管homography是处理二维点集之间的关系，但倘若三维物体中某些点都处于一个平面，即可设该面的z方向值为0，以三维物方xy值作为像素值与所成像片进行homography的变换。&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/24/56ce6ba16113c.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;上图是几种坐标系之间的关系，Mext是外参数矩阵，包含旋转和平移；Mproj是投影矩阵，主要由焦距决定，原理是共线方程；Maff是内参数仿射变换矩阵，由内参数决定。普通的homography是两幅图像像素坐标间或相片坐标间的变换，但上文提到，当三维物体某些点处于一个平面，亦可在World坐标和Film坐标之间进行homography矩阵变换。&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/24/56ce6cd71fc88.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;上图可以看到，将三维坐标点z值设为0，[p,q,0,1]即为三维齐次坐标。&lt;/p&gt;
+&lt;p&gt;$$ \begin{bmatrix} x \\ y \\ 1&lt;br&gt;\end{bmatrix} \sim \begin{bmatrix} f &amp;amp; 0 &amp;amp; 0 &amp;amp; 0 \\ 0 &amp;amp; f &amp;amp; 0 &amp;amp; 0 \\ 0 &amp;amp; 0 &amp;amp; 1 &amp;amp; 0 \end{bmatrix} \begin{bmatrix} r_11 &amp;amp; r_12 &amp;amp; r_13 &amp;amp; t_x \\ r_21 &amp;amp; r_22 &amp;amp; r_23 &amp;amp; t_y \\ r_31 &amp;amp; r_32&amp;amp; r_33 &amp;amp; t_z \\ 0 &amp;amp; 0 &amp;amp; 0 &amp;amp; 1 \end{bmatrix} \begin{bmatrix} p \\ q \\ 0 \\ 1 \end{bmatrix} \sim \begin{bmatrix} fr_11 &amp;amp; fr_12 &amp;amp; ft_x \\ fr_21 &amp;amp; fr_22 &amp;amp; ft_y \\ r_31 &amp;amp; r_32 &amp;amp; t_z \end{bmatrix} \begin{bmatrix} p \\ q \\ 1 \end{bmatrix}&lt;br&gt;$$$$\sim \begin{bmatrix} h_11 &amp;amp; h_12&amp;amp;h_13 \\ h_21 &amp;amp; h_22 &amp;amp; h_23 \\ h_31 &amp;amp; h_32 &amp;amp; h_33 \end{bmatrix} \begin{bmatrix} p \\ q \\ 1 \end{bmatrix}$$&lt;br&gt;最终推到出，3D转2D的投影变换成为2D转2D的变换，该变化可逆！其特例是，当采用的物方坐标系z轴与主光轴平行，即正射影像，则上式R矩阵为&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/24/56ce7aab1b305.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;则上式变形为：&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/24/56ce7b0376427.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;该式与相似变换的形式一样，只有4个自由度（tz可化为1），因而正射影像不会产生拉伸形变。（前提是拍摄物体几乎没有深度，几乎处在一个平面）。下图是依照三维中某平面进行拼接，会造成除平面部分其余图像的虚影。&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/25/56cf114fc872a.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/25/56cf117891dbb.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;上文中一直讨论的是从物方坐标系到像片坐标系的转换，倘若再加上内方位参数的内矩阵，则可直接导出从物方坐标到像素坐标的公式，如下图示意。内方位参数为仿射变换（Affine 6自由度 保持平行结构的变换）&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/25/56ceb1181fa03.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;将world-&amp;gt;film-&amp;gt;pixel结合起来，对于同一个物体，在某位置某台相机拍摄的照片就可以认为是一个单映H。当然，不同的位置拍摄的像片，各自对应物体的单映是不同的。但由于单映是可逆的，拍摄同一物体的两幅图像，也可以用使用$$H=H&lt;em&gt;{1}H&lt;/em&gt;{2}^{-1}$$&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/25/56ceb83e89a7b.png&quot; alt=&quot;&quot;&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/25/56cebcef9abd7.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;hr&gt;
+&lt;h1 id=&quot;4-Homography（单映）矩阵的求取&quot;&gt;&lt;a href=&quot;#4-Homography（单映）矩阵的求取&quot; class=&quot;headerlink&quot; title=&quot; 4. Homography（单映）矩阵的求取&quot;&gt;&lt;/a&gt;&lt;strong&gt; 4. Homography（单映）矩阵的求取&lt;/strong&gt;&lt;/h1&gt;&lt;p&gt;参考&lt;a href=&quot;http://www.robots.ox.ac.uk/~vgg/presentations/bmvc97/criminispaper/node3.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;  只要大于4个匹配点，都认为是冗余测量，必须融合数据。文章里提到了三种解求二维面到面的单应矩阵的球法。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;非线性的解决办法，使用伪逆进行分解。当所解求值为0时会有bug。&lt;/li&gt;
+&lt;li&gt;线性最小二乘解法，通常使用SVD分解，V矩阵就对应了最小奇异值。&lt;a href=&quot;http://blog.chinaunix.net/uid-20761674-id-4040274.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个SVD的文章&lt;/a&gt;相当好的解释了SVD分解的意义。八个未知数对应八个特征向量，也对应八个线性方程的解。SVD能直接解求出这八个向量，即V中的特征向量。&lt;/li&gt;
+&lt;li&gt;非线性几何解法，使对应点和映射点差值欧几里得距离（或平方和）最小。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Homograhy的计算：计算该矩阵当然不会上式f θ等值直接解算。由于是二维图像之间的关系，一般都已知二维对应点集，直接采用最小二乘的方式使用LM进行计算。在一般情况下的H矩阵可表示为&lt;/p&gt;
+&lt;p&gt;$$ \begin{bmatrix} x^{‘} \\ y^{‘} \\ 1 \end{bmatrix} \sim \begin{bmatrix} h_11 &amp;amp; h_12 &amp;amp; h_13 \\ h_21 &amp;amp; h_22 &amp;amp; h_23 \\ h_31 &amp;amp; h_32 &amp;amp; h_33 \end{bmatrix} \begin{bmatrix} x \\ y \\ 1 \end{bmatrix}$$&lt;/p&gt;
+&lt;p&gt;其中，$h_31 h_32 h_33$是为了配置相似比例，化简为&lt;/p&gt;
+&lt;p&gt;$$x^{‘}=\frac{h_11 x + h_12 y + h_13 }{ h_31 x + h_32 y + h_33 }$$&lt;/p&gt;
+&lt;p&gt;$$y^{‘}=\frac{h_21 \cdot x + h_22 y + h_23 }{ h_31 x + h_32 y + h_33 }$$&lt;/p&gt;
+&lt;p&gt;但可以看到，h所有元素同乘k 等式依旧成立。因而强制设为8自由度有两种方式，&lt;/p&gt;
+&lt;p&gt;①$$ h_{33} = 1 $$&lt;/p&gt;
+&lt;p&gt;②$ h&lt;em&gt;{11}\^{2} + h&lt;/em&gt;{12}\^{2} = 1 $&lt;br&gt;采用第一种方式较为常见。&lt;br&gt;当采用最小二乘解求H矩阵时，一般先用Ransac筛选最大集，然后利用下方程。&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/25/56cf041a7c664.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;以x y x’y’为A b矩阵参数，迭代解求H。由于是线性方程，因而可以直接使用$$h=(A^{T}A)^{-1}(A^{T}b)$$求取每次的残差。&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/25/56cf051be79bc.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;&amp;lt;font color=”#ff0000”&amp;gt;Caution！应该注意到的是，该方法对噪声极其敏感，即使没有外点（outliers）,因而，在计算前对数据里筛选就非常重要。为更好的得到结果，Ransac时可以将该组数据质心重置到原点；然后缩放比例使得各点到原点的平均距离是根号二。如下图，H的表达式。T、S分别为平移和缩放的矩阵。&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/25/56cf08c613352.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;如何判断这两幅图像确实匹配呢？记该区域的特征点总数为nf，而符合H的特征点（内点）数量为nj，如果两者比例足够大，说明两幅图像确实匹配。但一般拼接时都确认两幅图像有重叠面积才计算H。变换模型H计算时的误差可表述为Huber模型：&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/25/56cf0b53675d9.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;同时，由于矩阵具有可逆性，因此图像12之间的H1和图像23之间的H2可以直接推导出图像13之间的H3。但大量的单映队列并不推荐，这样会造成误差成倍扩大。&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/02/25/56cf0eb50a41b.png&quot; alt=&quot;&quot;&gt;&lt;/center&gt;
+
+&lt;p&gt;&lt;strong&gt; 谨记二 &lt;/strong&gt;：homography处理的是纯粹的二维与二维之间的变换。即便特例是3D也是视为在2D的单映和相似变换。在旋转相机和正射拼接可以得到良好的二维拼接效果，在具有深度的三维物体，拼接会造成虚影！&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;这两个函数都是基于特征点的变换模型求解，既然特征点已找出且筛查得到更正确的点，因此对图像外观的变化具有鲁棒性（尺度、光照、旋转等）。选择哪种函数基于图像间的关系，即立体场的观测使用fundamentalmatrix（视角矫正 三维全景 街景视角）,而相对平面化的则使用findhomography（全景拼接  航摄图像拼接 ）&lt;/p&gt;
+&lt;p&gt;解求这个变换模型一般基于线性最小二乘的方式，与平差原理类似，利用冗余的数据（大量同名点）来解算参数。一般的，先通过Ransac筛查数据比较靠谱。&lt;/p&gt;
+&lt;h1 id=&quot;谨记三：&quot;&gt;&lt;a href=&quot;#谨记三：&quot; class=&quot;headerlink&quot; title=&quot;** 谨记三：&quot;&gt;&lt;/a&gt;** 谨记三：&lt;/h1&gt;&lt;p&gt;homography 单映处理二维坐标系与二维坐标系关系，特例情况下是三维物体某平面可视为二维平面。更特例的是正射影像（相似变换）和旋转摄影全景拼接（C1-C2=0）（处理对应点集与点集的关系）矩阵可逆，具有结合性。&lt;/p&gt;
+&lt;p&gt;fundamental针对的是点和极线的关系（处理点集与极线集的关系），可用来在寻找匹配点的时候快速查找对应点。（以像素为坐标系）&lt;/p&gt;
+&lt;p&gt;essential 本质是连结同名点向量的矩阵（以像空系为标准）&lt;/p&gt;
+&lt;p&gt;参考。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/u010141025/article/details/16920567&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;【opencv】特征点检测方法–GFTT，SIFT，FAST，SURF&lt;/a&gt; &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.cse.psu.edu/~rtc12/CSE486/&quot; title=&quot;http://www.cse.psu.edu/~rtc12/CSE486/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.cse.psu.edu/~rtc12/CSE486/&lt;/a&gt; 宾州州立大学计算机视觉&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://opencv-users.1802565.n2.nabble.com/Difference-between-homography-and-fundamental-matrix-td6359087.html&quot; title=&quot;http://opencv-users.1802565.n2.nabble.com/Difference-between-homography-and-fundamental-matrix-td6359087.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://opencv-users.1802565.n2.nabble.com/Difference-between-homography-and-fundamental-matrix-td6359087.html&lt;/a&gt; homography and fundamental matrix的讨论&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://homepages.inf.ed.ac.uk/rbf/CVonline/&quot; title=&quot;http://homepages.inf.ed.ac.uk/rbf/CVonline/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://homepages.inf.ed.ac.uk/rbf/CVonline/&lt;/a&gt; 爱丁堡大学计算机视觉在线课件&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.robots.ox.ac.uk/~vgg/hzbook/hzbook2/HZepipolar.pdf&quot; title=&quot;https://www.robots.ox.ac.uk/~vgg/hzbook/hzbook2/HZepipolar.pdf&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.robots.ox.ac.uk/~vgg/hzbook/hzbook2/HZepipolar.pdf&lt;/a&gt; 牛津大学计算机视觉中的多视几何&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://120.52.72.36/www.umiacs.umd.edu/c3pr90ntcsf0/~ramani/cmsc828d/lecture27.pdf&quot; title=&quot;http://120.52.72.36/www.umiacs.umd.edu/c3pr90ntcsf0/~ramani/cmsc828d/lecture27.pdf&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://120.52.72.36/www.umiacs.umd.edu/c3pr90ntcsf0/~ramani/cmsc828d/lecture27.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;马里兰大学高级计算机研究&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.cnblogs.com/gemstone/articles/2294551.html&quot; title=&quot;http://www.cnblogs.com/gemstone/articles/2294551.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.cnblogs.com/gemstone/articles/2294551.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://imagine.enpc.fr/~monasse/Stereo/4Fundamental.pdf&quot; title=&quot;http://imagine.enpc.fr/~monasse/Stereo/4Fundamental.pdf&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://imagine.enpc.fr/~monasse/Stereo/4Fundamental.pdf&lt;/a&gt; 法国国立桥梁与公路学校Ecole Nationale des Ponts et Chaesses计算机视觉和图像&lt;/p&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;openCV中有两个函数，findhomography和findfundamentalmat，长的很像。。一开始严重的弄混，以为都是求对应点投影矩阵的公式，万万没想到其实是两个完全不同的内涵。😒&lt;br&gt;
+    
+    </summary>
+    
+      <category term="什么都学一下" scheme="http://ovjaywang.github.io/categories/%E4%BB%80%E4%B9%88%E9%83%BD%E5%AD%A6%E4%B8%80%E4%B8%8B/"/>
+    
+      <category term="学习log" scheme="http://ovjaywang.github.io/categories/%E4%BB%80%E4%B9%88%E9%83%BD%E5%AD%A6%E4%B8%80%E4%B8%8B/%E5%AD%A6%E4%B9%A0log/"/>
+    
+    
+      <category term="opencv" scheme="http://ovjaywang.github.io/tags/opencv/"/>
+    
+      <category term="计算机视觉" scheme="http://ovjaywang.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>社交app的2015</title>
+    <link href="http://ovjaywang.github.io/2016/01/18/%E7%A4%BE%E4%BA%A4app%E7%9A%842015/"/>
+    <id>http://ovjaywang.github.io/2016/01/18/社交app的2015/</id>
+    <published>2016-01-18T03:45:06.000Z</published>
+    <updated>2016-04-28T17:43:27.000Z</updated>
+    
+    <content type="html">&lt;p&gt;手机和网络重度使用患者也该是总结自己的时候了。庆幸的是各大app都热推了自己的2015数据流。把去年的数据库做个直白的excel统计。好吧。。我除了听歌看电影买买买也没别的(性)生活了。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/01/17/569b74dab78e7.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;进入微信还算比较早的。和我的两个基友都是300w内。但是潜水了快3年才在快毕业的时候旅行发了一条盆友圈。曾一度抗拒盆友圈这个类似空间的东西。当然大学的社交网络还是集中在“找人人上同学”的人人网。。毕竟各大校园通知新闻、文娱八卦、技术贴以及各种曾在校园见过又不知道是谁的人终于知道叫什么名字了。。还曾一度影响了各类插件的发展、影响了谁来看过我我被多少人看过的各类访问人数的截图。。现在看来。。大家当年都是一个水平的嘛&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/01/17/569b765a8c8ed.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;快一年也没旅游了。说是没时间不如说是没人陪。。只有寒假去东三省和海南度假算是正经的轻松了一回。不过上海的cj也是满满的收获。。红包多是借钱还钱。。。才没有人给我发红包呢。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/01/17/569b76c34f72d.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;惨淡的人际网并不像急于拓展。收货了太多的信息来源反倒不如维护好几个重要的人。。还未曾到需要攀龙附凤的阶段。充实自己吧。用了一段时间的手环终究是没有逃过不出一年就坏掉的命运。。所以微信运动总是几百米的步数。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/01/17/569b8cd37fbf6.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;其实点口碑外卖并不多。。不知道它计算了别的外卖支付没有。。。想想也就吃了下半年则么会这么多。。或许是把优惠支付也算进去了。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/01/17/569b8d469df74.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;除了一个月试了试微信的信用卡还款基本都在支付宝还款了。。后面几个月已经扒不到网易邮箱的信用卡账单了。。每次都要手动输金额也是好烦。。生产力还没达到一定程度消费就花了这么多了。。手机充值的方式越来越多样化。总之和外卖 电影一样 谁便宜去谁家。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/01/17/569b8dfc35999.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;大部分能用华北的地方都没主动用。。第一推荐的基本没人会主动换掉。。港真。芝麻信用分还是挺有用的。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/01/17/569b92b0b7ced.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;常年有1w余额。。这年利率越来越低了&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/01/17/569b9351c9783.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;大多数买买买都是电子产品。。两个手机。两个耳机。。单反。。品质的一年。旅游真的变少了。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/01/17/569b99e34fd85.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;比格这么高的音乐软件入碗了入碗了！！毕竟还是个网易最早用户呢&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/01/17/569b9a1dc8bf6.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;上班听歌狗。。。没歌没效率的最佳代言人。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/01/17/569b9a48e60dc.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;真是李荣浩狗。。陈粒狗。。李志狗。。还是国语歌听的比较顺耳&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/01/17/569b9a7cebaa4.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;喂喂喂！！要你管啦！&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/01/17/569b9a99a92ea.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;是的！都怪你拉！&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ooo.0o0.ooo/2016/01/17/569c588aa63d8.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;也是由于从村里搬到了城里。本以为8.8的电影算是捡了大便宜。妹想到4块钱看了个星战。闲来无事，也只能有看电影能消遣了。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/01/17/569c5ae2d384a.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;也是被自己的频率吓到。。毕竟前半个年基本没有机会看到电影院。。。或许是回忆标记的电影略多。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ooo.0o0.ooo/2016/01/17/569c587a5e523.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;电影院基本四星以下。唯独记得的几部看的相当爽的只有【师傅】【暗杀】【心迷宫】其他的五星基本在补电影。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ooo.0o0.ooo/2016/01/17/569c58890e21e.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;毕竟是互联网社交的先驱。极客的事业之道&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ooo.0o0.ooo/2016/01/17/569c588ab1ec6.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;港真。自尊心在受到歧视的人群更显得珍重。民族歧视、种族歧视、地域歧视，如果解决不好，就不是花钱能够应付的了&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ooo.0o0.ooo/2016/01/17/569c588c1f10b.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;第一次对动画电影这么赞叹，不愧是日本的高分动画。不愧是宫崎骏老师的配乐&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ooo.0o0.ooo/2016/01/17/569c5897d8f92.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;好吧。。容我矫情一回好了&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ooo.0o0.ooo/2016/01/17/569c588d50b2d.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;也不知道寒假怎么了。应该是约约约才对的阿。三月四月完全没有流量下电影。。也无心恋战。沉迷健身、跑步、羽毛球、课设、、、&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/01/17/569c5c4cdd158.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;豆瓣电影和豆瓣app相当混淆。。不知道应该取舍哪一个&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/01/17/569c5c7918c03.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;       &amp;amp;lt;p&amp;amp;gt;果然是2月挖坟了过往的很多电影。。毕竟也是太闲了这样算下来和前一年看的就差不多了&amp;amp;lt;/p&amp;amp;gt; &amp;amp;lt;p&amp;amp;gt;&amp;amp;lt;img src=&amp;quot;http://ooo.0o0.ooo/2016/01/17/569c5cba269c4.png&amp;quot;&amp;amp;gt;&amp;amp;lt;/p&amp;amp;gt; &amp;amp;lt;p&amp;amp;gt;&amp;amp;lt;img src=&amp;quot;http://ooo.0o0.ooo/2016/01/17/569c5cf85db53.png&amp;quot;&amp;amp;gt;&amp;amp;lt;/p&amp;amp;gt; &amp;amp;lt;p&amp;amp;gt;虽然口味较重。但类型没有特别偏颇的。反倒是对美帝的电影相当喜爱。&amp;amp;lt;/p&amp;amp;gt; &amp;amp;lt;p&amp;amp;gt;&amp;amp;lt;img src=&amp;quot;http://ooo.0o0.ooo/2016/01/17/569c5d1f44a7d.png&amp;quot;&amp;amp;gt;&amp;amp;lt;/p&amp;amp;gt;    &amp;amp;lt;p&amp;amp;gt;虽然很爱大咪咪。但演的渣还是不能同情的。。虽然艾玛斯通对你国态度相当恶劣。但演得好还是要乖乖献出5分。&amp;amp;lt;img src=&amp;quot;http://ooo.0o0.ooo/2016/01/17/569c5d7f7dbe0.png&amp;quot;&amp;amp;gt;&amp;amp;lt;/p&amp;amp;gt; &amp;amp;lt;p&amp;amp;gt;第一部是欠的电影票。。第二部是第一次看到了电影院娇嗔的妹子。。第三部是18.8看了个imax。。我是奇葩恩恩我承认好了&amp;amp;lt;/p&amp;amp;gt; &amp;amp;lt;p&amp;amp;gt;&amp;amp;lt;img src=&amp;quot;http://ooo.0o0.ooo/2016/01/17/569c5dc6997cf.png&amp;quot;&amp;amp;gt;&amp;amp;lt;/p&amp;amp;gt; &amp;amp;lt;p&amp;amp;gt;港真。。特工学院这剧情和特效能看？还有那操蛋的英伦腔。
+&lt;/code&gt;&lt;/pre&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;手机和网络重度使用患者也该是总结自己的时候了。庆幸的是各大app都热推了自己的2015数据流。把去年的数据库做个直白的excel统计。好吧。。我除了听歌看电影买买买也没别的(性)生活了。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="槽" scheme="http://ovjaywang.github.io/categories/%E6%A7%BD/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>[汇总]pc Android iOS传输文件</title>
+    <link href="http://ovjaywang.github.io/2016/01/04/%5B%E6%B1%87%E6%80%BB%5D%5B2015.1.3%5D%E7%94%B5%E8%84%91%E7%AB%AF%E4%B8%8EAndroid%20iOS%E4%BC%A0%E8%BE%93%E6%96%87%E4%BB%B6/"/>
+    <id>http://ovjaywang.github.io/2016/01/04/[汇总][2015.1.3]电脑端与Android iOS传输文件/</id>
+    <published>2016-01-03T16:35:49.000Z</published>
+    <updated>2016-04-28T17:45:07.000Z</updated>
+    
+    <content type="html">&lt;p&gt;曾写过一个这个&lt;a href=&quot;http://www.dooby.me/?p=473&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.dooby.me/?p=473&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;然而时过境迁很多出彩的多客户端文件传输的app已经出来了。。本篇主要提&lt;font color=&quot;#FF0000&quot;&gt;多客户端的文件无线传输&lt;/font&gt;，忽略笔记类和书签类。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;1.Airdroid3.1.6 &lt;a href=&quot;http://coolapk.com/apk/com.sand.airdroid&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://coolapk.com/apk/com.sand.airdroid&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ww1.sinaimg.cn/large/68eb7c93jw1ezmt5t987jj20u01hcn0w.jpg&quot; alt=&quot;&quot;&gt;&lt;img src=&quot;http://ww3.sinaimg.cn/large/68eb7c93jw1ezmt66mv43j20u01hctby.jpg&quot; alt=&quot;&quot;&gt;&lt;img src=&quot;http://ww3.sinaimg.cn/large/68eb7c93jw1ezmt76fl5dj20u01hc77z.jpg&quot; alt=&quot;&quot;&gt;&lt;img src=&quot;http://ww3.sinaimg.cn/large/68eb7c93jw1ezmt7qh365j20u01hctc6.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;tips：只能在安卓与电脑、安卓之间传输，需要注册登录账号&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ww3.sinaimg.cn/large/68eb7c93jw1ezms9x6npaj20f403s0th.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;鹅妹子赢：除了强大的win客户端（网页端）无线文件（夹）传输外，还有照片音频视频管理、手机通知&lt;font color=&quot;#FF0000&quot;&gt;桌面提示（低头党福音）&lt;/font&gt;、通讯录短信管理、截屏、&lt;font color=&quot;#FF0000&quot;&gt;apk卸载及下载&lt;/font&gt;，收发短信！电话接打！&lt;font color=&quot;#FF0000&quot;&gt;寻找手机&lt;/font&gt;！！（黑科技啊）。连接过的设备支持&lt;font color=&quot;#FF0000&quot;&gt;直接唤醒连接&lt;/font&gt;（只要都在联网状态下，无论同wifi、异wifi甚至是移动数据网络）。还支持&lt;font color=&quot;#FF0000&quot;&gt;桌面鼠标直接操控手机&lt;/font&gt;的airmirror！！简洁干净，效果拔群，关键&lt;font color=&quot;#FF0000&quot;&gt;美美美&lt;/font&gt;！！！&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ww1.sinaimg.cn/large/68eb7c93gw1ezom8kr3ksj21he0q2q8x.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;web平台远程唤醒&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ww2.sinaimg.cn/large/68eb7c93gw1ezomaz9flsj21h90qrgw9.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;web平台主界面。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ww4.sinaimg.cn/large/68eb7c93gw1ezomc357sjj21h10qt1d1.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;bug级别的手机查找&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ww3.sinaimg.cn/large/68eb7c93gw1ezoniqrfh4j20x90o1jw0.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Airmirror直接用鼠标代替手势&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ww3.sinaimg.cn/large/68eb7c93gw1ezonwxogcxj20ci03yt8x.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;同样是bug级别的桌面通知提示。还可直接回复短信&lt;/p&gt;
+&lt;p&gt;网络条件：&lt;/p&gt;
+&lt;p&gt;电脑可在win客户端或web网页操作 手机需安装客户端。（win↔Android；Android↔Android）&lt;/p&gt;
+&lt;p&gt;近距离传输 可在同wlan网络下，或手机自建热点，或无网络状况通过USB管理手机连接，通过FTP+端口的形式传输；远距离直接通过账号共享传输&lt;/p&gt;
+&lt;p&gt;文件格式：Android客户端可发送筛选过的有图片、直接拍照、视频、音频、已接受文件及所有SD卡下内容；Win下可直接拖动文件夹（需premium）、任意文件发送&lt;/p&gt;
+&lt;p&gt;&lt;font color=&quot;#FF0000&quot;&gt;注：&lt;/font&gt;Android间不可互传apk，分享出去是play的链接。只能在win下载apk&lt;/p&gt;
+&lt;p&gt;测速：&lt;/p&gt;
+&lt;p&gt;1G的视频 web端&amp;nbsp; 在2G的wifi下达到3MB/s 用时 5分13秒。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ww1.sinaimg.cn/large/68eb7c93jw1ezmszm05i9j20lz047gmo.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;2.快牙3.6（国际版）&lt;a href=&quot;http://coolapk.com/apk/com.dewmobile.kuaiya.play&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://coolapk.com/apk/com.dewmobile.kuaiya.play&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;tips:强大的三平台互传 起家早 然后堕落了 加入一堆没用的游戏和功能&lt;/p&gt;
+&lt;p&gt;饿妹子赢：支持wifi 热点 蓝牙各种乱七八糟的方式。能互传apk！能无账号扫码传输！&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;3.Xender&lt;/p&gt;
+&lt;p&gt;4.茄子助手&lt;/p&gt;
+&lt;p&gt;5.微信&amp;amp;qq手机助手&lt;/p&gt;
+&lt;p&gt;6.百度云&lt;/p&gt;
+&lt;p&gt;7.闪传&lt;/p&gt;
+&lt;p&gt;8.SuperBeam&lt;/p&gt;
+&lt;p&gt;9.极助手&lt;/p&gt;
+&lt;div class=&quot;PoweredByWebStory&quot; style=&quot;margin-top:15px;margin-bottom:10px&quot;&gt;&lt;a href=&quot;http://sns.juziyue.com/webinvite.php?u=94887&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;&lt;/a&gt;&amp;nbsp;今天你&lt;a href=&quot;http://sns.juziyue.com/webinvite.php?u=94887&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;菊子曰&lt;/a&gt;了么？&lt;/div&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;曾写过一个这个&lt;a href=&quot;http://www.dooby.me/?p=473&quot;&gt;http://www.dooby.me/?p=473&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;然而时过境迁很多出彩的多客户端文件传输的app已经出来了。。本篇主要提&lt;font color=&quot;#FF0000&quot;&gt;多客户端的文件无线传输&lt;/font&gt;，忽略笔记类和书签类。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="软件测评" scheme="http://ovjaywang.github.io/categories/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%84/"/>
+    
+      <category term="软文" scheme="http://ovjaywang.github.io/categories/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%84/%E8%BD%AF%E6%96%87/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Android为毛耗电[2]</title>
+    <link href="http://ovjaywang.github.io/2016/01/01/Android%E4%B8%BA%E6%AF%9B%E8%80%97%E7%94%B5%5B2%5D/"/>
+    <id>http://ovjaywang.github.io/2016/01/01/Android为毛耗电[2]/</id>
+    <published>2016-01-01T15:32:08.000Z</published>
+    <updated>2016-04-28T17:46:18.000Z</updated>
+    
+    <content type="html">&lt;p&gt;&lt;strong&gt;&lt;font size=&quot;4&quot; face=&quot;华文中宋&quot;&gt;本文只讨论安卓手机软节电，不负责推荐底包、rom、调频调压方案，刷机root&lt;font color=&quot;#ff0000&quot;&gt;后果自负&lt;/font&gt;。&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;font size=&quot;4&quot; face=&quot;华文中宋&quot;&gt;本小节只讨论干货。在root及xposed框架下。同时兼顾不能肉身翻墙又想用google服务的小狗们。本人的使用情况是正常功能照开，google需要gmail和google photo及部分gcm，黑屏开启手势和解锁，正常收微信、闹钟、短信电话外熄屏一切不开，后台常开应用有snap锁屏、grenntify绿色守护、调音的audio mix、天气插件、BBS、输入法、Nova Launcher。测试的环境为Android L 5.1.1&lt;/font&gt;
+
+&lt;font size=&quot;4&quot; face=&quot;华文中宋&quot;&gt;&amp;nbsp;&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;br&gt;&lt;em&gt; &lt;/em&gt; *&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#ff0000&quot;&gt;App干货推荐&lt;/font&gt;&lt;/font&gt;
+
+&lt;p&gt;&amp;nbsp;&lt;a href=&quot;http://coolapk.com/apk/com.oasisfeng.greenify&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://coolapk.com/apk/com.oasisfeng.greenify&lt;/a&gt; 绿色守护（评论好多捐赠包）国内优秀开发者–唤醒对其 深度休眠hibernateservice &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://coolapk.com/apk/com.asksven.betterbatterystats&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://coolapk.com/apk/com.asksven.betterbatterystats&lt;/a&gt;BetterBatteryStats（捐赠包只多了小插件和知识库） 国外应用（使用稳定后可删，留着也不费电）–查看耗电最多的程序 资源 频率占比 &lt;a href=&quot;http://coolapk.com/apk/com.uzumapps.wakelockdetector&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://coolapk.com/apk/com.uzumapps.wakelockdetector&lt;/a&gt; wakelock detector（使用后可删，被注册为系统程序，留着不太费电）–查看被CPU 屏幕 时钟唤醒的程序以便将其控制 可以便利的&lt;font color=&quot;#ff0000&quot;&gt;结合绿色守护使用&lt;/font&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://coolapk.com/apk/ccc71.at&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://coolapk.com/apk/ccc71.at&lt;/a&gt; 安卓调谐器:3C Toolbox（Android Tuner）–系统调节&lt;font color=&quot;#ff0000&quot;&gt;神器&lt;/font&gt; 控制自启 控制软件权限 自大组件控制 cpu调节 自动内存调节&lt;/p&gt;
+&lt;p&gt;一张图解释大部分唤醒、杀进程软件的思路&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ww2.sinaimg.cn/large/68eb7c93gw1ezs65djw3nj20tx0pn0xp.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;————————喂下面几个是一类 看清楚需求———————————&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://coolapk.com/apk/com.linangran.nowakelock&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://coolapk.com/apk/com.linangran.nowakelock&lt;/a&gt; 禁止唤醒1.2.1 （国内开发者）–只能禁5个 暂未发现捐献包 主程序调用捐助包需要与play验证。但也不贵才十几块。 但是禁止效果良好 百度 阿里 系的随便禁一两个就发现效果超级棒 就是挺贵 &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://coolapk.com/apk/me.piebridge.forcestopgb&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://coolapk.com/apk/me.piebridge.forcestopgb&lt;/a&gt; 阻止运行 国内开发者，免费!–阻止后台、前台、服务及可见的各种组件 不限数目 限制谷歌服务效果良好 &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://coolapk.com/apk/com.ryansteckler.nlpunbounce&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://coolapk.com/apk/com.ryansteckler.nlpunbounce&lt;/a&gt; 唤醒控制amplify3.3.4–可以查看唤醒次数&amp;nbsp;&amp;nbsp;&amp;nbsp; &lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;hr&gt;
+&lt;font color=&quot;#ff0000&quot;&gt;电量消耗结构总结&lt;/font&gt;
+
+&lt;p&gt;对于电量，总有一些是必然会消耗的，一些是可以减少的，而一些是可以避免的。那么，对于不同状态下那些成分占的比例会占比略高呢？&lt;/p&gt;
+&lt;p&gt;1.正常使用状态下（Screen on）：无容置疑的是屏幕的发亮，因而合适的调低亮度能更大的省电，尤其是主动发光的amoled使用深色主题会更省电。当然，大部分使用状态，需要更多的网络连接，4G&amp;gt;3G&amp;gt;2G&amp;gt;wifi是显而易见的。同时使用不同类型的App也会让CPU频率相应的上升，尤其是大型3D网游和功放影音体验。&lt;/p&gt;
+&lt;p&gt;正常开机使用，耗电排行一般为：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;屏幕发亮  &lt;/li&gt;&lt;li&gt;高CPU占用的App ，包括某些情况下刷帖、浏览网页等长时间交互行为  &lt;/li&gt;&lt;li&gt;手机通信（联网、移动通话、视频通话）  &lt;/li&gt;&lt;li&gt;Android系统  &lt;/li&gt;&lt;li&gt;手机待机 ，即Android OS 之类&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;2.正常待机状态下（Screen off）包括唤醒和睡眠、深睡眠。当然，大部分人都希望手机进入Idle正常无唤醒的状态，达到hibernate。但国产App可不会这么干。对于待机来说两大耗电来源就是alarm计时器唤醒各类监听进行后台操作、偷跑流量、不必要的消息推送；wakelock把持唤醒锁让手机无法进入深睡眠从而维持后台服务。&lt;/p&gt;
+&lt;p&gt;正常待机状况下，不飞行，不关闭数据网络，关闭GPS、wifi、蓝牙等，耗电排行是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;手机通信 Cell Standy之类。这一块比较大，依赖数据网络的制式  &lt;/li&gt;&lt;li&gt;Android OS（即BBS的Kernel wakelock或partial wakelock标记为Android的）  &lt;/li&gt;&lt;li&gt;手机待机 （PowerManagerService 及Device Idle之类的）处理休眠状态下设备监听及唤醒锁的管理&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;开启wld和bbs的实时监控，把该装的常用软件装上&lt;font color=&quot;#ff0000&quot;&gt;先用着那么一段时间。&lt;/font&gt;&lt;/p&gt;
+&lt;p&gt;1.&lt;/p&gt;
+&lt;p&gt;①利用这段时间 把权限都给干了 装软件给你显示了一list的权限然并卵 不同意没法装 装了也没几个需要的&amp;nbsp; 在【应用程序权限】的设置框中把权限悉心的扫个遍 曾经启用过的权限会有提示何时使用过 例如我把美团外卖的权限全禁了 然而还是可以正常使用&lt;/p&gt;
+&lt;p&gt;目标是：给app只留必要的权限 像读取短信直接get验证码那些权限就不必了，重点关注权限里的【&lt;font color=&quot;#ff0000&quot;&gt;保持唤醒&lt;/font&gt;】。这个权限意味着能在熄屏时候对手机进行唤醒操作，在亮屏时能够保证数据一致性。没有必要进行推送和同步的应用就应该关闭。&lt;/p&gt;
+&lt;p&gt;②利用小汽车autostat或者3c toolbox自带的自启动控制器 控制不需要自行启动的项目 除了launcher greentify 3c tool box类似物 等系统框架 其余全都不需要 不需要不需要&lt;/p&gt;
+&lt;p&gt;目标是：启动速度棒 未启动的应用不会推送任何消息 （微信 微博 GMail等可以排除）&lt;/p&gt;
+&lt;p&gt;③给app一点微弱的信任，试着在app的设置中，关掉消息推送、wifi下自动更新、wifi下同步等设置，稍微有点技术含量的程序猿都会在设置取消时cut掉后台进程。&lt;/p&gt;
+&lt;p&gt;④对于各种传感器，依据需求关闭能很好的节约电量（这一块和rom的优化很大关系）例如黑屏手势、人脸解锁、黑屏解锁、口袋检测等。&lt;/p&gt;
+&lt;p&gt;⑤利用系统的电量统计和后台开启程序大致了解本机运行的大消耗后台。例如本机待机时系统消耗的比例想当高。同时保持着很高的唤醒状态。。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;#ff0000&quot;&gt;系统的电量统计&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ww2.sinaimg.cn/large/68eb7c93gw1ezrv30mvwcj20u01hc435.jpg&quot; alt=&quot;&quot;&gt;&lt;img src=&quot;http://ww1.sinaimg.cn/large/68eb7c93gw1ezrv0fux6ej20u01hc0x7.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;点开正在运行的后台，可以看本机Android系统和Android操作系统电量消耗高的原因是高通CPU的定位服务。经过调校后的曲线，可以看到中度使用后，待机超过了一个天。同时待机时休眠比例也超过了8成。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/01/10/5693136395d1a.png&quot; alt=&quot;&quot;&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/01/10/569313c0b6950.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;2.使用过后 开启betterbatterystats和wakelock detector&lt;/p&gt;
+&lt;p&gt;D1 2016/1/6&lt;/p&gt;
+&lt;p&gt;①&lt;font color=&quot;#ff0000&quot;&gt;&lt;strong&gt;betterbatterystats BBS&lt;/strong&gt;&lt;/font&gt;查看耗电大户 一般来说googleservice由于不能随时翻 会造成gmail keep backup contacts 都会发送心跳包不停的连接 此外 除了显而易见的三大流氓滥用唤醒锁 相互唤醒 外 还有奇形怪状的耗电大户 如location定位 微信 &lt;/p&gt;
+&lt;p&gt;官方帮助指南：&lt;a href=&quot;http://better.asksven.org/bbs-how-to/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://better.asksven.org/bbs-how-to/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;应用beta版及正式版更新日志 &lt;a href=&quot;http://forum.xda-developers.com/showthread.php?t=1179809&quot; title=&quot;http://forum.xda-developers.com/showthread.php?t=1179809&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://forum.xda-developers.com/showthread.php?t=1179809&lt;/a&gt;&amp;nbsp; 包含apk下载。捐助包多了知识库和小控件。&lt;/p&gt;
+&lt;p&gt;它承诺不在后台记录电量，只在开机、断开充电器、插上充电器、亮屏、熄屏。custom是自定义的操作记录，current是当前时间截止的电量消耗的样本。它提供了后台电量实时监控，这会消耗一定的电量；同时提供了进程监控，并对唤醒次数超过阈值的进行提示。&lt;font color=&quot;#ff0000&quot;&gt;右侧的圈圈一律代表该应用、该服务、该定时器在所选时间段的使用时间比例&lt;/font&gt;&lt;/p&gt;
+&lt;p&gt;Entries：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ww4.sinaimg.cn/large/68eb7c93gw1ezp07m935cj20u012saci.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;font color=&quot;#ff0000&quot;&gt;other&lt;/font&gt;——睡眠、唤醒、亮屏等其他重要时间节点的电量消耗数据【深睡眠、熄屏唤醒、亮屏、通话时间、wifi开启时长、wifi连上时长、蓝牙开启时长】&lt;br&gt;&lt;br&gt;&lt;em&gt;   一般选择unplugged-current 即断电后到现在 一般熄屏情况下 要么deep sleep要么awake，所以两者相加应该是100%。  &lt;li&gt;（Awake）Screen off显示了熄屏时被唤醒所占比例 可以很直观的感受手机离开操作后后台运作的程度 最优的情况当然是0%，手机处于最节能的状态（之前的版本将awake&amp;amp;screen off分开计时 需要两个数据一起对比）  &lt;/li&gt;&lt;li&gt;此外，还有wifi 启动、wifi运行与唤醒的关系，很明显，在晚上断开wifi会给手机更好的进入休眠&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#ff0000&quot;&gt;kernel wakelocks&lt;/font&gt;——使手机唤醒的内核操作【大量的短暂唤醒会严重影响唤醒时间导致手机消耗更多的时间返回睡眠】
+
+&lt;/li&gt;&lt;/em&gt;   重点关注项目-PowerManagerService wakelock和multipdp、svnet-dormancy wakelock。前者是激活大部分app的唤醒锁服务，如果它占第一位，则取partial wakelocks关注唤醒时间较多的项目；后者是网络使用量，若存在后台偷跑流量的软件，可以很明显的发现异常，到network数据栏中看一下。  &lt;li&gt;kernel wakelock中的alarm是所有定时器的总和 基本不耗电 但如有异常 可到alarms或amplify中查看详细的计时器项目。  &lt;/li&gt;&lt;li&gt;&lt;em&gt;sync&lt;/em&gt; &lt;em&gt;backup&lt;/em&gt; &lt;em&gt;job&lt;/em&gt;很明显是系统的操作 同步 备份 消息推送 如果不需要就禁了吧&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#ff0000&quot;&gt;partial wakelocks&lt;/font&gt;——是大部分app把持的唤醒锁。（PowerManagerService高的可以关注这项）&lt;br&gt;&lt;br&gt;&lt;em&gt;   根据使用频率来限制大耗电partial wakelock 如ig tw fb wb wx等。可以在后文自行设置后台计时器时间。  &lt;li&gt;卸载/冻结/不可用 这些做法有些极端 但实在忍无何忍下还是放弃这个app吧。钛备份下的冻结就比较好用 对google系的后文提到。  &lt;/li&gt;&lt;li&gt;主动手动开关GPS。使用时才打开。  &lt;/li&gt;&lt;li&gt;根据需要使用后退键退出还是home键退出  &lt;/li&gt;&lt;li&gt;wifi是个奇葩 晚上记得关（If you don’t need Wifi turn it off: in some cases Wifi is known to cause wakeups and an overhead in e.g. location services）  &lt;/li&gt;&lt;li&gt;一次不要改太多，一次一次改 能对手机每个app和每个设置有直观的体验和感受&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#ff0000&quot;&gt;alarms&lt;/font&gt;——由于应用及服务的定时器唤醒手机【apps设定的触发器在某个时间节点唤醒手机，某些alarms只在唤醒时执行、另一些则直接唤醒手机。通常一个alarm绑定一个intent】
+
+&lt;/li&gt;&lt;/em&gt;   长时间和过高次数的alarm都是不正常的。一定要及时纠出。例如微信这狗。  &lt;/li&gt;&lt;li&gt;更多的alarm应该在手机亮屏时启动 除了闹钟、微信等必要的消息之外 如知乎提醒、百度外卖提醒等应用，按照使用习惯，更应该是熄屏时完全关闭计时器。&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#ff0000&quot;&gt;network&lt;/font&gt;——app的网络使用率【区分3G和wifi的网络连接数据】&lt;br&gt;&lt;br&gt;&lt;em&gt;   相当多的工具都能查看网络传输的状态。系统自带的也不错。  &lt;li&gt;信号较弱的wifi或窝蜂数据会频繁的连接并唤醒手机&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#ff0000&quot;&gt;CPU states&lt;/font&gt;——不同CPU频率所占用的时间【包括深度睡眠时的CPU频率占用时间】&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#ff0000&quot;&gt;Processes&lt;/font&gt;——用户及系统进程消耗的CPU时间【进程CPU消耗，分为用户及系统，以不同颜色标识】&lt;br&gt;&lt;br&gt;进阶功能：&lt;br&gt;&lt;br&gt;【&lt;font color=&quot;#ff0000&quot;&gt;Watchdog&lt;/font&gt;】——熄屏分析功能，可自定义亮屏、解锁等。对唤醒超过阈值的app和service进行提示，可在熄屏后一定时间对watchdog关闭。&lt;br&gt;&lt;br&gt;【&lt;font color=&quot;#ff0000&quot;&gt;Active Monitoring&lt;/font&gt;】——后台运行的一定时间间隔的数据采集，可能会造成额外耗电。&lt;br&gt;&lt;br&gt;观察一下本机的耗电比例，首先看到other中，Awake(Screen Off)的比例相当高，在其他人的截图是有deep sleep的！！！我安的软件已经炸裂了。尽管开启了wifi会消耗更多的电量，但大量的唤醒让手机不能正常进入休眠。&lt;br&gt;&lt;br&gt;&lt;img src=&quot;http://ww1.sinaimg.cn/large/68eb7c93gw1ezrv6kd1wgj20u01hcaep.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;br&gt;再观察partial wakelock ，除了gmail可能不顺利的同步导致消耗略多外，其余app都还算正常的耗电（注意关注连接时间，最多的也才3m35s，这在8h14m11s里来说是相当小的比例，同时消耗的电量也只有0.7%，还可以接受。当然是提前锁过了一部分app的后台）&lt;br&gt;&lt;br&gt;&lt;img src=&quot;http://ww3.sinaimg.cn/large/68eb7c93gw1ezrv97d35sj20u01hc7ci.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;br&gt;注意力关注到kernel wakelock，可以看到，核心的耗电量还是比较大的（由于之前的耗电太过大已经关闭了锁屏手势和黑屏解锁）。可以明显的看到，wlan联网在熄屏时间一直连接，qpnp_fg_memaccess qpnp_fg_update_temp qpnp_fg_update_sram是内核的操作。和rom有关。&lt;img src=&quot;http://ww3.sinaimg.cn/large/68eb7c93gw1ezrvef5tykj20u01hctff.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;br&gt;最后发现。。其实是rom的锅。我的other居然没有出现deep sleep。这是相当可怕的事情。经过调优和整理唤醒后，得到如下相当爽快的数据。接近70%的深睡眠还可以让人接受。毕竟还开启了微信。微博。邮件的消息推送。&lt;br&gt;&lt;br&gt;&lt;img src=&quot;http://ww4.sinaimg.cn/large/006fVPCvjw1ezvcpamb0bj30u01hcgrd.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;img src=&quot;http://ww3.sinaimg.cn/large/006fVPCvjw1ezvconkjs5j30u01hctfb.jpg&quot; alt=&quot;&quot;&gt;&lt;img src=&quot;http://ww2.sinaimg.cn/large/006fVPCvjw1ezvcqv63zoj30u01hcah1.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;br&gt;②&lt;font color=&quot;#ff0000&quot;&gt;&lt;strong&gt;wakelock detector WLD&lt;/strong&gt;&lt;/font&gt;查看流氓唤醒大户 这里要提到微信。千万不要手欠在应用内使用它的升级。最好在play或者cool市场升级。官方提供的流氓唤醒一个晚上唤醒好几千次。从未进入过休眠状态。一进入唤醒状态又有很多应用跟着启动。 微信的消息是利用同步，而CPU唤醒锁则是被滥用了的。&lt;br&gt;&lt;br&gt;Test1 2016.01.06&lt;br&gt;&lt;br&gt;&lt;img src=&quot;http://ww4.sinaimg.cn/large/68eb7c93gw1ezp096st0oj20u01hcwlt.jpg&quot; alt=&quot;&quot;&gt;&lt;img src=&quot;http://ww4.sinaimg.cn/large/68eb7c93gw1ezp0akfqdzj20u01hcgrl.jpg&quot; alt=&quot;&quot;&gt;&lt;img src=&quot;http://ww4.sinaimg.cn/large/68eb7c93gw1ezp09t72gcj20u01hcwja.jpg&quot; alt=&quot;&quot;&gt;&lt;img src=&quot;http://ww3.sinaimg.cn/large/68eb7c93gw1ezp0a61g8yj20u01hcgt8.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;br&gt;上图分别是WLD四个视图-CPU唤醒锁时间、Kernel唤醒锁时间、屏幕唤醒锁触发次数、Alarm触发器次数.&lt;br&gt;&lt;br&gt;CPU锁实际上就是用户app的持有wakelock的时间。可以看到由于需要同步相册里的图片，本次测试中google photo占用了极大部分的唤醒锁时间，其余的应用则比较正常；内核持有wakelock一般与rom的品质有关，由于po主使用的是第三方精简rom，出现了一些奇特的bug，例如第一项qcom_rx_wakelock高通的cpu在5.1的bug，在熄屏状态下仍在进行不停的wifi连接，持有唤醒锁对应用进行超负荷的运算，这也是比较不容易控制也难以改善的方面；屏幕唤醒则和用户使用的点亮次数有关，可以看到，每次启动SU超级root、微信、QQ、BBS都进行了短暂的唤醒，而视频软件如果在播放中熄屏，亮屏后也会唤醒屏幕锁（持久保有）；最后一项则是需要重点关注的，定时器启动唤醒锁，2个多小时内，google服务、微信、微博、日历、输入法都进行了大量的唤醒，导致80%的时间都难以进入deep sleep。&lt;br&gt;&lt;br&gt;Test2 2016.01.08&lt;br&gt;&lt;br&gt;CPU唤醒锁：本次测试google相册已经不进行同步，更多的是Gmail的同步操作。由于输入了7个邮件，不可避免的会进行更多频次的操作。除了gmail能利用谷歌框架同步外，其他邮件都应该设置比较合理的同步时间。而微信（后文提及）设置了封锁CPU锁后同步的频次也有所减少。&lt;br&gt;&lt;br&gt;kernel wakelock：qcom_rx_wakelock已经减少了很多，这是关闭黑屏手势的减少唤醒次数的效果。两次测试中，PowerManagerService.WakeLocks、qcom_rx_wakelock、PowerManagerService.Broadcasts、NETLINK四个核心服务占据的时间远远超过其他的服务。这也是需要优化的部分。&lt;br&gt;&lt;br&gt;屏幕唤醒锁触发：&lt;br&gt;&lt;br&gt;Alarm计时器触发：可以看到QQ、微信在夜晚的唤醒次数有些多，其实在qq、微信中都可以设置免打扰时间段，主动的消除在夜间待机时的计时器唤醒推送。&lt;br&gt;&lt;br&gt;&lt;img src=&quot;http://ww4.sinaimg.cn/large/68eb7c93gw1ezrvmr0wr2j20u01hcqaa.jpg&quot; alt=&quot;&quot;&gt;&lt;img src=&quot;http://ww3.sinaimg.cn/large/68eb7c93gw1ezrvnilpewj20u01hc7ai.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;img src=&quot;http://ww1.sinaimg.cn/large/68eb7c93gw1ezrvjeovxej20u01hcahy.jpg&quot; alt=&quot;&quot;&gt;&lt;img src=&quot;http://ww3.sinaimg.cn/large/68eb7c93gw1ezrvlj75wdj20u01hcn5a.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;br&gt;&amp;nbsp;&lt;br&gt;&lt;br&gt;4.绿色守护、3C ToolBox、Amplify的使用。&lt;br&gt;&lt;br&gt;①.&lt;font color=&quot;#ff0000&quot;&gt;&lt;em&gt;*绿色守护&lt;/em&gt;&lt;/font&gt;&lt;/li&gt;&lt;/em&gt;
+
+&lt;font color=&quot;#ff0000&quot;&gt;思路&lt;/font&gt;：熄屏清掉所有被勾选的app的服务和缓存进程，同时阻止所有可唤醒包含服务的监听receiver&amp;amp;释放所有包含服务的相互唤醒wakelock，达到相对休眠状态。主要运作在熄屏后不希望后台运作的程序（&lt;font color=&quot;#ff0000&quot;&gt;无法在前台操作切断应用间唤醒&lt;/font&gt;）。捐助版的亮点是可以在休眠状态下使用GCM服务。&lt;br&gt;&lt;br&gt;绿色守护在xda的讨论贴 开发者oisisfeng也在。&lt;br&gt;&lt;br&gt;&lt;a href=&quot;http://forum.xda-developers.com/showthread.php?t=2155737&quot; title=&quot;http://forum.xda-developers.com/showthread.php?t=2155737&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://forum.xda-developers.com/showthread.php?t=2155737&lt;/a&gt;&lt;br&gt;&lt;br&gt;绿守作者在知乎的问答&lt;br&gt;&lt;br&gt;&lt;a href=&quot;https://www.zhihu.com/question/38311793/answer/75897889&quot; title=&quot;https://www.zhihu.com/question/38311793/answer/75897889&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.zhihu.com/question/38311793/answer/75897889&lt;/a&gt;&lt;br&gt;&lt;br&gt;由于测试机在5.1.1,还未升级到Android M，因此没有享受到doze mode和app standby带来的福利。&lt;br&gt;&lt;br&gt;一张图看到就算不是 百度阿里疼腾讯系 从某个市场出来的app也会相互唤醒。这锅到底谁来背。以后反编译源码看一看。即刻-豆瓣-虎皮体育-同花顺-航旅纵横-什么值得买是什么关系。更不用说百度及包含百度字样的app-爱奇艺-去哪儿-uber-乐视-91-多米-音悦台-穷游途牛-汽车之家&amp;nbsp; 腾讯及包含qq字样-京东-大众-美团-饿了么-58-猎豹-搜狗-同城 阿里及UC-微博-优酷土豆-陌陌-滴滴快的-小米魅族&lt;br&gt;&lt;br&gt;&lt;img src=&quot;http://ww2.sinaimg.cn/large/68eb7c93gw1ezs6frg1q4j20u01hc461.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;br&gt;使用方法：主界面显示正在运行的服务及已经绿色化的应用。点击上方【+】号对所有潜在威胁进行评估，勾选的应用会在熄屏数分钟后清空缓存、杀死服务、抑制app唤醒及alarm的唤醒。root及xposed模式下效果更佳。支持gcm的应用会有小图标，能在绿色化的情况下还可收发消息。&lt;br&gt;&lt;br&gt;②.&lt;font color=&quot;#ff0000&quot;&gt;&lt;strong&gt;3C tool box&lt;/strong&gt;&lt;/font&gt;
+
+&lt;font color=&quot;#ff0000&quot;&gt;思路&lt;/font&gt;：封杀选定的activity receiver service。结晶化应用（无论前台后台，需要更多的测试，容易出现应用fc 可以实现前台界面退出后直接清缓存 &lt;font color=&quot;#ff0000&quot;&gt;可直接在应用使用中禁止广告、介绍、推荐app的activity和service&lt;/font&gt;）（本篇不涉及3c的调频调压 内存管理设置）&lt;br&gt;&lt;br&gt;例如：杀错了谷歌的邮件提醒，即便能实时接收邮件，但系统不做出提醒通知。&lt;br&gt;&lt;br&gt;&lt;img src=&quot;http://ww4.sinaimg.cn/large/68eb7c93gw1ezrulsjoalj20u01hcgt5.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;br&gt;又例如：杀错了QQi的消息消息提示核心，虽然在后台能看到QQ的进程，但新消息通知会出现不同步（极有可能是阻止了开机自启杀掉的，但这个receiver需要的权限相当多，网络改变、时间改变等乱七八糟的）&lt;br&gt;&lt;br&gt;&lt;img src=&quot;http://ww1.sinaimg.cn/large/68eb7c93gw1ezrusb4h51j20u01hctf7.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;br&gt;再比如杀掉了随手记的通知权限，居然能把自己的同步服务给搞挂了。。这代码写的。此外几个应用，饿了么，大众点评，都有不同程度的易fc但后台又唤醒个不停的问题。&lt;br&gt;&lt;br&gt;使用方法：对四大组件中那三个进行轮番排查，限制自启动，限制唤醒路径，冻结后台。（主要操作在应用管理里）&lt;br&gt;&lt;br&gt;③&lt;strong&gt;&lt;font color=&quot;#ff0000&quot;&gt;唤醒控制Amplify&lt;/font&gt;&lt;/strong&gt;的使用&lt;br&gt;&lt;br&gt;思路：对Alarm计时器的时间进行限制重设、对Service进行屏蔽、限制同步，可使用进阶的正则表达式过滤。&lt;br&gt;&lt;br&gt;使用方法：对在wld找到的唤醒次数多的详细分析，对alarm中唤醒频次高的限制更长的时间，对显见的服务停用，先做完这两者再对wakelock进行限制。&lt;br&gt;&lt;br&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/01/10/569322dfc0422.png&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;br&gt;④&lt;strong&gt;&lt;font color=&quot;#ff0000&quot;&gt;禁止唤醒&lt;/font&gt;&lt;/strong&gt;的使用(非捐助版只能对5个app进行限制，入正也就十几块)&lt;br&gt;&lt;br&gt;思路：在前台就主动把各类唤醒锁进行封闭、定时器对齐、对同步进行限制&lt;br&gt;&lt;br&gt;作者曾提到了&lt;font color=&quot;#ff0000&quot;&gt;唤醒锁的危害&lt;/font&gt;&lt;font color=&quot;#000000&quot;&gt;及禁止唤醒对这些危害的防范&lt;/font&gt;
+
+&lt;p&gt;&lt;strong&gt;CPU唤醒锁&lt;/strong&gt;: 这是在息屏后阻止你的设备进入休眠状态的唤醒锁, 禁用它通常不会有任何问题.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;所有其它唤醒锁&lt;/strong&gt;: 除了CPU唤醒锁之外, 还有一些唤醒锁可以阻止设备休眠, 甚至阻止设备息屏. 开启这个选项以禁用这些唤醒锁.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;同步&lt;/strong&gt;: 同步也可以唤醒设备, 如果你不需要应用的同步功能, 使用这个选项来禁用掉它.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;对齐定时器:&lt;/strong&gt; (&amp;gt;= Android 4.4) AlarmManager可以使用定时器来周期性的唤醒设备, 阻止CPU进入长期休眠状态. 启用这个选项来强制对齐定时器, 让它们尽量在同一时间触发以节省电量. 请注意: 对于设计不良的应用, 启用此选项有可能会引发推送消息延迟.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.linangran.com/?p=611&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.linangran.com/?p=611&lt;/a&gt; 作者使用指南&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/01/10/569323251d9ce.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;⑤阻止运行的使用&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/liudongmiao/ForceStopGB&quot; title=&quot;https://github.com/liudongmiao/ForceStopGB&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/liudongmiao/ForceStopGB&lt;/a&gt; 开源项目地址 免费&lt;/p&gt;
+&lt;p&gt;相当推荐的一款软件，无论前后台，通过劫持系统api，直接禁止非需求service的启动。精简版的3c tool box，保证应用只在需要时启动。添加到阻止列表的应用只在以下情况开启：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;启动器直接或第三方provider，如手动点button、分享、支付  &lt;/li&gt;&lt;li&gt;桌面小部件定时更新、但只维持30秒（这个好顶赞）  &lt;/li&gt;&lt;li&gt;同步开启时的定时同步，也只能维持30秒  &lt;/li&gt;&lt;li&gt;除谷歌服务外的系统服务、支付宝的支付服务  &lt;/li&gt;&lt;li&gt;其他可能的用户行为引起的启动&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;同时，谷歌服务在阻止列表时，可以支持gcm和谷歌家族应用的使用。但当任何一个谷歌家族应用没有退出时，都不会退出谷歌服务。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/01/10/569322a0e590e.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;5.针对微信的方案&lt;/p&gt;
+&lt;p&gt;微信最近从良而加入gcm的推送方案，能在有谷歌框架的手机在hibernate休眠状况下直接推送消息！既不用随时拿着唤醒锁又不唤醒其他乱七八糟的应用！但原先保留的wakelock模式依旧存在，握着各种随机数的锁禁都不知道禁哪些。但大神出现了。 &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.zhihu.com/question/31136645&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.zhihu.com/question/31136645&lt;/a&gt; 知乎高票的正则表达式杀wakerlock方案&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://bbs.gfan.com/android-7963258-1-1.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://bbs.gfan.com/android-7963258-1-1.html&lt;/a&gt; gfan精华帖&lt;/p&gt;
+&lt;p&gt;上面是一种方案，但微信更改了wakelock的命名方式就会得不偿失错杀唤醒锁了。最近发现单独使用【 禁止唤醒】中的CPU唤醒锁，也能阻止微信胡乱的唤醒，同时不影响推送；但相同的情况下使用绿色守护对微信绿色化却不能及时收到消息。&lt;/p&gt;
+&lt;p&gt;6.针对gms的方案 考虑到gms 的复杂性 提一下它涉及到google账户的同步&lt;em&gt;sync&lt;/em&gt; 备份 keep photo gmail(分为对被墙的不被墙的) 三个文档&amp;nbsp; play软件升级等等 google service包含了N个心跳包的alarm 各种硬件CPU唤醒锁&lt;/p&gt;
+&lt;p&gt;①完全禁掉是一个办法（当然这需要框架 service play一起禁 不然各种报错）这种方式最省电 但是又想使用google收国内账户 或者时不时FQ看看FB TW IG使用其中一些&lt;/p&gt;
+&lt;p&gt;②不停更换host文件。这个方式能保证随时上墙又不会因为vpn挂着长期费电。测试几天发现耗电稳定，gmail是不是抽风但效果拔群。（推荐神站load.cn）&lt;/p&gt;
+&lt;p&gt;③长时间挂载稳定vpn。该方式同样能随时保证上墙接收同步和推送。同时配合now能享受到肉身翻墙的欢喜效果。但vpn的开发良莠不齐，耗电状况不一。&lt;/p&gt;
+&lt;p&gt;④不需要google家族的直接装无gms版的精简rom或国内大部分融都会删掉——————这个方法纯天然摒除了谷歌的抽风状况，但，滚粗。&lt;/p&gt;
+&lt;p&gt;⑤久不久上墙。gms耗电的问题就是连接不上google而大量地进行重连接。所以希望使用google服务又不想随时耗电使用vpn的一个便捷方案就是每天保证登录一次，并在amplify对google框架进行限制时间，每隔一天敲醒alarm一次，但不能阻止cpu唤醒锁对gms想要获取推送的影响。&lt;/p&gt;
+&lt;p&gt;参考：&lt;/p&gt;
+&lt;p&gt;【2013.04.14】绿守作者 微信收费事件背后被广泛忽略的技术细节&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://blog.oasisfeng.com/2013/04/14/dirty-secret-behind-weixin-charge-gate/&quot; title=&quot;http://blog.oasisfeng.com/2013/04/14/dirty-secret-behind-weixin-charge-gate/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://blog.oasisfeng.com/2013/04/14/dirty-secret-behind-weixin-charge-gate/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;【2013.06.19】PC Online 的省电优化方案介绍&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://pcedu.pconline.com.cn/334/3345895_all.html&quot; title=&quot;http://pcedu.pconline.com.cn/334/3345895_all.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://pcedu.pconline.com.cn/334/3345895_all.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;【2014.02.16】唤醒锁: 检测 Android* 应用中的 No-Sleep（无法进入睡眠）问题&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://software.intel.com/zh-cn/android/articles/wakelocks-detect-no-sleep-issues-in-android-applications?language=es&quot; title=&quot;https://software.intel.com/zh-cn/android/articles/wakelocks-detect-no-sleep-issues-in-android-applications?language=es&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://software.intel.com/zh-cn/android/articles/wakelocks-detect-no-sleep-issues-in-android-applications?language=es&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;【2014.06.05】wakelock alarm wifi 详细数据测评 唤醒锁: 检测 Android* 应用中的 No-Sleep（无法进入睡眠）问题&lt;a href=&quot;http://www.oneplusbbs.com/forum.php?mod=viewthread&amp;amp;tid=366390&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.oneplusbbs.com/forum.php?mod=viewthread&amp;amp;tid=366390&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;【2014.07.22】Android Standby 对于绿色守护唤醒对其 进入深睡眠的一些思考&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://lockekk.github.io/jekyll-bootstrap/2014/07/22/Android-Standby/&quot; title=&quot;http://lockekk.github.io/jekyll-bootstrap/2014/07/22/Android-Standby/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://lockekk.github.io/jekyll-bootstrap/2014/07/22/Android-Standby/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;android论坛关于ba保持屏幕唤醒和cpu唤醒&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://developer.android.com/training/scheduling/wakelock.html&quot; title=&quot;http://developer.android.com/training/scheduling/wakelock.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://developer.android.com/training/scheduling/wakelock.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;此外 几个app的酷市场下评论都很精彩。&lt;/p&gt;
+&lt;p&gt;例如Amplify的评论 &lt;a href=&quot;http://coolapk.com/feed/1201169&quot; title=&quot;http://coolapk.com/feed/1201169&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://coolapk.com/feed/1201169&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;例如Google Play Service 的评论 &lt;a href=&quot;http://coolapk.com/feed/1196656&quot; title=&quot;http://coolapk.com/feed/1196656&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://coolapk.com/feed/1196656&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;strong&gt;&lt;font size=&quot;4&quot; face=&quot;华文中宋&quot;&gt;本文只讨论安卓手机软节电，不负责推荐底包、rom、调频调压方案，刷机root&lt;font color=&quot;#ff0000&quot;&gt;后果自负&lt;/font&gt;。&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;font size=&quot;4&quot; face=&quot;华文中宋&quot;&gt;本小节只讨论干货。在root及xposed框架下。同时兼顾不能肉身翻墙又想用google服务的小狗们。本人的使用情况是正常功能照开，google需要gmail和google photo及部分gcm，黑屏开启手势和解锁，正常收微信、闹钟、短信电话外熄屏一切不开，后台常开应用有snap锁屏、grenntify绿色守护、调音的audio mix、天气插件、BBS、输入法、Nova Launcher。测试的环境为Android L 5.1.1&lt;/font&gt;
+
+&lt;font size=&quot;4&quot; face=&quot;华文中宋&quot;&gt;&amp;nbsp;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="App强推" scheme="http://ovjaywang.github.io/categories/App%E5%BC%BA%E6%8E%A8/"/>
+    
+      <category term="软文" scheme="http://ovjaywang.github.io/categories/App%E5%BC%BA%E6%8E%A8/%E8%BD%AF%E6%96%87/"/>
+    
+    
+      <category term="Android" scheme="http://ovjaywang.github.io/tags/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Android为毛耗电[1]</title>
+    <link href="http://ovjaywang.github.io/2015/12/28/Android%E4%B8%BA%E6%AF%9B%E8%80%97%E7%94%B5%5B1%5D/"/>
+    <id>http://ovjaywang.github.io/2015/12/28/Android为毛耗电[1]/</id>
+    <published>2015-12-28T15:34:25.000Z</published>
+    <updated>2016-04-28T17:45:59.000Z</updated>
+    
+    <content type="html">&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;#000000&quot;&gt;&lt;/font&gt;**&lt;/strong&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot;&gt;&lt;font face=&quot;微软雅黑 Light&quot;&gt;本文只讨论安卓手机软节电，不负责推荐底包、rom、调频调压方案，&lt;font color=&quot;#ff0000&quot;&gt;刷机root后果自负。&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;**&lt;/p&gt;
+&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;&lt;strong&gt;纯硬货，只想节电看后文。&lt;/strong&gt;&lt;/font&gt;
+
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;使用安德猴主要还是谷歌的情怀。最近无可救药的恋上了无线高质量同步的Google相册和Keep。此外Google Contact和Gmail也时不时要收一下。&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;问题是。。墙内不能随时翻。国内流氓自启和相互唤醒严重影响待机时间。如何破？首先搞清楚什么在耗电。再来解决怎么防流氓的同时不影响收发消息体验。&lt;/font&gt;
+
+&lt;font color=&quot;#333333&quot;&gt;&lt;font size=&quot;4&quot;&gt;&lt;font face=&quot;微软雅黑 Light&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;这里提到的几个概念是安猪手机由于真后台，而造成的各种能耗电耗流量元凶——四大组件&lt;/font&gt;&lt;strong&gt;&lt;font color=&quot;#ff0000&quot;&gt;Activity、Service、BroadCastReceiver、ContentProvider&lt;/font&gt;。&lt;/strong&gt;&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;#333333&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;耗电–一定是这四个中的一个在以某种方式运行&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;font color=&quot;#000000&quot; size=&quot;4&quot;&gt;&lt;font face=&quot;微软雅黑 Light&quot;&gt;&lt;font color=&quot;#ff0000&quot;&gt;&lt;strong&gt;Activity&lt;/strong&gt;&lt;/font&gt;简言之就是前台窗体可视界面它上面可以显示一些控件也可以监听并处理用户的事件做出响应。你跳转到一个程序的界面、里面可能嵌套了很多个Activity。也有的一个Activity自成一个界面，例如第一次启动的引导界面。当然，程序猿代码风格迥异，一个&lt;font size=&quot;4&quot;&gt;Activity有的直接盖在一个上面，这样按下返回键销毁当前的能直接返回上一个；有的流程和任务则直接生成新Activity把当前的干掉。一些广告，一些无聊的需求，如淘宝摇一摇、美图下游戏，你完全不想要，则可以通过阻止Activity启动的方式，干掉。这样的做法可以降低内存消耗。但如果代码流程，若写入了不开启这个Activity就没法运行，很可能造成FC。因此测试Activity阻止就需要很谨慎。网路也有很多大神提供了Activity的阻止列表。但App更新极快，同时包名和Activity的命名方式更加让人难以捉摸，就相当难以防范。&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot;&gt;&lt;font size=&quot;4&quot;&gt;&lt;font face=&quot;微软雅黑 Light&quot;&gt;&lt;font color=&quot;#ff0000&quot;&gt;&lt;strong&gt;Activity&lt;/strong&gt;&lt;/font&gt;之间通过&lt;font color=&quot;#ff0000&quot;&gt;Intent&lt;/font&gt;进行通信，它描述的事某一个事件（单机、浏览、编辑）。也就是说这个Activity的一些参数在Activity跳转时，通过把参数塞入Intent这样一个对象，在另一个Activity读取。在Intent的描述结构中，有两个最重要的部分：动作和动作对应的数据。而IntentFilter则对应一个Activity能做哪些Intent。IntentFilter通常写入Android的AndroidManifest文件中定义好。&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot;&gt;&lt;font size=&quot;4&quot;&gt;&lt;font face=&quot;微软雅黑 Light&quot;&gt;&lt;font color=&quot;#ff0000&quot;&gt;&lt;strong&gt;BroadCastReceiver&lt;/strong&gt;&lt;/font&gt;（广播接收器）它是监听响应各种手机变化并作出响应反应的组件。例如打进电话某个App调出号码查询，例如WiFi网络改变某App可以进行同步。这些监听并不经常是我们需要的，同时如果App写的极差，接收的广播级多，也会造成资源的浪费也相当耗电。它并不会产生一个界面，但是它能唤起一个Activity或者Service对事件进行相应。最常见的就是电话来了闪灯响铃，最讨厌的就是有Wifi了发个通知广告。甚至，当一个App装过还启动过，由于设置了开机启动的响应或网络状况的变化响应，都会产生通知。然而与Activity一样，阻止某一种广播接收同样会可能造成应用使用不正常，但FC情况相当少，测试的时候需要相当小心，但这里的组件命名方式都较为规范，因此测试起来也会比较顺利。&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;监听广播同样可以视为一个事件，使用Intent对其参数进行传递。这些事件，就是通常意义上的权限，可以查看联系人、可以监听电话等。许多监控App都能查看并修改应用程序能够监听的内容。注册广播接收器可以写入一个App的AndroidManifest.xml中进行静态注册，若完成时间比较长必须通过线程，放进Service后台中运行，否则容易造成程序卡顿；也可以程序动态注册，当Activity关闭后，监听广播也关闭，这样的做法比较省电，但是关闭程序就无法接受一些通知和广告。（需要完全退出或者多任务杀掉）因此大多数App都采用静态注册，App不启动，也能通过订阅的广播触发，例如开机启动触发、时间变化触发等。&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot;&gt;&lt;font size=&quot;4&quot;&gt;&lt;font face=&quot;微软雅黑 Light&quot;&gt;&lt;font color=&quot;#ff0000&quot;&gt;&lt;strong&gt;Service&lt;/strong&gt;&lt;/font&gt;（服务）也是无界面的组件，它通过后台长时间的运行来进行运行一些监测程序，例如后台听歌单曲循环等，后台轮询查询最新消息的微博。配合BroadCastReceiver使用效果极佳耗电也极棒。一个App很可能有相当多的Service在后台挂着，同时一个流氓集团的Service也会相互唤醒保证一个被杀掉的时候又自启动。但乱杀也会造成严重的后果，一些闹钟，一些天气，一些消息软件误杀后没有了后台Service做消息推送，就会错过重要的事情。&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;一个Service不能自己运行。首次启动需要create再start，第二次之后就只用start需要别的启动或触发。但Service一旦启动，就与调用者无关了。需要停止service需要调用stop方法同时销毁destroy。可以使用bindservice让service随着调用者关闭而终止。&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot;&gt;&lt;font size=&quot;4&quot;&gt;&lt;font face=&quot;微软雅黑 Light&quot;&gt;&lt;font color=&quot;#ff0000&quot;&gt;&lt;strong&gt;ContentProvider&lt;/strong&gt;&lt;/font&gt;(内容提供者)一个应用程序的指定数据集提供给其他应用程序。这些数据可以存储在文件系统中、在一个SQLite数据库、或以任何其他合理的方式。其他应用可以通过ContentResolver类(见ContentProviderAccessApp例子)从该内容提供者中获取或存入数据.(相当于在应用外包了一层壳),最常见的就是支付婊在别的应用中的调用，它提供了一个统一的支付接口，写在一个内部路径URL里。&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;
+
+&lt;font color=&quot;#ff0000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;四大组件启动，&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;除了ContentProvider是通过别的应用程序调用ContentResolver 发出内容请求后激活外，其他三个都是通过Intent异步消息激活。&lt;br&gt;Activity的激活通过传递一个Intent 对象至&lt;font color=&quot;#ff0000&quot;&gt;Context.startActivity()或Activity.startActivityForResult()&lt;/font&gt;以载入（或指定新工作给）一个activity。 前面的函数直接启动的Activity，可以查看Intent中传入的参数。若期待新启动的Activity返回一个值（例如填写个人信息提交返回是否成功）就调用后面那个函数，并调用onActivityResult() 查询返回结果.&lt;br&gt;Service的激活可以通过传递一个Intent 对象至&lt;font color=&quot;#ff0000&quot;&gt;Context.startService()或Context.bindService()&lt;/font&gt;前者Android 调用服务的onStart()方法并将Intent 对象传递给它，后者Android 调用服务的onBind()方法将这个Intent 对象传递给它&lt;br&gt;发送广播可以通过传递一个Intent 对象至给&lt;font color=&quot;#ff0000&quot;&gt;Context.sendBroadcast() 、Context.sendOrderedBroadcast()或Context.sendStickyBroadcast()。&lt;/font&gt;Android 会调用所有对此广播有兴趣的广播接收器的onReceive()方法，将intent 传递给它们&lt;/font&gt;&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#ff0000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;四大组件销毁时，&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot;&gt;&lt;font size=&quot;4&quot;&gt;&lt;font face=&quot;微软雅黑 Light&quot;&gt;&lt;font color=&quot;#ff0000&quot;&gt;&lt;strong&gt;ContentProvider&lt;/strong&gt;&lt;/font&gt;通过别的应用程序调用，消息处理完毕即销毁（如调用图片viewer看图，调用支付接口付款）。&lt;font color=&quot;#ff0000&quot;&gt;&lt;strong&gt;BroadCastReceiver&lt;/strong&gt;&lt;/font&gt;则注册在系统中监听，这两者都无需主动人为关闭，可以直接在权限中限制。其中BroadCastReceiver的生命周期只有十秒，否则就会报ANR(Application No Response)程序无响应的消息。&lt;br&gt;&lt;strong&gt;&lt;font color=&quot;#ff0000&quot;&gt;Activity&lt;/font&gt;&lt;/strong&gt;则通过finish()函数退出。一般情况下，按下返回退出键，或在多任务窗口杀掉都能直接关闭显式的Activity。有时直接按下Home键则会在后台缓存（Process），当切换过多个应用后，切回来时还能完整的保留原先打开时候的数据和窗口。当然，这样的过程会占用内存空间（RAM），同时也消耗一定的电量（比较少）。当后台运行过多缓存时，部分低内存手机会出现明显的卡顿。Android5.0之后的系统做的不错，能够按照优先级杀掉缓存应用。&lt;br&gt;&lt;strong&gt;&lt;font color=&quot;#ff0000&quot;&gt;Service&lt;/font&gt;&lt;/strong&gt;是个比较头疼的东西。尽管App可以调用&lt;font color=&quot;#ff0000&quot;&gt;Context.stopService()&lt;/font&gt;方法关闭服务，或使用&lt;font color=&quot;#ff0000&quot;&gt;bindService()&lt;/font&gt;绑定调用的组件关闭，但，流氓才不会这么做。&lt;br&gt;通常，手机应用中都看到正在运行的x个进程和y个服务。进程由多个线程组成，其中，主线程主要负责全局的参数传递，一些核心启动器及主界面的显示。而一些时间较长的函数，如获取多个图片，获取大量的数据，可以写在一个子线程，对主界面交互可以进行异步刷新，否则会造成主界面的卡顿。而当程序退居后台后，子线程依然处理数据，但没有了Activity进行联系，因此可以通过Service进行管理。由于Service并不负责应用层面的复杂操作，只对数据进行处理传递，同时可以写进单独的进程中，因而更为便利。&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;这里总结一下Service能被启动&amp;amp;被守护的各种方式。&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;1.打开应用后，直接显而易见的调用它想要完成的Service，此时按照一般的逻辑，理应是退出App关闭Activity后就会stopservice.&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;2.注册一个广播，可以按时钟、按网络变化、屏幕变化等，每次触发这些广播，就会检查一次Service的状况。遇到杀掉就重启。此时应当关注app的权限及其注册的广播。&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;3.重写Service里的函数，在被杀时自动重启；配置到单独的进程中；配置安卓persistent=true；设置前台foreground=true.这些情况，在root情况下很容易被进程管理的杀掉&lt;/font&gt;
+
+&lt;font size=&quot;4&quot;&gt;&lt;font face=&quot;微软雅黑 Light&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;4.双Service或多Service守护，在AndroidManifest.xml里面定义Service时加入android:process=”:service1”&lt;/font&gt;&lt;br&gt;&lt;/font&gt;&lt;/font&gt;
+
+&lt;pre class=&quot;brush: xml; gutter: true; first-line: 1; highlight: []; html-script: false&quot;&gt;&amp;lt;service android:enabled=&quot;true&quot; 
+android:name=&quot;com.service.demo.Service1&quot; 
+android:process=&quot;:service1&quot;&amp;gt;
+&amp;lt;service&amp;gt;
+&amp;lt;service android:enabled=&quot;true&quot; 
+android:name=&quot;com.service.demo.Service2&quot; 
+android:process=&quot;:service2&quot;&amp;gt;
+&amp;lt;service&amp;gt;  
+&lt;/pre&gt;
+
+&lt;p&gt;&amp;lt;&lt;/p&gt;
+&lt;p&gt;p align=”left”&amp;gt;&lt;span&gt;&lt;span&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;关键的Point是触发了service的onTrimMemory()函数。又分别重新启动。&lt;/font&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span&gt;&lt;span&gt;&lt;font size=&quot;4&quot;&gt;&lt;font face=&quot;微软雅黑 Light&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;&lt;/span&gt;&lt;/span&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;span&gt;&lt;span&gt;&lt;font size=&quot;4&quot;&gt;&lt;font face=&quot;微软雅黑 Light&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;5.Wakelock。Android机制下有一个唤醒锁，可以唤醒休眠中的手机。&lt;/font&gt;&lt;font color=&quot;#000000&quot;&gt;WakeLock阻止应用处理器（Application &lt;wbr&gt;Processor）挂起&lt;/font&gt;&lt;font color=&quot;#000000&quot;&gt;，确保关键代码的运行，通过中断唤起应用处理器（Application &lt;wbr&gt;Processor），可以阻止屏幕变暗。一旦有有效的wakelock，系统就不能进入深度睡眠（Deep Sleep）。一般在熄屏传输文件、下歌中使用。被滥用后，后果不堪设想。&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span&gt;&lt;span&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;AlarmManage有一个AlarmManagerService,该服务程序主要维护app注册下来的各类Alarm,并且一直监听 Alarm设备，一旦有Alarm触发，或者是Alarm事件发生，AlarmManagerService就会遍历Alarm列表，找到相应的注册 Alarm并发出广播。Alarm &lt;wbr&gt;Manager会维持一个cpu的wake &lt;wbr&gt;lock。这样能保证电话休眠时，也能处理alarm的广播。一旦alarm &lt;wbr&gt;receiver的onReceive() &lt;wbr&gt;方法执行完，wake &lt;wbr&gt;lock会迅速被释放。如果在receiver中开启一个service，有可能service还没启动，wake &lt;wbr&gt;lock已经被释放了。所以此时要实现单独的wake &lt;wbr&gt;lock策略。&lt;/font&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;这也是一般不root不能根治的唤醒service的手段。App通过反复注册系统应用，调用级别高的Wakelock使得手机很难进入低频率的待机状态。&lt;/font&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;6.注册成为系统app同时包名混乱的编写。隐藏需要调用的service。一般没root的做不到。&lt;/font&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;所以，杀进程很容易，杀会自启的service也不难，难的是杀各种唤醒。&lt;/font&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;font size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;&lt;/font&gt;
+
+&lt;font size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;div align=&quot;left&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;em&gt; &lt;/em&gt; &lt;em&gt;&lt;br&gt;&lt;br&gt;&lt;/em&gt;&lt;/div&gt;&lt;br&gt;&lt;br&gt;&lt;/font&gt;&lt;br&gt;&lt;span&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;这里提到两个重要概念：&lt;/font&gt;&lt;/span&gt;&lt;br&gt;&lt;br&gt;&lt;span&gt;&lt;font color=&quot;#000000&quot;&gt;&lt;font size=&quot;4&quot;&gt;&lt;font face=&quot;微软雅黑 Light&quot;&gt;&lt;font color=&quot;#ff0000&quot;&gt;&lt;strong&gt;Wakelock&lt;/strong&gt;&lt;/font&gt;。唤醒锁；&lt;font color=&quot;#ff0000&quot;&gt;&lt;strong&gt;Alarm&lt;/strong&gt;&lt;/font&gt;。定时器&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;&lt;/span&gt;&lt;br&gt;&lt;br&gt;&lt;span&gt;&lt;font size=&quot;4&quot;&gt;&lt;font face=&quot;微软雅黑 Light&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;&lt;em&gt;*Wakelock&lt;/em&gt;&lt;/font&gt;&lt;font color=&quot;#000000&quot;&gt;定义了一个接口，能让App有权限，在停止交互、黑屏状况下&lt;/font&gt;&lt;font color=&quot;#ff0000&quot;&gt;阻止手机休眠&lt;/font&gt;&lt;font color=&quot;#000000&quot;&gt;，运行关键而必要的一些代码，通常是账户同步、消息推送。&lt;span&gt;Android手机有两个处理器，一个叫Application Processor（AP），一个叫Baseband Processor（BP）。AP是ARM架构的处理器，用于运行Linux+Android系统；BP用于运行实时操作系统（RTOS），通讯协议栈运行于BP的RTOS之上。非通话时间，BP的能耗基本上在5mA左右，而AP只要处于非休眠状态，能耗至少在50mA以上，执行图形运算时会更高 。此外耗电大户wifi在100mA左右，LCD灯也在100mA左右。而进入休眠的手机大部分代码会停止运行。但，并不是很容易进入深度休眠的状态。&lt;/span&gt;&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;&lt;/span&gt;&lt;br&gt;&lt;br&gt;&lt;span&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;&lt;span&gt;wakelock针对的是&lt;font color=&quot;#ff0000&quot;&gt;某个Activity，而不是整个app&lt;/font&gt;。因此，获取和释放wakelock在单个Activity中进行。&lt;/span&gt;&lt;/font&gt;&lt;/span&gt;&lt;br&gt;&lt;br&gt;&lt;span&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;&lt;span&gt;对于唤醒锁，官方文档中的解释是：&lt;/span&gt;&lt;/font&gt;&lt;/span&gt;&lt;br&gt;&lt;br&gt;&lt;a href=&quot;http://developer.android.com/reference/android/os/PowerManager.html#goToSleep(long&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;华文中宋&quot;&gt;PowerManager&lt;/font&gt;&lt;/a&gt;)&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;华文中宋&quot;&gt;:This class gives you control of the power state of the device.&lt;/font&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://developer.android.com/reference/android/os/PowerManager.WakeLock.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;华文中宋&quot;&gt;PowerManager.WakeLock&lt;/font&gt;&lt;/a&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;华文中宋&quot;&gt;: lets you say that you need to have the device on.&lt;/font&gt;&lt;/p&gt;
+&lt;font color=&quot;#ff0000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;只要系统中存在任一有效的wake_lock，系统就不能进入深度休眠，但可以进行设备的浅度休眠操作。&lt;/font&gt;
+
+&lt;font size=&quot;4&quot;&gt;&lt;font face=&quot;微软雅黑 Light&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;Android定义了几种低功耗状态，&lt;/font&gt;：&lt;strong&gt;&lt;font color=&quot;#ff0000&quot;&gt;earlysuspend、suspend、hibernation.&lt;/font&gt;&lt;/strong&gt;&lt;/font&gt;&lt;/font&gt;
+
+&lt;font size=&quot;4&quot;&gt;&lt;font face=&quot;微软雅黑 Light&quot;&gt;1) &lt;font color=&quot;#ff0000&quot;&gt;&lt;strong&gt;earlysuspend&lt;/strong&gt;&lt;/font&gt;&lt;font color=&quot;#000000&quot;&gt;（浅度休眠），&lt;/font&gt;&lt;font color=&quot;#000000&quot;&gt;也有称standby&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;&lt;font size=&quot;4&quot;&gt;&lt;font face=&quot;微软雅黑 Light&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;: 是一种低功耗的状态,某些设备可以选择进入某种功耗较低的状态,比如 LCD可以降低亮度或灭掉;它不会受到wakelock阻止。例如接收黑屏手势。&lt;br&gt;&lt;/font&gt;2) &lt;font color=&quot;#ff0000&quot;&gt;&lt;strong&gt;suspend&lt;/strong&gt;&lt;/font&gt;&lt;font color=&quot;#000000&quot;&gt;（休眠），也有称sleep（bad nomenclature）: 是指除电源管理以外的其他外围模块以及cpu均不工作,只有内存保持自刷新的状态; 一般休眠到RAM&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;
+
+&lt;font size=&quot;4&quot;&gt;&lt;font face=&quot;微软雅黑 Light&quot;&gt;3) &lt;font color=&quot;#ff0000&quot;&gt;&lt;strong&gt;hibernation&lt;/strong&gt;&lt;/font&gt;&lt;font color=&quot;#000000&quot;&gt;（冬眠）是指所有内存镜像都被写入磁盘（disk）中,然后系统关机,恢复后系统将能恢复到“关机”之前的状态。是最彻底的低功耗模式，它把所有内存镜像都写入磁盘中，然后系统关机，是Linux内核系统级的休眠。&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;&lt;br&gt;&lt;br&gt;PowerManager.WakeLock有加锁与解锁两种状态，而加锁的形式有两种:&lt;br&gt;&lt;br&gt;①永久锁住，这种锁除非显式的放开，否则是不会解锁的，所以用起来需要非常小心！&lt;br&gt;&lt;br&gt;②超时锁，到时间后就会解锁，而创建WakeLock后，有两种加锁机制: ①不计数锁机制，②计数锁机制(默认)可通过setReferenceCounted(boolean value)来指定,区别在于: 前者无论acquire( )多少次，一次release( )就可以解开锁。 而后者则需要(–count == 0)的时候，同样当(count == 0)才会去申请锁 所以，WakeLock的计数机制并不是正真意义上对每次请求进行申请/释放一个锁; 只是对同一把锁被申请/释放的次数来进行统计，然后再去操作！&lt;/font&gt;&lt;font face=&quot;微软雅黑 Light&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;&lt;font size=&quot;4&quot;&gt;该操作可通过setReferenceCounted(boolean value)设置。&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot; face=&quot;微软雅黑 Light&quot;&gt;当然，需要用到权限&lt;pre&gt;&amp;lt;uses-permission android:name=”android.permission.WAKE_LOCK”/&amp;gt;&lt;/pre&gt;&lt;pre&gt;&amp;lt;uses-permission android:name=”android.permission.DEVICE_POWER”/&amp;gt;&lt;/pre&gt;&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;锁有两种类型：&lt;/font&gt;
+
+&lt;font size=&quot;4&quot;&gt;&lt;font face=&quot;微软雅黑 Light&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;WAKE_LOCK_SUSPEND：这种锁会防止系统进入睡眠(suspend)。&lt;br&gt;WAKE_LOCK_IDLE：这种锁不会影响系统的休眠，用于阻止系统在持有锁的过程中进入低功耗状态。即直到wake_lock被释放，系统才会从idle状态进入低功耗状态，此低功耗状态将使中断延迟或禁用一组中断&lt;/font&gt; &lt;/font&gt;&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;有3个地方让&lt;font color=&quot;#ff0000&quot;&gt;系统直接开始挂起&lt;/font&gt;suspend()， 分别是:&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp; • 在wake_unlock()中， 如果发现解锁以后没有任何其他的wake lock了，就开始休眠&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp; • 在定时器都到时间以后，定时器的回调函数会查看是否有其他的wake lock，如果没有，就在这里让系统进入睡眠。&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp; • 在wake_lock() 中，对一个wake lock加锁以后，会再次检查一下有没有锁， 这里的检查是没有必要的， 更好的方法是使加锁的这个操作原子化，而不是繁冗的检查，而且这样的检查也有可能漏掉。&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;如下是一些常见的调用wakelock的操作&lt;br&gt;&lt;br&gt;&lt;/font&gt;
+
+&lt;table width=&quot;80%&quot; border=&quot;0&quot;&gt;&lt;br&gt;&lt;tbody&gt;&lt;br&gt;&lt;tr&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;应用&lt;/font&gt;&lt;br&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;操作&lt;/font&gt;&lt;br&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;唤醒锁的服务&lt;/font&gt;&lt;br&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot; align=&quot;center&quot;&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;运行状态&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;&lt;br&gt;&lt;tr&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;任意&lt;/font&gt;&lt;br&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;按下UI中的button或listview&lt;/font&gt;&lt;br&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;PowerManagerService&lt;/font&gt;&lt;br&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;启用并在5秒后释放锁定&lt;/font&gt;&lt;br&gt;&lt;/td&gt;&lt;/tr&gt;&lt;br&gt;&lt;tr&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;地图/导航&lt;/font&gt;&lt;br&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;启用地图或进入导航&lt;/font&gt;&lt;br&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;gps-lock&lt;/font&gt;&lt;br&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;锁定并使用GPS直到退出应用或手动设置取消GPS&lt;/font&gt;&lt;br&gt;&lt;/td&gt;&lt;/tr&gt;&lt;br&gt;&lt;tr&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;视频软件&lt;/font&gt;&lt;br&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;观看视频流&lt;/font&gt;&lt;br&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;PowerManagerService&lt;/font&gt;&lt;br&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;视频播放过程中一直启用唤醒锁&lt;/font&gt;&lt;br&gt;&lt;/td&gt;&lt;/tr&gt;&lt;br&gt;&lt;tr&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;音乐软件&lt;/font&gt;&lt;br&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;听歌&lt;/font&gt;&lt;br&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;PowerManagerService&lt;/font&gt;&lt;br&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;音乐播放过程中一直启用唤醒锁&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+
+&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;Video和 Music 应用能够很好地展示不同级别的唤醒锁。 用户播放视频时，Video应用将会启用唤醒锁。 在播放视频的整个过程中，显示器会保持开启状态（忽略系统的显示设置）。 但是，如果用户在播放过程中按下了电源按钮，设备将会挂起，这会导致显示器关闭以及音频/视频停止播放。 Music 应用在播放音频时使用不同的唤醒锁。 显示设置无法更改，因此设备的屏幕将会根据用户的显示设置来关闭。 显示器关闭后，唤醒锁会让 CPU 保持活动状态以便音频能够继续播放 — 即使用户按下了电源按钮。&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;上图可见，&lt;font color=&quot;#ff0000&quot;&gt;PowerManagerService&lt;/font&gt;是一项使用率非常高的wakelock调用的操作，它是Android上层电源管理服务，属于&lt;font color=&quot;#ff0000&quot;&gt;内核唤醒锁,适用于所有局部唤醒锁（partial wakelock 后文提到）的容器&lt;/font&gt;。主要负责系统待机、屏幕背光、按键背光、键盘背光以及用户事件的处理。这些可在后文的wakelock detector软件中看到。通过锁的申请和释放以及默认待机时间来控制系统的待机状态，通过系统的灭屏时间及用户操作的事件状态来控制背光暗亮。此外该服务还包括了光线、距离传感器上层查询与控制、LCD灯控制。&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot; face=&quot;微软雅黑 Light&quot;&gt;其他的内核唤醒锁有：&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot;&gt;Wlan_rx： 当通过 Wi-Fi* 发送或接收数据时由内核控制。&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot;&gt;Sync： 在同步流程运行时启用。&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot;&gt;Alarm_rtc： 控制告警（当应用或流程执行定期检查时使用）。&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot;&gt;Main： 保持内核处于唤醒状态。 系统进入挂起模式时，这是最后一个被释放的唤醒锁。&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;自最初版本的Android OS 的API中就设置了Android.OS.PowerManager.WakeLock类 &lt;/font&gt;&lt;a href=&quot;https://developer.xamarin.com/api/type/Android.OS.PowerManager+WakeLock/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;https://developer.xamarin.com/api/type/Android.OS.PowerManager+WakeLock/&lt;/font&gt;&lt;/a&gt;&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;一下为Java代码应用层的操作。&lt;/font&gt;&amp;nbsp;&lt;br&gt;&lt;br&gt;&lt;pre class=&quot;brush: java; gutter: true; first-line: 1; highlight: []; html-script: false&quot;&gt;PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);//创建pm对象&lt;br&gt;PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, “Tag”);&lt;br&gt;//第一个参数为flag,即后文提到的六个标记；最后一个参数为实例名，可以换成其他的&lt;br&gt;wl.acquire(); //唤醒点亮屏幕 获取wakelock&lt;br&gt;wl.release(); //恢复屏幕到黑暗 释放wakelock&lt;/pre&gt;&lt;br&gt;&lt;br&gt;&amp;nbsp;&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;2.1 API Level7开始增加了一个判断屏幕是否处于点亮状态可以使用public boolean isScreenOn ()这个方法，代码为&lt;/font&gt;
+
+&lt;pre class=&quot;brush: java; gutter: true; first-line: 1; highlight: []; html-script: false&quot;&gt;PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+boolean isScreenOn = pm.isScreenOn();
+&lt;/pre&gt;
+
+&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;对它进行实例化。&lt;/font&gt;
+
+&lt;font size=&quot;4&quot;&gt;&lt;font face=&quot;微软雅黑 Light&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;Wakelock源码简介&lt;/font&gt;&amp;nbsp; &lt;/font&gt;&lt;/font&gt;&lt;a href=&quot;http://www.07net01.com/2015/07/870479.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;&lt;font size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;http://www.07net01.com/2015/07/870479.html&lt;/font&gt;&lt;/a&gt;&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;PowerManager和Wakelock申请 &lt;a href=&quot;http://blog.csdn.net/wh_19910525/article/details/8287202&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://blog.csdn.net/wh_19910525/article/details/8287202&lt;/a&gt;&lt;/font&gt;&lt;br&gt;&lt;p align=&quot;left&quot;&gt;&lt;span&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;Android PowerManager API 介绍了4种用于更改设备电源状态的&lt;font color=&quot;#ff0000&quot;&gt;唤醒锁标记&lt;/font&gt;：&lt;br&gt;&lt;br&gt;&lt;/font&gt;&lt;/span&gt;&lt;br&gt;&lt;table width=&quot;80%&quot; border=&quot;0&quot;&gt;&lt;br&gt;&lt;tbody&gt;&lt;br&gt;&lt;tr&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;标记值&lt;/font&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;CPU/场景&lt;/font&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;屏幕&lt;/font&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;键盘&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;&lt;br&gt;&lt;tr&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;font color=&quot;#ff0000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;PARTIAL_WAKE_LOCK&lt;/font&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;开启-长时间运行的后台service&lt;/font&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;关闭&lt;/font&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;关闭&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;&lt;br&gt;&lt;tr&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;SCREEN_DIM_WAKE_LOCK&lt;/font&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;开启-除非必须保持CPU运行至运算完成，否则尽量使用FLAG_KEEP_SCREEN_ON&lt;/font&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;低亮度&lt;/font&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;关闭&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;&lt;br&gt;&lt;tr&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;SCREEN_BRIGHT_WAKE_LOCK&lt;/font&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;同上&lt;/font&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;高亮度&lt;/font&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;关闭&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;&lt;br&gt;&lt;tr&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;FULL_WAKE_LOCK&lt;/font&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;同上&lt;/font&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;高亮度&lt;/font&gt;&lt;/td&gt;&lt;br&gt;&lt;td width=&quot;20%&quot;&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;调亮&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;br&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;需要注意的是 API17开始，FULL_WAKE_LOCK将被弃用，取而代之的是FLAG_KEEP_SCREEN_ON 因此有的检测软件也将屏幕亮屏所单独提出来，表明调用该锁时目的是保证屏幕不会超时熄灭。&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;除了四个标记值外，还提供了两个Flag配合使用。&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;ACQUIRE_CAUSES_WAKEUP：默认情况下唤醒锁并不是马上开启CPU、屏幕或者调整键盘的亮度（对于屏幕处于低亮度或高亮度、键盘处于高亮，唤醒锁只是在被开启后，延续这一状态）但如果加上这一标记，就可让屏幕或键盘亮度未开启的状态下，马上开启它们。典型的例子就是受到一个重要的notification时（短信、邮件等），需要马上点亮屏幕。&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;ON_AFTER_RELEASE：当wake lock被释放的时候，当前调用wake lock的activity的计数器会被重置，所以屏幕会继续亮一段时间。&lt;/font&gt;
+
+&lt;font size=&quot;4&quot;&gt;&lt;font face=&quot;微软雅黑 Light&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;因此，Android中通常是这么写。&lt;/font&gt;&lt;br&gt;&lt;/font&gt;&lt;/font&gt;&lt;br&gt;&lt;div align=&quot;center&quot;&gt;&lt;pre class=&quot;brush: java; gutter: true; first-line: 1; highlight: []; html-script: false&quot;&gt;PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);&lt;br&gt;&lt;br&gt; WakeLock sCpuWakeLock = pm.newWakeLock(&lt;br&gt;                PowerManager.FULL_WAKE_LOCK |&lt;br&gt;                PowerManager.ACQUIRE_CAUSES_WAKEUP,”okTag”);&lt;br&gt; if (sCpuWakeLock!= null) {&lt;br&gt; sCpuWakeLock.release();&lt;br&gt;          sCpuWakeLock = null;&lt;br&gt;&lt;br&gt;}&lt;br&gt;&lt;/pre&gt;&lt;/div&gt;&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;&lt;/font&gt;&amp;nbsp;&lt;br&gt;&lt;br&gt;&lt;strong&gt;&lt;font color=&quot;#ff0000&quot;&gt;注意&lt;/font&gt;&lt;/strong&gt;：如果申请了&lt;font color=&quot;#ff0000&quot;&gt;partial wakelock&lt;/font&gt;,那么即使按Power键,系统也不会进Sleep,如Music播放时。所有的锁必须成对的使用, 如果申请了而没有及时释放，会造成系统故障。如申请了partial wakelock,而没有及时释放, 那系统就永远进不了Sleep模式.&lt;br&gt;&lt;br&gt;因此，partial wakelock作为6中标识中，需最为谨慎使用的一个。BBS也专门指出了partial wakelock造成的电量损耗及待机时长。其余的则可标记为屏幕锁，辅助标记CPU锁。&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#000000&quot; face=&quot;微软雅黑 Light&quot;&gt;&lt;img src=&quot;http://ww4.sinaimg.cn/large/68eb7c93gw1eztpciku00j20de0bjjsd.jpg&quot; alt=&quot;&quot;&gt;&lt;/font&gt;
+
+&lt;font size=&quot;4&quot;&gt;&lt;font color=&quot;#000000&quot; face=&quot;微软雅黑 Light&quot;&gt;&lt;strong&gt;上图表明了App内部、Android框架及内核硬件在唤醒锁交互中的流程。&lt;/strong&gt;&lt;/font&gt;&lt;/font&gt;
+
+&lt;font size=&quot;4&quot;&gt;&lt;font face=&quot;微软雅黑 Light&quot;&gt;&lt;font color=&quot;#ff0000&quot;&gt;&lt;strong&gt;AlarmManager&lt;/strong&gt;&lt;/font&gt;&lt;font color=&quot;#000000&quot;&gt;，有一个AlarmManagerService,该服务程序主要维护app注册下来的各类Alarm,并且一直监听Alarm设备，一旦有Alarm触发，或者是Alarm事件发生，AlarmManagerService就会遍历Alarm列表，找到相应的注册Alarm并发出广播，是Android中常用的一种&lt;font color=&quot;#ff0000&quot;&gt;系统级别的提示服务&lt;/font&gt;，在特定的时刻为我们广播一个指定的Intent。通常我们使用 PendingIntent，可以理解为Intent的封装包，在Intent上在加个指定的动作。在使用Intent的时候，我们还需要在执行startActivity、startService或sendBroadcast才能使Intent有用。而PendingIntent的话就是将这个动作包含在内了。&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;
+
+&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;闹钟响起，实际上是系统发出了为这个&lt;font color=&quot;#ff0000&quot;&gt;闹钟注册的广播&lt;/font&gt;，会自动开启目标应用。这种做法可以在某一时刻当做唤醒应用。注册的闹钟在设备睡眠的时候仍然会保留，可以选择性地设置是否唤醒设备，但是当设备关机和重启后，闹钟将会被清除。在alarm的receiver的onReceive()方法被执行的时候，Alarm Manager持有一个CPU唤醒锁，这样就保证了设备在处理完广播之前不会sleep。&lt;/font&gt;
+
+&lt;/p&gt;&lt;p&gt;&lt;span&gt;&lt;font color=&quot;#000000&quot;&gt;&lt;font size=&quot;4&quot;&gt;&lt;font face=&quot;微软雅黑 Light&quot;&gt;有4种Alarm类型： &lt;wbr&gt;&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;font color=&quot;#000000&quot;&gt;&lt;font size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;1)&lt;/font&gt;&lt;font size=&quot;4&quot;&gt;&lt;font face=&quot;微软雅黑 Light&quot;&gt;&lt;font color=&quot;#ff0000&quot;&gt;RTC_WAKEUP &lt;wbr&gt;&lt;br&gt;&lt;/font&gt;在指定的时刻（设置Alarm的时候），唤醒设备来触发Intent。（闹钟）&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;&lt;font size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt; &lt;/font&gt;
+
+&lt;p&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;font color=&quot;#000000&quot;&gt;&lt;font size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;2)&lt;font color=&quot;#ff0000&quot;&gt;RTC&lt;/font&gt; &lt;wbr&gt;&lt;br&gt;在一个显式的时间触发Intent，但不唤醒设备。&lt;wbr&gt;&lt;wbr&gt;&lt;wbr&gt;&lt;br&gt;3)&lt;/font&gt;&lt;font size=&quot;4&quot;&gt;&lt;font face=&quot;微软雅黑 Light&quot;&gt;&lt;font color=&quot;#ff0000&quot;&gt;ELAPSED_REALTIME &lt;wbr&gt;&lt;br&gt;&lt;/font&gt;从设备启动后，如果流逝的时间达到总时间，那么触发Intent，但不唤醒设备。流逝的时间包括设备睡眠的任何时间。注意一点的是，时间流逝的计算点是自从它最后一次启动算起。 &lt;wbr&gt;&amp;nbsp;&lt;wbr&gt;&amp;nbsp;&lt;wbr&gt;&lt;br&gt;4)&lt;font color=&quot;#ff0000&quot;&gt;ELAPSED_REALTIME_WAKEUP&lt;/font&gt; &lt;wbr&gt;&lt;br&gt;从设备启动后，达到流逝的总时间后，如果需要将唤醒设备并触发Intent。&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;这样，唤醒对齐的方案就显得相当便捷，让唤醒次数大大降低。把允许唤醒的应用，按照某一合理的时刻进行排序和对齐，不会凌乱的唤醒手机而出现过度的cpu变频造成的耗电。&lt;/font&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span&gt;&lt;font color=&quot;#000000&quot;&gt;&lt;font size=&quot;4&quot;&gt;&lt;font face=&quot;微软雅黑 Light&quot;&gt;&lt;font color=&quot;#ff0000&quot;&gt;软节电&lt;/font&gt;方案：&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;1、对不需要联网、不需要通知的 限制权限&amp;amp;App自调 取消通知、联网等权限 杀注册广播&lt;/font&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;2、限制通知和自启动、互相启动、相互守护的service 禁启动&lt;/font&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;3、（千万少做）安全软件狂杀进程process和service&lt;/font&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;4、限制唤醒时长和对齐唤醒&lt;/font&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;5、对可识别的Activity禁止&lt;/font&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;6、对不需要通知、自升级、关闭软件啥也不想让他做的 结晶 禁止、半禁止一切后台&lt;/font&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;7、争取多冬眠service&lt;/font&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;8、在合理的时间重启并FQ&lt;/font&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;So 开搞&lt;/font&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span&gt;&lt;font color=&quot;#000000&quot; face=&quot;微软雅黑 Light&quot;&gt;&lt;/font&gt;&lt;/span&gt;参考&lt;/p&gt;
+&lt;p&gt;&lt;span&gt;&lt;a href=&quot;http://www.runoob.com/w3cnote/android-tutorial-powermanager.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.runoob.com/w3cnote/android-tutorial-powermanager.html&lt;/a&gt;&amp;nbsp; PowerManager(电源服务)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.kancloud.cn/kancloud/android-tutorial/87277&quot; title=&quot;http://www.kancloud.cn/kancloud/android-tutorial/87277&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.kancloud.cn/kancloud/android-tutorial/87277&lt;/a&gt; 这俩好像一样、&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://forum.xda-developers.com/galaxy-s2/general/guide-complete-guide-maximum-battery-t1909996&quot; title=&quot;http://forum.xda-developers.com/galaxy-s2/general/guide-complete-guide-maximum-battery-t1909996&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://forum.xda-developers.com/galaxy-s2/general/guide-complete-guide-maximum-battery-t1909996&lt;/a&gt; 真的是能关的全给关了的大全&lt;/p&gt;
+&lt;font size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;&lt;/font&gt;
+
+&lt;font size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;&lt;/font&gt;
+
+&lt;font size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;&lt;/font&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://lockekk.github.io/jekyll-bootstrap/2014/07/22/Android-Standby/&quot; title=&quot;http://lockekk.github.io/jekyll-bootstrap/2014/07/22/Android-Standby/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://lockekk.github.io/jekyll-bootstrap/2014/07/22/Android-Standby/&lt;/a&gt; Android Standby 解析查杀软件的弊病&lt;/p&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;strong&gt;&lt;font color=&quot;#000000&quot;&gt;&lt;/font&gt;**&lt;/strong&gt;&lt;font color=&quot;#000000&quot; size=&quot;4&quot;&gt;&lt;font face=&quot;微软雅黑 Light&quot;&gt;本文只讨论安卓手机软节电，不负责推荐底包、rom、调频调压方案，&lt;font color=&quot;#ff0000&quot;&gt;刷机root后果自负。&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;**&lt;/p&gt;
+&lt;font color=&quot;#000000&quot; size=&quot;4&quot; face=&quot;微软雅黑 Light&quot;&gt;&lt;strong&gt;纯硬货，只想节电看后文。&lt;/strong&gt;&lt;/font&gt;
+    
+    </summary>
+    
+      <category term="App强推" scheme="http://ovjaywang.github.io/categories/App%E5%BC%BA%E6%8E%A8/"/>
+    
+      <category term="软文" scheme="http://ovjaywang.github.io/categories/App%E5%BC%BA%E6%8E%A8/%E8%BD%AF%E6%96%87/"/>
+    
+    
+      <category term="Android" scheme="http://ovjaywang.github.io/tags/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>后方交会检校(8)--光束法区域平差 bundle block adjustment</title>
+    <link href="http://ovjaywang.github.io/2015/11/18/%E5%90%8E%E6%96%B9%E4%BA%A4%E4%BC%9A%E6%A3%80%E6%A0%A1(8)--%E5%85%89%E6%9D%9F%E6%B3%95%E5%8C%BA%E5%9F%9F%E5%B9%B3%E5%B7%AE%20bundle%20block%20adjustment/"/>
+    <id>http://ovjaywang.github.io/2015/11/18/后方交会检校(8)--光束法区域平差 bundle block adjustment/</id>
+    <published>2015-11-18T15:17:39.000Z</published>
+    <updated>2016-04-28T16:36:57.000Z</updated>
+    
+    <content type="html">&lt;font size=&quot;3&quot;&gt;航空摄影最终的目标都是，将某一波段的图像（传感器接收的某一宽度波长的电磁波），在一定范围（地理空间范畴）内融合在一起。原因有：&lt;/font&gt;&lt;br&gt;&lt;br&gt;&lt;font size=&quot;3&quot;&gt;①拍摄的每幅图像幅宽有限（高的分辨率不够低了拍的面积不够多）&lt;/font&gt;
+
+&lt;font size=&quot;3&quot;&gt;②需要研究的区域相对一张或几张照片来说，太太太大了，没有或难以测量地面的标识，就只能靠拼接（然而飞机需要飞行，飞行需要时间，时间就带来光照、镜头本身、飞行姿态等各种变化）&lt;/font&gt;
+
+&lt;font size=&quot;3&quot;&gt;③除了高端的飞机带有精度极高的POS（position &amp;amp; orientation system）能够实时记录飞行的姿态，即飞机的朝向、飞机的地理位置等明确告诉我该用哪个位置的点拼起来的，其他只能依赖，连续两张图片的相关性来拼（这里讲的就是，同名点即tie point）&lt;/font&gt;
+
+&lt;p&gt;——航摄大致思路？完成这一工作，最主要的工作是法一：利用地面其他物体的三维坐标（灰机、相机的某一时刻姿态也可以）点确定相邻两幅图像的地理位置（三维的，依赖地理空间的）——&amp;gt;解算相对位置；法二，利用同名点（两幅图像都拍到的点，二维的，不依赖地理空间的），找到某个投影变换（即一个投影矩阵），直接解求两幅相邻图像的相对位置。&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;font size=&quot;3&quot;&gt;航摄中常用的三种用于加密控制点的方法有&lt;span style=&quot;color: #ff0000&quot;&gt;航带法、独立模型法、光束法&lt;/span&gt;。其中航带法精度较低，不能用于高精度的测量。独立模型法较前者精度略高，光束法则是精度最高同时计算量最大的模型，适用于高精度航摄。&lt;/font&gt;
+
+&lt;font size=&quot;3&quot;&gt;——用来做啥?不同时刻的航摄图片，对绝对位置或相对坐标进行确认，为拼接准备。&lt;/font&gt;
+
+&lt;font size=&quot;3&quot;&gt;&lt;font color=&quot;#ff0000&quot;&gt;自检较光束&lt;/font&gt;则是最广泛应用的做法，尽管&lt;font size=&quot;3&quot;&gt;粗差（奇葩的大误差）对于精度的影响极大&lt;/font&gt;。其基本思想是选用一个由若干个参数组成的系统误差模型，将这些附加参数作为未知数与区域网的其他参数一起解求，从而达到在平差过程中自动消除系统误差的目的。其缺点是①&lt;span style=&quot;color: #ff0000&quot;&gt;附加参数人为选择&lt;/span&gt;，选择不当会导致迭代结果不收敛恶化计算结果。②附加参数与区域网参数一起解求，会使&lt;span style=&quot;color: #ff0000&quot;&gt;计算量明显上升&lt;/span&gt;。&lt;/font&gt;
+
+&lt;font size=&quot;3&quot;&gt;&lt;/font&gt;&amp;nbsp;&lt;br&gt;&lt;br&gt;&lt;font size=&quot;3&quot;&gt;光束法平差以单个像片作为平差单元（意思就是一个观测值是一个像片，主要包含像片的内外方位元素，它们作为一个整体，就如测量一个高程的值 一个坐标的值一样&amp;nbsp; 在整个区域进行一边计算一边排错 进行平差处理 解算出每张相片的外方位元素 然后按照前方交会计算加密点（不同像片的拍下的重复点 tie point）坐标。&lt;/font&gt;
+
+&lt;div class=&quot;PoweredByWebStory&quot; style=&quot;margin-bottom: 10px; margin-top: 15px&quot;&gt;&lt;font size=&quot;3&quot;&gt;&amp;nbsp;&lt;/font&gt;&lt;/div&gt;
+
+&lt;font size=&quot;3&quot;&gt;&lt;/font&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;font size=&quot;3&quot;&gt;航空摄影最终的目标都是，将某一波段的图像（传感器接收的某一宽度波长的电磁波），在一定范围（地理空间范畴）内融合在一起。原因有：&lt;/font&gt;&lt;br&gt;&lt;br&gt;&lt;font size=&quot;3&quot;&gt;①拍摄的每幅图像幅宽有限（高的分辨率不够低了拍的面积不够多）&lt;/
+    
+    </summary>
+    
+      <category term="什么都学一下" scheme="http://ovjaywang.github.io/categories/%E4%BB%80%E4%B9%88%E9%83%BD%E5%AD%A6%E4%B8%80%E4%B8%8B/"/>
+    
+      <category term="学习log" scheme="http://ovjaywang.github.io/categories/%E4%BB%80%E4%B9%88%E9%83%BD%E5%AD%A6%E4%B8%80%E4%B8%8B/%E5%AD%A6%E4%B9%A0log/"/>
+    
+    
+      <category term="检校" scheme="http://ovjaywang.github.io/tags/%E6%A3%80%E6%A0%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>后方交会检校(7)--后方检校精度的检验</title>
+    <link href="http://ovjaywang.github.io/2015/11/09/%E5%90%8E%E6%96%B9%E4%BA%A4%E4%BC%9A%E6%A3%80%E6%A0%A1(7)--%E5%90%8E%E6%96%B9%E6%A3%80%E6%A0%A1%E7%B2%BE%E5%BA%A6%E7%9A%84%E6%A3%80%E9%AA%8C/"/>
+    <id>http://ovjaywang.github.io/2015/11/09/后方交会检校(7)--后方检校精度的检验/</id>
+    <published>2015-11-09T09:39:06.000Z</published>
+    <updated>2016-04-28T16:36:57.000Z</updated>
+    
+    <content type="html">&lt;p&gt;后方交会得到的结果，除了使用平差误差表达式来计算之外，还可以通过以下方式进行检验和矫正。&lt;/p&gt;
+&lt;p&gt;①利用旋转矩阵，使用物放三维数据，反算二维坐标点，比较二者之差。&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;②利用多片空间前方交会，通过未参与空间后方交会计算的控制点像点坐标反算理论空间坐标，得出空间坐标的误差。&lt;/p&gt;
+&lt;p&gt;使用条件：至少2张相片的内方位元素、外方位元素、畸变因子。把待定点的像点坐标作为观测值，逐点求解待定点物方空间坐标的过程。&lt;/p&gt;
+&lt;p&gt;其步骤与多片空间前方交会也类似，给定初值后，进行逐次迭代运算。误差方程为&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;div class=&quot;PoweredByWebStory&quot; style=&quot;margin-top:15px;margin-bottom:10px&quot;&gt;&lt;a href=&quot;http://sns.juziyue.com/webinvite.php?u=94887&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;&lt;/a&gt;&amp;nbsp;今天你&lt;a href=&quot;http://sns.juziyue.com/webinvite.php?u=94887&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;菊子曰&lt;/a&gt;了么？&lt;/div&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;后方交会得到的结果，除了使用平差误差表达式来计算之外，还可以通过以下方式进行检验和矫正。&lt;/p&gt;
+&lt;p&gt;①利用旋转矩阵，使用物放三维数据，反算二维坐标点，比较二者之差。&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;②利用多片空间前方交会，通过未参与空间后方交会计算的控制点像点
+    
+    </summary>
+    
+      <category term="什么都学一下" scheme="http://ovjaywang.github.io/categories/%E4%BB%80%E4%B9%88%E9%83%BD%E5%AD%A6%E4%B8%80%E4%B8%8B/"/>
+    
+      <category term="学习log" scheme="http://ovjaywang.github.io/categories/%E4%BB%80%E4%B9%88%E9%83%BD%E5%AD%A6%E4%B8%80%E4%B8%8B/%E5%AD%A6%E4%B9%A0log/"/>
+    
+    
+      <category term="后方交会" scheme="http://ovjaywang.github.io/tags/%E5%90%8E%E6%96%B9%E4%BA%A4%E4%BC%9A/"/>
+    
+      <category term="检校" scheme="http://ovjaywang.github.io/tags/%E6%A3%80%E6%A0%A1/"/>
+    
+      <category term="精度" scheme="http://ovjaywang.github.io/tags/%E7%B2%BE%E5%BA%A6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[2015.11.08]安装google 框架 service 一系列</title>
+    <link href="http://ovjaywang.github.io/2015/11/08/2015.11.08%E5%AE%89%E8%A3%85google%20%E6%A1%86%E6%9E%B6%20service%20%E4%B8%80%E7%B3%BB%E5%88%97/"/>
+    <id>http://ovjaywang.github.io/2015/11/08/2015.11.08安装google 框架 service 一系列/</id>
+    <published>2015-11-08T15:53:53.000Z</published>
+    <updated>2016-04-28T16:36:57.000Z</updated>
+    
+    <content type="html">&lt;p&gt;装了cm还有其他一些国产ui直接滤掉了google的一系列被墙的服务。&lt;/p&gt;
+&lt;p&gt;但明明又不可或缺。尤其是最近无可救药的爱上了google相册，那无限制的容量让人流口水。&lt;/p&gt;
+&lt;p&gt;试了一下各种论坛apk专栏的gms（google mobile service 涉及Android版本 cpu类型 屏幕尺寸，以及各种旧版本都试过了都不行。。我就郁闷了。。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.coolapk.com/apk/com.google.android.gms&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;各版本gms-酷安网&lt;/a&gt;&amp;nbsp; &amp;nbsp; &lt;a href=&quot;http://www.android-apk.com/zh-cn/2015/02/google-play-store-%E8%88%8A%E7%89%88%E6%9C%AC-apk-%E5%A4%A7%E9%9B%86%E5%90%88/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;各种旧版本google&lt;/a&gt;&amp;nbsp;&amp;nbsp; &lt;a href=&quot;http://www.apkmirror.com/?s=google+play+service&amp;amp;post_type=apps_post&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;各种能找到的google相关旧版本&lt;/a&gt;&amp;nbsp;&amp;nbsp; &lt;a href=&quot;http://sspai.com/30499&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;少数派的小姿势&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;因此试了一下传说中的，Open GApps和TK GApps，非常顺滑。一刷就行，不用双清，放在sd里和刷机一样。&lt;/p&gt;
+&lt;p&gt;提供了详细列表的&lt;a href=&quot;http://forum.xda-developers.com/android/software/tk-gapps-t3116347&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;tk gapps-5.1.X列表&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;同样提供了详细列表的&lt;a href=&quot;http://www.androidrootz.com/2015/03/download-android-51x-lollipop-pa-gapps.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;PA Gapps-5.1.X列表&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.technobuzz.net/download-google-apps-gapps/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GAPPS FOR ANY ANDROID ROM&lt;/a&gt;（提供所有安卓版本的GAPPS安装，我成功的刷入了一台老机子nexus 7 在CM12下。震精的是，居然也提供了6.0和我家一加二的安装-。-，MIUI6也适时的出现了&lt;/p&gt;
+&lt;p&gt;stock ：最为贴近 Nexus 机型体验的 GApps 版本，包含了 Nexus 机型所预装的所有 Google 服务和 Google 应用。需要注意的是，这个版本会用 Chrome 、 Google Now Launcher 、 Google Keybord 等 Google 应用替换掉 CM 系 ROM 中那些基于 AOSP 代码的相关应用。&lt;br&gt; full ：与 stock 版所包含的内容相同，但不会替换 AOSP 应用。&lt;br&gt; mini ：包含了完整的 Google 服务框架和主流 Google 应用，去掉了 Google Docs 等文档处理应用&lt;br&gt; micro ：包含了完整的 Google 服务框架和少数 Google 应用，如 Gmail 、 Google Calender 、 Google Now Launcher 。&lt;br&gt; nano ：包含完整的 Google 服务框架但不包含多余的 Google 应用。&lt;br&gt; pico：包含了最基础的 Google 服务框架，体积最小，一些依赖完整 Google 框架的应用（如 Google Camera ）将无法运行。&lt;/p&gt;
+&lt;div class=&quot;PoweredByWebStory&quot; style=&quot;margin-top:15px;margin-bottom:10px&quot;&gt;&lt;a href=&quot;http://sns.juziyue.com/webinvite.php?u=94887&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;&lt;/a&gt;&amp;nbsp;今天你&lt;a href=&quot;http://sns.juziyue.com/webinvite.php?u=94887&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;菊子曰&lt;/a&gt;了么？&lt;/div&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;装了cm还有其他一些国产ui直接滤掉了google的一系列被墙的服务。&lt;/p&gt;
+&lt;p&gt;但明明又不可或缺。尤其是最近无可救药的爱上了google相册，那无限制的容量让人流口水。&lt;/p&gt;
+&lt;p&gt;试了一下各种论坛apk专栏的gms（google mobile service 涉及
+    
+    </summary>
+    
+      <category term="App强推" scheme="http://ovjaywang.github.io/categories/App%E5%BC%BA%E6%8E%A8/"/>
+    
+      <category term="软文" scheme="http://ovjaywang.github.io/categories/App%E5%BC%BA%E6%8E%A8/%E8%BD%AF%E6%96%87/"/>
+    
+    
+      <category term="Android" scheme="http://ovjaywang.github.io/tags/Android/"/>
+    
+      <category term="gms" scheme="http://ovjaywang.github.io/tags/gms/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>无人机影像相关--拍摄、校正、平差、拼接</title>
+    <link href="http://ovjaywang.github.io/2015/11/04/uac-involved/"/>
+    <id>http://ovjaywang.github.io/2015/11/04/uac-involved/</id>
+    <published>2015-11-04T13:12:46.000Z</published>
+    <updated>2016-04-28T16:36:57.000Z</updated>
+    
+    <content type="html">&lt;p&gt;无人机在近地拍摄全色或者多光谱数据，进行近景摄影测量，成图为后期的制图反演批处理提供数据来源。一般对像片各项操作，都需要知道像片的&lt;font color=&quot;#FF0000&quot;&gt;空中姿态及其位置&lt;/font&gt;。然而，无人机自身系统受外界干扰较大，飞行姿态难以准确控制，同时缺乏监测飞机姿态的设备，处理无人机数据不能完全采用传统航摄流程进行作业。&lt;/p&gt;
+&lt;p&gt;关于摄影平台——无人机或带着单数码相机或组合相机，或带着遥感平台。常用的大面阵数码航摄相机，有DMC和UC（UCD UCX UCXp UCE）。DMC由4个全色4个多光谱镜头组成，4个中心投影拼接合成一副具有虚拟投影中心固定虚拟焦距的投影合成影像。UC4个全色波段对应3*3矩阵排列的9个CCD面阵，分别为&lt;font color=&quot;#FF0000&quot;&gt;4221&lt;/font&gt;（分别对应二行左二（东南东北西南西北），二行左一（正南正北），二行左三（正东正西），二行左四（中心））.如下图所示，UC革新的将四个角的镜头设为主镜头（master cone）其他三个为从属镜头（slave cone）为的是控制相机区域，尽量覆盖完整视场角，其他3个镜头的影响依据它进行精确配准保证输出的影响具有强健刚性的严格中心投影。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ww3.sinaimg.cn/large/68eb7c93gw1exq55pwc5xj20l30cyjt1.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;几个全色影像CCD之间存在重叠（航向258旁向262），通过重叠部分&lt;font color=&quot;#FF0000&quot;&gt;影像精确配准&lt;/font&gt;，消除曝光时间带来的误差影响，生成一个完整的中心投影影像。图为四个镜头在不同时刻曝光，最后生成虚拟影像。值得一提的是，UC系统四个镜头虽然在不同时刻曝光拍摄，但是&lt;font color=&quot;#FF0000&quot;&gt;&lt;strong&gt;选取了合适了速度并沿着第二行相机方向飞行&lt;/strong&gt;&lt;/font&gt;时，每个曝光的相机都几乎在同一时空位置，因此得到的是一个完整的中心投影大幅面全色影像。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ww1.sinaimg.cn/large/68eb7c93gw1exq5bny66wj21180koag8.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;关于数码航摄仪——若采用多相机进行拍摄，扩大VOF（view of field），或采取张大仰角或采取移轴摄影，都需要对多相机进行合成，&lt;font color=&quot;#FF0000&quot;&gt;组成一张虚拟影像&lt;/font&gt;，来达到对后面平差拼接做前期准备，因此精度相当重要。&lt;/p&gt;
+&lt;p&gt;关于图像拼接——无人机搭载的数码相机虽然提高了影像的分辨率，但焦距有限视野较小，获得整个飞行区域的完整影像设计&lt;font color=&quot;#FF0000&quot;&gt;像片的拼接问题&lt;/font&gt;。影像拼接涉及匀光匀色等色彩处理、对误差较大的图像进行粗提取、采用某些算计对影像提取特征点或者利用空间位置进行拼接等步骤。&lt;/p&gt;
+&lt;p&gt;这里可以参考的文献有，&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.cnki.net/KCMS/detail/detail.aspx?QueryID=2&amp;amp;CurRec=1&amp;amp;recid=&amp;amp;filename=TJDZ201205018&amp;amp;dbname=CJFD2012&amp;amp;dbcode=CJFQ&amp;amp;pr=&amp;amp;urlid=&amp;amp;yx=&amp;amp;uid=WEEvREcwSlJHSldRa1FhalpDTFRFYlpBY0d5OVdscE1hTndUdWJEd0ZyRGtESXlzS2lQZ1pVUkVRNVNOL1VwNmlRPT0=$9A4hF_YAuvQ5obgVAqNKPCYcEjKensW4IQMovwHtwkF4VYPoHbKxJw!!&amp;amp;v=MTk3OTZVTDdKTVNmUGRMRzRIOVBNcW85RWJJUjhlWDFMdXhZUzdEaDFUM3FUcldNMUZyQ1VSTCtlWnVackZDam4=&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;基于光束法自由网平差的无人机影像严格拼接&lt;/a&gt;&amp;nbsp;主要总结了航摄基本方法（空三方式利用野外控制点加密测出大量控制点、通过灭点建立影像直线段与方位元素的关系、自检校光束区域平差利用定向参数解求外方位元素、量测直线段长度确定外方位元素、区域平差及SIFT+一定数量控制点针对不同尺度三维影像进行拼接、光束法区域平差+秩亏可以解决缺少控制信息的像片）&lt;/p&gt;
+&lt;div class=&quot;PoweredByWebStory&quot; style=&quot;margin-top:15px;margin-bottom:10px&quot;&gt;&lt;a href=&quot;http://sns.juziyue.com/webinvite.php?u=94887&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;&lt;/a&gt;&amp;nbsp;今天你&lt;a href=&quot;http://sns.juziyue.com/webinvite.php?u=94887&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;菊子曰&lt;/a&gt;了么？&lt;/div&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;无人机在近地拍摄全色或者多光谱数据，进行近景摄影测量，成图为后期的制图反演批处理提供数据来源。一般对像片各项操作，都需要知道像片的&lt;font color=&quot;#FF0000&quot;&gt;空中姿态及其位置&lt;/font&gt;。然而，无人机自身系统受外界干扰较大，飞行姿态难以准确控制，同时缺乏监
+    
+    </summary>
+    
+      <category term="什么都学一下" scheme="http://ovjaywang.github.io/categories/%E4%BB%80%E4%B9%88%E9%83%BD%E5%AD%A6%E4%B8%80%E4%B8%8B/"/>
+    
+      <category term="学习log" scheme="http://ovjaywang.github.io/categories/%E4%BB%80%E4%B9%88%E9%83%BD%E5%AD%A6%E4%B8%80%E4%B8%8B/%E5%AD%A6%E4%B9%A0log/"/>
+    
+    
+      <category term="航空摄影测量" scheme="http://ovjaywang.github.io/tags/%E8%88%AA%E7%A9%BA%E6%91%84%E5%BD%B1%E6%B5%8B%E9%87%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>后方交会检校(6)--后方交会的补充及DLT和角锥体法</title>
+    <link href="http://ovjaywang.github.io/2015/11/04/%E5%90%8E%E6%96%B9%E4%BA%A4%E4%BC%9A%E6%A3%80%E6%A0%A1(6)--%E5%90%8E%E6%96%B9%E4%BA%A4%E4%BC%9A%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8ADLT%E5%92%8C%E8%A7%92%E9%94%A5%E4%BD%93%E6%B3%95/"/>
+    <id>http://ovjaywang.github.io/2015/11/04/后方交会检校(6)--后方交会的补充及DLT和角锥体法/</id>
+    <published>2015-11-04T07:29:32.000Z</published>
+    <updated>2016-04-28T16:36:57.000Z</updated>
+    
+    <content type="html">&lt;p&gt;除了后方交会之外，常用的进行内外参数检校的方法还有DLT和角锥体法。&lt;/p&gt;
+&lt;p&gt;写在前面：DLT可在&lt;font color=&quot;#FF0000&quot;&gt;未提供初值&lt;/font&gt;的情况下推导内外方位元素，同时&lt;font color=&quot;#FF0000&quot;&gt;不需要迭代&lt;/font&gt;，但精度相比后方交会较低；&lt;font color=&quot;#FF0000&quot;&gt;DLT与后方交会等价&lt;/font&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;#FF0000&quot; size=&quot;5&quot;&gt;内容提要&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#DLT基本原理与公式&quot;&gt;DLT基本原理与公式&lt;/a&gt;&amp;nbsp; &lt;a href=&quot;#其中&quot;&gt;L的基本形式&lt;/a&gt;&amp;nbsp;&amp;nbsp;&lt;a href=&quot;#根据求得的li计算各参数&quot;&gt;用Li表示内外参数&lt;/a&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#非正交与比例尺不一致因素&quot;&gt;非正交与比例尺不一致因素&lt;/a&gt;&amp;nbsp; &lt;a href=&quot;#DLT的真正一般形式&quot;&gt;DLT的真正一般形式&lt;/a&gt;&amp;nbsp; &lt;a href=&quot;#包含2项因素的Li表达内外参数&quot;&gt;包含2项因素的Li表达内外参数&lt;/a&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#包含畸变参数校正的DLT&quot;&gt;包含畸变参数校正的DLT&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a name=&quot;DLT基本原理与公式&quot;&gt;DLT基本原理与公式&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;基本原理：将物方点坐标（X,Y,Z）和(x,y)看做是空间中的某种线性变换，可以互为函数。一般地，将x,y用X,Y,Z表示。&lt;/p&gt;
+&lt;p&gt;基本公式：&lt;/p&gt;
+&lt;p&gt;$$!\left{\begin{matrix}x+\frac{L&lt;em&gt;{1}X+L&lt;/em&gt;{2}Y+L&lt;em&gt;{3}Z+L&lt;/em&gt;{4}}{L&lt;em&gt;{9}X+L&lt;/em&gt;{10}Y+L&lt;em&gt;{11}Z+1}=0\y+\frac{L&lt;/em&gt;{5}X+L&lt;em&gt;{6}Y+L&lt;/em&gt;{7}Z+L&lt;em&gt;{8}}{L&lt;/em&gt;{9}X+L&lt;em&gt;{10}Y+L&lt;/em&gt;{11}Z+1}=0\end{matrix}\right.$$&lt;/p&gt;
+&lt;p&gt;DLT误差方程：&lt;/p&gt;
+&lt;font color=&quot;#FF0000&quot;&gt;$$!\begin{pmatrix}v&lt;em&gt;{x}\v&lt;/em&gt;{y}\end{pmatrix}=\begin{pmatrix}X&amp;amp;Y&amp;amp;Z&amp;amp;1&amp;amp;0&amp;amp;0&amp;amp;0&amp;amp;0&amp;amp;xX&amp;amp;xY&amp;amp;xZ\0&amp;amp;0&amp;amp;0&amp;amp;0&amp;amp;X&amp;amp;Y&amp;amp;Z&amp;amp;1&amp;amp;yX&amp;amp;yY&amp;amp;yZ\end{pmatrix}\begin{pmatrix}L&lt;em&gt;{1}\L&lt;/em&gt;{2}\L&lt;em&gt;{3}\L&lt;/em&gt;{4}\L&lt;em&gt;{5}\L&lt;/em&gt;{6}\L&lt;em&gt;{7}\L&lt;/em&gt;{8}\L&lt;em&gt;{9}\L&lt;/em&gt;{10}\L&lt;em&gt;{11}\end{pmatrix}+\begin{pmatrix}l&lt;/em&gt;{x}\l_{y}\end{pmatrix}$$&lt;/font&gt;
+
+&lt;p&gt;与后方交会一样，若有n个控制点，则A矩阵有2n行。还是利用求改正数的公式求取。&lt;/p&gt;
+&lt;p&gt;DLT推导过程如下：&lt;/p&gt;
+&lt;p&gt;根据共线方程的后方交会形式：&lt;/p&gt;
+&lt;p&gt;$$!x-x&lt;em&gt;{0}+f&lt;/em&gt;{x}\frac{a&lt;em&gt;{1}(X-X&lt;/em&gt;{s})+b&lt;em&gt;{1}(Y-Y&lt;/em&gt;{s})+c&lt;em&gt;{1}(Z-Z&lt;/em&gt;{s})}{a&lt;em&gt;{3}(X-X&lt;/em&gt;{s})+b&lt;em&gt;{3}(Y-Y&lt;/em&gt;{s})+c&lt;em&gt;{3}(Z-Z&lt;/em&gt;{s})}=0$$&lt;/p&gt;
+&lt;p&gt;$$!y-y&lt;em&gt;{0}+f&lt;/em&gt;{y}\frac{a&lt;em&gt;{2}(X-X&lt;/em&gt;{s})+b&lt;em&gt;{2}(Y-Y&lt;/em&gt;{s})+c&lt;em&gt;{2}(Z-Z&lt;/em&gt;{s})}{a&lt;em&gt;{3}(X-X&lt;/em&gt;{s})+b&lt;em&gt;{3}(Y-Y&lt;/em&gt;{s})+c&lt;em&gt;{3}(Z-Z&lt;/em&gt;{s})}=0$$&lt;/p&gt;
+&lt;p&gt;这里，f分为fx和fy，即主距在像空系中这两个分量的投影。因为有的单个ccd xy方向上的大小不一致，即不是正方形。&lt;/p&gt;
+&lt;p&gt;将X，Y，Z和Xs，Ys，Zs分离，将之看作是摄影中心的变换坐标。&lt;/p&gt;
+&lt;font color=&quot;#FF0000&quot;&gt;$$!\left{\begin{matrix}r&lt;em&gt;{1}=-(a&lt;/em&gt;{1}X&lt;em&gt;{s}+b&lt;/em&gt;{1}Y&lt;em&gt;{s}+c&lt;/em&gt;{1}Z&lt;em&gt;{s})\r&lt;/em&gt;{2}=-(a&lt;em&gt;{2}X&lt;/em&gt;{s}+b&lt;em&gt;{2}Y&lt;/em&gt;{s}+c&lt;em&gt;{2}Z&lt;/em&gt;{s})\r&lt;em&gt;{3}=-(a&lt;/em&gt;{3}X&lt;em&gt;{s}+b&lt;/em&gt;{3}Y&lt;em&gt;{s}+c&lt;/em&gt;{3}Z_{s})\end{matrix}\right.$$&lt;/font&gt;
+
+&lt;p&gt;化简可得&lt;/p&gt;
+&lt;p&gt;$$!x-x&lt;em&gt;{0}+f&lt;/em&gt;{x}\frac{a&lt;em&gt;{1}X+b&lt;/em&gt;{1}Y+c&lt;em&gt;{1}Z+r&lt;/em&gt;{1}}{a&lt;em&gt;{3}X+b&lt;/em&gt;{3}Y+c&lt;em&gt;{3}Z+r&lt;/em&gt;{3}}=0$$&lt;/p&gt;
+&lt;p&gt;$$!y-y&lt;em&gt;{0}+f&lt;/em&gt;{y}\frac{a&lt;em&gt;{2}X+b&lt;/em&gt;{2}Y+c&lt;em&gt;{2}Z+r&lt;/em&gt;{1}}{a&lt;em&gt;{3}X+b&lt;/em&gt;{3}Y+c&lt;em&gt;{3}Z+r&lt;/em&gt;{3}}=0$$&lt;/p&gt;
+&lt;p&gt;将x0，y0通分。&lt;/p&gt;
+&lt;p&gt;$$!x+\frac{(a&lt;em&gt;{1}f&lt;/em&gt;{x}-a&lt;em&gt;{3}x&lt;/em&gt;{0})X+(b&lt;em&gt;{1}f&lt;/em&gt;{x}-b&lt;em&gt;{3}x&lt;/em&gt;{0})Y+(c&lt;em&gt;{1}f&lt;/em&gt;{x}-c&lt;em&gt;{3}x&lt;/em&gt;{0})Z+(r&lt;em&gt;{1}f&lt;/em&gt;{x}-r&lt;em&gt;{3}x&lt;/em&gt;{0})}{a&lt;em&gt;{3}X+b&lt;/em&gt;{3}Y+c&lt;em&gt;{3}Z+r&lt;/em&gt;{3}}=0$$&lt;/p&gt;
+&lt;p&gt;$$!y+\frac{(a&lt;em&gt;{2}f&lt;/em&gt;{y}-a&lt;em&gt;{3}y&lt;/em&gt;{0})X+(b&lt;em&gt;{2}f&lt;/em&gt;{y}-b&lt;em&gt;{3}y&lt;/em&gt;{0})Y+(c&lt;em&gt;{2}f&lt;/em&gt;{y}-c&lt;em&gt;{3}y&lt;/em&gt;{0})Z+(r&lt;em&gt;{2}f&lt;/em&gt;{y}-r&lt;em&gt;{3}y&lt;/em&gt;{0})}{a&lt;em&gt;{3}X+b&lt;/em&gt;{3}Y+c&lt;em&gt;{3}Z+r&lt;/em&gt;{3}}=0$$&lt;/p&gt;
+&lt;p&gt;将X、Y、Z的系数简化为L，即&lt;/p&gt;
+&lt;p&gt;$$!x+\frac{L&lt;em&gt;{1}X+L&lt;/em&gt;{2}Y+L&lt;em&gt;{3}Z+L&lt;/em&gt;{4}}{L&lt;em&gt;{9}X+L&lt;/em&gt;{10}Y+L_{11}Z+1}=0$$&lt;/p&gt;
+&lt;p&gt;$$!y+\frac{L&lt;em&gt;{5}X+L&lt;/em&gt;{6}Y+L&lt;em&gt;{7}Z+L&lt;/em&gt;{8}}{L&lt;em&gt;{9}X+L&lt;/em&gt;{10}Y+L_{11}Z+1}=0$$&lt;/p&gt;
+&lt;p&gt;&lt;a name=&quot;其中&quot;&gt;其中，L为：&lt;/a&gt;&lt;/p&gt;
+&lt;font color=&quot;#FF0000&quot;&gt;$$!L=\begin{bmatrix}L&lt;em&gt;{1}&amp;amp;L&lt;/em&gt;{2}&amp;amp;L&lt;em&gt;{3}&amp;amp;L&lt;/em&gt;{4}\L&lt;em&gt;{5}&amp;amp;L&lt;/em&gt;{6}&amp;amp;L&lt;em&gt;{7}&amp;amp;L&lt;/em&gt;{8}\L&lt;em&gt;{9}&amp;amp;L&lt;/em&gt;{10}&amp;amp;L&lt;em&gt;{11}&amp;amp;L&lt;/em&gt;{12}\end{bmatrix}$$&lt;/font&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://www.dooby.me/wp-content/uploads/2015/11/151C86750F1FFF17ECE621971610488CBAE13A81.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;该公式表示像点测量坐标与物方点坐标直接的变化，无需内方位元素。从另一个角度看，L矩阵其实是二维坐标通过三次矩阵变换得到的三维坐标，即：&lt;/p&gt;
+&lt;p&gt;$$!L=\frac{1}{r&lt;em&gt;{3}}\begin{bmatrix}f&lt;/em&gt;{x}&amp;amp;0&amp;amp;-x&lt;em&gt;{0}\0&amp;amp;f&lt;/em&gt;{y}&amp;amp;-y&lt;em&gt;{0}\0&amp;amp;0&amp;amp;1\end{bmatrix}\begin{bmatrix}a&lt;/em&gt;{1}&amp;amp;b&lt;em&gt;{1}&amp;amp;c&lt;/em&gt;{1}\a&lt;em&gt;{2}&amp;amp;b&lt;/em&gt;{2}&amp;amp;c&lt;em&gt;{2}\a&lt;/em&gt;{3}&amp;amp;b&lt;em&gt;{3}&amp;amp;c&lt;/em&gt;{3}\end{bmatrix}\begin{bmatrix}1&amp;amp;0&amp;amp;0&amp;amp;X&lt;em&gt;{s}\0&amp;amp;1&amp;amp;0&amp;amp;Y&lt;/em&gt;{s}\0&amp;amp;0&amp;amp;1&amp;amp;Z&lt;em&gt;{s}\end{bmatrix}=\frac{1}{r&lt;/em&gt;{3}}\begin{bmatrix}f&lt;em&gt;{x}&amp;amp;0&amp;amp;-x&lt;/em&gt;{0}\0&amp;amp;f&lt;em&gt;{y}&amp;amp;-y&lt;/em&gt;{0}\0&amp;amp;0&amp;amp;1\end{bmatrix}\begin{bmatrix}R&amp;amp;t\0^{T}&amp;amp;1\end{bmatrix}$$&lt;/p&gt;
+&lt;p&gt;第一个矩阵由内方位元素组成，是辅助坐标和像平面坐标的平移和比例关系；第二个矩阵是外方位元素的角元素，表达物方系和地辅系的坐标旋转关系；第三个矩阵是外方位线元素，表达物方坐标和地辅系坐标的原点平移关系。&lt;/p&gt;
+&lt;p&gt;由于计算机视觉中使用齐次坐标，即如下形式&lt;/p&gt;
+&lt;p&gt;$$!\begin{pmatrix}x\y\1\end{pmatrix}=L\begin{pmatrix}X\Y\Z\1\end{pmatrix}=\begin{bmatrix}L&lt;em&gt;{1}&amp;amp;L&lt;/em&gt;{2}&amp;amp;L&lt;em&gt;{3}&amp;amp;L&lt;/em&gt;{4}\L&lt;em&gt;{5}&amp;amp;L&lt;/em&gt;{6}&amp;amp;L&lt;em&gt;{7}&amp;amp;L&lt;/em&gt;{8}\L&lt;em&gt;{9}&amp;amp;L&lt;/em&gt;{10}&amp;amp;L&lt;em&gt;{11}&amp;amp;L&lt;/em&gt;{12}\end{bmatrix}\begin{pmatrix}X\Y\Z\1\end{pmatrix}$$因此形成了上红色式子。&lt;/p&gt;
+&lt;p&gt;&lt;a name=&quot;根据求得的li计算各参数&quot;&gt;根据求得的li计算各参数&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;重要参数的求解：&lt;/p&gt;
+&lt;p&gt;$$!r&lt;em&gt;{3}=\frac{1}{(L&lt;/em&gt;{9}^{2}+L&lt;em&gt;{10}^{2}+L&lt;/em&gt;{11}^{2})^{1/2}}$$&lt;/p&gt;
+&lt;p&gt;(1)内方位元素&lt;/p&gt;
+&lt;p&gt;$$!x&lt;em&gt;{0}=-(L&lt;/em&gt;{1}L&lt;em&gt;{9}+L&lt;/em&gt;{2}L&lt;em&gt;{10}+L&lt;/em&gt;{3}L&lt;em&gt;{11})/(L&lt;/em&gt;{9}^{2}+&lt;em&gt;{10}^{2}+L&lt;/em&gt;{11}^{2})$$&lt;/p&gt;
+&lt;p&gt;$$!y&lt;em&gt;{0}=-(L&lt;/em&gt;{5}L&lt;em&gt;{9}+L&lt;/em&gt;{6}L&lt;em&gt;{10}+L&lt;/em&gt;{7}L&lt;em&gt;{11})/(L&lt;/em&gt;{9}^{2}+&lt;em&gt;{10}^{2}+L&lt;/em&gt;{11}^{2})$$&lt;/p&gt;
+&lt;p&gt;$$!f&lt;em&gt;{x}^{2}=-x&lt;/em&gt;{0}^{2}+(L&lt;em&gt;{1}^{2}+L&lt;/em&gt;{2}^{2}+L&lt;em&gt;{3}^{2})/(L&lt;/em&gt;{9}^{2}+&lt;em&gt;{10}^{2}+L&lt;/em&gt;{11}^{2})$$&lt;/p&gt;
+&lt;p&gt;$$!f&lt;em&gt;{y}^{2}=-y&lt;/em&gt;{0}^{2}+(L&lt;em&gt;{4}^{2}+L&lt;/em&gt;{5}^{2}+L&lt;em&gt;{6}^{2})/(L&lt;/em&gt;{9}^{2}+&lt;em&gt;{10}^{2}+L&lt;/em&gt;{11}^{2})$$&lt;/p&gt;
+&lt;p&gt;$$!f=\frac{1}{2}(f&lt;em&gt;{x}+f&lt;/em&gt;{y})$$&lt;/p&gt;
+&lt;p&gt;(2)外方位角元素&lt;/p&gt;
+&lt;p&gt;$$!\begin{bmatrix}a&lt;em&gt;{1}&amp;amp;b&lt;/em&gt;{1}&amp;amp;c&lt;em&gt;{1}\end{bmatrix}=\frac{1}{f&lt;/em&gt;{x}}\begin{bmatrix}\frac{L&lt;em&gt;{1}}{(L&lt;/em&gt;{9}^{2}+L&lt;em&gt;{10}^{2}+L&lt;/em&gt;{11}^{2})^{1/2}}+a&lt;em&gt;{3}x&lt;/em&gt;{0}\frac{L&lt;em&gt;{2}}{(L&lt;/em&gt;{9}^{2}+L&lt;em&gt;{10}^{2}+L&lt;/em&gt;{11}^{2})^{1/2}}+b&lt;em&gt;{3}x&lt;/em&gt;{0}\frac{L&lt;em&gt;{3}}{(L&lt;/em&gt;{9}^{2}+L&lt;em&gt;{10}^{2}+L&lt;/em&gt;{11}^{2})^{1/2}}+c&lt;em&gt;{3}x&lt;/em&gt;{0}\end{bmatrix}$$&lt;/p&gt;
+&lt;p&gt;$$!\begin{bmatrix}a&lt;em&gt;{2}&amp;amp;b&lt;/em&gt;{2}&amp;amp;c&lt;em&gt;{2}\end{bmatrix}=\frac{1}{f&lt;/em&gt;{y}}\begin{bmatrix}\frac{L&lt;em&gt;{5}}{(L&lt;/em&gt;{9}^{2}+L&lt;em&gt;{10}^{2}+L&lt;/em&gt;{11}^{2})^{1/2}}+a&lt;em&gt;{3}y&lt;/em&gt;{0}\frac{L&lt;em&gt;{6}}{(L&lt;/em&gt;{9}^{2}+L&lt;em&gt;{10}^{2}+L&lt;/em&gt;{11}^{2})^{1/2}}+b&lt;em&gt;{3}y&lt;/em&gt;{0}\frac{L&lt;em&gt;{7}}{(L&lt;/em&gt;{9}^{2}+L&lt;em&gt;{10}^{2}+L&lt;/em&gt;{11}^{2})^{1/2}}+c&lt;em&gt;{3}y&lt;/em&gt;{0}\end{bmatrix}$$&lt;/p&gt;
+&lt;p&gt;$$!\begin{bmatrix}a&lt;em&gt;{3}&amp;amp;b&lt;/em&gt;{3}&amp;amp;c&lt;em&gt;{3}\end{bmatrix}=\frac{1}{(L&lt;/em&gt;{9}^{2}+L&lt;em&gt;{10^{2}}+L&lt;/em&gt;{11}^{2})^{1/2}}\begin{bmatrix}L&lt;em&gt;{9}&amp;amp;L&lt;/em&gt;{10}&amp;amp;L_{11}\end{bmatrix}$$&lt;/p&gt;
+&lt;p&gt;可以注意到的是，DLT解求内外方位元素是有次序的，因为外方位元素解求的公式中包含有所有的内方位元素。&lt;/p&gt;
+&lt;p&gt;$$!\left{\begin{matrix}\varphi =arctan(\frac{a&lt;em&gt;{3}}{c&lt;/em&gt;{3}})=arctan(\frac{l&lt;em&gt;{9}}{l&lt;/em&gt;{11}})\\omega =arcsin(-b&lt;em&gt;{3})=arcsin(-\frac{l&lt;/em&gt;{10}}{l&lt;em&gt;{9}^2+l&lt;/em&gt;{10}^{2}+l&lt;em&gt;{11}^{2}})\\kappa =arctan(\frac{b&lt;/em&gt;{1}}{b&lt;em&gt;{2}})=arctan(\frac{f&lt;/em&gt;{y}[x&lt;em&gt;{0}\frac{L&lt;/em&gt;{2}}{(L&lt;em&gt;{9}^{2}+L&lt;/em&gt;{10}^{2}+L&lt;em&gt;{11}^{2})^{1/2}}+b&lt;/em&gt;{3}]}{f&lt;em&gt;{x}[y&lt;/em&gt;{0}\frac{L&lt;em&gt;{6}}{(L&lt;/em&gt;{9}^{2}+L&lt;em&gt;{10}^{2}+L&lt;/em&gt;{11}^{2})^{1/2}}+b_{3}]})\end{matrix}\right.$$&lt;/p&gt;
+&lt;p&gt;(3)外方位线元素&lt;br&gt; 则需要根据如下方程解出&lt;/p&gt;
+&lt;p&gt;$$!a&lt;em&gt;{3}X&lt;/em&gt;{s}+b&lt;em&gt;{3}Y&lt;/em&gt;{s}+c&lt;em&gt;{3}Z&lt;/em&gt;{s}+r_{3}$$&lt;/p&gt;
+&lt;p&gt;$$!\frac{a&lt;em&gt;{1}f&lt;/em&gt;{x}-a&lt;em&gt;{3}x&lt;/em&gt;{0}}{r&lt;em&gt;{3}}X&lt;/em&gt;{s}+\frac{b&lt;em&gt;{1}f&lt;/em&gt;{x}-b&lt;em&gt;{3}x&lt;/em&gt;{0}}{r&lt;em&gt;{3}}Y&lt;/em&gt;{s}+\frac{c&lt;em&gt;{1}f&lt;/em&gt;{x}-c&lt;em&gt;{3}x&lt;/em&gt;{0}}{r&lt;em&gt;{3}}+L&lt;/em&gt;{4}=0$$&lt;/p&gt;
+&lt;p&gt;$$!\frac{a&lt;em&gt;{2}f&lt;/em&gt;{y}-a&lt;em&gt;{3}y&lt;/em&gt;{0}}{r&lt;em&gt;{3}}X&lt;/em&gt;{s}+\frac{b&lt;em&gt;{2}f&lt;/em&gt;{y}-b&lt;em&gt;{3}y&lt;/em&gt;{0}}{r&lt;em&gt;{3}}Y&lt;/em&gt;{s}+\frac{c&lt;em&gt;{2}f&lt;/em&gt;{y}-c&lt;em&gt;{3}y&lt;/em&gt;{0}}{r&lt;em&gt;{3}}+L&lt;/em&gt;{8}=0$$&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;DLT实质上与共线方程等价，Li之间的相关性，因为2个条件=11个参数-必要观测个数&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;以上是只解求内外方位元素的时候，Li与各参数的关系，如果加上光学畸变、非正交比例、比例尺不一致等误差，光学畸变在前文中提到。&lt;/p&gt;
+&lt;p&gt;x轴方向上比例系数为1，y轴方向比例系数为(1+ds).则&lt;/p&gt;
+&lt;p&gt;x轴方向上的主距为fx，y轴方向上的主距为fy=fx/(1+ds).&lt;/p&gt;
+&lt;p&gt;对数字相机，比例尺不一致可认为是襄垣x、y方向长度不等引起的；而不正交性误差可认为是像元x、y方向排列不垂直引起的。&lt;/p&gt;
+&lt;p&gt;&lt;a name=&quot;非正交与比例尺不一致因素&quot;&gt;如图展现了以上两种误差的原因。&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://www.dooby.me/wp-content/uploads/2015/11/C99CDEAA218715286FA9FE07A8E69B343C345FAA.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;以下表述中，小括号代表坐标系，中括号代表坐标值。&lt;/p&gt;
+&lt;p&gt;$$!(\overline{x},\overline{y})[on&lt;em&gt;{2},on&lt;/em&gt;{1}]$$——以像主点为原点（像平面坐标系的原点），不包含线性误差的&lt;font color=&quot;#FF0000&quot;&gt;某像点p的坐标&lt;/font&gt;&lt;/p&gt;
+&lt;p&gt;$$!(x,y)[om&lt;em&gt;{2},0m&lt;/em&gt;{1}]$$——以像主点为原点，不包含正交性dβ误差的像点p坐标。&lt;/p&gt;
+&lt;p&gt;$$!(x,y)[om&lt;em&gt;{2},om&lt;/em&gt;{1}^{‘}]$$——以像主点为原点，不包括正交性dβ误差及比例尺不一致误差ds的像点坐标p&lt;/p&gt;
+&lt;p&gt;则从图中可知，$$!\delta x=on&lt;em&gt;{2}-om&lt;/em&gt;{2}=m&lt;em&gt;{2}p\cdot sin d\beta=om&lt;/em&gt;{1}\cdot sin d\beta=(1+ds)(y-y&lt;em&gt;{0})sind\beta\approx (y-y&lt;/em&gt;{0})sind\beta$$&lt;/p&gt;
+&lt;p&gt;$$!\delta y=on&lt;em&gt;{1}-om&lt;/em&gt;{1}^{‘}=om&lt;em&gt;{1}\cdot cosd\beta -om&lt;/em&gt;{1}^{‘}=(1+ds)(y-y&lt;em&gt;{0})\cdot cosd\beta-(y-y&lt;/em&gt;{0})=&lt;a href=&quot;y-y_{0}&quot;&gt;(1+ds)\cdot cosd\beta -1&lt;/a&gt;\approx (y-y_{0})\cdot ds$$&lt;/p&gt;
+&lt;p&gt;将上式2值带入线性方程&lt;font color=&quot;#FF0000&quot;&gt;有线性误差的形式&lt;/font&gt;：式中有11个独立参数，3个内方位x0,yo,fx6个外方位Xs，Ys，Zs，φ，ω，k，比例尺不一致系数ds，xy轴不正交系数dβ。&lt;/p&gt;
+&lt;p&gt;$$!\left{\begin{matrix}x-x&lt;em&gt;{0}+(1+ds)(y-y&lt;/em&gt;{0})\cdot sind\beta +f&lt;em&gt;{x}\frac{a&lt;/em&gt;{1}(X-X&lt;em&gt;{s}+b&lt;/em&gt;{1}(Y-Y&lt;em&gt;{s})+c&lt;/em&gt;{1}(Z-Z&lt;em&gt;{s})}{a&lt;/em&gt;{3}(X-X&lt;em&gt;{s})+b&lt;/em&gt;{3}(Y-Y&lt;em&gt;{s})+c&lt;/em&gt;{3}(Z-Z&lt;em&gt;{s})}=0\y-y&lt;/em&gt;{0}+[(1+ds)\cdot cosd\beta-1] (y-y&lt;em&gt;{0})+f&lt;/em&gt;{x}\frac{a&lt;em&gt;{1}(X-X&lt;/em&gt;{s}+b&lt;em&gt;{1}(Y-Y&lt;/em&gt;{s})+c&lt;em&gt;{1}(Z-Z&lt;/em&gt;{s})}{a&lt;em&gt;{3}(X-X&lt;/em&gt;{s})+b&lt;em&gt;{3}(Y-Y&lt;/em&gt;{s})+c&lt;em&gt;{3}(Z-Z&lt;/em&gt;{s})}=0\end{matrix}\right.$$&lt;/p&gt;
+&lt;p&gt;通过一系列的化简，如前面介绍不带线性误差一样，提取出r1，r2，r3，&lt;a name=&quot;DLT的真正一般形式&quot;&gt;得到：&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;$$!x+\frac{\frac{1}{r&lt;em&gt;{3}}(a&lt;/em&gt;{1}f&lt;em&gt;{x}-a&lt;/em&gt;{2}f&lt;em&gt;{x}tand\beta -a&lt;/em&gt;{3}x&lt;em&gt;{0})}{\frac{a&lt;/em&gt;{3}}{r&lt;em&gt;{3}}X+\frac{b&lt;/em&gt;{3}}{r&lt;em&gt;{3}}Y+\frac{c&lt;/em&gt;{3}}{r&lt;em&gt;{3}}Z+1}\cdot X+\frac{\frac{1}{r&lt;/em&gt;{3}}(b&lt;em&gt;{1}f&lt;/em&gt;{x}-b&lt;em&gt;{2}f&lt;/em&gt;{x}tand\beta -b&lt;em&gt;{3}x&lt;/em&gt;{0})}{\frac{a&lt;em&gt;{3}}{r&lt;/em&gt;{3}}X+\frac{b&lt;em&gt;{3}}{r&lt;/em&gt;{3}}Y+\frac{c&lt;em&gt;{3}}{r&lt;/em&gt;{3}}Z+1}\cdot Y+\frac{\frac{1}{r&lt;em&gt;{3}}(c&lt;/em&gt;{1}f&lt;em&gt;{x}-c&lt;/em&gt;{2}f&lt;em&gt;{x}tand\beta -c&lt;/em&gt;{3}x&lt;em&gt;{0})}{\frac{a&lt;/em&gt;{3}}{r&lt;em&gt;{3}}X+\frac{b&lt;/em&gt;{3}}{r&lt;em&gt;{3}}Y+\frac{c&lt;/em&gt;{3}}{r&lt;em&gt;{3}}Z+1}\cdot Z+\frac{\frac{1}{r&lt;/em&gt;{3}}(r&lt;em&gt;{1}f&lt;/em&gt;{x}-r&lt;em&gt;{2}f&lt;/em&gt;{x}tand\beta -r&lt;em&gt;{3}x&lt;/em&gt;{0})}{\frac{a&lt;em&gt;{3}}{r&lt;/em&gt;{3}}X+\frac{b&lt;em&gt;{3}}{r&lt;/em&gt;{3}}Y+\frac{c&lt;em&gt;{3}}{r&lt;/em&gt;{3}}Z+1}=0$$&lt;/p&gt;
+&lt;p&gt;$$!y+\frac{\frac{1}{r&lt;em&gt;{3}}[\frac{a&lt;/em&gt;{2}f&lt;em&gt;{x}}{(1+ds)cosd\beta }-a&lt;/em&gt;{3}\cdot y&lt;em&gt;{0}]}{\frac{a&lt;/em&gt;{3}}{r&lt;em&gt;{3}}X+\frac{b&lt;/em&gt;{3}}{r&lt;em&gt;{3}}Y+\frac{c&lt;/em&gt;{3}}{r&lt;em&gt;{3}}Z+1}\cdot X+\frac{\frac{1}{r&lt;/em&gt;{3}}[\frac{b&lt;em&gt;{2}f&lt;/em&gt;{x}}{(1+ds)cosd\beta }-b&lt;em&gt;{3}\cdot y&lt;/em&gt;{0}]}{\frac{a&lt;em&gt;{3}}{r&lt;/em&gt;{3}}X+\frac{b&lt;em&gt;{3}}{r&lt;/em&gt;{3}}Y+\frac{c&lt;em&gt;{3}}{r&lt;/em&gt;{3}}Z+1}\cdot Y+\frac{\frac{1}{r&lt;em&gt;{3}}[\frac{c&lt;/em&gt;{2}f}{(1+ds)cosd\beta }-c&lt;em&gt;{3}\cdot y&lt;/em&gt;{0}]}{\frac{a&lt;em&gt;{3}}{r&lt;/em&gt;{3}}X+\frac{b&lt;em&gt;{3}}{r&lt;/em&gt;{3}}Y+\frac{c&lt;em&gt;{3}}{r&lt;/em&gt;{3}}Z+1}\cdot Z+\frac{\frac{1}{r&lt;em&gt;{3}}[\frac{r&lt;/em&gt;{2}f&lt;em&gt;{x}}{(1+ds)cosd\beta }-r&lt;/em&gt;{3}\cdot y&lt;em&gt;{0}]}{\frac{a&lt;/em&gt;{3}}{r&lt;em&gt;{3}}X+\frac{b&lt;/em&gt;{3}}{r&lt;em&gt;{3}}Y+\frac{c&lt;/em&gt;{3}}{r_{3}}Z+1}=0$$&lt;/p&gt;
+&lt;p&gt;则上式即可化为基本式：&lt;/p&gt;
+&lt;p&gt;$$!x+\frac{l&lt;em&gt;{1}X+l&lt;/em&gt;{2}Y+l&lt;em&gt;{3}Z+l&lt;/em&gt;{4}}{l&lt;em&gt;{9}X+l&lt;/em&gt;{10}Y+l_{11}Z+1}=0$$&lt;/p&gt;
+&lt;p&gt;$$!y+\frac{l&lt;em&gt;{5}X+l&lt;/em&gt;{6}Y+l&lt;em&gt;{7}Z+l&lt;/em&gt;{8}}{l&lt;em&gt;{9}X+l&lt;/em&gt;{10}Y+l_{11}Z+1}=0$$&lt;/p&gt;
+&lt;p&gt;其中，l4、l8可化简：&lt;/p&gt;
+&lt;p&gt;$$!l&lt;em&gt;{8}=\frac{1}{r&lt;/em&gt;{3}}[\frac{r&lt;em&gt;{2}f&lt;/em&gt;{x}}{(1+ds)\cdot d\beta}-r&lt;em&gt;{3}\cdot y&lt;/em&gt;{0}]=\frac{1}{r&lt;em&gt;{3}}[\frac{-(a&lt;/em&gt;{2}Xs+b&lt;em&gt;{2}Y&lt;/em&gt;{s}+c&lt;em&gt;{2}Z&lt;/em&gt;{s})f&lt;em&gt;{x}}{(1+ds)\cdot cosd\beta }+(a&lt;/em&gt;{3}X&lt;em&gt;{s}+b&lt;/em&gt;{3}Y&lt;em&gt;{s}+c&lt;/em&gt;{3}Z&lt;em&gt;{s})\cdot y&lt;/em&gt;{0}]=-\frac{1}{r&lt;em&gt;{3}}[(\frac{a&lt;/em&gt;{2}f&lt;em&gt;{x}}{(1+ds)\cdot cosd\beta }-a&lt;/em&gt;{3}y&lt;em&gt;{0})X&lt;/em&gt;{s}+(\frac{b&lt;em&gt;{2}f&lt;/em&gt;{x}}{(1+ds)\cdot cosd\beta }-b&lt;em&gt;{3}y&lt;/em&gt;{0})Y&lt;em&gt;{s}+(\frac{c&lt;/em&gt;{2}f&lt;em&gt;{x}}{(1+ds)\cdot cosd\beta }-c&lt;/em&gt;{3}y&lt;em&gt;{0})Z&lt;/em&gt;{s}]=-(l&lt;em&gt;{5}X&lt;/em&gt;{s}+l&lt;em&gt;{6}Y&lt;/em&gt;{s}+l&lt;em&gt;{7}Z&lt;/em&gt;{s})$$&lt;/p&gt;
+&lt;p&gt;$$!l&lt;em&gt;{4}=\frac{1}{r&lt;/em&gt;{3}}(r&lt;em&gt;{1}f&lt;/em&gt;{x}-r&lt;em&gt;{2}f&lt;/em&gt;{x}tand\beta -r&lt;em&gt;{3}x&lt;/em&gt;{0})=-(l&lt;em&gt;{1}X&lt;/em&gt;{s}+l&lt;em&gt;{2}Y&lt;/em&gt;{s}+l&lt;em&gt;{3}Z&lt;/em&gt;{s})$$&lt;/p&gt;
+&lt;p&gt;由于未知数是11个，因此最少需要布置6个控制点。&lt;/p&gt;
+&lt;p&gt;值得一提的是，像主点的求解公式与没有畸变参与&lt;a name=&quot;包含2项因素的Li表达内外参数&quot;&gt;相同&lt;/a&gt;，&lt;/p&gt;
+&lt;p&gt;$$!x&lt;em&gt;{0}=-(L&lt;/em&gt;{1}L&lt;em&gt;{9}+L&lt;/em&gt;{2}L&lt;em&gt;{10}+L&lt;/em&gt;{3}L&lt;em&gt;{11})/(L&lt;/em&gt;{9}^{2}+&lt;em&gt;{10}^{2}+L&lt;/em&gt;{11}^{2})$$&lt;/p&gt;
+&lt;p&gt;$$!y&lt;em&gt;{0}=-(L&lt;/em&gt;{5}L&lt;em&gt;{9}+L&lt;/em&gt;{6}L&lt;em&gt;{10}+L&lt;/em&gt;{7}L&lt;em&gt;{11})/(L&lt;/em&gt;{9}^{2}+&lt;em&gt;{10}^{2}+L&lt;/em&gt;{11}^{2})$$&lt;/p&gt;
+&lt;p&gt;最重要的ds和dβ，设：&lt;/p&gt;
+&lt;p&gt;$$!\overline{A}=r&lt;em&gt;{3}^{2}(l&lt;/em&gt;{1}^{2}+l&lt;em&gt;{2}^{2}+l&lt;/em&gt;{3}^{2})-x&lt;em&gt;{0}^{2}=\frac{f&lt;/em&gt;{x}^{2}}{cos^{2}d\beta }$$&lt;/p&gt;
+&lt;p&gt;$$!B=r&lt;em&gt;{3}^{2}(l&lt;/em&gt;{5}^{2}+l&lt;em&gt;{6}^{2}+l&lt;/em&gt;{7}^{2})-y&lt;em&gt;{0}^{2}=\frac{f&lt;/em&gt;{x}^{2}}{(1+ds)^{2}cos^{2}d\beta }$$&lt;/p&gt;
+&lt;p&gt;$$!C=r&lt;em&gt;{3}^{2}(l&lt;/em&gt;{1}l&lt;em&gt;{5}+l&lt;/em&gt;{2}l&lt;em&gt;{6}+l&lt;/em&gt;{3}l&lt;em&gt;{7})-x&lt;/em&gt;{0}y&lt;em&gt;{0}=\frac{-f&lt;/em&gt;{x}^{2}sind\beta }{(1+ds)cos^{2}d\beta }$$&lt;/p&gt;
+&lt;p&gt;$$!ds=\sqrt{\frac{\overline{A}}{B}-1}$$&lt;/p&gt;
+&lt;p&gt;$$!sind\beta =\pm \sqrt{\frac{C^{2}}{\overline{A}B}}$$&lt;/p&gt;
+&lt;p&gt;而主距的公式变为：&lt;/p&gt;
+&lt;p&gt;$$!f_{x}=\sqrt{\overline{A}}cosd\beta $$&lt;/p&gt;
+&lt;p&gt;$$!f&lt;em&gt;{y}=\frac{f&lt;/em&gt;{x}}{1+ds}$$&lt;/p&gt;
+&lt;p&gt;外方位角元素：&lt;/p&gt;
+&lt;p&gt;$$!tan\varphi =\frac{a&lt;em&gt;{3}}{c&lt;/em&gt;{3}}$$&lt;/p&gt;
+&lt;p&gt;$$!sin\omega =-b_{3}$$&lt;/p&gt;
+&lt;p&gt;$$!tan\kappa =\frac{b&lt;em&gt;{1}}{b&lt;/em&gt;{2}}$$&lt;/p&gt;
+&lt;p&gt;其中，$$a&lt;em&gt;{3}=r&lt;/em&gt;{3}l&lt;em&gt;{9},b&lt;/em&gt;{3}=r&lt;em&gt;{3}l&lt;/em&gt;{10},c&lt;em&gt;{3}=r&lt;/em&gt;{3}l_{11}$$&lt;/p&gt;
+&lt;p&gt;而外方位线元素由以下三个式子构成：&lt;/p&gt;
+&lt;p&gt;$$!l&lt;em&gt;{1}X&lt;/em&gt;{s}+l&lt;em&gt;{2}Y&lt;/em&gt;{s}+l&lt;em&gt;{3}Z&lt;/em&gt;{s}=-l_{4}$$&lt;/p&gt;
+&lt;p&gt;$$!l&lt;em&gt;{5}X&lt;/em&gt;{s}+l&lt;em&gt;{6}Y&lt;/em&gt;{s}+l&lt;em&gt;{7}Z&lt;/em&gt;{s}=-l_{8}$$&lt;/p&gt;
+&lt;p&gt;$$!l&lt;em&gt;{9}X&lt;/em&gt;{s}+l&lt;em&gt;{10}Y&lt;/em&gt;{s}+l&lt;em&gt;{11}Z&lt;/em&gt;{s}=\frac{a&lt;em&gt;{3}}{r&lt;/em&gt;{3}}X&lt;em&gt;{s}+\frac{b&lt;/em&gt;{3}}{r&lt;em&gt;{3}}Y&lt;/em&gt;{s}+\frac{c&lt;em&gt;{3}}{r&lt;/em&gt;{3}}Z&lt;em&gt;{s}=-\frac{a&lt;/em&gt;{3}Xs+b&lt;em&gt;{3}Y&lt;/em&gt;{s}+c&lt;em&gt;{3}Z&lt;/em&gt;{s}}{a&lt;em&gt;{3}Xs+b&lt;/em&gt;{3}Y&lt;em&gt;{s}+c&lt;/em&gt;{3}Z_{s}}=-1$$&lt;/p&gt;
+&lt;p&gt;到这里，能解求出包含非正交比例和xy不一致比例，但缺乏了对镜头畸变的改正。若将镜头畸变写入DLT方程式，则变为：&lt;/p&gt;
+&lt;p&gt;$$!x+v&lt;em&gt;{x}+\Delta x+\frac{l&lt;/em&gt;{1}X+l&lt;em&gt;{2}Y+l&lt;/em&gt;{3}Z+l&lt;em&gt;{4}}{l&lt;/em&gt;{9}X+l&lt;em&gt;{10}Y+l&lt;/em&gt;{11}Z+1}=0$$&lt;/p&gt;
+&lt;p&gt;$$!y+v&lt;em&gt;{y}+\Delta y+\frac{l&lt;/em&gt;{5}X+l&lt;em&gt;{6}Y+l&lt;/em&gt;{7}Z+l&lt;em&gt;{8}}{l&lt;/em&gt;{9}X+l&lt;em&gt;{10}Y+l&lt;/em&gt;{11}Z+1}=0$$&lt;/p&gt;
+&lt;p&gt;其中，vx vy是残差，△x △y是畸变的改正数，若忽略切向畸变且只去一项径向畸变的参数作为例子，&lt;/p&gt;
+&lt;p&gt;$$!\left{\begin{matrix}\Delta x=(x-x&lt;em&gt;{0})r^{2}k&lt;/em&gt;{1}\\Delta y=(y-y&lt;em&gt;{0})r^{2}k&lt;/em&gt;{1}\end{matrix}\right.$$&lt;/p&gt;
+&lt;p&gt;再令$$A=l&lt;em&gt;{9}X+l&lt;/em&gt;{10}Y+l_{11}Z+1$$&lt;/p&gt;
+&lt;p&gt;以li为未知数，列误差方程，则DLT&lt;a name=&quot;包含畸变参数校正的DLT&quot;&gt;公式可化简为&lt;/a&gt;：&lt;/p&gt;
+&lt;p&gt;$$!v&lt;em&gt;{x}=-\frac{1}{A}[Xl&lt;/em&gt;{1}+Yl&lt;em&gt;{2}+Zl&lt;/em&gt;{3}+l&lt;em&gt;{4}+xXl&lt;/em&gt;{9}+xYl&lt;em&gt;{10}+xZl&lt;/em&gt;{11}+A(x-x&lt;em&gt;{0}^{2})r^{2}k&lt;/em&gt;{1}+x]$$&lt;/p&gt;
+&lt;p&gt;$$!v&lt;em&gt;{y}=-\frac{1}{A}[Xl&lt;/em&gt;{5}+Yl&lt;em&gt;{6}+Zl&lt;/em&gt;{7}+l&lt;em&gt;{8}+yXl&lt;/em&gt;{9}+yYl&lt;em&gt;{10}+yZl&lt;/em&gt;{11}+A(y-y&lt;em&gt;{0}^{2})r^{2}k&lt;/em&gt;{1}+x]$$&lt;/p&gt;
+&lt;p&gt;矩阵的形式则可写为（以物方坐标表示像点坐标）：&lt;/p&gt;
+&lt;font color=&quot;#FF0000&quot;&gt;$$!\begin{bmatrix}v&lt;em&gt;{x}\v&lt;/em&gt;{y}\end{bmatrix}=\begin{bmatrix}\frac{X}{A}&amp;amp;\frac{Y}{A}&amp;amp;\frac{Z}{A}&amp;amp;\frac{1}{A}&amp;amp;0&amp;amp;0&amp;amp;0&amp;amp;0&amp;amp;\frac{xX}{A}&amp;amp;\frac{xY}{A}&amp;amp;\frac{xZ}{A}&amp;amp;(x-x&lt;em&gt;{0})r^{2}\0&amp;amp;0&amp;amp;0&amp;amp;0&amp;amp;\frac{X}{A}&amp;amp;\frac{Y}{A}&amp;amp;\frac{Z}{A}&amp;amp;\frac{1}{A}&amp;amp;\frac{yX}{A}&amp;amp;\frac{yY}{A}&amp;amp;\frac{yZ}{A}&amp;amp;(y-y&lt;/em&gt;{0})r^{2}\end{bmatrix}\begin{bmatrix}l&lt;em&gt;{1}\l&lt;/em&gt;{2}\l&lt;em&gt;{3}\l&lt;/em&gt;{4}\l&lt;em&gt;{5}\l&lt;/em&gt;{6}\l&lt;em&gt;{7}\l&lt;/em&gt;{8}\l&lt;em&gt;{9}\l&lt;/em&gt;{10}\l&lt;em&gt;{11}\k&lt;/em&gt;{1}\end{bmatrix}-\begin{bmatrix}\frac{x}{A}\\frac{y}{A}\end{bmatrix}$$&lt;/font&gt;
+
+&lt;p&gt;可简写为:&lt;/p&gt;
+&lt;p&gt;$$!V=AL+BX-W$$&lt;/p&gt;
+&lt;p&gt;其中L是11个（二维DLT是可能是8个）li参数，X是单独提出来计算的畸变系数，在后交时通常加载改正数值里，当学要加入更多畸变参数时，需要确定更多的B矩阵中的形式。W一般是x/A,y/A.&lt;/p&gt;
+&lt;p&gt;A和B的求取也是迭代计算，每次迭代A的值计算是通过控制点求得的。对不同控制点像点坐标列误差方程，A的值也不同。&lt;/p&gt;
+&lt;p&gt;简单提一下以像方坐标表示物放坐标的DLT公式：&lt;/p&gt;
+&lt;p&gt;$$!(l&lt;em&gt;{1}+\overline{x}l&lt;/em&gt;{9})X+(l&lt;em&gt;{2}+\overline{x}l&lt;/em&gt;{10})Y+(l&lt;em&gt;{3}+\overline{x}l&lt;/em&gt;{11})Z+(l_{4}+\overline{x})=0$$&lt;/p&gt;
+&lt;p&gt;$$!(l&lt;em&gt;{5}+\overline{y}l&lt;/em&gt;{9})X+(l&lt;em&gt;{6}+\overline{y}l&lt;/em&gt;{10})Y+(l&lt;em&gt;{7}+\overline{y}l&lt;/em&gt;{11})Z+(l_{8}+\overline{y})=0$$&lt;/p&gt;
+&lt;p&gt;直接线性变换的精度：可提供1/5000摄影距离精度的测量成果。影响DLT解法精度的是：控制点分布数量质量、像点坐标的测量精度、两张相片主光轴的交会角、像片张数、非线性畸变误差的改正数。&lt;/p&gt;
+&lt;div class=&quot;PoweredByWebStory&quot; style=&quot;margin-top:15px;margin-bottom:10px&quot;&gt;&lt;a href=&quot;http://sns.juziyue.com/webinvite.php?u=94887&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;&lt;/a&gt;&amp;nbsp;今天你&lt;a href=&quot;http://sns.juziyue.com/webinvite.php?u=94887&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;菊子曰&lt;/a&gt;了么？&lt;/div&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;除了后方交会之外，常用的进行内外参数检校的方法还有DLT和角锥体法。&lt;/p&gt;
+&lt;p&gt;写在前面：DLT可在&lt;font color=&quot;#FF0000&quot;&gt;未提供初值&lt;/font&gt;的情况下推导内外方位元素，同时&lt;font color=&quot;#FF0000&quot;&gt;不需要迭代&lt;/font&gt;，但
+    
+    </summary>
+    
+      <category term="什么都学一下" scheme="http://ovjaywang.github.io/categories/%E4%BB%80%E4%B9%88%E9%83%BD%E5%AD%A6%E4%B8%80%E4%B8%8B/"/>
+    
+      <category term="学习log" scheme="http://ovjaywang.github.io/categories/%E4%BB%80%E4%B9%88%E9%83%BD%E5%AD%A6%E4%B8%80%E4%B8%8B/%E5%AD%A6%E4%B9%A0log/"/>
+    
+    
+      <category term="检校" scheme="http://ovjaywang.github.io/tags/%E6%A3%80%E6%A0%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>后方交会检校(5)--多片后方交会&amp;相对绝对定向</title>
+    <link href="http://ovjaywang.github.io/2015/11/04/%E5%90%8E%E6%96%B9%E4%BA%A4%E4%BC%9A%E6%A3%80%E6%A0%A1(5)--%E5%A4%9A%E7%89%87%E5%90%8E%E6%96%B9%E4%BA%A4%E4%BC%9A%20%E7%9B%B8%E5%AF%B9%E7%BB%9D%E5%AF%B9%E5%AE%9A%E5%90%91/"/>
+    <id>http://ovjaywang.github.io/2015/11/04/后方交会检校(5)--多片后方交会 相对绝对定向/</id>
+    <published>2015-11-04T04:00:00.000Z</published>
+    <updated>2016-04-28T16:36:57.000Z</updated>
+    
+    <content type="html">&lt;p&gt;&lt;a href=&quot;#多片交会&quot;&gt;多片检校方程&lt;/a&gt;&amp;nbsp;&lt;a href=&quot;#相对定向完成标志&quot;&gt;相对定向完成标志&lt;/a&gt;&amp;nbsp;&amp;nbsp;&lt;a href=&quot;#两种方式&quot;&gt;相对定向解答的两种方式&lt;/a&gt;&amp;nbsp;&lt;a href=&quot;#图解&quot;&gt;图解连续像片和单独像对&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;单片检校主要目的是精确测量相机的内方位元素和检校相机镜头畸变。由于只使用一幅影像进行参数的解算，使用了较少的几何约束条件和观测值，最容易产生内方位元素x0 y0 与外方位元素Xs Ys的不定解或强相关，使检校结果稳定性和可靠性受到影响。多片后方交会则可以更精确的解算这些参数，尤其是&lt;font color=&quot;#FF0000&quot;&gt;主点位置的精度&lt;/font&gt;问题。多片空间后方交会与单片空间后方交会的根本区别是：在不同的位置拍摄多张照片，由于各像片在同一主距条件下拍摄，因而解算所得的各相片的&lt;font color=&quot;#FF0000&quot;&gt;外方位元素不同&lt;/font&gt;，解算的&lt;font color=&quot;#FF0000&quot;&gt;内方位元素和畸变参数被认为相同&lt;/font&gt;。&lt;/p&gt;
+&lt;p&gt;这样，就可以用下式方程表达&lt;a name=&quot;多片交会&quot;&gt;多片交会&lt;/a&gt;：&lt;/p&gt;
+&lt;p&gt;$$!\begin{bmatrix}A&lt;em&gt;{I}&amp;amp;0&amp;amp;\cdot&amp;amp;\cdot&amp;amp;\cdot&amp;amp;0&amp;amp;B&lt;/em&gt;{I}&amp;amp;C&lt;em&gt;{I}\0&amp;amp;A&lt;/em&gt;{II}&amp;amp;.&amp;amp;.&amp;amp;.&amp;amp;0&amp;amp;B&lt;em&gt;{II}&amp;amp;C&lt;/em&gt;{II}\.&amp;amp;.&amp;amp; &amp;amp; &amp;amp; &amp;amp;0&amp;amp;.&amp;amp;.\.&amp;amp;.&amp;amp; &amp;amp; &amp;amp; &amp;amp;0&amp;amp;.&amp;amp;.\0&amp;amp;.&amp;amp;.&amp;amp;.&amp;amp;.&amp;amp;A&lt;em&gt;{n}&amp;amp;B&lt;/em&gt;{n}&amp;amp;C&lt;em&gt;{n}\end{bmatrix}&lt;/em&gt;{2n\times (6n+7)}\begin{bmatrix}X&lt;em&gt;{out&lt;/em&gt;{I}}\X&lt;em&gt;{out&lt;/em&gt;{II}}\.\.\.\X&lt;em&gt;{out&lt;/em&gt;{n}}\X&lt;em&gt;{in}\X&lt;/em&gt;{res}\end{bmatrix}&lt;em&gt;{(6n+7)\times1}-\begin{bmatrix}xy&lt;/em&gt;{res 1}\xy&lt;em&gt;{res 2}\.\.\.\xy&lt;/em&gt;{res n}\end{bmatrix}_{2\times1}=0$$&lt;/p&gt;
+&lt;p&gt;这一点与图像配准极其相似，用一副影像作为参考影像去配准多幅图像的结果显然没有用周边多幅图像组为参考标准的结果令人信服。由于每张相片的外方位元素不同（一般都是围绕检校场左中右进行拍摄），所以良好的消除了外方位元素和内方位元素的强相关性。&lt;/p&gt;
+&lt;p&gt;针对多片，提出了相对定向和绝对定向的概念，绝对定向即利用共线方程检校计算出的外方位元素绝对值，这是以物方坐标系的原点作为参考值；而相对定向则是以被检校出的某一张像片为参考，计算出其余像片在其坐标系的坐标值，即相对关系。相对关系的求取的精度对图像拼接有至关重要的影像。&lt;/p&gt;
+&lt;p&gt;&lt;a name=&quot;相对定向完成标志&quot;&gt;&lt;font color=&quot;#FF0000&quot;&gt;相对定向完成的标志&lt;/font&gt;&lt;/a&gt;：同名光线对对相交。所有点在其承影面上的上下视差为零。即通过矩阵变换改变投影器的相对位置，使光线相交。&lt;font color=&quot;#FF0000&quot;&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/font&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a name=&quot;两种方式&quot;&gt;&lt;font color=&quot;#FF0000&quot;&gt;相对定向有两种方式&lt;/font&gt;&lt;/a&gt;：①根据单片分别解算出的不同像片（可以使同相机可以不同）物方坐标系下的外方位元素绝对值，计算相对定向的五个元素，By,Bz,φ2，ω2，k2;或多片解算的某一相机的物方绝对值（必须统一相机，保证内方位元素相同），同样计算相对定向元素。可以作为航拍的连续拍摄的相对方位的确定，也可以作为立体固定的某些相机之间的相对方位的确定②直接根据同名点的像点坐标（6组以上），计算相对定向的旋转矩阵[R|t]，&lt;font color=&quot;#FF0000&quot;&gt;不需要地面控制点！&lt;/font&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;a name=&quot;图解&quot;&gt;图解①方式的连续像对和单独像对&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;上面提到的连续像对，如下图所示，By Bz决定了摄影基线（即摄影中心移动的向量），φ2，ω2，k2决定了右片光束对于左光束的旋转。固定一个光束，旋转和移动第二个，便可以确定两个光束之间的相对方位，第三张相片可以和第二张相片确定相对方位，一次类推，所形成的相对方位元素称为连续像对系统。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ww4.sinaimg.cn/large/68eb7c93gw1eyb8jft5rpj20ln0fmgoj.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;而单独相对，即可以取左片摄影中心XZ平面为主核面，摄影基线为X轴的右手空间直角坐标系。由φ1，ω1，k1,φ2，ω2，k2组成。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ww3.sinaimg.cn/large/68eb7c93gw1eyb93i6vwcj20lg0d0dii.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;相对定向共面条件&lt;/p&gt;
+&lt;p&gt;在相对定向中，答解相对元素的重要依据就是共面条件，当光线相交时，易知B（摄影基线，即S1S2）,S1a1,S2a2共面。如图可以看到，解求相对定向元素就是解求两个摄影中心的像方辅助坐标系的转换。共面条件方程形式为：&lt;/p&gt;
+&lt;p&gt;$$!\overrightarrow{S&lt;em&gt;{1}S&lt;/em&gt;{2}}\cdot (\overrightarrow{S&lt;em&gt;{1}a&lt;/em&gt;{1}}\times \overrightarrow{S&lt;em&gt;{2}a&lt;/em&gt;{2}})=0$$&lt;/p&gt;
+&lt;p&gt;共面条件方程无需地面控制点，一个同名点列一个方程。必须有5个以上定向点。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://ww4.sinaimg.cn/large/68eb7c93gw1eyb9drztouj20lz0ig782.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;如图，设像点a1、a2在大地坐标系坐标分别为(X1,Y1,Z1)、(X2,Y2,Z2).摄站S1、S2在大地坐标系坐标分别为$$(X&lt;em&gt;{S1},Y&lt;/em&gt;{S1},Z&lt;em&gt;{S1}),(X&lt;/em&gt;{S2},Y&lt;em&gt;{S2},Z&lt;/em&gt;{S2})$$,则上式在即可表示为向量形式的行列式。&lt;/p&gt;
+&lt;p&gt;$$!\begin{vmatrix}X&lt;em&gt;{S2}-X&lt;/em&gt;{S1}&amp;amp;Y&lt;em&gt;{S2}-Y&lt;/em&gt;{S1}&amp;amp;Z&lt;em&gt;{S2}-Z&lt;/em&gt;{S1}\X&lt;em&gt;{1}-X&lt;/em&gt;{S1}&amp;amp;Y&lt;em&gt;{1}-Y&lt;/em&gt;{S1}&amp;amp;Z&lt;em&gt;{1}-Z&lt;/em&gt;{S1}\X&lt;em&gt;{2}-X&lt;/em&gt;{S2}&amp;amp;Y&lt;em&gt;{2}-Y&lt;/em&gt;{S2}&amp;amp;Z&lt;em&gt;{2}-Z&lt;/em&gt;{S2}\end{vmatrix}$$&lt;/p&gt;
+&lt;p&gt;又令(X,Y,Z)、(Bx,By,Bz)为a1,S2在S1的像辅系S1-XYZ中的坐标，(X’,Y’,Z’)为a2在S2像辅系S2-XYZ中的坐标。由三点共面的方程，&lt;/p&gt;
+&lt;p&gt;$$!\begin{vmatrix}B&lt;em&gt;{X}&amp;amp;B&lt;/em&gt;{Y}&amp;amp;B_{Z}\X&amp;amp;Y&amp;amp;Z\X’&amp;amp;Y’&amp;amp;Z’\end{vmatrix}=0$$上式可改写为：&lt;/p&gt;
+&lt;p&gt;$$!\begin{bmatrix}B&lt;em&gt;{X}&amp;amp;B&lt;/em&gt;{Y}&amp;amp;B_{Z}\end{bmatrix}\begin{bmatrix}0&amp;amp;-Z&amp;amp;Y\Z&amp;amp;0&amp;amp;-X\-Y&amp;amp;X&amp;amp;0\end{bmatrix}\begin{bmatrix}X’\Y’\Z’\end{bmatrix}=0$$&lt;/p&gt;
+&lt;p&gt;光线是否成对相交与摄影测量坐标系的选择无关，但可以&lt;font color=&quot;#FF0000&quot;&gt;选择适当的像辅系&lt;/font&gt;，改变共面条件便于实际应用。&lt;/p&gt;
+&lt;p&gt;（1）&lt;font color=&quot;#FF0000&quot;&gt;选择左侧像空系&lt;/font&gt;——连续像对系统。此时R1=E，即左系的旋转矩阵为0，像平面的z坐标均为-f；或为右片的旋转矩阵。则，公式未改变。&lt;/p&gt;
+&lt;p&gt;$$!\begin{vmatrix}B&lt;em&gt;{X}&amp;amp;B&lt;/em&gt;{Y}&amp;amp;B_{Z}\X&amp;amp;Y&amp;amp;Z\X’&amp;amp;Y’&amp;amp;Z’\end{vmatrix}=0$$&lt;/p&gt;
+&lt;p&gt;（2）选择基线坐标系——单独像对系统。此时，$$B&lt;em&gt;{Y}=B&lt;/em&gt;{Z}=0$$，即需要求取两个像片对基线坐标系的旋转。&lt;/p&gt;
+&lt;div class=&quot;PoweredByWebStory&quot; style=&quot;margin-top:15px;margin-bottom:10px&quot;&gt;&lt;a href=&quot;http://sns.juziyue.com/webinvite.php?u=94887&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;&lt;/a&gt;&amp;nbsp;今天你&lt;a href=&quot;http://sns.juziyue.com/webinvite.php?u=94887&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;菊子曰&lt;/a&gt;了么？&lt;/div&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;#多片交会&quot;&gt;多片检校方程&lt;/a&gt;&amp;nbsp;&lt;a href=&quot;#相对定向完成标志&quot;&gt;相对定向完成标志&lt;/a&gt;&amp;nbsp;&amp;nbsp;&lt;a href=&quot;#两种方式&quot;&gt;相对定向解答的两种方式&lt;/a&gt;&amp;nbsp;&lt;a href=&quot;#图解&quot;&gt;图解连续像片和单独像
+    
+    </summary>
+    
+      <category term="什么都学一下" scheme="http://ovjaywang.github.io/categories/%E4%BB%80%E4%B9%88%E9%83%BD%E5%AD%A6%E4%B8%80%E4%B8%8B/"/>
+    
+      <category term="学习log" scheme="http://ovjaywang.github.io/categories/%E4%BB%80%E4%B9%88%E9%83%BD%E5%AD%A6%E4%B8%80%E4%B8%8B/%E5%AD%A6%E4%B9%A0log/"/>
+    
+    
+      <category term="后方交会" scheme="http://ovjaywang.github.io/tags/%E5%90%8E%E6%96%B9%E4%BA%A4%E4%BC%9A/"/>
+    
+  </entry>
+  
+</feed>

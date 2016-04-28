@@ -1,0 +1,853 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.useso.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="java,bae,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ov智商捉急" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="1.要加入session的话需要在duapp.xml中加入2.不能部署在本机tomcat的问题 以myeclipse为例在项目根目录的 .mymetadata中id=”XXX”后面 加入 context-root=”/项目名字”（不带后缀，随便起名字 最好和 name=”XX”中一样）3.log4j要参考文档进行配置。否则直接使用会有异常抛出。4.连接云百度数据库 必须要在百度的云环境（即svn或">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于bae的java环境下的几点提示">
+<meta property="og:url" content="http://ovjaywang.github.io/2013/05/08/bae-java/index.html">
+<meta property="og:site_name" content="ov智商捉急">
+<meta property="og:description" content="1.要加入session的话需要在duapp.xml中加入2.不能部署在本机tomcat的问题 以myeclipse为例在项目根目录的 .mymetadata中id=”XXX”后面 加入 context-root=”/项目名字”（不带后缀，随便起名字 最好和 name=”XX”中一样）3.log4j要参考文档进行配置。否则直接使用会有异常抛出。4.连接云百度数据库 必须要在百度的云环境（即svn或">
+<meta property="og:image" content="http://i1061.photobucket.com/albums/t476/ov_beeshoot/bae90E87F72.jpg">
+<meta property="og:image" content="http://i1061.photobucket.com/albums/t476/ov_beeshoot/bae768457FA672C4FE1606F.jpg">
+<meta property="og:image" content="http://i1061.photobucket.com/albums/t476/ov_beeshoot/bae6570636E5E93.jpg">
+<meta property="og:updated_time" content="2016-04-28T16:36:57.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于bae的java环境下的几点提示">
+<meta name="twitter:description" content="1.要加入session的话需要在duapp.xml中加入2.不能部署在本机tomcat的问题 以myeclipse为例在项目根目录的 .mymetadata中id=”XXX”后面 加入 context-root=”/项目名字”（不带后缀，随便起名字 最好和 name=”XX”中一样）3.log4j要参考文档进行配置。否则直接使用会有异常抛出。4.连接云百度数据库 必须要在百度的云环境（即svn或">
+<meta name="twitter:image" content="http://i1061.photobucket.com/albums/t476/ov_beeshoot/bae90E87F72.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 关于bae的java环境下的几点提示 | ov智商捉急 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+    <div class="site-meta-headline">
+      <a>
+        <img class="custom-logo-image" src="/images/touxiang.jpg" alt="ov智商捉急">
+      </a>
+    </div>
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">ov智商捉急</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/me" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sth">
+          <a href="/sth" rel="section">
+            
+              <i class="menu-item-icon fa fa-child fa-fw"></i> <br>
+            
+            有料
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ZtWPUvzBjdXDQ7iNrTbW','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                关于bae的java环境下的几点提示
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-05-08T12:09:32+08:00" content="2013-05-08">
+              2013-05-08
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/代码狗/" itemprop="url" rel="index">
+                    <span itemprop="name">代码狗</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/代码狗/学习log/" itemprop="url" rel="index">
+                    <span itemprop="name">学习log</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/05/08/bae-java/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/05/08/bae-java/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>1.要加入session的话需要在duapp.xml中加入<br>2.不能部署在本机tomcat的问题 以myeclipse为例<br>在项目根目录的 .mymetadata中id=”XXX”后面 加入 context-root=”/项目名字”（不带后缀，随便起名字 最好和 name=”XX”中一样）<img src="http://i1061.photobucket.com/albums/t476/ov_beeshoot/bae90E87F72.jpg" alt="bae的本机部署"><br>3.log4j要参考文档进行配置。否则直接使用会有异常抛出。<br>4.连接云百度数据库 必须要在百度的云环境（即svn或者git在本地编辑的工程。BaeEnv是云环境的变量 不用导入包即可使用）<br>注意的是 连接云数库只能在云环境使用 使用tomcat等在本地的无法连接云数据库。<br>在java环境中为例：<br>在云环境基本信息中获取ApIkey 和secretKey<img src="http://i1061.photobucket.com/albums/t476/ov_beeshoot/bae768457FA672C4FE1606F.jpg" alt="bae基本信息"><br>在版本管理中新建一个版本 并在本地用svn同步（不知道什么是svn…算了）<br>在云数据库中新建一个数据库 可以获取免费的1G配额<br>数据库可以利用phpAdmin管理 也可以在本地建好导出sql脚本（最好在本地建好 否则phpAdmin比较难操作 在本地可以利用MysqlFont我比较喜欢这个）如图建立了一个User表 里面有username和password两个字段<br><img src="http://i1061.photobucket.com/albums/t476/ov_beeshoot/bae6570636E5E93.jpg" alt="bae数据库"><br>在同步的javaweb中建以下几个东西<br>一个DBManager.java以连接数据库</p>
+<p>‘’’java<br>import java.sql.DriverManager;<br>import java.sql.SQLException;<br>import com.mysql.jdbc.Connection;<br>public class  DBManager {<br>    private static Connection con=null;<br>    /**</p>
+<pre><code> * 
+ * 构造方法私有 外部方法不能创建对象
+ * @author Wjy
+ * 懒汉单态模式
+ */
+private DBManager()
+{}
+public synchronized static Connection getCon() 
+    throws ClassNotFoundException, SQLException
+{
+</code></pre><p>//      String host = BaeEnv.getBaeHeader(BaeEnv.BAE_ENV_ADDR_SQL_IP);<br>//      String port = BaeEnv.getBaeHeader(BaeEnv.BAE_ENV_ADDR_SQL_PORT);<br>//      String username = BaeEnv.getBaeHeader(BaeEnv.BAE_ENV_AK);<br>//      String password = BaeEnv.getBaeHeader(BaeEnv.BAE_ENV_SK);<br>          String DRIVERNAME = &quot;com.mysql.jdbc.Driver&quot;;<br>          String URL = &quot;jdbc:mysql://sqld.duapp.com:4050/rMDtIBgOtaeTHVuKjaep&quot;;<br>          String USER = &quot;uK2b4AyjaNTGCcxUbR9Drmo8&quot;;<br>          String PWD = &quot;LGN4LjqH0bTFMGhtTMoQMCeDFQ6tzeRW&quot;;<br>        //String driverName = &quot;com.mysql.jdbc.Driver&quot;;<br>        //String dbUrl = &quot;jdbc:mysql://&quot;;<br>        //String serverName = host + &quot;:&quot; + port + &quot;/&quot;;<br>            //从平台查询应用要使用的数据库名<br>        String databaseName = &quot;rMDtIBgOtaeTHVuKjaep&quot;;<br>        //String connName = dbUrl + serverName + databaseName;<br>        Connection connection = null;<br>        Class.forName(DRIVERNAME);<br>        connection = (Connection) DriverManager.getConnection(URL, USER,PWD); // 链接数据库<br>        if(connection!=null){return connection;}<br>        else{return null;}//具体的数据库操作逻辑</p>
+<pre><code>} 
+</code></pre><p>}<br>‘’’</p>
+<p>一个实体类User.java</p>
+<p>‘’’java<br>public class User {<br>    private String userName;<br>    private String psw;<br>    public String getUserName() {<br>        return userName;<br>    }<br>    public void setUserName(String userName) {<br>        this.userName = userName;<br>    }<br>    public String getPsw() {<br>        return psw;<br>    }<br>    public void setPsw(String psw) {<br>        this.psw = psw;<br>    }<br>    public User(String userName, String psw) {<br>        super();<br>        this.userName = userName;<br>        this.psw = psw;<br>    }<br>    @Override<br>    public String toString() {<br>        return &quot;User [userName=&quot; + userName + &quot;, psw=&quot; + psw + &quot;]&quot;;<br>    }</p>
+<p>}<br>‘’’</p>
+<p>一个把sql查询的结果集转换成实体类的接口和实现类<br>EntityMapping .java</p>
+<p>‘’’java<br>import java.sql.ResultSet;<br>import java.sql.SQLException;<br>public interface EntityMapping {<br>    public Object mapping(ResultSet rs)throws SQLException ;<br>}<br>‘’’</p>
+<p>UserMapping.java</p>
+<p>‘’’java<br>import java.sql.ResultSet;<br>import java.sql.SQLException;<br>public class UserMapping  implements EntityMapping{</p>
+<pre><code>@Override
+public User mapping(ResultSet rs) throws SQLException {
+    int i = 1;
+    User user = new User(rs.getString(i++),rs.getString(i++));
+    return user;
+}
+</code></pre><p>}<br>‘’’</p>
+<p>一个万能！！！的！！！操作数据库的类。。在任何地方也可以使用<br>JdbcTemplate.java</p>
+<p>‘’’java<br>import java.sql.Connection;<br>import java.sql.PreparedStatement;<br>import java.sql.ResultSet;<br>import java.sql.SQLException;<br>import java.util.ArrayList;<br>import java.util.List;<br>import java.util.Vector;</p>
+<p>//代替原来DBmamager功能<br>public class JdbcTemplate {<br>    public  boolean update(String sql,Object… values) throws ClassNotFoundException, SQLException<br>    {<br>        PreparedStatement psta=null;<br>        int row=0;<br>        try {<br>            Connection con=DBManager.getCon();<br>            psta= con.prepareStatement(sql);<br>                for (int i = 0; i &lt; values.length; i++) {<br>                psta.setObject(i+1, values[i]);<br>            }<br>            row=psta.executeUpdate();<br>        } catch (Exception e) {<br>            // TODO: handle exception<br>        }finally<br>        {<br>            if (psta!=null) {<br>                psta.close();<br>                psta=null;<br>            }<br>        }       </p>
+<pre><code>    return (row==1);
+}
+public List findAll(String sql,EntityMapping EnMp,Object...Objects) throws SQLException
+{   PreparedStatement psta=null;
+    ResultSet rs=null;
+    List list=new Vector();
+    try {
+        Connection con=DBManager.getCon();
+        psta= con.prepareStatement(sql);    
+    for (int i = 0; i &amp;lt; Objects.length; i++) {
+         psta.setObject(i+1, Objects[i]);
+    }
+         rs=psta.executeQuery();
+        if(rs==null)
+        {System.out.println(&amp;quot;为空！&amp;quot;);}
+    while(rs.next())
+    {
+         list.add(EnMp.mapping(rs));
+    }
+
+} catch (Exception e) {
+}finally
+{
+    if (rs!=null) {
+        rs.close();
+        rs=null;
+    }
+    if (psta!=null) {
+        psta.close();
+        psta=null;
+    }
+}       
+    return list;
+}
+</code></pre><p>}<br>‘’’</p>
+<p>连接数据库的servlet<br>GetUser.java</p>
+<p>‘’’java<br>import java.io.IOException;<br>import java.sql.SQLException;<br>import java.util.List;</p>
+<p>import javax.servlet.ServletException;<br>import javax.servlet.http.HttpServlet;<br>import javax.servlet.http.HttpServletRequest;<br>import javax.servlet.http.HttpServletResponse;</p>
+<p>public class GetUser extends HttpServlet {<br>    public GetUser() {<br>        super();<br>    }<br>    public void doGet(HttpServletRequest request, HttpServletResponse response)<br>            throws ServletException, IOException {<br>        this.doPost(request, response);<br>    }<br>    public void doPost(HttpServletRequest request, HttpServletResponse response)<br>            throws ServletException, IOException {<br>         JdbcTemplate template=new JdbcTemplate();<br>         List  list=null;<br>         try {<br>             list=template.findAll(&quot;select * from User&quot;, new UserMapping());<br>        } catch (SQLException e) {<br>            // TODO Auto-generated catch block<br>            e.printStackTrace();}<br>         request.setAttribute(&quot;User&quot;, list);<br>         request.getRequestDispatcher(&quot;/User.jsp&quot;).forward(request, response);}<br>}<br>‘’’</p>
+<p>最后是显示信息的页面User.jsp</p>
+<p>‘’’html<br>&lt;%@ page language=&quot;java&quot; import=&quot;java.util.*,java.net.URL&quot; contentType=&quot;text/html; charset=UTF-8&quot;%&gt;<br>&lt;%@page import=&quot;你的类名！&quot;%&gt;<br>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;<br>&lt;html&gt;<br>  &lt;head&gt;<br>    &lt;title&gt;User&lt;/title&gt;<br>  &lt;/head&gt;<br>  &lt;body&gt;<br>    &lt;%Object info=request.getAttribute(&quot;User&quot;);<br>    if (info!=null)<br>    {  List&lt;User&gt; uu=(List&lt;User&gt;)info;<br>        for (User user : uu) {<br>            %&gt;&lt;%=user%&gt;&lt;br&gt;&lt;%<br>        }}<br>   %&gt;<br>  &lt;/body&gt;<br>&lt;/html&gt;<br>‘’’</p>
+<p>记住的是要把web.xml中的welcome-filelist设成servlet的名字或者直接输入地址<br><a href="http://1.你的app名字.duapp.com/GetUser" target="_blank" rel="external">http://1.你的app名字.duapp.com/GetUser</a></p>
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+            <a href="/tags/bae/" rel="tag">#bae</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/05/08/今日吐槽/" rel="next" title="今日吐槽">
+                <i class="fa fa-chevron-left"></i> 今日吐槽
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/05/08/求解释..布吉岛/" rel="prev" title="求解释..布吉岛">
+                求解释..布吉岛 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2013/05/08/bae-java/" data-title="关于bae的java环境下的几点提示" data-content="" data-url="http://ovjaywang.github.io/2013/05/08/bae-java/">
+  <div class="ds-share-inline">
+    <ul class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2013/05/08/bae-java/" data-title="关于bae的java环境下的几点提示" data-url="http://ovjaywang.github.io/2013/05/08/bae-java/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/xiaozaizi.png" alt="Jay Wang">
+          <p class="site-author-name" itemprop="name">Jay Wang</p>
+          <p class="site-description motion-element" itemprop="description">你猜?</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">102</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ovjaywang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/302060345" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jay Wang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"mimimomo"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax --><!-- hexo-inject:end -->
+
+
+</body>
+</html>

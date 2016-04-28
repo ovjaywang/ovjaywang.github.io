@@ -1,0 +1,975 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.useso.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="后方交会,检校,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ov智商捉急" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="本片涉及前文中叙述到的三个角元素含义及外延，包含与角元素相关的旋转矩阵R并简明介绍几个常用坐标系。
+内容提要：
+几个概念（视场 像场 视场角）&amp;nbsp;
+几个坐标系
+共线方程的推导
+&amp;nbsp;坐标旋转即共线方程的应用
+坐标旋转
+像片水平与倾斜像点坐标的关系
+几个概念：&amp;nbsp;视场：光线通过物镜后，焦面上照度不均匀的光亮圆为镜头的视场。像场：摄影时，影像相当清晰的一部分视场内的光亮圆。视场角">
+<meta property="og:type" content="article">
+<meta property="og:title" content="后方交会检校(3)--角度、坐标及其应用">
+<meta property="og:url" content="http://ovjaywang.github.io/2015/10/28/后方交会检校(3)--角度、坐标及其应用/index.html">
+<meta property="og:site_name" content="ov智商捉急">
+<meta property="og:description" content="本片涉及前文中叙述到的三个角元素含义及外延，包含与角元素相关的旋转矩阵R并简明介绍几个常用坐标系。
+内容提要：
+几个概念（视场 像场 视场角）&amp;nbsp;
+几个坐标系
+共线方程的推导
+&amp;nbsp;坐标旋转即共线方程的应用
+坐标旋转
+像片水平与倾斜像点坐标的关系
+几个概念：&amp;nbsp;视场：光线通过物镜后，焦面上照度不均匀的光亮圆为镜头的视场。像场：摄影时，影像相当清晰的一部分视场内的光亮圆。视场角">
+<meta property="og:image" content="http://www.dooby.me/wp-content/uploads/2015/11/E31B0C36B248ADD81D8147EE808E68085B42914E.jpg">
+<meta property="og:image" content="http://www.dooby.me/wp-content/uploads/2015/11/6E6CFB3A2924474655DD2222F8223CABE46AD6FC.jpg">
+<meta property="og:image" content="http://www.dooby.me/wp-content/uploads/2015/11/B91663ACDA13BB74808431E1CBA1F9DEB72AAA10.jpg">
+<meta property="og:image" content="http://www.dooby.me/wp-content/uploads/2015/11/13598A8CB4E7FDBD56C5B595E2AD0624D9A2FD14.jpg">
+<meta property="og:image" content="http://www.dooby.me/wp-content/uploads/2015/11/1AF795ADEC60BCB2F0396B5F841F4844E636A283.jpg">
+<meta property="og:image" content="http://www.dooby.me/wp-content/uploads/2015/11/7238D8A7EF534575B5EE48B9CCA41FF8E4903B6C.jpg">
+<meta property="og:image" content="http://www.dooby.me/wp-content/uploads/2015/11/5F3074FF98FA07ED1F357962C68FF593E047311B.jpg">
+<meta property="og:image" content="http://www.dooby.me/wp-content/uploads/2015/11/98B5D21FDF0802661E47A2C3089CF683E856F014.jpg">
+<meta property="og:image" content="http://www.dooby.me/wp-content/uploads/2015/11/5A4A8734E57C7C288466AFAF21FE3D1DA7F17C1B.jpg">
+<meta property="og:image" content="http://www.dooby.me/wp-content/uploads/2015/11/9C02C1C63C5D098E97E8A04FBBDFB60F02221B34.jpg">
+<meta property="og:image" content="http://www.dooby.me/wp-content/uploads/2015/11/A203A33F40A9904D7EA2D966CB486C277511405E.jpg">
+<meta property="og:image" content="http://www.dooby.me/wp-content/uploads/2015/11/6F2D6EC82C1793253C32825B3180B3F84A68D11B.jpg">
+<meta property="og:image" content="http://www.dooby.me/wp-content/uploads/2015/11/3669611136A21AC23885E7932C6D17D84AEC1C27.jpg">
+<meta property="og:image" content="http://www.dooby.me/wp-content/uploads/2015/11/3C453D9DA7CF479D4624D8465171F8FAF1F9E701.jpg">
+<meta property="og:image" content="http://www.dooby.me/wp-content/uploads/2015/11/A1BBA5EFFED4F68C01CF47FBC61FC4FA7087739E.jpg">
+<meta property="og:image" content="http://www.dooby.me/wp-content/uploads/2015/11/3C7C83AD827FB7A7BD4108090804ED13131E82D7.jpg">
+<meta property="og:updated_time" content="2016-04-28T16:36:57.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="后方交会检校(3)--角度、坐标及其应用">
+<meta name="twitter:description" content="本片涉及前文中叙述到的三个角元素含义及外延，包含与角元素相关的旋转矩阵R并简明介绍几个常用坐标系。
+内容提要：
+几个概念（视场 像场 视场角）&amp;nbsp;
+几个坐标系
+共线方程的推导
+&amp;nbsp;坐标旋转即共线方程的应用
+坐标旋转
+像片水平与倾斜像点坐标的关系
+几个概念：&amp;nbsp;视场：光线通过物镜后，焦面上照度不均匀的光亮圆为镜头的视场。像场：摄影时，影像相当清晰的一部分视场内的光亮圆。视场角">
+<meta name="twitter:image" content="http://www.dooby.me/wp-content/uploads/2015/11/E31B0C36B248ADD81D8147EE808E68085B42914E.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 后方交会检校(3)--角度、坐标及其应用 | ov智商捉急 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+    <div class="site-meta-headline">
+      <a>
+        <img class="custom-logo-image" src="/images/touxiang.jpg" alt="ov智商捉急">
+      </a>
+    </div>
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">ov智商捉急</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/me" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sth">
+          <a href="/sth" rel="section">
+            
+              <i class="menu-item-icon fa fa-child fa-fw"></i> <br>
+            
+            有料
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ZtWPUvzBjdXDQ7iNrTbW','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                后方交会检校(3)--角度、坐标及其应用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-10-28T19:55:49+08:00" content="2015-10-28">
+              2015-10-28
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/什么都学一下/" itemprop="url" rel="index">
+                    <span itemprop="name">什么都学一下</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/什么都学一下/学习log/" itemprop="url" rel="index">
+                    <span itemprop="name">学习log</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/10/28/后方交会检校(3)--角度、坐标及其应用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/28/后方交会检校(3)--角度、坐标及其应用/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本片涉及前文中叙述到的三个角元素含义及外延，包含与角元素相关的旋转矩阵R并简明介绍几个常用坐标系。</p>
+<p>内容提要：</p>
+<p><a href="#几个概念：">几个概念</a>（视场 像场 视场角）&nbsp;</p>
+<p><a href="#几个坐标系">几个坐标系</a></p>
+<p><a href="#共线方程的推导">共线方程的推导</a></p>
+<p>&nbsp;<a href="#坐标旋转即共线方程的应用">坐标旋转即共线方程的应用</a></p>
+<p><a href="#坐标旋转">坐标旋转</a></p>
+<p><a href="#像片水平与倾斜像点坐标的关系">像片水平与倾斜像点坐标的关系</a></p>
+<font size="5"><strong><a name="几个概念：">几个概念：</a></strong></font>&nbsp;<br><br>视场：光线通过物镜后，焦面上照度不均匀的光亮圆为镜头的视场。<br><br>像场：摄影时，影像相当清晰的一部分视场内的光亮圆。<br><br>视场角（filed of view）：由镜头后节点向市场边缘射出的光线所张开的角，用2β表示。常角&lt;75&deg;，宽角75&deg;~100&deg;，特宽角&gt;100&deg;<br><br><img src="http://www.dooby.me/wp-content/uploads/2015/11/E31B0C36B248ADD81D8147EE808E68085B42914E.jpg" alt=""><br><br>数码相机的瞬时视场角IFOV与空间分辨率的关系：$$R_{g}=2\sqrt{2}IFOV$$<br><br><font size="5"><strong><a name="几个坐标系">几个坐标系：</a></strong></font>
+
+<font color="#FF0000">像素坐标系</font>-2D-IAJ以像片左上角为坐标原点，下为y正，右为x正。坐标一般用(u,v)表示。<br><br>$$x=J\Delta -x<em>{0}$$,$$y=-(I\Delta -y</em>{0})$$<br><br><img src="http://www.dooby.me/wp-content/uploads/2015/11/6E6CFB3A2924474655DD2222F8223CABE46AD6FC.jpg" alt=""><br><br>这里，值得一提的是，坐标单位一般是像素。而一般以中心为基准的坐标系（像平面坐标系，一般用(x,y)表示的单位是毫米。这两个坐标系之间的转换公式形式可以写为:<br><br>$$!\left{\begin{matrix}u=\frac{x}{d<em>{x}}+u</em>{0}=x<em>s<em>{x+u</em>{0}}\v=\frac{y}{d<em>{y}}+v</em>{0}=y</em>s<em>{y}+v</em>{0}\end{matrix}\right.$$<br><br>这里，dx dy分别代表每个像素在横轴x和纵轴y的物理尺寸，单位是mm per pixel。而sx和sy分别是二者的导数。或可以用矩阵的形式：<br><br>$$!\begin{pmatrix}u\v\1\end{pmatrix}=\begin{pmatrix}s<em>{x}&amp;0&amp;c</em>{x}\0&amp;s<em>{y}&amp;c</em>{y}\0&amp;0&amp;1\end{pmatrix}\begin{pmatrix}x\y\1\end{pmatrix}$$<br><br><font color="#FF0000">像空间坐标系</font>-3D-Sxyz表示<font color="#FF0000">像点</font>在<font color="#FF0000">像方空间</font>位置的空间直角坐标系。原点即投影中心，xy轴分别平行于像平面xy轴，z轴即主光轴的方向。在该坐标系中，所有像点的z坐标都是-f。几何含义就是，投影中心在投向焦平面的时候，与设计上认为的像点（像平面几何中心）相比，投偏了多少。像平面坐标+内方位元素就可以定位所有穿过像平面到达物放世界的光束的形状；该坐标系的方位就代表了像片的空间方位，像空间坐标系绕原点的旋转就代表了像片绕投影中心的旋转。下图中S为投影中心，O为投影中心，a为任意一个像点，其坐标为(x,y,-f)<br><br><img src="http://www.dooby.me/wp-content/uploads/2015/11/B91663ACDA13BB74808431E1CBA1F9DEB72AAA10.jpg" alt=""><br><br><font color="#FF0000">物方空间坐标系</font>-3D-O-XdYdZd测绘系统选择一定的原点，进行测绘测量的世界真实坐标，描述点的空间位置。摄影测量的成果最终要转到该坐标系中。<br><br>地面辅助坐标系-3D-O-XtYtZt 一般称地辅系，<font color="#FF0000">Z轴铅锤，X Y轴与物空系平行</font>。在摄影测量中，<font color="#FF0000">原点都默认设为摄影中心S</font>。因此该坐标系<font color="#FF0000">与物空系不需要进行旋转，只需要平移</font>，即坐标轴加减运算。这是中间成果和数学运算常用的坐标系。下图是地辅系、像空系、像平面坐标系在一起的示意图。而共线方程就是依据这几个坐标系空间转换得到的。原理为三角形相似。<br><br><img src="http://www.dooby.me/wp-content/uploads/2015/11/13598A8CB4E7FDBD56C5B595E2AD0624D9A2FD14.jpg" alt=""><br><br><font color="#FF0000">像素坐标系→像平面坐标系（内方位元素）</font>
+
+<font color="#FF0000">地面辅助坐标系→像平面坐标系（外方位元素）</font>
+
+<p>共线方程的物理含义就是三点一线，两点一系（理想状况下，摄影瞬间像点、投影中心位于同一直线。）如图所示：</p>
+<p><img src="http://www.dooby.me/wp-content/uploads/2015/11/1AF795ADEC60BCB2F0396B5F841F4844E636A283.jpg" alt=""></p>
+<p>图中浅蓝色坐标系是<font color="#00FFFF"><u>地辅系</u></font>（这里 地辅系通过投影中心 连接物空系和像空系），a点是像平面上的投影，A点是地面控制点，红色坐标系是<font color="#FF0000"><u>物方空间坐标系</u></font>，黄色坐标是<font color="#FFC800"><u>像空系</u></font>（像空系垂直与像平面），λ即投影比例尺，二维坐标各自成比例，形成了共线方程的最基本形式。也可以用向量的方式来解释。其中Xs &nbsp;Ys&nbsp; Zs是投影中心在物方空间的坐标，$$X<em>{A}&nbsp; Y</em>{A}&nbsp; Z_{A}$$是真实世界某控制点的物方坐标。两者相减，即得到相对位置，即地辅系的坐标。该方程是<font color="#FF0000"><strong>建立在地辅系上</strong></font>的。</p>
+<p><strong><a name="共线方程的推导">共线方程的推导</a></strong></p>
+<p>→<strong>点的坐标变换</strong>（一点两系）：目标是建立同一个点在空间坐标系与地面辅助坐标系中坐标值之间的对应关系。坐标点一般的转换关系为：</p>
+<p>$$!\begin{pmatrix}X\Y\Z\end{pmatrix}=R\begin{pmatrix}x\y\z\end{pmatrix}$$</p>
+<p>$$!\begin{pmatrix}x\y\z\end{pmatrix}=R^{T}\begin{pmatrix}X\Y\Z\end{pmatrix}$$</p>
+<p>则R称为旋转矩阵。</p>
+<p>点a、A位于两个坐标系，分别用两组坐标来表示。S-xyz示意像空系，S-XYZ示意地辅系。</p>
+<table width="80%" border="0"> <tbody> <tr> <td width="26%">点\坐标系</td> <td width="26%">S-xyz</td> <td width="26%">S-XYZ</td> </tr> <tr> <td width="26%">a</td> <td width="26%">x,y,-f</td> <td width="26%">Xa，Ya，Za</td> </tr> <tr> <td width="26%">A</td> <td width="26%">xA,yA,zA</td> <td width="26%">X,Y,Z</td> </tr> </tbody> </table>
+
+<p>由于旋转矩阵相同，两个点可表示为：</p>
+<p>$$!\begin{pmatrix}X\Y\Z\end{pmatrix}=R\begin{pmatrix}x<em>{A}\y</em>{A}\z_{A}\end{pmatrix}$$</p>
+<p>$$!\begin{pmatrix}X<em>{a}\Y</em>{a}\Z_{a}\end{pmatrix}=R\begin{pmatrix}x\y\-f\end{pmatrix}$$</p>
+<p>则，$$!\begin{pmatrix}x<em>{A}\y</em>{A}\z_{A}\end{pmatrix}=R^{T}\begin{pmatrix}X\Y\Z\end{pmatrix}$$</p>
+<p>→点的共线关系（两点一系）：目标是建立像点和物方点的坐标关系。易知，两点一线时，可以用一个点的齐次方程表示另一个点。即：</p>
+<p>$$!\left{\begin{matrix}x<em>{A}=a</em>{1}X+b<em>{1}Y+c</em>{1}Z\y<em>{A}=a</em>{2}X+b<em>{2}Y+c</em>{2}Z\y<em>{A}=a</em>{3}X+b<em>{3}Y+c</em>{3}Z\end{matrix}\right.$$</p>
+<p><img src="http://www.dooby.me/wp-content/uploads/2015/11/7238D8A7EF534575B5EE48B9CCA41FF8E4903B6C.jpg" alt=""></p>
+<p>上图中可建立的方程有，（该方程建立在像空系中）</p>
+<p>$$!\frac{x<em>{A}}{x}=\frac{y</em>{A}}{y}=\frac{z<em>{A}}{-f}=\lambda \Rightarrow\left{\begin{matrix}x=-f\frac{x</em>{A}}{z<em>{A}}\y=-f\frac{y</em>{A}}{z_{A}}\end{matrix}\right.$$</p>
+<p>联立坐标转换方程和像空系方程，化简即可得到传说中的共线条件方程。</p>
+<p>用<font color="#FF0000">地面点</font>坐标表示<font color="#FF0000">像点</font>坐标的共线方程（地辅系形式）</p>
+<p>$$!x=-f\frac{a<em>{1}(X</em>{T}-X<em>{S})+b</em>{1}(Y<em>{T}-Y</em>{S})+c<em>{1}(Z</em>{T}-Z<em>{S})}{a</em>{3}(X<em>{T}-X</em>{S})+b<em>{3}(Y</em>{T}-Y<em>{S})+c</em>{3}(Z<em>{T}-Z</em>{S})}$$</p>
+<p>$$!y=-f\frac{a<em>{2}(X</em>{T}-X<em>{S})+b</em>{2}(Y<em>{T}-Y</em>{S})+c<em>{2}(Z</em>{T}-Z<em>{S})}{a</em>{3}(X<em>{T}-X</em>{S})+b<em>{3}(Y</em>{T}-Y<em>{S})+c</em>{3}(Z<em>{T}-Z</em>{S})}$$</p>
+<p>或（物空系形式）</p>
+<p>$$!x=-f\frac{a<em>{1}(X-X</em>{S})+b<em>{1}(Y-Y</em>{S})+c<em>{1}(Z-Z</em>{S})}{a<em>{3}(X-X</em>{S})+b<em>{3}(Y-Y</em>{S})+c<em>{3}(Z-Z</em>{S})}$$</p>
+<p>$$!y=-f\frac{a<em>{2}(X-X</em>{S})+b<em>{2}(Y-Y</em>{S})+c<em>{2}(Z-Z</em>{S})}{a<em>{3}(X-X</em>{S})+b<em>{3}(Y-Y</em>{S})+c<em>{3}(Z-Z</em>{S})}$$</p>
+<p>同理，利用蓝图中在地辅系的共线方程，可以建立用<font color="#FF0000">像点</font>坐标表达<font color="#FF0000">地面坐标</font>的方程（物空系形式）</p>
+<p>$$!X=X<em>{s}+(Z-Z</em>{s})\frac{a<em>{1}x+a</em>{2}y-a<em>{3}f}{c</em>{1}x+c<em>{2}y-c</em>{3}f}$$</p>
+<p>$$!Y=Y<em>{s}+(Z-Z</em>{s})\frac{b<em>{1}x+b</em>{2}y-b<em>{3}f}{c</em>{1}x+c<em>{2}y-c</em>{3}f}$$</p>
+<p>上式也成为了前方交会解算的基本方程。</p>
+<hr>
+<p><strong><a name="坐标旋转即共线方程的应用">坐标旋转即共线方程的应用</a></strong></p>
+<p>①<strong>求像点坐标</strong></p>
+<ul>
+<li>已知Xs Ys Zs ai bi ci f(物方真值 旋转矩阵)</li>
+<li>求x y（像平面坐标）</li>
+</ul>
+<p>依赖方程：</p>
+<p>$$!x=-f\frac{a<em>{1}(X-X</em>{S})+b<em>{1}(Y-Y</em>{S})+c<em>{1}(Z-Z</em>{S})}{a<em>{3}(X-X</em>{S})+b<em>{3}(Y-Y</em>{S})+c<em>{3}(Z-Z</em>{S})}$$</p>
+<p>$$!y=-f\frac{a<em>{2}(X-X</em>{S})+b<em>{2}(Y-Y</em>{S})+c<em>{2}(Z-Z</em>{S})}{a<em>{3}(X-X</em>{S})+b<em>{3}(Y-Y</em>{S})+c<em>{3}(Z-Z</em>{S})}$$</p>
+<p>②<strong>答解外方位元素</strong>(后方交会基本原理)</p>
+<ul>
+<li>已知$$x<em>{i}^{‘} y</em>{i}^{‘} X<em>{i} Y</em>{i} Z<em>{i} x</em>{0} y_{0} f$$（像坐标观测值 物方观测值 内方位元素）</li>
+<li>求Xs Ys Zs ai bi ci（外方位元素）</li>
+</ul>
+<p>依赖方程：</p>
+<p>$$!x^{‘}-x<em>{0}=-f\frac{a</em>{1}(X-X<em>{S})+b</em>{1}(Y-Y<em>{S})+c</em>{1}(Z-Z<em>{S})}{a</em>{3}(X-X<em>{S})+b</em>{3}(Y-Y<em>{S})+c</em>{3}(Z-Z_{S})}$$</p>
+<p>$$!y^{‘}-y<em>{0}=-f\frac{a</em>{2}(X-X<em>{S})+b</em>{2}(Y-Y<em>{S})+c</em>{2}(Z-Z<em>{S})}{a</em>{3}(X-X<em>{S})+b</em>{3}(Y-Y<em>{S})+c</em>{3}(Z-Z_{S})}$$</p>
+<p>③<strong>求地面点坐标</strong></p>
+<ul>
+<li>已知x，y，Xs，Ys，Zs，ai，bi，ci，f(外方位元素，像点坐标观测值，焦距)</li>
+<li>求X，Y，Z（求未知物方点坐标,这里，大部分都知道DEM，即(X,Y)坐标下的Z高程的信息）</li>
+</ul>
+<p>依赖方程(单片定位)：</p>
+<p>$$!\frac{X-X<em>{S}}{Z-Z</em>{S}}=\frac{a<em>{1}x+a</em>{2}y-a<em>{3}f}{c</em>{1}x+c<em>{2}y-c</em>{3}f}$$</p>
+<p>$$!\frac{Y-Y<em>{S}}{Z-Z</em>{S}}=\frac{b<em>{1}x+b</em>{2}y-b<em>{3}f}{c</em>{1}x+c<em>{2}y-c</em>{3}f}$$</p>
+<p>依赖方程（立体像对定位）–4个方程解算3个未知数。(前方交会后方交会同时进行)</p>
+<p><img src="http://www.dooby.me/wp-content/uploads/2015/11/5F3074FF98FA07ED1F357962C68FF593E047311B.jpg" alt=""></p>
+<p>$$!\frac{X-X<em>{S}}{Z-Z</em>{S}}=\frac{a<em>{1}x+a</em>{2}y-a<em>{3}f}{c</em>{1}x+c<em>{2}y-c</em>{3}f}$$</p>
+<p>$$!\frac{Y-Y<em>{S}}{Z-Z</em>{S}}=\frac{b<em>{1}x+b</em>{2}y-b<em>{3}f}{c</em>{1}x+c<em>{2}y-c</em>{3}f}$$</p>
+<p>$$!\frac{X-X<em>{S}^{‘}}{Z-Z</em>{S}^{‘}}=\frac{a<em>{1}^{‘}x^{‘}+a</em>{2}^{‘}y^{‘}-a<em>{3}^{‘}f}{c</em>{1}^{‘}x^{‘}+c<em>{2}^{‘}y^{‘}-c</em>{3}^{‘}f}$$</p>
+<p>$$!\frac{Y-Y<em>{S}^{‘}}{Z-Z</em>{S}^{‘}}=\frac{b<em>{1}^{‘}x^{‘}+b</em>{2}^{‘}y^{‘}-b<em>{3}^{‘}f}{c</em>{1}^{‘}x^{‘}+c<em>{2}^{‘}y^{‘}-c</em>{3}^{‘}f}$$</p>
+<hr>
+<p><a name="坐标旋转">坐标旋转</a></p>
+<p>从物方空间坐标系到像空间坐标系的转换其实就是一个<font color="#FF0000">平移</font>（平移到地辅系）再<font color="#FF0000">旋转</font>的过程，这就是常见的[R|t]。旋转真正的含义就是对3个坐标轴作二维角度上的旋转，3个旋转合成一个旋转矩阵R。坐标轴旋转θ角度，等同于目标点绕坐标原点反方向旋转同样的角度θ。选择的旋转3个坐标系的方式有很多，常用的就是以Y轴为主轴的φ，ω,k的系统。</p>
+<p><strong>航向倾角φ</strong>（pitching）：z轴在<font color="#FF0000">XZ坐标面内的投影</font>（即过z轴所做的XZ面的垂面与XZ面的交线）<font color="#FF0000">与Z轴的夹角</font>，叫做航向倾角。从Z轴算起，由Y轴的负方向逆时针为正。如图为正。</p>
+<p><img src="http://www.dooby.me/wp-content/uploads/2015/11/98B5D21FDF0802661E47A2C3089CF683E856F014.jpg" alt=""></p>
+<p><strong>旁向倾角ω</strong>（roll）：z轴与XZ坐标面之间的夹角，即z轴与它在XZ面上投影之间的夹角，叫做旁向倾角。从z轴的投影算起，由X轴的正方向看逆时针为正。如图为正。</p>
+<p><img src="http://www.dooby.me/wp-content/uploads/2015/11/5A4A8734E57C7C288466AFAF21FE3D1DA7F17C1B.jpg" alt=""></p>
+<p><strong>像片旋角k</strong>（yaw）：Y轴在xy坐标系面上的投影与y轴的夹角，叫做旋角。从投影算起，由z轴正方向看逆时针为正。如图k为正。</p>
+<ul>
+<li>二维平面的坐标旋转</li>
+</ul>
+<p>如图所示，旋转是可逆变化，两套坐标之间可以用矩阵和逆矩阵进行转换。</p>
+<p><img src="http://www.dooby.me/wp-content/uploads/2015/11/9C02C1C63C5D098E97E8A04FBBDFB60F02221B34.jpg" alt=""></p>
+<p>$$!\begin{bmatrix}x^{‘}\y^{‘}\end{bmatrix}=A\begin{bmatrix}x\y\end{bmatrix},\begin{bmatrix}x\y\end{bmatrix}=A^{-1}\begin{bmatrix}x^{‘}\y^{‘}\end{bmatrix}$$</p>
+<p>$$!A=\begin{bmatrix}a<em>{1}&amp;a</em>{2}\b<em>{1}&amp;b</em>{2}\end{bmatrix}=\begin{bmatrix}cos \widehat{x^{‘}x}&amp;cos \widehat{x^{‘}y}\cos\widehat{y^{‘}x}&amp;cos \widehat{y^{‘}y}\end{bmatrix}=\begin{bmatrix}cos \kappa&amp;sin \kappa\-sin \kappa&amp;cos\kappa\end{bmatrix}$$</p>
+<p>式中</p>
+<p>a1是x’轴与x轴夹角的余弦；a1=cos k</p>
+<p>b1是x’轴与y轴夹角的余弦：b1=cos(90&deg;-k)=sin k</p>
+<p>a2是y’轴与x轴夹角的余弦：a2=cos(90&deg;+k)=-sin k</p>
+<p>b2是y’轴与y轴夹角的余弦：b2=cos k</p>
+<ul>
+<li>三维空间的坐标旋转</li>
+</ul>
+<p>从像空间直角坐标系到像空间辅助坐标系之间的转换可以通过<font color="#FF0000">三次二维坐标转换完成</font>。</p>
+<p><img src="http://www.dooby.me/wp-content/uploads/2015/11/A203A33F40A9904D7EA2D966CB486C277511405E.jpg" alt=""></p>
+<p>$$!\begin{bmatrix}X\Y\Z\end{bmatrix}=R\begin{bmatrix}x\y\-f\end{bmatrix}$$</p>
+<p>$$!R=\begin{bmatrix}a<em>{1}&amp;a</em>{2}&amp;a<em>{3}\b</em>{1}&amp;b<em>{2}&amp;b</em>{3}\c<em>{1}&amp;c</em>{2}&amp;c_{3}\end{bmatrix}=\begin{bmatrix}cos\widehat{Xx}&amp;cos\widehat{Xy}&amp;cos\widehat{Xz}\cos\widehat{Yx}&amp;cos\widehat{Yy}&amp;cos\widehat{Yz}\cos\widehat{Zx}&amp;cos\widehat{Zy}&amp;cos\widehat{Zz}\end{bmatrix}$$</p>
+<p>①S-XYZ<font color="#FF0000">绕Y轴旋转φ</font>到S-XφYφZφ，在XSZ平面内，以S点位圆心旋转XSZ至XφSZφ</p>
+<p>$$!\begin{bmatrix}X\Y\Z\end{bmatrix}=R<em>{\varphi}\begin{bmatrix}X</em>{\varphi }\Y<em>{\varphi }\Z</em>{\varphi }\end{bmatrix}=\begin{bmatrix}cos\varphi&amp;0&amp;-sin\varphi\0&amp;1&amp;0\sin\varphi&amp;0&amp;cos\varphi\end{bmatrix}\begin{bmatrix}X<em>{\varphi }\Y</em>{\varphi }\Z_{\varphi }\end{bmatrix}$$</p>
+<p><img src="http://www.dooby.me/wp-content/uploads/2015/11/6F2D6EC82C1793253C32825B3180B3F84A68D11B.jpg" alt=""></p>
+<p>该次变换中，由于是绕Y轴旋转的，因此Y坐标值没有改变，相当于在二维XSZ平面做了旋转，下同。</p>
+<p>②S-XφYφZφ绕Xφ旋转ω角到S-XφωYφωZφω，在YφSZφ平面内，以S点为圆心旋转YφSZφ到YφωSZφω。这次变化中，x轴坐标值没有改变。</p>
+<p>$$!\begin{bmatrix}X<em>{\varphi}\Y</em>{\varphi}\Z<em>{\varphi}\end{bmatrix}=R</em>{\omega}\begin{bmatrix}X<em>{\varphi\omega}\Y</em>{\varphi \omega}\Z<em>{\varphi\omega}\end{bmatrix}=\begin{bmatrix}1&amp;0&amp;0\0&amp;cos \omega&amp;-sin \omega\0&amp;sin \omega&amp;cos \omega \end{bmatrix}\begin{bmatrix}X</em>{\varphi\omega}\Y<em>{\varphi \omega}\Z</em>{\varphi\omega}\end{bmatrix}$$</p>
+<p><img src="http://www.dooby.me/wp-content/uploads/2015/11/3669611136A21AC23885E7932C6D17D84AEC1C27.jpg" alt=""></p>
+<p>③S-XφωYφωZφω绕Zφω轴旋转k角度到S-xyz，在XφSYω平面内，以S点为圆心转到XφωSYφω至xSy。</p>
+<p>$$!\begin{bmatrix}X<em>{\varphi\omega}\Y</em>{\varphi\omega}\Z<em>{\varphi\omega}\end{bmatrix}=R</em>{\kappa}\begin{bmatrix}x\y\-f\end{bmatrix}=\begin{bmatrix}cos \kappa&amp;-sin \kappa&amp;0\sin \kappa&amp;cos \kappa&amp;0\0&amp;0&amp;1\end{bmatrix}\begin{bmatrix}x\y\-f\end{bmatrix}$$</p>
+<p><img src="http://www.dooby.me/wp-content/uploads/2015/11/3C453D9DA7CF479D4624D8465171F8FAF1F9E701.jpg" alt=""></p>
+<p>联立之前三个旋转矩阵即可得到三维下的旋转矩阵R</p>
+<p>$$!\begin{bmatrix}X\Y\Z\end{bmatrix}=R<em>{\varphi}R</em>{\omega}R<em>{\kappa}\begin{bmatrix}x\y\-f\end{bmatrix}=\begin{bmatrix}cos\varphi&amp;0&amp;-sin\varphi\0&amp;1&amp;0\sin\varphi&amp;0&amp;cos\varphi\end{bmatrix}\begin{bmatrix}1&amp;0&amp;0\0&amp;cos \omega&amp;-sin \omega\0&amp;sin \omega&amp;cos \omega \end{bmatrix}\begin{bmatrix}cos \kappa&amp;-sin \kappa&amp;0\sin \kappa&amp;cos \kappa&amp;0\0&amp;0&amp;1\end{bmatrix}\begin{bmatrix}x\y\-f\end{bmatrix}=\begin{bmatrix}a</em>{1}&amp;a<em>{2}&amp;a</em>{3}\b<em>{1}&amp;b</em>{2}&amp;b<em>{3}\c</em>{1}&amp;c<em>{2}&amp;c</em>{3} \end{bmatrix}\begin{bmatrix}x\y\-f\end{bmatrix}=R\begin{bmatrix}x\y\-f\end{bmatrix}$$</p>
+<p>旋转矩阵R因此由外方位元素φ，ω，k确定。其中a1,a2,a3,b1,b2,b3,c1,c2,c3是9个方向的<font color="#FF0000">方向余弦</font>。</p>
+<p>$$!a_{1}=cos\varphi cos\kappa-sin\varphi sin\omega sin\kappa$$</p>
+<p>$$!a_{2}=-cos\varphi sin\kappa -sin\varphi sin\omega cos\kappa$$</p>
+<p>$$!a_{3}=-sin\varphi cos\omega$$</p>
+<p>$$!b_{1}=cos\omega sin\kappa$$</p>
+<p>$$!b_{2}=cos\omega cos\kappa$$</p>
+<p>$$!b_{3}=-sin\omega$$</p>
+<p>$$!c_{1}=sin\varphi cos\kappa+cos\varphi sin\omega sin\kappa $$</p>
+<p>$$!c_{2}=-sin\varphi sin\kappa +cos\varphi sin\omega cos\kappa $$</p>
+<p>$$!c_{3}=cos\varphi cos\omega $$</p>
+<p>通过解算可知</p>
+<p>$$!R\cdot R^{T}=\begin{bmatrix}a<em>{1}&amp;a</em>{2}&amp;a<em>{3}\b</em>{1}&amp;b<em>{2}&amp;b</em>{3}\c<em>{1}&amp;c</em>{2}&amp;c<em>{3} \end{bmatrix}\cdot \begin{bmatrix}a</em>{1}&amp;b<em>{1}&amp;c</em>{1}\a<em>{2}&amp;b</em>{2}&amp;c<em>{2}\a</em>{3}&amp;b<em>{3}&amp;c</em>{3}\end{bmatrix}=\begin{bmatrix}1&amp;0&amp;0\0&amp;1&amp;0\0&amp;0&amp;1\end{bmatrix}$$</p>
+<p>$$!R^{T}\cdot R =\begin{bmatrix}a<em>{1}&amp;b</em>{1}&amp;c<em>{1}\a</em>{2}&amp;b<em>{2}&amp;c</em>{2}\a<em>{3}&amp;b</em>{3}&amp;c<em>{3}\end{bmatrix}\cdot \begin{bmatrix}a</em>{1}&amp;a<em>{2}&amp;a</em>{3}\b<em>{1}&amp;b</em>{2}&amp;b<em>{3}\c</em>{1}&amp;c<em>{2}&amp;c</em>{3} \end{bmatrix}=\begin{bmatrix}1&amp;0&amp;0\0&amp;1&amp;0\0&amp;0&amp;1\end{bmatrix}$$</p>
+<p>很明显，意味着R与$$R^{T}$$互为逆矩阵。这也验证了R矩阵是两个坐标系之间相互转换的矩阵。由$$RR^{T}=I$$可得：</p>
+<p>（1）同行（列）列的各元素自乘之和为1</p>
+<p>（2）任意两行（列）的对应元素相乘之和为0（正交）</p>
+<p>（3）旋转矩阵行列式为|R|=1</p>
+<p>（4）每行元素等于其代数余子式</p>
+<p>（5）每个元素为变换前后坐标轴夹角的余弦值<br> 易知</p>
+<p>$$!\varphi =-arctan(\frac{a<em>{3}}{c</em>{3}}),\omega =-arcsin(b<em>{3}),\kappa =-arctan(\frac{b</em>{1}}{b_{2}})$$</p>
+<p>$$!a<em>{1}^{2}+a</em>{2}^{2}+a<em>{3}^{2}=1,b</em>{1}^{2}+b<em>{2}^{2}+b</em>{3}^{2}=1,c<em>{1}^{2}+c</em>{2}^{2}+c_{3}^{2}=1$$</p>
+<p>$$!a<em>{1}b</em>{1}+a<em>{2}b</em>{2}+a<em>{3}b</em>{3}=0,a<em>{1}c</em>{1}+a<em>{2}c</em>{2}+a<em>{3}c</em>{3}=0,b<em>{1}c</em>{1}+b<em>{2}c</em>{2}+b<em>{3}c</em>{3}=0$$</p>
+<p>$$!a<em>{1}^{2}+b</em>{1}^{2}+c<em>{1}^{2}=1,a</em>{2}^{2}+b<em>{2}^{2}+c</em>{2}^{2}=1,a<em>{3}^{2}+b</em>{3}^{2}+c_{3}^{2}=1$$</p>
+<p>$$!a<em>{1}a</em>{2}+b<em>{1}b</em>{2}+c<em>{1}c</em>{2}=0,a<em>{1}a</em>{3}+b<em>{1}b</em>{3}+c<em>{1}c</em>{3}=0,a<em>{2}a</em>{3}+b<em>{2}b</em>{3}+c<em>{2}c</em>{3}=0$$</p>
+<font size="+0"><strong><a name="像片水平与倾斜像点坐标的关系">像片水平与倾斜像点坐标的关系</a></strong></font>。（这里，以摄影中心<font color="#FF0000">S点为像片旋转中心</font>，因此外方位元素中，<font color="#FF0000">主距依旧是f</font>，<font color="#FF0000">线元素没有改变</font>）<br><br>已知：外方位元素Xs Ys Zs φ ω k(即九个方向余弦)<br><br><font color="#FF0000">对于某高程</font>，摄影中心在该高程Z方向的投影N坐标为(Xs,Ys,Zs-$$H_{N}$$)–<font color="#FF0000">物方坐标系</font>
+
+<p><font color="#FF0000">对于某高程</font>，摄影中心在该高程的垂线与像平面的交点n坐标为$$(-f\frac{c<em>{1}}{c</em>{3}},-f\frac{c<em>{2}}{c</em>{3}})$$–<font color="#FF0000">像方坐标</font>，可将上点带入共线条件方程后方交会求得↓↓↓</p>
+<p><img src="http://www.dooby.me/wp-content/uploads/2015/11/A1BBA5EFFED4F68C01CF47FBC61FC4FA7087739E.jpg" alt=""></p>
+<p>又根据共线方程前方交会公式，在水平图像的平面上，物方任意点A(X,Y,Z)-（物方坐标）在像平面的成像点a为$$(x^{0},y^{0})$$-（像平面坐标）或$$(x^{0},y^{0},-f)$$像空间坐标系。↓↓↓</p>
+<p><img src="http://www.dooby.me/wp-content/uploads/2015/11/3C7C83AD827FB7A7BD4108090804ED13131E82D7.jpg" alt=""></p>
+<p>值得注意的是，主光轴正好是垂直于大地水平面，所以，地辅系与像空系只需要在XSY平面上旋转即可。</p>
+<p>在倾斜形态中，由像点表示物方点坐标点的公式为：</p>
+<p>$$!\frac{X-X<em>{S}}{Z-Z</em>{S}}=\frac{a<em>{1}x+a</em>{2}y-a<em>{3}f}{c</em>{1}x+c<em>{2}y-c</em>{3}f}$$</p>
+<p>$$!\frac{Y-Y<em>{S}}{Z-Z</em>{S}}=\frac{b<em>{1}x+b</em>{2}y-b<em>{3}f}{c</em>{1}x+c<em>{2}y-c</em>{3}f}$$</p>
+<p>在垂直形态中，三个角元素严格为0，因次带入之前的矩阵公式得到：</p>
+<p>a1=1 a2=0 a3=0 b1=0 b2=1 b3=0 c1=0 c2=0 c3=1</p>
+<p>$$!\frac{X-X<em>{S}}{Z-Z</em>{S}}=\frac{x^{0}}{-f}$$</p>
+<p>$$!\frac{Y-Y<em>{S}}{Z-Z</em>{S}}=\frac{y^{0}}{-f}$$</p>
+<p>其中$$x^{0},y^{0}$$分别表示水平状态的像点坐标。</p>
+<p>上两式的外方位角元素不同，而线元素是相同的。因此联立可得<font color="#FF0000">水平纠正的基本公式</font>：</p>
+<p>$$!\left{\begin{matrix}x^{0}=-f\frac{a<em>{1}x+a</em>{2}y-a<em>{3}f}{c</em>{1}x+c<em>{2}y-c</em>{3}f}\y^{0}=-f\frac{b<em>{1}x+b</em>{2}y-b<em>{3}f}{c</em>{1}x+c<em>{2}y-c</em>{3}f}\end{matrix}\right.$$</p>
+<p>&nbsp;</p>
+<div class="PoweredByWebStory" style="margin-top:15px;margin-bottom:10px"><a href="http://sns.juziyue.com/webinvite.php?u=94887" target="_blank" rel="external"></a>&nbsp;今天你<a href="http://sns.juziyue.com/webinvite.php?u=94887" target="_blank" rel="external">菊子曰</a>了么？</div>
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/后方交会/" rel="tag">#后方交会</a>
+          
+            <a href="/tags/检校/" rel="tag">#检校</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/12/后方交会检校(2)--误差方程及各项系数解求及精度/" rel="next" title="后方交会检校(2)--误差方程及各项系数解求及精度">
+                <i class="fa fa-chevron-left"></i> 后方交会检校(2)--误差方程及各项系数解求及精度
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/10/28/后方交会检校(4)--畸变差矫正/" rel="prev" title="后方交会检校(4)--畸变差矫正">
+                后方交会检校(4)--畸变差矫正 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2015/10/28/后方交会检校(3)--角度、坐标及其应用/" data-title="后方交会检校(3)--角度、坐标及其应用" data-content="" data-url="http://ovjaywang.github.io/2015/10/28/后方交会检校(3)--角度、坐标及其应用/">
+  <div class="ds-share-inline">
+    <ul class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/10/28/后方交会检校(3)--角度、坐标及其应用/" data-title="后方交会检校(3)--角度、坐标及其应用" data-url="http://ovjaywang.github.io/2015/10/28/后方交会检校(3)--角度、坐标及其应用/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/xiaozaizi.png" alt="Jay Wang">
+          <p class="site-author-name" itemprop="name">Jay Wang</p>
+          <p class="site-description motion-element" itemprop="description">你猜?</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">102</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ovjaywang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/302060345" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jay Wang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"mimimomo"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax --><!-- hexo-inject:end -->
+
+
+</body>
+</html>

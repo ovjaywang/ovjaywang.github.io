@@ -1,0 +1,859 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.useso.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ov智商捉急" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="Hexo是很棒的静态博客，简单的安装配置即可专注写作。但是强迫症就是很爱折腾。倘若：
+
+主机烧了数据备份怎么破？
+换了系统想继续之前的写作怎么破?
+纯粹就是想多客户端写作怎么破？
+
+
+我就纯属蛋疼的。喜欢在办公和休息的地方都写作；或者我一win本一mac 都想写文章。但Hexo的静态部署的原则不像WordPress一样，能关联博客地址，利用数据库进行博客更新。好了，这里就来解决这个问题。┑(￣Д">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo多客户端写作">
+<meta property="og:url" content="http://ovjaywang.github.io/2016/04/27/hexo多客户端写作/index.html">
+<meta property="og:site_name" content="ov智商捉急">
+<meta property="og:description" content="Hexo是很棒的静态博客，简单的安装配置即可专注写作。但是强迫症就是很爱折腾。倘若：
+
+主机烧了数据备份怎么破？
+换了系统想继续之前的写作怎么破?
+纯粹就是想多客户端写作怎么破？
+
+
+我就纯属蛋疼的。喜欢在办公和休息的地方都写作；或者我一win本一mac 都想写文章。但Hexo的静态部署的原则不像WordPress一样，能关联博客地址，利用数据库进行博客更新。好了，这里就来解决这个问题。┑(￣Д">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/04/27/5720a2a70a238.png">
+<meta property="og:updated_time" content="2016-04-28T16:36:57.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo多客户端写作">
+<meta name="twitter:description" content="Hexo是很棒的静态博客，简单的安装配置即可专注写作。但是强迫症就是很爱折腾。倘若：
+
+主机烧了数据备份怎么破？
+换了系统想继续之前的写作怎么破?
+纯粹就是想多客户端写作怎么破？
+
+
+我就纯属蛋疼的。喜欢在办公和休息的地方都写作；或者我一win本一mac 都想写文章。但Hexo的静态部署的原则不像WordPress一样，能关联博客地址，利用数据库进行博客更新。好了，这里就来解决这个问题。┑(￣Д">
+<meta name="twitter:image" content="http://ooo.0o0.ooo/2016/04/27/5720a2a70a238.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Hexo多客户端写作 | ov智商捉急 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+    <div class="site-meta-headline">
+      <a>
+        <img class="custom-logo-image" src="/images/touxiang.jpg" alt="ov智商捉急">
+      </a>
+    </div>
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">ov智商捉急</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/me" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sth">
+          <a href="/sth" rel="section">
+            
+              <i class="menu-item-icon fa fa-child fa-fw"></i> <br>
+            
+            有料
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ZtWPUvzBjdXDQ7iNrTbW','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Hexo多客户端写作
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-27T11:50:01+08:00" content="2016-04-27">
+              2016-04-27
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/27/hexo多客户端写作/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/27/hexo多客户端写作/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>Hexo是很棒的静态博客，简单的安装配置即可专注写作。<br>但是强迫症就是很爱折腾。倘若：</p>
+<ul>
+<li>主机烧了数据备份怎么破？</li>
+<li>换了系统想继续之前的写作怎么破?</li>
+<li>纯粹就是想多客户端写作怎么破？</li>
+</ul>
+</blockquote>
+<p>我就纯属蛋疼的。喜欢在办公和休息的地方都写作；或者我一win本<br>一mac 都想写文章。但Hexo的静态部署的原则不像WordPress一样，能关联博客地址，利用数据库进行博客更新。好了，这里就来解决这个问题。┑(￣Д ￣)┍</p>
+<a id="more"></a>
+<h1 id="Hexo写作的部署逻辑-amp-其他"><a href="#Hexo写作的部署逻辑-amp-其他" class="headerlink" title="Hexo写作的部署逻辑&amp;其他"></a>Hexo写作的部署逻辑&amp;其他</h1><h2 id="Hexo的写作特点"><a href="#Hexo的写作特点" class="headerlink" title="Hexo的写作特点"></a>Hexo的写作特点</h2><p>Hexo最大特点就是静态博客，即部署到服务器的博客内容是静态写好的html（由markdown转义），而不像类似wordpress的数据都存放在服务器端数据库，每次更新即一次读写数据库的操作。所以如果需要更改博客内容、发布新内容，必须</p>
+<ol>
+<li>更改源文件source文件夹下_post及其他各页面文件夹的md文件</li>
+<li>通过<code>hexo g</code>或<code>hexo generate</code>在public生成静态文件。</li>
+<li>利用<code>hexo-deployer-git</code>插件及<code>hexo d</code>命令将public的文件自动的部署到创建好的<code>user-name.github.io</code>项目中。<blockquote>
+<p>在github项目中可以看到，自动上传的只有public文件夹中的文件，包括以年份分类的静态页面文件夹、tag、categories及其他辅助css、js、img等，还有域名指引的CNAME和rss sitemap等。</p>
+</blockquote>
+</li>
+<li>在博客中看到更新的内容。当然，本地目录中，即存放了md源文件，也包含了生成的public文件。其实，本地并不需要public里的内容，只要有写作的源文件，generate一下就能生成。</li>
+</ol>
+<h2 id="Hexo的缺憾"><a href="#Hexo的缺憾" class="headerlink" title="Hexo的缺憾"></a>Hexo的缺憾</h2><p>那么问题来了，如果我在公司和贫民窟都想写作怎么办。总不能在两个本地仓库hexo init都部署到pages项目。在公司更新一篇blog里面全都是公司写的，然后回到地下室又写一篇更新又全是小黑屋的内容。  </p>
+<p>尽管Hexo让人专注写作，随时随地用md写一篇博，等到来到同步的机器才更新一次也让人很不爽。对于远程仓库只存放静态文件的方案，就想到了两个思路</p>
+<h3 id="同步静态文件"><a href="#同步静态文件" class="headerlink" title="同步静态文件"></a>同步静态文件</h3><blockquote>
+<p>新仓库同步静态文件-&gt;hexo g生成静态文件-&gt;合并静态文件-&gt;hexo d部署</p>
+</blockquote>
+<ol>
+<li>在两地分别hexo init建立hexo博客目录，在_config.yml中都部署到同一个远程仓库，在每次generate时，都先将远程仓库的静态文件同步下来（新建一个单独的folder专门用于同步静态文件）。请勿使用hexo博客中的public文件夹用于同步，每次generate会覆盖同名文件。若另一台主机曾做过修改并提交，这次修改的静态文件将被本地未修改的静态文件覆盖。具体操作：<br>第一次克隆远程hexo主分支：</li>
+</ol>
+<pre><code>git clone git@github.com:user-name/user-name.github.io.git
+</code></pre><p>之后每次hexo仓库发布首先在静态文件仓库获取远程仓库最新静态文件(无条件merge)</p>
+<pre><code>git pull origin master
+</code></pre><ol>
+<li>在静态文件同步仓库中，将自上次部署后，本地修改过的静态文件<strong>删掉</strong>（不记得怪我咯┑(￣Д ￣)┍）；同时在hexo blog仓库中<code>hexo -g</code>生成本地静态文件。</li>
+<li>将剔除过期静态文件的public仓库中文件复制到hexo的public中。</li>
+<li>使用<code>hexo -d</code>部署<blockquote>
+<p>以上步骤2中的删除操作是为了保证静态文件的数据都是最新的，保证博客内容的一致性。</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="同步源文件（大招）"><a href="#同步源文件（大招）" class="headerlink" title="同步源文件（大招）"></a>同步源文件（大招）</h3><p>想到上述方式需要进行2步骤的主要原因就是本地的源文件不同步，只能通过生成的静态文件进行合并的方式，为毛不将源文件同步呢？！参考<a href="http://crazymilk.github.io/2015/12/28/GitHub-Pages-Hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/" target="_blank" rel="external">这篇文章</a>的思路，同步源文件就是通过远程仓库对源文件融合统一。</p>
+<h2 id="呵呵哒"><a href="#呵呵哒" class="headerlink" title="呵呵哒"></a>呵呵哒</h2><p>本文为了完成多客户端的同Hexo博的管理和发布，对ssh、git安装、Hexo安装、配置插件主题管理、域名绑定<strong>不涉及</strong>。</p>
+<ul>
+<li>系统不限制 </li>
+<li>是否写过博部署过没差</li>
+<li>最好Hexo3.X,2.X没试过出事自负</li>
+</ul>
+<h1 id="真·多客户端"><a href="#真·多客户端" class="headerlink" title="真·多客户端"></a>真·多客户端</h1><h2 id="创建远程仓库"><a href="#创建远程仓库" class="headerlink" title="创建远程仓库"></a>创建远程仓库</h2><ul>
+<li>对于没有进行创作的hexo博客，首先创建同名仓库，再创建一个hexo branch。此时俩分支都是空的  </li>
+<li>对于已经进行创作的hexo博客，直接创建一个hexo 分支。此时，hexo clone了master的静态文件。</li>
+</ul>
+<h2 id="设置主分支"><a href="#设置主分支" class="headerlink" title="设置主分支"></a>设置主分支</h2><p>将hexo branch设为主分支，用于同步源文件；master branch作为静态文件的存放。（由于github pages会检索master分支作为该域名下的部署分支，因此必须把master名字保留）</p>
+<p><img src="http://ooo.0o0.ooo/2016/04/27/5720a2a70a238.png" alt=""></p>
+<h2 id="同步远程仓库并初始化"><a href="#同步远程仓库并初始化" class="headerlink" title="同步远程仓库并初始化"></a>同步远程仓库并初始化</h2><p>在本地（包含第一次所有源文件的主机）新建一个文件夹（就算已经写过博客的也这么搞）同步远程仓库并初始化</p>
+<pre><code>git clone git@github.com:your-Id/your-Id.github.io.git
+</code></pre><p>此时输入<code>git branch</code>可以看到两个分支，红色分支为主分支。<br>若是非空白博客，同步后需要先删掉里面的静态文件.直接删光，把原博客的文件全部复制过来<strong>（好像没有发现更换远程仓库主分支后本地同步更换的git bash。求解?）</strong>;若是空白博客，那么需要再令建一个文件夹，（因为hexo init操作会覆盖原.git文件导致与远程仓库失联）在该文件夹git bash执行</p>
+<pre><code>npm install -g hexo
+hexo init
+npm install
+hexo g
+npm install hexo-deployer-git--save
+</code></pre><p>好了，里面该有的差不多都有了。全部复制到源文件仓库。<strong>注意把hello worl删掉啊。</strong>关键的就是，config.yml里deployer的branch是master，而本地仓库关联的是hexo就对了。<br>然后执行</p>
+<pre><code>git add .
+git commit -m &quot;init&quot;
+git push -u origin hexo
+</code></pre><p>值得注意的是，有的时候提示主题的文件夹并未加入同步操作，显示</p>
+<pre><code class="shell">
+Changes not staged for commit
+</code></pre>
+<p>即主题文件夹的内容尚未有之前版本，应该加入tracked。应在提交前输入<code>git add themes/themes_name/</code>.最后那个斜杠别忘了加。<br>这就完成源文件的同步了！(￣▽￣)”” 执行<code>hexo d</code>操作将本地public静态文件部署。</p>
+<h1 id="发博日常"><a href="#发博日常" class="headerlink" title="发博日常"></a>发博日常</h1><h2 id="更博"><a href="#更博" class="headerlink" title="更博"></a>更博</h2><p>如果你不能确定是否抽风需要经常换客户端，因此需要每次都要同步本地源文件；如果能忍住，，或者有规律的换客户端，那么平时更新不需要经常同步。<br>写博前操作(<strong>特么狠重要啊</strong>)：</p>
+<pre><code>git pull origin hexo
+</code></pre><p>更新操作：(同步源文件到hexo分支)</p>
+<pre><code>git add .
+git commit -m &quot;hehe&quot;
+git push origin hexo
+</code></pre><p>这样每次更博都需要多几个步骤，嫌麻烦就要忍住不手痒了。在手机、pad写md再同步到电脑也是个不错的习惯。</p>
+<h2 id="换客户端"><a href="#换客户端" class="headerlink" title="换客户端"></a>换客户端</h2><p>easy.只要远程仓库存在了一份完整的源文件，那同步就很容易了。似上步第一次同步，使用<code>git clone git@github.com:your-Id/your-Id.github.io.git</code>拷贝仓库。然后执行</p>
+<pre><code>npm install -g hexo
+npm install
+npm install hexo-deployer-git
+</code></pre><font color="red"><strong>不用hexo init!!!</strong></font>
+
+<h1 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h1><h2 id="多地部署"><a href="#多地部署" class="headerlink" title="多地部署"></a>多地部署</h2><p>pacman的公式和代码支持好差啊~还有需要多地备份的可以尝试coding（page之前免费的现在要钱了 = =）.在站点部署文件中更改deploy：</p>
+<pre><code class="markdown">deploy:
+   type: git
+   repo: 
+      github: https://github.com/{YOUR_ID}/{YOUR_ID}.github.io.git,master
+      coding: https://git.coding.net/{YOUR_ID}/{BLOG　NAME}.git,master
+</code></pre>
+<p>同理也能部署到自己的ftp服务器上。</p>
+<h2 id="bug1-file-name-too-long"><a href="#bug1-file-name-too-long" class="headerlink" title="bug1 file-name-too-long"></a><font color="red">bug1 file-name-too-long</font></h2><p>在拷贝原始数据的时候，提交远程仓库时可能会报modules的文件夹无法同步。这个情况在windows下安装msysgit进行git bash会报这一问题。<a href="https://github.com/msysgit/git/pull/110" target="_blank" rel="external">这里</a>也提到了这个异常。但这并不是git的问题，而是msysgit的问题。使用其他git方式对文件路径较长的提交就不会报错。实测在github for windows下提交该modules文件就不会报错。</p>
+<h2 id="bug2-could-not-read-Username-for-‘https-XXX‘"><a href="#bug2-could-not-read-Username-for-‘https-XXX‘" class="headerlink" title="bug2 could not read Username for ‘https://XXX‘"></a><font color="red">bug2 could not read Username for ‘<a href="https://XXX" target="_blank" rel="external">https://XXX</a>‘</font></h2><p>当需要推送另一台设备的静态文件时，可能极少情况会碰上这个问题。有的说是bash的版本问题，不识别这种方式的推送。然而我用的同一版本的msysgit..</p>
+<p>在<a href="http://stackoverflow.com/questions/20871549/error-when-push-commits-with-github-fatal-could-not-read-username" target="_blank" rel="external">这里</a>也发现了这个问题，尝试了一下使用在https中加入用户名和密码的方式能够良好的推送。。当然配置文件别泄露了。。更改配置文件的deploy如下：</p>
+<pre><code class="markdown">deploy:
+   type: git
+   repo: 
+      github: https://{YOUR_ID}:{Your_Pwd}@github.com/{YOUR_ID}/{YOUR_ID}.github.io.git,master
+      coding: https://{YOUR_ID}:{Your_Pwd}@git.coding.net/{YOUR_ID}/{BLOG　NAME}.git,master
+</code></pre>
+<p>Enjoy Hexo!</p>
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/27/effective java 笔记--创建对象的几个tips/" rel="next" title="effective java 笔记--创建对象的几个tips">
+                <i class="fa fa-chevron-left"></i> effective java 笔记--创建对象的几个tips
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/28/svm初探/" rel="prev" title="svm初探">
+                svm初探 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/04/27/hexo多客户端写作/" data-title="Hexo多客户端写作" data-content="" data-url="http://ovjaywang.github.io/2016/04/27/hexo多客户端写作/">
+  <div class="ds-share-inline">
+    <ul class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/04/27/hexo多客户端写作/" data-title="Hexo多客户端写作" data-url="http://ovjaywang.github.io/2016/04/27/hexo多客户端写作/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/xiaozaizi.png" alt="Jay Wang">
+          <p class="site-author-name" itemprop="name">Jay Wang</p>
+          <p class="site-description motion-element" itemprop="description">你猜?</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">102</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ovjaywang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/302060345" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Hexo写作的部署逻辑-amp-其他"><span class="nav-number">1.</span> <span class="nav-text">Hexo写作的部署逻辑&其他</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo的写作特点"><span class="nav-number">1.1.</span> <span class="nav-text">Hexo的写作特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo的缺憾"><span class="nav-number">1.2.</span> <span class="nav-text">Hexo的缺憾</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#同步静态文件"><span class="nav-number">1.2.1.</span> <span class="nav-text">同步静态文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同步源文件（大招）"><span class="nav-number">1.2.2.</span> <span class="nav-text">同步源文件（大招）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#呵呵哒"><span class="nav-number">1.3.</span> <span class="nav-text">呵呵哒</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#真·多客户端"><span class="nav-number">2.</span> <span class="nav-text">真·多客户端</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建远程仓库"><span class="nav-number">2.1.</span> <span class="nav-text">创建远程仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置主分支"><span class="nav-number">2.2.</span> <span class="nav-text">设置主分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步远程仓库并初始化"><span class="nav-number">2.3.</span> <span class="nav-text">同步远程仓库并初始化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#发博日常"><span class="nav-number">3.</span> <span class="nav-text">发博日常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#更博"><span class="nav-number">3.1.</span> <span class="nav-text">更博</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#换客户端"><span class="nav-number">3.2.</span> <span class="nav-text">换客户端</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#后记"><span class="nav-number">4.</span> <span class="nav-text">后记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#多地部署"><span class="nav-number">4.1.</span> <span class="nav-text">多地部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bug1-file-name-too-long"><span class="nav-number">4.2.</span> <span class="nav-text">bug1 file-name-too-long</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bug2-could-not-read-Username-for-‘https-XXX‘"><span class="nav-number">4.3.</span> <span class="nav-text">bug2 could not read Username for ‘https://XXX‘</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jay Wang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"mimimomo"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax --><!-- hexo-inject:end -->
+
+
+</body>
+</html>

@@ -1,0 +1,916 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.useso.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="检校,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ov智商捉急" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="除了后方交会之外，常用的进行内外参数检校的方法还有DLT和角锥体法。
+写在前面：DLT可在未提供初值的情况下推导内外方位元素，同时不需要迭代，但精度相比后方交会较低；DLT与后方交会等价。
+内容提要
+DLT基本原理与公式&amp;nbsp; L的基本形式&amp;nbsp;&amp;nbsp;用Li表示内外参数&amp;nbsp;
+非正交与比例尺不一致因素&amp;nbsp; DLT的真正一般形式&amp;nbsp; 包含2项因素的Li表达内外">
+<meta property="og:type" content="article">
+<meta property="og:title" content="后方交会检校(6)--后方交会的补充及DLT和角锥体法">
+<meta property="og:url" content="http://ovjaywang.github.io/2015/11/04/后方交会检校(6)--后方交会的补充及DLT和角锥体法/index.html">
+<meta property="og:site_name" content="ov智商捉急">
+<meta property="og:description" content="除了后方交会之外，常用的进行内外参数检校的方法还有DLT和角锥体法。
+写在前面：DLT可在未提供初值的情况下推导内外方位元素，同时不需要迭代，但精度相比后方交会较低；DLT与后方交会等价。
+内容提要
+DLT基本原理与公式&amp;nbsp; L的基本形式&amp;nbsp;&amp;nbsp;用Li表示内外参数&amp;nbsp;
+非正交与比例尺不一致因素&amp;nbsp; DLT的真正一般形式&amp;nbsp; 包含2项因素的Li表达内外">
+<meta property="og:image" content="http://www.dooby.me/wp-content/uploads/2015/11/151C86750F1FFF17ECE621971610488CBAE13A81.jpg">
+<meta property="og:image" content="http://www.dooby.me/wp-content/uploads/2015/11/C99CDEAA218715286FA9FE07A8E69B343C345FAA.jpg">
+<meta property="og:updated_time" content="2016-04-28T16:36:57.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="后方交会检校(6)--后方交会的补充及DLT和角锥体法">
+<meta name="twitter:description" content="除了后方交会之外，常用的进行内外参数检校的方法还有DLT和角锥体法。
+写在前面：DLT可在未提供初值的情况下推导内外方位元素，同时不需要迭代，但精度相比后方交会较低；DLT与后方交会等价。
+内容提要
+DLT基本原理与公式&amp;nbsp; L的基本形式&amp;nbsp;&amp;nbsp;用Li表示内外参数&amp;nbsp;
+非正交与比例尺不一致因素&amp;nbsp; DLT的真正一般形式&amp;nbsp; 包含2项因素的Li表达内外">
+<meta name="twitter:image" content="http://www.dooby.me/wp-content/uploads/2015/11/151C86750F1FFF17ECE621971610488CBAE13A81.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 后方交会检校(6)--后方交会的补充及DLT和角锥体法 | ov智商捉急 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+    <div class="site-meta-headline">
+      <a>
+        <img class="custom-logo-image" src="/images/touxiang.jpg" alt="ov智商捉急">
+      </a>
+    </div>
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">ov智商捉急</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/me" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sth">
+          <a href="/sth" rel="section">
+            
+              <i class="menu-item-icon fa fa-child fa-fw"></i> <br>
+            
+            有料
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ZtWPUvzBjdXDQ7iNrTbW','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                后方交会检校(6)--后方交会的补充及DLT和角锥体法
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-11-04T15:29:32+08:00" content="2015-11-04">
+              2015-11-04
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/什么都学一下/" itemprop="url" rel="index">
+                    <span itemprop="name">什么都学一下</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/什么都学一下/学习log/" itemprop="url" rel="index">
+                    <span itemprop="name">学习log</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/11/04/后方交会检校(6)--后方交会的补充及DLT和角锥体法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/04/后方交会检校(6)--后方交会的补充及DLT和角锥体法/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>除了后方交会之外，常用的进行内外参数检校的方法还有DLT和角锥体法。</p>
+<p>写在前面：DLT可在<font color="#FF0000">未提供初值</font>的情况下推导内外方位元素，同时<font color="#FF0000">不需要迭代</font>，但精度相比后方交会较低；<font color="#FF0000">DLT与后方交会等价</font>。</p>
+<p><strong><font color="#FF0000" size="5">内容提要</font></strong></p>
+<p><a href="#DLT基本原理与公式">DLT基本原理与公式</a>&nbsp; <a href="#其中">L的基本形式</a>&nbsp;&nbsp;<a href="#根据求得的li计算各参数">用Li表示内外参数</a>&nbsp;</p>
+<p><a href="#非正交与比例尺不一致因素">非正交与比例尺不一致因素</a>&nbsp; <a href="#DLT的真正一般形式">DLT的真正一般形式</a>&nbsp; <a href="#包含2项因素的Li表达内外参数">包含2项因素的Li表达内外参数</a>&nbsp;</p>
+<p><a href="#包含畸变参数校正的DLT">包含畸变参数校正的DLT</a></p>
+<p><a name="DLT基本原理与公式">DLT基本原理与公式</a></p>
+<p>基本原理：将物方点坐标（X,Y,Z）和(x,y)看做是空间中的某种线性变换，可以互为函数。一般地，将x,y用X,Y,Z表示。</p>
+<p>基本公式：</p>
+<p>$$!\left{\begin{matrix}x+\frac{L<em>{1}X+L</em>{2}Y+L<em>{3}Z+L</em>{4}}{L<em>{9}X+L</em>{10}Y+L<em>{11}Z+1}=0\y+\frac{L</em>{5}X+L<em>{6}Y+L</em>{7}Z+L<em>{8}}{L</em>{9}X+L<em>{10}Y+L</em>{11}Z+1}=0\end{matrix}\right.$$</p>
+<p>DLT误差方程：</p>
+<font color="#FF0000">$$!\begin{pmatrix}v<em>{x}\v</em>{y}\end{pmatrix}=\begin{pmatrix}X&amp;Y&amp;Z&amp;1&amp;0&amp;0&amp;0&amp;0&amp;xX&amp;xY&amp;xZ\0&amp;0&amp;0&amp;0&amp;X&amp;Y&amp;Z&amp;1&amp;yX&amp;yY&amp;yZ\end{pmatrix}\begin{pmatrix}L<em>{1}\L</em>{2}\L<em>{3}\L</em>{4}\L<em>{5}\L</em>{6}\L<em>{7}\L</em>{8}\L<em>{9}\L</em>{10}\L<em>{11}\end{pmatrix}+\begin{pmatrix}l</em>{x}\l_{y}\end{pmatrix}$$</font>
+
+<p>与后方交会一样，若有n个控制点，则A矩阵有2n行。还是利用求改正数的公式求取。</p>
+<p>DLT推导过程如下：</p>
+<p>根据共线方程的后方交会形式：</p>
+<p>$$!x-x<em>{0}+f</em>{x}\frac{a<em>{1}(X-X</em>{s})+b<em>{1}(Y-Y</em>{s})+c<em>{1}(Z-Z</em>{s})}{a<em>{3}(X-X</em>{s})+b<em>{3}(Y-Y</em>{s})+c<em>{3}(Z-Z</em>{s})}=0$$</p>
+<p>$$!y-y<em>{0}+f</em>{y}\frac{a<em>{2}(X-X</em>{s})+b<em>{2}(Y-Y</em>{s})+c<em>{2}(Z-Z</em>{s})}{a<em>{3}(X-X</em>{s})+b<em>{3}(Y-Y</em>{s})+c<em>{3}(Z-Z</em>{s})}=0$$</p>
+<p>这里，f分为fx和fy，即主距在像空系中这两个分量的投影。因为有的单个ccd xy方向上的大小不一致，即不是正方形。</p>
+<p>将X，Y，Z和Xs，Ys，Zs分离，将之看作是摄影中心的变换坐标。</p>
+<font color="#FF0000">$$!\left{\begin{matrix}r<em>{1}=-(a</em>{1}X<em>{s}+b</em>{1}Y<em>{s}+c</em>{1}Z<em>{s})\r</em>{2}=-(a<em>{2}X</em>{s}+b<em>{2}Y</em>{s}+c<em>{2}Z</em>{s})\r<em>{3}=-(a</em>{3}X<em>{s}+b</em>{3}Y<em>{s}+c</em>{3}Z_{s})\end{matrix}\right.$$</font>
+
+<p>化简可得</p>
+<p>$$!x-x<em>{0}+f</em>{x}\frac{a<em>{1}X+b</em>{1}Y+c<em>{1}Z+r</em>{1}}{a<em>{3}X+b</em>{3}Y+c<em>{3}Z+r</em>{3}}=0$$</p>
+<p>$$!y-y<em>{0}+f</em>{y}\frac{a<em>{2}X+b</em>{2}Y+c<em>{2}Z+r</em>{1}}{a<em>{3}X+b</em>{3}Y+c<em>{3}Z+r</em>{3}}=0$$</p>
+<p>将x0，y0通分。</p>
+<p>$$!x+\frac{(a<em>{1}f</em>{x}-a<em>{3}x</em>{0})X+(b<em>{1}f</em>{x}-b<em>{3}x</em>{0})Y+(c<em>{1}f</em>{x}-c<em>{3}x</em>{0})Z+(r<em>{1}f</em>{x}-r<em>{3}x</em>{0})}{a<em>{3}X+b</em>{3}Y+c<em>{3}Z+r</em>{3}}=0$$</p>
+<p>$$!y+\frac{(a<em>{2}f</em>{y}-a<em>{3}y</em>{0})X+(b<em>{2}f</em>{y}-b<em>{3}y</em>{0})Y+(c<em>{2}f</em>{y}-c<em>{3}y</em>{0})Z+(r<em>{2}f</em>{y}-r<em>{3}y</em>{0})}{a<em>{3}X+b</em>{3}Y+c<em>{3}Z+r</em>{3}}=0$$</p>
+<p>将X、Y、Z的系数简化为L，即</p>
+<p>$$!x+\frac{L<em>{1}X+L</em>{2}Y+L<em>{3}Z+L</em>{4}}{L<em>{9}X+L</em>{10}Y+L_{11}Z+1}=0$$</p>
+<p>$$!y+\frac{L<em>{5}X+L</em>{6}Y+L<em>{7}Z+L</em>{8}}{L<em>{9}X+L</em>{10}Y+L_{11}Z+1}=0$$</p>
+<p><a name="其中">其中，L为：</a></p>
+<font color="#FF0000">$$!L=\begin{bmatrix}L<em>{1}&amp;L</em>{2}&amp;L<em>{3}&amp;L</em>{4}\L<em>{5}&amp;L</em>{6}&amp;L<em>{7}&amp;L</em>{8}\L<em>{9}&amp;L</em>{10}&amp;L<em>{11}&amp;L</em>{12}\end{bmatrix}$$</font>
+
+<p><img src="http://www.dooby.me/wp-content/uploads/2015/11/151C86750F1FFF17ECE621971610488CBAE13A81.jpg" alt=""></p>
+<p>该公式表示像点测量坐标与物方点坐标直接的变化，无需内方位元素。从另一个角度看，L矩阵其实是二维坐标通过三次矩阵变换得到的三维坐标，即：</p>
+<p>$$!L=\frac{1}{r<em>{3}}\begin{bmatrix}f</em>{x}&amp;0&amp;-x<em>{0}\0&amp;f</em>{y}&amp;-y<em>{0}\0&amp;0&amp;1\end{bmatrix}\begin{bmatrix}a</em>{1}&amp;b<em>{1}&amp;c</em>{1}\a<em>{2}&amp;b</em>{2}&amp;c<em>{2}\a</em>{3}&amp;b<em>{3}&amp;c</em>{3}\end{bmatrix}\begin{bmatrix}1&amp;0&amp;0&amp;X<em>{s}\0&amp;1&amp;0&amp;Y</em>{s}\0&amp;0&amp;1&amp;Z<em>{s}\end{bmatrix}=\frac{1}{r</em>{3}}\begin{bmatrix}f<em>{x}&amp;0&amp;-x</em>{0}\0&amp;f<em>{y}&amp;-y</em>{0}\0&amp;0&amp;1\end{bmatrix}\begin{bmatrix}R&amp;t\0^{T}&amp;1\end{bmatrix}$$</p>
+<p>第一个矩阵由内方位元素组成，是辅助坐标和像平面坐标的平移和比例关系；第二个矩阵是外方位元素的角元素，表达物方系和地辅系的坐标旋转关系；第三个矩阵是外方位线元素，表达物方坐标和地辅系坐标的原点平移关系。</p>
+<p>由于计算机视觉中使用齐次坐标，即如下形式</p>
+<p>$$!\begin{pmatrix}x\y\1\end{pmatrix}=L\begin{pmatrix}X\Y\Z\1\end{pmatrix}=\begin{bmatrix}L<em>{1}&amp;L</em>{2}&amp;L<em>{3}&amp;L</em>{4}\L<em>{5}&amp;L</em>{6}&amp;L<em>{7}&amp;L</em>{8}\L<em>{9}&amp;L</em>{10}&amp;L<em>{11}&amp;L</em>{12}\end{bmatrix}\begin{pmatrix}X\Y\Z\1\end{pmatrix}$$因此形成了上红色式子。</p>
+<p><a name="根据求得的li计算各参数">根据求得的li计算各参数</a></p>
+<p>重要参数的求解：</p>
+<p>$$!r<em>{3}=\frac{1}{(L</em>{9}^{2}+L<em>{10}^{2}+L</em>{11}^{2})^{1/2}}$$</p>
+<p>(1)内方位元素</p>
+<p>$$!x<em>{0}=-(L</em>{1}L<em>{9}+L</em>{2}L<em>{10}+L</em>{3}L<em>{11})/(L</em>{9}^{2}+<em>{10}^{2}+L</em>{11}^{2})$$</p>
+<p>$$!y<em>{0}=-(L</em>{5}L<em>{9}+L</em>{6}L<em>{10}+L</em>{7}L<em>{11})/(L</em>{9}^{2}+<em>{10}^{2}+L</em>{11}^{2})$$</p>
+<p>$$!f<em>{x}^{2}=-x</em>{0}^{2}+(L<em>{1}^{2}+L</em>{2}^{2}+L<em>{3}^{2})/(L</em>{9}^{2}+<em>{10}^{2}+L</em>{11}^{2})$$</p>
+<p>$$!f<em>{y}^{2}=-y</em>{0}^{2}+(L<em>{4}^{2}+L</em>{5}^{2}+L<em>{6}^{2})/(L</em>{9}^{2}+<em>{10}^{2}+L</em>{11}^{2})$$</p>
+<p>$$!f=\frac{1}{2}(f<em>{x}+f</em>{y})$$</p>
+<p>(2)外方位角元素</p>
+<p>$$!\begin{bmatrix}a<em>{1}&amp;b</em>{1}&amp;c<em>{1}\end{bmatrix}=\frac{1}{f</em>{x}}\begin{bmatrix}\frac{L<em>{1}}{(L</em>{9}^{2}+L<em>{10}^{2}+L</em>{11}^{2})^{1/2}}+a<em>{3}x</em>{0}\frac{L<em>{2}}{(L</em>{9}^{2}+L<em>{10}^{2}+L</em>{11}^{2})^{1/2}}+b<em>{3}x</em>{0}\frac{L<em>{3}}{(L</em>{9}^{2}+L<em>{10}^{2}+L</em>{11}^{2})^{1/2}}+c<em>{3}x</em>{0}\end{bmatrix}$$</p>
+<p>$$!\begin{bmatrix}a<em>{2}&amp;b</em>{2}&amp;c<em>{2}\end{bmatrix}=\frac{1}{f</em>{y}}\begin{bmatrix}\frac{L<em>{5}}{(L</em>{9}^{2}+L<em>{10}^{2}+L</em>{11}^{2})^{1/2}}+a<em>{3}y</em>{0}\frac{L<em>{6}}{(L</em>{9}^{2}+L<em>{10}^{2}+L</em>{11}^{2})^{1/2}}+b<em>{3}y</em>{0}\frac{L<em>{7}}{(L</em>{9}^{2}+L<em>{10}^{2}+L</em>{11}^{2})^{1/2}}+c<em>{3}y</em>{0}\end{bmatrix}$$</p>
+<p>$$!\begin{bmatrix}a<em>{3}&amp;b</em>{3}&amp;c<em>{3}\end{bmatrix}=\frac{1}{(L</em>{9}^{2}+L<em>{10^{2}}+L</em>{11}^{2})^{1/2}}\begin{bmatrix}L<em>{9}&amp;L</em>{10}&amp;L_{11}\end{bmatrix}$$</p>
+<p>可以注意到的是，DLT解求内外方位元素是有次序的，因为外方位元素解求的公式中包含有所有的内方位元素。</p>
+<p>$$!\left{\begin{matrix}\varphi =arctan(\frac{a<em>{3}}{c</em>{3}})=arctan(\frac{l<em>{9}}{l</em>{11}})\\omega =arcsin(-b<em>{3})=arcsin(-\frac{l</em>{10}}{l<em>{9}^2+l</em>{10}^{2}+l<em>{11}^{2}})\\kappa =arctan(\frac{b</em>{1}}{b<em>{2}})=arctan(\frac{f</em>{y}[x<em>{0}\frac{L</em>{2}}{(L<em>{9}^{2}+L</em>{10}^{2}+L<em>{11}^{2})^{1/2}}+b</em>{3}]}{f<em>{x}[y</em>{0}\frac{L<em>{6}}{(L</em>{9}^{2}+L<em>{10}^{2}+L</em>{11}^{2})^{1/2}}+b_{3}]})\end{matrix}\right.$$</p>
+<p>(3)外方位线元素<br> 则需要根据如下方程解出</p>
+<p>$$!a<em>{3}X</em>{s}+b<em>{3}Y</em>{s}+c<em>{3}Z</em>{s}+r_{3}$$</p>
+<p>$$!\frac{a<em>{1}f</em>{x}-a<em>{3}x</em>{0}}{r<em>{3}}X</em>{s}+\frac{b<em>{1}f</em>{x}-b<em>{3}x</em>{0}}{r<em>{3}}Y</em>{s}+\frac{c<em>{1}f</em>{x}-c<em>{3}x</em>{0}}{r<em>{3}}+L</em>{4}=0$$</p>
+<p>$$!\frac{a<em>{2}f</em>{y}-a<em>{3}y</em>{0}}{r<em>{3}}X</em>{s}+\frac{b<em>{2}f</em>{y}-b<em>{3}y</em>{0}}{r<em>{3}}Y</em>{s}+\frac{c<em>{2}f</em>{y}-c<em>{3}y</em>{0}}{r<em>{3}}+L</em>{8}=0$$</p>
+<p>&nbsp;</p>
+<p>DLT实质上与共线方程等价，Li之间的相关性，因为2个条件=11个参数-必要观测个数</p>
+<hr>
+<p>以上是只解求内外方位元素的时候，Li与各参数的关系，如果加上光学畸变、非正交比例、比例尺不一致等误差，光学畸变在前文中提到。</p>
+<p>x轴方向上比例系数为1，y轴方向比例系数为(1+ds).则</p>
+<p>x轴方向上的主距为fx，y轴方向上的主距为fy=fx/(1+ds).</p>
+<p>对数字相机，比例尺不一致可认为是襄垣x、y方向长度不等引起的；而不正交性误差可认为是像元x、y方向排列不垂直引起的。</p>
+<p><a name="非正交与比例尺不一致因素">如图展现了以上两种误差的原因。</a></p>
+<p><img src="http://www.dooby.me/wp-content/uploads/2015/11/C99CDEAA218715286FA9FE07A8E69B343C345FAA.jpg" alt=""></p>
+<p>以下表述中，小括号代表坐标系，中括号代表坐标值。</p>
+<p>$$!(\overline{x},\overline{y})[on<em>{2},on</em>{1}]$$——以像主点为原点（像平面坐标系的原点），不包含线性误差的<font color="#FF0000">某像点p的坐标</font></p>
+<p>$$!(x,y)[om<em>{2},0m</em>{1}]$$——以像主点为原点，不包含正交性dβ误差的像点p坐标。</p>
+<p>$$!(x,y)[om<em>{2},om</em>{1}^{‘}]$$——以像主点为原点，不包括正交性dβ误差及比例尺不一致误差ds的像点坐标p</p>
+<p>则从图中可知，$$!\delta x=on<em>{2}-om</em>{2}=m<em>{2}p\cdot sin d\beta=om</em>{1}\cdot sin d\beta=(1+ds)(y-y<em>{0})sind\beta\approx (y-y</em>{0})sind\beta$$</p>
+<p>$$!\delta y=on<em>{1}-om</em>{1}^{‘}=om<em>{1}\cdot cosd\beta -om</em>{1}^{‘}=(1+ds)(y-y<em>{0})\cdot cosd\beta-(y-y</em>{0})=<a href="y-y_{0}">(1+ds)\cdot cosd\beta -1</a>\approx (y-y_{0})\cdot ds$$</p>
+<p>将上式2值带入线性方程<font color="#FF0000">有线性误差的形式</font>：式中有11个独立参数，3个内方位x0,yo,fx6个外方位Xs，Ys，Zs，φ，ω，k，比例尺不一致系数ds，xy轴不正交系数dβ。</p>
+<p>$$!\left{\begin{matrix}x-x<em>{0}+(1+ds)(y-y</em>{0})\cdot sind\beta +f<em>{x}\frac{a</em>{1}(X-X<em>{s}+b</em>{1}(Y-Y<em>{s})+c</em>{1}(Z-Z<em>{s})}{a</em>{3}(X-X<em>{s})+b</em>{3}(Y-Y<em>{s})+c</em>{3}(Z-Z<em>{s})}=0\y-y</em>{0}+[(1+ds)\cdot cosd\beta-1] (y-y<em>{0})+f</em>{x}\frac{a<em>{1}(X-X</em>{s}+b<em>{1}(Y-Y</em>{s})+c<em>{1}(Z-Z</em>{s})}{a<em>{3}(X-X</em>{s})+b<em>{3}(Y-Y</em>{s})+c<em>{3}(Z-Z</em>{s})}=0\end{matrix}\right.$$</p>
+<p>通过一系列的化简，如前面介绍不带线性误差一样，提取出r1，r2，r3，<a name="DLT的真正一般形式">得到：</a></p>
+<p>$$!x+\frac{\frac{1}{r<em>{3}}(a</em>{1}f<em>{x}-a</em>{2}f<em>{x}tand\beta -a</em>{3}x<em>{0})}{\frac{a</em>{3}}{r<em>{3}}X+\frac{b</em>{3}}{r<em>{3}}Y+\frac{c</em>{3}}{r<em>{3}}Z+1}\cdot X+\frac{\frac{1}{r</em>{3}}(b<em>{1}f</em>{x}-b<em>{2}f</em>{x}tand\beta -b<em>{3}x</em>{0})}{\frac{a<em>{3}}{r</em>{3}}X+\frac{b<em>{3}}{r</em>{3}}Y+\frac{c<em>{3}}{r</em>{3}}Z+1}\cdot Y+\frac{\frac{1}{r<em>{3}}(c</em>{1}f<em>{x}-c</em>{2}f<em>{x}tand\beta -c</em>{3}x<em>{0})}{\frac{a</em>{3}}{r<em>{3}}X+\frac{b</em>{3}}{r<em>{3}}Y+\frac{c</em>{3}}{r<em>{3}}Z+1}\cdot Z+\frac{\frac{1}{r</em>{3}}(r<em>{1}f</em>{x}-r<em>{2}f</em>{x}tand\beta -r<em>{3}x</em>{0})}{\frac{a<em>{3}}{r</em>{3}}X+\frac{b<em>{3}}{r</em>{3}}Y+\frac{c<em>{3}}{r</em>{3}}Z+1}=0$$</p>
+<p>$$!y+\frac{\frac{1}{r<em>{3}}[\frac{a</em>{2}f<em>{x}}{(1+ds)cosd\beta }-a</em>{3}\cdot y<em>{0}]}{\frac{a</em>{3}}{r<em>{3}}X+\frac{b</em>{3}}{r<em>{3}}Y+\frac{c</em>{3}}{r<em>{3}}Z+1}\cdot X+\frac{\frac{1}{r</em>{3}}[\frac{b<em>{2}f</em>{x}}{(1+ds)cosd\beta }-b<em>{3}\cdot y</em>{0}]}{\frac{a<em>{3}}{r</em>{3}}X+\frac{b<em>{3}}{r</em>{3}}Y+\frac{c<em>{3}}{r</em>{3}}Z+1}\cdot Y+\frac{\frac{1}{r<em>{3}}[\frac{c</em>{2}f}{(1+ds)cosd\beta }-c<em>{3}\cdot y</em>{0}]}{\frac{a<em>{3}}{r</em>{3}}X+\frac{b<em>{3}}{r</em>{3}}Y+\frac{c<em>{3}}{r</em>{3}}Z+1}\cdot Z+\frac{\frac{1}{r<em>{3}}[\frac{r</em>{2}f<em>{x}}{(1+ds)cosd\beta }-r</em>{3}\cdot y<em>{0}]}{\frac{a</em>{3}}{r<em>{3}}X+\frac{b</em>{3}}{r<em>{3}}Y+\frac{c</em>{3}}{r_{3}}Z+1}=0$$</p>
+<p>则上式即可化为基本式：</p>
+<p>$$!x+\frac{l<em>{1}X+l</em>{2}Y+l<em>{3}Z+l</em>{4}}{l<em>{9}X+l</em>{10}Y+l_{11}Z+1}=0$$</p>
+<p>$$!y+\frac{l<em>{5}X+l</em>{6}Y+l<em>{7}Z+l</em>{8}}{l<em>{9}X+l</em>{10}Y+l_{11}Z+1}=0$$</p>
+<p>其中，l4、l8可化简：</p>
+<p>$$!l<em>{8}=\frac{1}{r</em>{3}}[\frac{r<em>{2}f</em>{x}}{(1+ds)\cdot d\beta}-r<em>{3}\cdot y</em>{0}]=\frac{1}{r<em>{3}}[\frac{-(a</em>{2}Xs+b<em>{2}Y</em>{s}+c<em>{2}Z</em>{s})f<em>{x}}{(1+ds)\cdot cosd\beta }+(a</em>{3}X<em>{s}+b</em>{3}Y<em>{s}+c</em>{3}Z<em>{s})\cdot y</em>{0}]=-\frac{1}{r<em>{3}}[(\frac{a</em>{2}f<em>{x}}{(1+ds)\cdot cosd\beta }-a</em>{3}y<em>{0})X</em>{s}+(\frac{b<em>{2}f</em>{x}}{(1+ds)\cdot cosd\beta }-b<em>{3}y</em>{0})Y<em>{s}+(\frac{c</em>{2}f<em>{x}}{(1+ds)\cdot cosd\beta }-c</em>{3}y<em>{0})Z</em>{s}]=-(l<em>{5}X</em>{s}+l<em>{6}Y</em>{s}+l<em>{7}Z</em>{s})$$</p>
+<p>$$!l<em>{4}=\frac{1}{r</em>{3}}(r<em>{1}f</em>{x}-r<em>{2}f</em>{x}tand\beta -r<em>{3}x</em>{0})=-(l<em>{1}X</em>{s}+l<em>{2}Y</em>{s}+l<em>{3}Z</em>{s})$$</p>
+<p>由于未知数是11个，因此最少需要布置6个控制点。</p>
+<p>值得一提的是，像主点的求解公式与没有畸变参与<a name="包含2项因素的Li表达内外参数">相同</a>，</p>
+<p>$$!x<em>{0}=-(L</em>{1}L<em>{9}+L</em>{2}L<em>{10}+L</em>{3}L<em>{11})/(L</em>{9}^{2}+<em>{10}^{2}+L</em>{11}^{2})$$</p>
+<p>$$!y<em>{0}=-(L</em>{5}L<em>{9}+L</em>{6}L<em>{10}+L</em>{7}L<em>{11})/(L</em>{9}^{2}+<em>{10}^{2}+L</em>{11}^{2})$$</p>
+<p>最重要的ds和dβ，设：</p>
+<p>$$!\overline{A}=r<em>{3}^{2}(l</em>{1}^{2}+l<em>{2}^{2}+l</em>{3}^{2})-x<em>{0}^{2}=\frac{f</em>{x}^{2}}{cos^{2}d\beta }$$</p>
+<p>$$!B=r<em>{3}^{2}(l</em>{5}^{2}+l<em>{6}^{2}+l</em>{7}^{2})-y<em>{0}^{2}=\frac{f</em>{x}^{2}}{(1+ds)^{2}cos^{2}d\beta }$$</p>
+<p>$$!C=r<em>{3}^{2}(l</em>{1}l<em>{5}+l</em>{2}l<em>{6}+l</em>{3}l<em>{7})-x</em>{0}y<em>{0}=\frac{-f</em>{x}^{2}sind\beta }{(1+ds)cos^{2}d\beta }$$</p>
+<p>$$!ds=\sqrt{\frac{\overline{A}}{B}-1}$$</p>
+<p>$$!sind\beta =\pm \sqrt{\frac{C^{2}}{\overline{A}B}}$$</p>
+<p>而主距的公式变为：</p>
+<p>$$!f_{x}=\sqrt{\overline{A}}cosd\beta $$</p>
+<p>$$!f<em>{y}=\frac{f</em>{x}}{1+ds}$$</p>
+<p>外方位角元素：</p>
+<p>$$!tan\varphi =\frac{a<em>{3}}{c</em>{3}}$$</p>
+<p>$$!sin\omega =-b_{3}$$</p>
+<p>$$!tan\kappa =\frac{b<em>{1}}{b</em>{2}}$$</p>
+<p>其中，$$a<em>{3}=r</em>{3}l<em>{9},b</em>{3}=r<em>{3}l</em>{10},c<em>{3}=r</em>{3}l_{11}$$</p>
+<p>而外方位线元素由以下三个式子构成：</p>
+<p>$$!l<em>{1}X</em>{s}+l<em>{2}Y</em>{s}+l<em>{3}Z</em>{s}=-l_{4}$$</p>
+<p>$$!l<em>{5}X</em>{s}+l<em>{6}Y</em>{s}+l<em>{7}Z</em>{s}=-l_{8}$$</p>
+<p>$$!l<em>{9}X</em>{s}+l<em>{10}Y</em>{s}+l<em>{11}Z</em>{s}=\frac{a<em>{3}}{r</em>{3}}X<em>{s}+\frac{b</em>{3}}{r<em>{3}}Y</em>{s}+\frac{c<em>{3}}{r</em>{3}}Z<em>{s}=-\frac{a</em>{3}Xs+b<em>{3}Y</em>{s}+c<em>{3}Z</em>{s}}{a<em>{3}Xs+b</em>{3}Y<em>{s}+c</em>{3}Z_{s}}=-1$$</p>
+<p>到这里，能解求出包含非正交比例和xy不一致比例，但缺乏了对镜头畸变的改正。若将镜头畸变写入DLT方程式，则变为：</p>
+<p>$$!x+v<em>{x}+\Delta x+\frac{l</em>{1}X+l<em>{2}Y+l</em>{3}Z+l<em>{4}}{l</em>{9}X+l<em>{10}Y+l</em>{11}Z+1}=0$$</p>
+<p>$$!y+v<em>{y}+\Delta y+\frac{l</em>{5}X+l<em>{6}Y+l</em>{7}Z+l<em>{8}}{l</em>{9}X+l<em>{10}Y+l</em>{11}Z+1}=0$$</p>
+<p>其中，vx vy是残差，△x △y是畸变的改正数，若忽略切向畸变且只去一项径向畸变的参数作为例子，</p>
+<p>$$!\left{\begin{matrix}\Delta x=(x-x<em>{0})r^{2}k</em>{1}\\Delta y=(y-y<em>{0})r^{2}k</em>{1}\end{matrix}\right.$$</p>
+<p>再令$$A=l<em>{9}X+l</em>{10}Y+l_{11}Z+1$$</p>
+<p>以li为未知数，列误差方程，则DLT<a name="包含畸变参数校正的DLT">公式可化简为</a>：</p>
+<p>$$!v<em>{x}=-\frac{1}{A}[Xl</em>{1}+Yl<em>{2}+Zl</em>{3}+l<em>{4}+xXl</em>{9}+xYl<em>{10}+xZl</em>{11}+A(x-x<em>{0}^{2})r^{2}k</em>{1}+x]$$</p>
+<p>$$!v<em>{y}=-\frac{1}{A}[Xl</em>{5}+Yl<em>{6}+Zl</em>{7}+l<em>{8}+yXl</em>{9}+yYl<em>{10}+yZl</em>{11}+A(y-y<em>{0}^{2})r^{2}k</em>{1}+x]$$</p>
+<p>矩阵的形式则可写为（以物方坐标表示像点坐标）：</p>
+<font color="#FF0000">$$!\begin{bmatrix}v<em>{x}\v</em>{y}\end{bmatrix}=\begin{bmatrix}\frac{X}{A}&amp;\frac{Y}{A}&amp;\frac{Z}{A}&amp;\frac{1}{A}&amp;0&amp;0&amp;0&amp;0&amp;\frac{xX}{A}&amp;\frac{xY}{A}&amp;\frac{xZ}{A}&amp;(x-x<em>{0})r^{2}\0&amp;0&amp;0&amp;0&amp;\frac{X}{A}&amp;\frac{Y}{A}&amp;\frac{Z}{A}&amp;\frac{1}{A}&amp;\frac{yX}{A}&amp;\frac{yY}{A}&amp;\frac{yZ}{A}&amp;(y-y</em>{0})r^{2}\end{bmatrix}\begin{bmatrix}l<em>{1}\l</em>{2}\l<em>{3}\l</em>{4}\l<em>{5}\l</em>{6}\l<em>{7}\l</em>{8}\l<em>{9}\l</em>{10}\l<em>{11}\k</em>{1}\end{bmatrix}-\begin{bmatrix}\frac{x}{A}\\frac{y}{A}\end{bmatrix}$$</font>
+
+<p>可简写为:</p>
+<p>$$!V=AL+BX-W$$</p>
+<p>其中L是11个（二维DLT是可能是8个）li参数，X是单独提出来计算的畸变系数，在后交时通常加载改正数值里，当学要加入更多畸变参数时，需要确定更多的B矩阵中的形式。W一般是x/A,y/A.</p>
+<p>A和B的求取也是迭代计算，每次迭代A的值计算是通过控制点求得的。对不同控制点像点坐标列误差方程，A的值也不同。</p>
+<p>简单提一下以像方坐标表示物放坐标的DLT公式：</p>
+<p>$$!(l<em>{1}+\overline{x}l</em>{9})X+(l<em>{2}+\overline{x}l</em>{10})Y+(l<em>{3}+\overline{x}l</em>{11})Z+(l_{4}+\overline{x})=0$$</p>
+<p>$$!(l<em>{5}+\overline{y}l</em>{9})X+(l<em>{6}+\overline{y}l</em>{10})Y+(l<em>{7}+\overline{y}l</em>{11})Z+(l_{8}+\overline{y})=0$$</p>
+<p>直接线性变换的精度：可提供1/5000摄影距离精度的测量成果。影响DLT解法精度的是：控制点分布数量质量、像点坐标的测量精度、两张相片主光轴的交会角、像片张数、非线性畸变误差的改正数。</p>
+<div class="PoweredByWebStory" style="margin-top:15px;margin-bottom:10px"><a href="http://sns.juziyue.com/webinvite.php?u=94887" target="_blank" rel="external"></a>&nbsp;今天你<a href="http://sns.juziyue.com/webinvite.php?u=94887" target="_blank" rel="external">菊子曰</a>了么？</div>
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/检校/" rel="tag">#检校</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/11/04/后方交会检校(5)--多片后方交会 相对绝对定向/" rel="next" title="后方交会检校(5)--多片后方交会&相对绝对定向">
+                <i class="fa fa-chevron-left"></i> 后方交会检校(5)--多片后方交会&相对绝对定向
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/11/04/uac-involved/" rel="prev" title="无人机影像相关--拍摄、校正、平差、拼接">
+                无人机影像相关--拍摄、校正、平差、拼接 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2015/11/04/后方交会检校(6)--后方交会的补充及DLT和角锥体法/" data-title="后方交会检校(6)--后方交会的补充及DLT和角锥体法" data-content="" data-url="http://ovjaywang.github.io/2015/11/04/后方交会检校(6)--后方交会的补充及DLT和角锥体法/">
+  <div class="ds-share-inline">
+    <ul class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/11/04/后方交会检校(6)--后方交会的补充及DLT和角锥体法/" data-title="后方交会检校(6)--后方交会的补充及DLT和角锥体法" data-url="http://ovjaywang.github.io/2015/11/04/后方交会检校(6)--后方交会的补充及DLT和角锥体法/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/xiaozaizi.png" alt="Jay Wang">
+          <p class="site-author-name" itemprop="name">Jay Wang</p>
+          <p class="site-description motion-element" itemprop="description">你猜?</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">102</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ovjaywang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/302060345" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jay Wang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"mimimomo"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax --><!-- hexo-inject:end -->
+
+
+</body>
+</html>

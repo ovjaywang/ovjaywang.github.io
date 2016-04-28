@@ -1,0 +1,830 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.useso.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="dbscan,demo,ICP,MMC,MME,SPark,算法,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ov智商捉急" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="http://ju.outofmemory.cn/entry/106397 【坑妹填完】
+最近各种乱整。。文章妹时间管光顾着折腾手头派下来的事情了。再加上每天固定的复习提高一下。小论文完全没有头绪。最近get到的实用方法还是很多阿。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="最近demo 模块 算法总结">
+<meta property="og:url" content="http://ovjaywang.github.io/2016/03/08/最近demo 模块 算法总结/index.html">
+<meta property="og:site_name" content="ov智商捉急">
+<meta property="og:description" content="http://ju.outofmemory.cn/entry/106397 【坑妹填完】
+最近各种乱整。。文章妹时间管光顾着折腾手头派下来的事情了。再加上每天固定的复习提高一下。小论文完全没有头绪。最近get到的实用方法还是很多阿。">
+<meta property="og:image" content="http://ooo.0o0.ooo/2016/03/30/56fb7e092b350.png">
+<meta property="og:updated_time" content="2016-04-28T16:36:57.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="最近demo 模块 算法总结">
+<meta name="twitter:description" content="http://ju.outofmemory.cn/entry/106397 【坑妹填完】
+最近各种乱整。。文章妹时间管光顾着折腾手头派下来的事情了。再加上每天固定的复习提高一下。小论文完全没有头绪。最近get到的实用方法还是很多阿。">
+<meta name="twitter:image" content="http://ooo.0o0.ooo/2016/03/30/56fb7e092b350.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 最近demo 模块 算法总结 | ov智商捉急 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+    <div class="site-meta-headline">
+      <a>
+        <img class="custom-logo-image" src="/images/touxiang.jpg" alt="ov智商捉急">
+      </a>
+    </div>
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">ov智商捉急</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/me" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sth">
+          <a href="/sth" rel="section">
+            
+              <i class="menu-item-icon fa fa-child fa-fw"></i> <br>
+            
+            有料
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ZtWPUvzBjdXDQ7iNrTbW','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                最近demo 模块 算法总结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-03-08T17:43:56+08:00" content="2016-03-08">
+              2016-03-08
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/代码狗/" itemprop="url" rel="index">
+                    <span itemprop="name">代码狗</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/代码狗/学习log/" itemprop="url" rel="index">
+                    <span itemprop="name">学习log</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/03/08/最近demo 模块 算法总结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/08/最近demo 模块 算法总结/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="http://ju.outofmemory.cn/entry/106397" title="http://ju.outofmemory.cn/entry/106397" target="_blank" rel="external">http://ju.outofmemory.cn/entry/106397</a> 【坑妹填完】</p>
+<p>最近各种乱整。。文章妹时间管光顾着折腾手头派下来的事情了。再加上每天固定的复习提高一下。小论文完全没有头绪。<br>最近get到的实用方法还是很多阿。<br><a id="more"></a></p>
+<h1 id="DBScan（Density-Based-Spatial-Clustering-of-Applications-with-Noise）基于密度的含噪空间聚类"><a href="#DBScan（Density-Based-Spatial-Clustering-of-Applications-with-Noise）基于密度的含噪空间聚类" class="headerlink" title="DBScan（Density-Based Spatial Clustering of Applications with Noise）基于密度的含噪空间聚类"></a><strong>DBScan</strong>（Density-Based Spatial Clustering of Applications with Noise）<strong>基于密度的含噪空间聚类</strong></h1><p>最大特点是：多维、任何形状聚类、聚类数任意、噪声可控、对输入不敏感；缺点很明显，需要提前知道2个参数（一般实验多了，根据经验对同一类型聚类可以不用改。），时间复杂度和空间复杂度都很大，需要计算点两两之间距离[这里需要优化，否则算法超出一般忍受时间] 不对密度变化做出选择。<br>输入参数2个，单一点半径范围R及其最小包含的点数N。算法本质是遍历所有点并计算邻域内的点数并拓展该类（以R范围内是否达到N来判断）。被分类的点将会标记并不再被检测到。因此耗时表现在邻域查找和拓展聚类上。但解算效果相当良好。<br>算法的优化方案相当多：kdtree的、基于网格计算的、基于适应性解算阈值的、局部敏感哈希。主要解决的都是如何加快求解邻域解求速度。诚然它的算法复杂度有n^3显然想要加快并不是那么容易。深入研讨了一番发现计算距离时有的不止一遍，因此写入硬盘或许是个好的方案，但是I/O读取的效率就要考虑进来了；还有一种方式是限制深入迭代次数，即做多在第几层nearestpoint()这个数组中进行聚类的拓展。这种做法的危害是使得同一个点集很可能多次才并入，或者完全没有并到一块，因此需要一个后手，将聚类中心相近的再次组合，其实在kdtree中也有类似的做法。参考<a href="https://github.com/alitouka/spark_dbscan" target="_blank" rel="external">基于SPark的DBSCAN的图解</a>，KDTree建立时，按区域分割好数据后，同一类的点集亦可能先分散于个个区间。各自区间先进行小聚类后，再进行大聚类。</p>
+<p><img src="http://ooo.0o0.ooo/2016/03/30/56fb7e092b350.png" alt=""></p>
+<p>（中了SPark的毒，后面会进行测试）<br>demo很好的展示了算法的原理。</p>
+<p><a href="http://www.naftaliharris.com/blog/visualizing-dbscan-clustering/" title="http://www.naftaliharris.com/blog/visualizing-dbscan-clustering/" target="_blank" rel="external">http://www.naftaliharris.com/blog/visualizing-dbscan-clustering/</a> 在线666可视化理解dbscan过程。不同的实例可以看到，对不同图形的检测相当准确；同时聚类精度亦相当高。</p>
+<p><a href="http://stackoverflow.com/questions/6621630/dbscan-code-in-c-sharp-or-vb-net-for-cluster-analysis" title="http://stackoverflow.com/questions/6621630/dbscan-code-in-c-sharp-or-vb-net-for-cluster-analysis" target="_blank" rel="external">http://stackoverflow.com/questions/6621630/dbscan-code-in-c-sharp-or-vb-net-for-cluster-analysis</a>stackoverflow图解dbscan</p>
+<p><a href="https://www.yzuzun.com/2015/07/dbscan-clustering-algorithm-and-c-implementation/" title="https://www.yzuzun.com/2015/07/dbscan-clustering-algorithm-and-c-implementation/" target="_blank" rel="external">https://www.yzuzun.com/2015/07/dbscan-clustering-algorithm-and-c-implementation/</a> dbscan的C#实现和作者的gayhub项目</p>
+<p><a href="http://download.csdn.net/detail/f112122/7482303" title="http://download.csdn.net/detail/f112122/7482303" target="_blank" rel="external">http://download.csdn.net/detail/f112122/7482303 </a>c#简易可视化工程例子</p>
+<p>诚然，boost把很多常用的算法都写进去了。但c++使用起来才比较顺。这是c++环境下使用dbscan的正确方式：上boost。比如下面这个</p>
+<p><a href="https://github.com/yusufuzun/dbscan" title="https://github.com/yusufuzun/dbscan" target="_blank" rel="external">https://github.com/yusufuzun/dbscan</a>（C# 以算法原理为基准 不是很快）</p>
+<p>或这个<a href="https://github.com/Terranlee/DBSCAN" title="https://github.com/Terranlee/DBSCAN" target="_blank" rel="external">https://github.com/Terranlee/DBSCAN</a>（C++&amp;boost&amp;KDTree&nbsp; 至今没有明白第一个参数ire的含义啊。一般都2个参数就好了啊 而且结果貌似也不太对 等待修正）</p>
+<h1 id="boost的使用"><a href="#boost的使用" class="headerlink" title="boost的使用"></a><strong>boost的使用</strong></h1><p>上边两个github的例子都基于c++开发，其中都使用到了流行的c++高性能计算类库boost。</p>
+<p>linux下的编译和安装遵循这个帖比较顺 </p>
+<p><a href="http://ju.outofmemory.cn/entry/106397" title="http://ju.outofmemory.cn/entry/106397" target="_blank" rel="external">http://ju.outofmemory.cn/entry/106397</a></p>
+<hr>
+<p>KDTree </p>
+<p>KDTree作为一种数据结构的拓展，其实是一种变异的二叉排序树，其最最最原始的构造就是，在二叉树左小右大的基础上，对多维数据，第一层比较第一个维度，第二层比较第二个维度，以此类推…………排到最后一维又返回第一位继续排，当然，而已设定排序的次数，到多少维就懒得排了。这个数据结构的好处是，寻找欧几里得空间（也就是任意维度的两个对象的连线长度&amp;有的地方也使用该值当做两个对象相似度）的最邻近点（集）复杂度大大降低，不用迭代整个数就能找到最近的点。</p>
+<p>上面说的DBSCAN、后面的ICP、图像匹配中的SIFT算子比较相似度（128维），使用KDTree可以很好的解决时间太长的问题。</p>
+<p>来一波树形结合，</p>
+<p>KDTree的改进方法有Best Bin Fisrt、Best First Search。它主要的临近查找是基于路径和回路的，但没有考虑节点的一些性质，BBF则根据查询路径上的节点进行排序，排序原则是按照超平面的最短距离。另外还可设置超时，优先级队列中的所有节点都经过检查或者超出时间限制时，返回当前最好结果当做近似的最近邻。这种方式在高维上效率提升很大。（尤其sift）</p>
+<p>&nbsp;</p>
+<hr>
+<p><font color="#555555"></font>&nbsp;</p>
+<h1 id="ICP（Iterative-closest-point）"><a href="#ICP（Iterative-closest-point）" class="headerlink" title="ICP（Iterative closest point）"></a><strong>ICP</strong>（<a href="https://en.wikipedia.org/wiki/Iterative_closest_point" target="_blank" rel="external">Iterative closest point</a>）</h1><p>点集匹配算法——两组有部分重叠区域的点集，进行拟合和对应点匹配。匹配中如果模式重复程度过高可能陷入局部最小值，因此需要对模式进行了良好的解析。</p>
+<p>算法原理：①算法先解算归一两组点集比例尺、解算质心，将质心重合②对其中一个点集，寻找每个另一点集的最近点，解算梯度和旋转平移量③再次计算最近点，若旋转量小于阈值则停止，若大于阈值则继续②步骤。④按照对应点计算H矩阵（单映矩阵）。</p>
+<p>第二部中的关键步骤其实就是解算每一步的迭代旋转和平移量，用到的是最小二乘法；其次，输入模式及输入顺序对匹配影像也比较大。一般的，停止迭代可以设置限差或者迭代次数。</p>
+<p>VTK5.8的C#dll中有包含ICP最新的算法，但算法较旧，效率较低，但新版6.0+在C#上未开源，忧伤。算法中，求取最近点有三种做法，一点对点，直接找最近点，常用kd-tree实现；二点对面，求取最近的切面的一个切点，主要针对点集和曲面匹配；三点做发现与另一曲面交点，主要针对面与面配准。</p>
+<p>mrpt类库中关于ICP的例子</p>
+<p><a href="http://www.mrpt.org/Iterative_Closest_Point_%28ICP%29_and_other_matching_algorithms" title="http://www.mrpt.org/Iterative_Closest_Point_%28ICP%29_and_other_matching_algorithms" target="_blank" rel="external">http://www.mrpt.org/Iterative_Closest<em>Point</em>%28ICP%29_and_other_matching_algorithms</a></p>
+<p>结合NUnit的ICP算法</p>
+<p><a href="http://www.codeproject.com/Articles/865830/Point-cloud-alignment-ICP-methods-compared" title="http://www.codeproject.com/Articles/865830/Point-cloud-alignment-ICP-methods-compared" target="_blank" rel="external">http://www.codeproject.com/Articles/865830/Point-cloud-alignment-ICP-methods-compared</a></p>
+<p>&nbsp;</p>
+<p>适应性：对自由形状的曲面适应性较好，VTK算法在LiDar数据扫描配准中应用较好。</p>
+<hr>
+<h1 id="convex-hull-of-a-set-of-points-点集的凸包"><a href="#convex-hull-of-a-set-of-points-点集的凸包" class="headerlink" title="convex hull of a set of points 点集的凸包"></a><strong>convex hull of a set of points</strong> 点集的凸包</h1><p>没啥特点。但相当基础。在外接圆计算、外接矩形计算的时候必须首先解算。demo相当完美。可直接改了用了。能把demo做的这么直白这么易用相当666了(c#)</p>
+<p><a href="http://csharphelper.com/blog/2014/07/find-the-convex-hull-of-a-set-of-points-in-c/" target="_blank" rel="external">查找点集外包圆</a></p>
+<p>&nbsp;</p>
+<p><strong>minimal bounding rectangle for a polygon </strong>凸包的最小外接矩形。这个算法在解求聚类、数据形态方面有很多利用。前提是前面提到的点集凸包以及点集是否按顺时针排序。同样的网站，给的demo我只能说酷炸了。（c#）包含了两种模式：最小面积和最小周长，两者相差不会很大。demo的计算原则是面积。</p>
+<p><a href="http://csharphelper.com/blog/2014/07/find-minimal-bounding-rectangle-polygon-c/" target="_blank" rel="external">计算凸多边形最小外接矩形</a></p>
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/dbscan/" rel="tag">#dbscan</a>
+          
+            <a href="/tags/demo/" rel="tag">#demo</a>
+          
+            <a href="/tags/ICP/" rel="tag">#ICP</a>
+          
+            <a href="/tags/MMC/" rel="tag">#MMC</a>
+          
+            <a href="/tags/MME/" rel="tag">#MME</a>
+          
+            <a href="/tags/SPark/" rel="tag">#SPark</a>
+          
+            <a href="/tags/算法/" rel="tag">#算法</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/01/25/opencv-findhomography-findfundanmentalmat/" rel="next" title="由opencv中findFundamentalMat和findHomography区别的引申">
+                <i class="fa fa-chevron-left"></i> 由opencv中findFundamentalMat和findHomography区别的引申
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/01/记静态ip的坑/" rel="prev" title="记静态ip的坑">
+                记静态ip的坑 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/03/08/最近demo 模块 算法总结/" data-title="最近demo 模块 算法总结" data-content="" data-url="http://ovjaywang.github.io/2016/03/08/最近demo 模块 算法总结/">
+  <div class="ds-share-inline">
+    <ul class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/03/08/最近demo 模块 算法总结/" data-title="最近demo 模块 算法总结" data-url="http://ovjaywang.github.io/2016/03/08/最近demo 模块 算法总结/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/xiaozaizi.png" alt="Jay Wang">
+          <p class="site-author-name" itemprop="name">Jay Wang</p>
+          <p class="site-description motion-element" itemprop="description">你猜?</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">102</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ovjaywang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/302060345" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DBScan（Density-Based-Spatial-Clustering-of-Applications-with-Noise）基于密度的含噪空间聚类"><span class="nav-number">1.</span> <span class="nav-text">DBScan（Density-Based Spatial Clustering of Applications with Noise）基于密度的含噪空间聚类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#boost的使用"><span class="nav-number">2.</span> <span class="nav-text">boost的使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ICP（Iterative-closest-point）"><span class="nav-number">3.</span> <span class="nav-text">ICP（Iterative closest point）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#convex-hull-of-a-set-of-points-点集的凸包"><span class="nav-number">4.</span> <span class="nav-text">convex hull of a set of points 点集的凸包</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jay Wang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"mimimomo"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax --><!-- hexo-inject:end -->
+
+
+</body>
+</html>
