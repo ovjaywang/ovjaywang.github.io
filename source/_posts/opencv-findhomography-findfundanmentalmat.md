@@ -9,6 +9,9 @@ tags:
 id: 1092
 date: 2016-01-25 00:54:26
 ---
+openCV中有两个函数，findhomography和findfundamentalmat，长的很像。。一开始严重的弄混，以为都是求对应点投影矩阵的公式，万万没想到其实是两个完全不同的内涵。😒
+<!-- more -->
+
 opencv 中，进行**图像拼接(全景拼接 航摄拼接 三维重建 街景地图)**，大致流程如下。
 
 1. 利用opencv提供的各类型特征点检测方法（Fast Start SIFT SURF ORB SimpleBlobPyramidAdapter DynamicAdapter 等）在图像中将感兴趣的有独特标识的点找出来,其中orb 是最近提出效率较高的检测和描述算法，金字塔算法则是更高的提高效率的算法；

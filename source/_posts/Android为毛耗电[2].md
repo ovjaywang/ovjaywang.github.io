@@ -14,7 +14,7 @@ date: 2016-01-01 23:32:08
 <font size="4" face="华文中宋">本小节只讨论干货。在root及xposed框架下。同时兼顾不能肉身翻墙又想用google服务的小狗们。本人的使用情况是正常功能照开，google需要gmail和google photo及部分gcm，黑屏开启手势和解锁，正常收微信、闹钟、短信电话外熄屏一切不开，后台常开应用有snap锁屏、grenntify绿色守护、调音的audio mix、天气插件、BBS、输入法、Nova Launcher。测试的环境为Android L 5.1.1</font>
 
 <font size="4" face="华文中宋">&nbsp;
-
+<!-- more -->
 * * *
 
 <font color="#ff0000">App干货推荐</font></font>

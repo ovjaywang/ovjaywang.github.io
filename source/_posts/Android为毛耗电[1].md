@@ -13,6 +13,7 @@ date: 2015-12-28 23:34:25
 
 <font color="#000000" size="4" face="微软雅黑 Light">**纯硬货，只想节电看后文。**</font>
 
+<!-- more -->
 <font color="#000000" size="4" face="微软雅黑 Light">使用安德猴主要还是谷歌的情怀。最近无可救药的恋上了无线高质量同步的Google相册和Keep。此外Google Contact和Gmail也时不时要收一下。</font>
 
 <font color="#000000" size="4" face="微软雅黑 Light">问题是。。墙内不能随时翻。国内流氓自启和相互唤醒严重影响待机时间。如何破？首先搞清楚什么在耗电。再来解决怎么防流氓的同时不影响收发消息体验。</font>
