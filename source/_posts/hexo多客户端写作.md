@@ -100,7 +100,13 @@ git add .
 git commit -m "init"
 git push -u origin hexo
 ```
+值得注意的是，有的时候提示主题的文件夹并未加入同步操作，显示
 
+```shell
+
+Changes not staged for commit
+```
+即主题文件夹的内容尚未有之前版本，应该加入tracked。应在提交前输入``git add themes/themes_name/``.最后那个斜杠别忘了加。
 这就完成源文件的同步了！(￣▽￣)"" 执行``hexo d``操作将本地public静态文件部署。
 
 #  发博日常
@@ -132,10 +138,11 @@ npm install
 npm install hexo-deployer-git 
 ```
 
-**不用init!!!**
+<font color="red">**不用hexo init!!!**</font>
 
 ##  后记
 
+###  多地部署
 pacman的公式和代码支持好差啊~还有需要多地备份的可以尝试coding（page之前免费的现在要钱了 = =）.在站点部署文件中更改deploy：
 
 ```markdown
@@ -145,3 +152,7 @@ deploy:
       github: https://github.com/{YOUR_ID}/{YOUR_ID}.github.io.git,master
       coding: https://git.coding.net/{YOUR_ID}/{BLOG　NAME}.git,master
 ```
+同理也能部署到自己的ftp服务器上。
+
+###   <font color="red">bug1--file-name-too-long</font>  
+在拷贝原始数据的时候，提交远程仓库时可能会报modules的文件夹无法同步。这个情况在windows下安装msysgit进行git bash会报这一问题。[这里](https://github.com/msysgit/git/pull/110)也提到了这个异常。但这并不是git的问题，而是msysgit的问题。使用其他git方式对文件路径较长的提交就不会报错。实测在github for windows下提交该modules文件就不会报错。
