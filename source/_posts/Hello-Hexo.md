@@ -21,7 +21,9 @@ $$ \begin{bmatrix} x \\\\ y \\\\ 1
 $$$$\sim \begin{bmatrix} h_11 & h_12&h_13 \\\\ h_21 & h_22 & h_23 \\\\ h_31 & h_32 & h_33 \end{bmatrix} \begin{bmatrix} p \\\\ q \\\\ 1 \end{bmatrix}$$
 # WordPress迁移 #
 这个使用hexo-migrate-wordpress插件还不错 但是切记导出的xml是文章 tag和category会自动建好。否则使用hexo migrate wordpress 会报错
+> 沙扬娜拉dooby.me
 
+![dooby.me](http://ooo.0o0.ooo/2016/05/02/5727757865698.png)
 # Github和Coding双备份 #
 按照一般的教程都能配置好Github的。但是Coding对国内线路速度相对较快（好蛋疼GitCafe已经被收了）配置文档差不多是这样
 ```markdown

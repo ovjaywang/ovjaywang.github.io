@@ -25,7 +25,7 @@ List、Set有着相似的方式。它们都继承自Collection，同时不能实
 
 最上面这段代码最有趣的地方在于，它是Boolean的包装类，输入的是值类型而返回的是Boolean对象,当然Boolean只实例化了两个对象。但当新的子类构建，简单的静态工厂必须重写，常用的改进方法有：
 
-+ 反射机制+配置
+## 反射机制+配置
   例如下面一段就是根据不同的类名，返回不同的对象
 
 ```java
@@ -38,7 +38,7 @@ List、Set有着相似的方式。它们都继承自Collection，同时不能实
         return (InterFace_Name) Class.forName(name).newInstance();
     }
 ```
-+ 注册方式(Service Provider Framework)
+## 注册方式(Service Provider Framework)
 
 >注册需要(服务提供者编写的)服务接口、(服务提供者创建服务的实例)而提供的接口(可选)、(服务提供者)注册API、(使用者编写的)服务访问API
 
@@ -65,7 +65,7 @@ List、Set有着相似的方式。它们都继承自Collection，同时不能实
           else{return null;}//具体的数据库操作逻辑   
     }  
 ```
-+ 这种方式已经不推荐-工厂模式
+## 这种方式已经不推荐-工厂模式
 [工厂方法](https://zh.wikipedia.org/wiki/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95)  [抽象工厂](https://zh.wikipedia.org/wiki/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82)
 
 
