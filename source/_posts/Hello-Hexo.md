@@ -44,4 +44,36 @@ deploy:
 # 专注写作 #
 放弃各种挂饰 插件 统计吧 seo和评论就足够了。多写作多讨论 当然很想适时的学一发nodejs因为折腾了好久ig的照片还是没能get进来。
 
+
+{% gist 86cc40065a691b7c4534e483249583dd transValue.java %}
+
+{% blockquote @DevDocs https://twitter.com/devdocs/status/356095192085962752 %}
+NEW: DevDocs now comes with syntax highlighting. http://devdocs.io
+{% endblockquote %}
+
+{% blockquote David Levithan, Wide Awake %}
+Do not just seek happiness for yourself. Seek happiness for all. Through kindness. Through mercy.
+{% endblockquote %}
+
+{% blockquote Seth Godin http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html Welcome to Island Marketing %}
+Every interaction is both precious and an opportunity to delight.
+{% endblockquote %}
+
+{% codeblock hello.java java https://gist.github.com/ovjaywang/86cc40065a691b7c4534e483249583dd %}
+void transValue(int a,int b){
+        a ^= b;
+        b ^= a;
+        a ^=b;
+    }
+{% endcodeblock %}
+
+{% codeblock %}
+alert('Hello World!');
+{% endcodeblock %}
+
+{% pullquote [class] %}
+blah blah blah
+{% endpullquote %}
+
+{% iframe http://www.tudou.com/albumplay/Y0h15MtBFlc/4vR4XdWiMJo.html?resourceId=0_06_02_99 800 600 %}
 2016.04.11
