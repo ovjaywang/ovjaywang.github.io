@@ -40,8 +40,12 @@ List、Set有着相似的方式。它们都继承自Collection，同时不能实
 ```
 ## 注册方式(Service Provider Framework)
 
->注册需要(服务提供者编写的)服务接口、(服务提供者创建服务的实例)而提供的接口(可选)、(服务提供者)注册API、(使用者编写的)服务访问API
-
+>注册方式需要
+1. 服务具体实现类(由服务提供商实现)
+2. 服务提供者实现类，1为2的实例，(由服务提供商实现)
+3. 服务定义接口，定义服务内容，不包含实现。
+4. 服务提供者接口，3为4的实例，定义获取提供者的方式，不包含实现。
+5. 服务提供者注册类
 最常见的实例就是JDBC(Java DataBase Connection)。下面这段最常见的连接mysql的标准函数就很好的体现了注册的方式。
 ```java
     public synchronized static Connection getCon() 
@@ -49,15 +53,16 @@ List、Set有着相似的方式。它们都继承自Collection，同时不能实
     {
         //服务提供者接口
           String DRIVERNAME = "com.mysql.jdbc.Driver";
-          //java.sql.Driver.class这个是服务提供者接口，服务提供者可以使mysql
-          //那就使用"com.mysql.jdbc.Driver"；
+          //java.sql.Driver.class这个是服务提供者接口，
+          //服务提供者若使mysql，那就使用"com.mysql.jdbc.Driver"；
           //如果是sql server，那就使用"com.microsoft.sqlserver.jdbc.SQLServerDriver";
           //如果是Oracle，那就要用"oracle.jdbc.driver.OracleDriver"...
           String URL = "jdbc:mysql://URL/DataBase_Names";
           String USER = "USER";
           String PWD = "PWD"; 
           Connection connection = null;//接口 由服务提供者提供并实现具体服务 
-          Class.forName(DRIVERNAME);//这里映射通过DriverManager判断获取的是哪个服务
+          Class.forName(DRIVERNAME);
+          //这里映射通过DriverManager判断获取的是哪个服务
           connection = (Connection) DriverManager.getConnection(URL, USER,PWD);
           //链接数据库  mysql已经在驱动管理注册了API(本机装mysql的时候)
           //这里使用者编写的服务访问getConnection这个API，
@@ -65,6 +70,93 @@ List、Set有着相似的方式。它们都继承自Collection，同时不能实
           else{return null;}//具体的数据库操作逻辑   
     }  
 ```
+上式的意义就是，使用**Java**连接上**数据库**。注意，不是某种数据库，是数据库。数据库的提供商按照定义的接口（Java提供的,增删改查等数据库操作），都可以顺利的连接上它们的数据库。  
+- ``Class.forName("...")``这句实例化一个mysql等数据库提供商的<font color="red">服务提供者实现类</font>，并将这个类的实例注册到DriverManager即<font color="red">服务提供者注册类</font>。
+- 通过URL指明连接的地址和端口，判断所连接的数据库类别，在利用USERNAME PWD参数连接到数据库获取操作数据库的一个连接Connection。
+- Connection作为一个实现类，客户端的程序得到了这个实例就可以操作各种数据库，但其内部的原理对客户端不可见的，这就是所谓的面向接口编程。
+
+这里举一个炸裂的例子。
+1. 具体服务接口定义了live和die，然后实现类实现了具体的方法
+2. 服务提供者接口定义了获取服务实例的函数，然后服务提供者实现类实现了注册方式获取实例
+3. 注册类则对ClassName和服务提供者接口进行绑定。相当于，对不同的服务提供商通过名字进行映射
+4. 调用类则通过常规步骤，调用具体服务。
+
+HaInterface.java
+{% codeblock lang:java %}
+    package com.gua.com;
+    public interface HaInterface {
+        public void Live();
+        public void Die();
+    }
+{% endcodeblock %}  
+HaClass.java
+{% codeblock lang:java %}
+    package com.gua.com;
+    public class HaClass implements HaInterface{
+        @Override
+        public void Live() {
+            System.out.println("给你们一些人生经验");
+        }
+        @Override
+        public void Die() {
+            System.out.println("又想搞大新闻!");
+        }
+    }
+{% endcodeblock %}  
+Xuyimiao.java
+{% codeblock lang:java %}
+    package com.gua.com;
+    public interface Xuyimiao {
+        public HaInterface HahaGo();
+    }
+{% endcodeblock %}  
+WoyaoXuyimiao.java
+{% codeblock lang:java %}
+    package com.gua.com;
+    public class WoyaoXuyimiao implements  Xuyimiao{
+        static{
+            MingwangManager.registerProvider("辣妹子辣", new WoyaoXuyimiao());  
+        }
+        @Override
+        public HaInterface HahaGo() {
+            return new HaClass(); 
+        }
+    }
+{% endcodeblock %}  
+MingwangManager.java
+
+```
+package com.gua.com;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+public class MingwangManager {
+    public MingwangManager(){};
+    private static final Map<String, Xuyimiao> providers = new ConcurrentHashMap<String, Xuyimiao>();  
+    public static void registerProvider(String name, Xuyimiao p) {
+            providers.put(name, p);  
+        }  
+    public static HaInterface getService(String name) {       
+            Xuyimiao p = providers.get(name);  
+            if (p == null) {  
+                throw new IllegalArgumentException(  
+                        "No provider registered with name:" + name);  
+            } 
+            return p.HahaGo();
+        }  
+}
+```  
+TestHa.java
+{% codeblock lang:java %}
+    package com.gua.com; 
+    public class TestHa {  
+        public static void main(String[] args) throws ClassNotFoundException {
+            Class.forName("com.gua.com.WoyaoXuyimiao");  
+            HaInterface hi = MingwangManager.getService("辣妹子辣");  
+            hi.Live();  
+            hi.Die();  
+        }
+    }
+{% endcodeblock %}
 ## 这种方式已经不推荐-工厂模式
 [工厂方法](https://zh.wikipedia.org/wiki/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95)  [抽象工厂](https://zh.wikipedia.org/wiki/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82)
 

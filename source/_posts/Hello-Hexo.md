@@ -75,5 +75,4 @@ alert('Hello World!');
 blah blah blah
 {% endpullquote %}
 
-{% iframe http://www.tudou.com/albumplay/Y0h15MtBFlc/4vR4XdWiMJo.html?resourceId=0_06_02_99 800 600 %}
 2016.04.11

@@ -16,8 +16,8 @@ tags:
 3. 强悍的builder.在实体类中，再编写一个builder用于构造和赋值，必须的字段出现在构造函数中，需要赋值的字段在后面以.setter的方式调用，相当简洁高效，同时易于观察和修正。类似jQuery和python中一样。棒呆。
 
 最丑的长字段实体类原本是这么写的
-```
 
+```
 class Animal{
     private string name;//必须参数
     private bool isTail;//必须参数
@@ -54,15 +54,15 @@ class Animal{
 }
 ```
 在某处调用就可能是这样
-```java
 
+```java
 Animal animal = new Animal("caonima",true,true,-1,3);
 //由于我并不想知道体重，但又因为构造函数的关系不得不加上。
 //所以相当繁琐。当字段达到几十个时，调用构造函数都分不清参数是否对应上。
 ```
 ​将上文的动物实体类以builder的方式写出来，大概是这样的
-```
 
+```
 class Animal{
     private final string name;
     private final bool isTail;
@@ -100,7 +100,6 @@ class Animal{
             return new Animal(this);
         }
     }
-
     //当然 在animal类的最后 也需要把builder的参数取出来
     private Animal(Builder builder){
         name = builder.name;
@@ -112,14 +111,13 @@ class Animal{
 }
 ```
 在某处构造该类对象时，即可像下面一样声明
-```
 
+```
     Animal dog = new Animal.Builder("旺财",true).setIsEatGrass(false).setSexMethod(3).setWeight(20.0)
 ```
 builder类似一个抽象工厂 客户端可以将这样一个builder传给方法，在方法中生成需要数量的对象。1.5+版本可以使用泛型定义。
 
 ```
-
 public interface Builder{
     public T build();
 }
