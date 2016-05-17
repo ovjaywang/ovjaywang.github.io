@@ -15,3 +15,7 @@ date: 2016-05-16 00:15:07
 {% centerquote%}除非你当我和你平等，否则我不会找你
 {% fi http://ooo.0o0.ooo/2016/05/16/5739e7d65fbc2.png, "平常的心", "平常的心" %}
 {% endcenterquote %}
+
+{% centerquote%}
+{% fi http://ooo.0o0.ooo/2016/05/16/573a80bba3ba9.png, "丹麦女孩", "丹麦女孩" %}
+{% endcenterquote %}
