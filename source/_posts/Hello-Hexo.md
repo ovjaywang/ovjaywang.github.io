@@ -1,5 +1,5 @@
 ---
-title: Hexo双备份Github和Coding&域名绑定
+title: Hexo双备份Github和Coding及域名绑定
 date: 2016-04-10 22:51:49
 tags: [hello]
 categories: 槽

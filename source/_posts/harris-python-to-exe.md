@@ -1,5 +1,5 @@
 ---
-title: 'Harri特征角点检测&特征匹配的python实现&PyInstaller编译成可执行文件exe'
+title: 'Harris检测及匹配的python实现及PyInstaller编译成可执行文件exe'
 categories:
   - 代码狗
   - 学习log
