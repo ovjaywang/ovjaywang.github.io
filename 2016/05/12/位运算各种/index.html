@@ -1,0 +1,1328 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.useso.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="BitManipulattion,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ov智商捉急" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="最近发现位运算在很多场合有很多运用啊。大概有以下几个方面:
+
+涉及二进制及其2^n进制的运算
+很少字段的struct class的改写例如棋盘记录和模式比较
+逼格&amp;amp;效率比较高的小心机
+
+几个运算符
+
+
+符号
+名称
+含义
+
+
+
+
+^
+按位亦或
+同为0，异为1
+
+
+竖线(打不了)
+按位或
+有1则1，双0为0
+
+
+&amp;amp;
+按位与
+有0则0，双为1
+
+
+~
+按位取反
+变1为0，变0为1（包含符">
+<meta property="og:type" content="article">
+<meta property="og:title" content="位运算各种">
+<meta property="og:url" content="http://ovjaywang.github.io/2016/05/12/位运算各种/index.html">
+<meta property="og:site_name" content="ov智商捉急">
+<meta property="og:description" content="最近发现位运算在很多场合有很多运用啊。大概有以下几个方面:
+
+涉及二进制及其2^n进制的运算
+很少字段的struct class的改写例如棋盘记录和模式比较
+逼格&amp;amp;效率比较高的小心机
+
+几个运算符
+
+
+符号
+名称
+含义
+
+
+
+
+^
+按位亦或
+同为0，异为1
+
+
+竖线(打不了)
+按位或
+有1则1，双0为0
+
+
+&amp;amp;
+按位与
+有0则0，双为1
+
+
+~
+按位取反
+变1为0，变0为1（包含符">
+<meta property="og:updated_time" content="2016-05-19T18:52:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="位运算各种">
+<meta name="twitter:description" content="最近发现位运算在很多场合有很多运用啊。大概有以下几个方面:
+
+涉及二进制及其2^n进制的运算
+很少字段的struct class的改写例如棋盘记录和模式比较
+逼格&amp;amp;效率比较高的小心机
+
+几个运算符
+
+
+符号
+名称
+含义
+
+
+
+
+^
+按位亦或
+同为0，异为1
+
+
+竖线(打不了)
+按位或
+有1则1，双0为0
+
+
+&amp;amp;
+按位与
+有0则0，双为1
+
+
+~
+按位取反
+变1为0，变0为1（包含符">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 位运算各种 | ov智商捉急 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+    <div class="site-meta-headline">
+      <a>
+        <img class="custom-logo-image" src="/images/touxiang.jpg" alt="ov智商捉急">
+      </a>
+    </div>
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">ov智商捉急</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/me" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sth">
+          <a href="/sth" rel="section">
+            
+              <i class="menu-item-icon fa fa-child fa-fw"></i> <br>
+            
+            有料
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-pic-movie">
+          <a href="/a-pic-a-movie" rel="section">
+            
+              <i class="menu-item-icon fa fa-film fa-fw"></i> <br>
+            
+            一影一图
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ZtWPUvzBjdXDQ7iNrTbW','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                位运算各种
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-12T11:12:00+08:00" content="2016-05-12">
+              2016-05-12
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/代码狗/" itemprop="url" rel="index">
+                    <span itemprop="name">代码狗</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/代码狗/学习log/" itemprop="url" rel="index">
+                    <span itemprop="name">学习log</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/12/位运算各种/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/12/位运算各种/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近发现位运算在很多场合有很多运用啊。大概有以下几个方面:</p>
+<ul>
+<li>涉及二进制及其2^n进制的运算</li>
+<li>很少字段的struct class的改写例如棋盘记录和模式比较</li>
+<li>逼格&amp;效率比较高的小心机</li>
+</ul>
+<h1 id="几个运算符"><a href="#几个运算符" class="headerlink" title="几个运算符"></a>几个运算符</h1><table>
+<thead>
+<tr>
+<th style="text-align:center">符号</th>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>^</code></td>
+<td style="text-align:center">按位亦或</td>
+<td style="text-align:center">同为0，异为1</td>
+</tr>
+<tr>
+<td style="text-align:center">竖线(打不了)</td>
+<td style="text-align:center">按位或</td>
+<td style="text-align:center">有1则1，双0为0</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>&amp;</code></td>
+<td style="text-align:center">按位与</td>
+<td style="text-align:center">有0则0，双为1</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>~</code></td>
+<td style="text-align:center">按位取反</td>
+<td style="text-align:center">变1为0，变0为1（包含符号位）</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>&lt;&lt;</code></td>
+<td style="text-align:center">按位左移（包括符号）</td>
+<td style="text-align:center">对应二进制每移一位乘二</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>&gt;&gt;</code></td>
+<td style="text-align:center">按位右移（包括符号）</td>
+<td style="text-align:center">对应二进制每移一位除二</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>`&gt;&gt;&gt;</code></td>
+<td style="text-align:center">按位无符号右移</td>
+<td style="text-align:center">对应二进制全指定的位数</td>
+</tr>
+</tbody>
+</table>
+<p>以上均是按位操作，要区分逻辑运算<code>&amp;&amp; ||</code>和位运算符<code>&amp; |</code></p>
+<h1 id="关于取反"><a href="#关于取反" class="headerlink" title="关于取反"></a>关于取反</h1><p>普通的Integer char等按位操作都是直接按照它们的二进制补码操作，int直接使用该数字的补码，char则先按照ascii转换成二进制在进行操作。<br>e.g.<code>char a = &#39;a&#39;</code>a的ascii码十进制为097，二进制原码为1100001，这里注意，作为char，它在java中是一个<font color="red">无符号16位的整数</font>，所以补齐它的<br>二进制原码 补码 反码（非负数原码 补码 反码相同）</p>
+<blockquote>
+<p>000000000 1100001</p>
+</blockquote>
+<p>取反后的补码</p>
+<blockquote>
+<p>111111111 0011110</p>
+</blockquote>
+<p>取反后的反码</p>
+<blockquote>
+<p>111111111 0011101</p>
+</blockquote>
+<p>取反后的源码</p>
+<blockquote>
+<p>100000000 1100010</p>
+</blockquote>
+<p>十进制即为 <strong>-98</strong>。<br>同理的，byte如果存储字符型也是按照先转成ascii码进行操作，即便是字符型的数字也一样。</p>
+<pre><code class="java">byte a = 2;
+int b = ~a;//输出b为-3
+byte c = &#39;2&#39;;
+int d = ~c;//输出d为-51 2的ascii为50(十进制) 32(十六进制)
+</code></pre>
+<h1 id="关于亦或"><a href="#关于亦或" class="headerlink" title="关于亦或"></a>关于亦或</h1><p>亦或相当的特别同时阴森啊，有几个性质</p>
+<ul>
+<li>a^a = 0 也就是亦或自己为0，因为每位都是相同的。</li>
+<li>a^a^a = a^0 = 0^a  = a</li>
+<li>a^b = b^a 符合交换律</li>
+<li>(a^b)^c = a^(b^c) 符合结合律</li>
+<li>e = a^b^c^d &lt;-&gt; e^a = b^c^d &lt;-&gt; e^a^b= c^d &lt;-&gt; e^a^b^c=d</li>
+</ul>
+<p>既然满足交换律结合律，则如果出现这么一种情况，</p>
+<blockquote>
+<p>[一个数组里除了一个数值出现一次，其他都出现了两次。找出这个数值。]<br>将这个数组全部亦或一遍，则出现两次的都可以按照交换律结合律化为0，</p>
+</blockquote>
+<h2 id="数组内只存在两个奇数次出现的数，其他都出现了偶数次，找出这两个数"><a href="#数组内只存在两个奇数次出现的数，其他都出现了偶数次，找出这两个数" class="headerlink" title="数组内只存在两个奇数次出现的数，其他都出现了偶数次，找出这两个数"></a>数组内只存在两个奇数次出现的数，其他都出现了偶数次，找出这两个数</h2><blockquote>
+<p>思路：这就是上面实例的改进，因为知道了其他数字都出现了偶数次，全体亦或的结果就是<code>x=a^b</code> 其中a b分别是所要找的这两个数。由于a b不同，则x必然不为零，也必然存在为1的位（可以取从右第一次出现1的位置）。同时由于是亦或操作，这个1必然是a和b相异造成的。这样，把这一位为1的分一组，这一位为0的分一组，出现偶数次的依然会被分到一组通过亦或自己消除。</p>
+</blockquote>
+<pre><code class="java">    //从右寻找补码中1第一次出现的位置
+    public static int getFirst1(int num){
+        int index = 0;
+        while(index&lt;32){//Integer有32位
+            if(((num&amp;(1&lt;&lt;index))^(1&lt;&lt;index))==0)
+                return index+1;
+            else
+                index++;
+        }
+        return -1;
+    }
+
+    //判断这个数这一位是否为1
+    public static boolean is1AtPos(int num,int pos){    
+        return ((num&gt;&gt;(pos-1))&amp;1)==1;
+    }
+
+    //寻找这两个数
+    public static int[] get2Num(int[] a){
+        int [] find2Num = new int[2];
+        //默认初始化0
+        int rs = 0;
+        for (int i : a) {
+            rs ^= i;//亦或全体求x
+        int pos=getFirst1(rs);//寻找第一个出现1的位
+        for (int j : a) {
+            if(is1AtPos(j,pos))//按这位是否位1分组
+                find2Num[0] ^= j;
+            else
+                find2Num[1] ^= j;           
+        }
+        System.out.println(find2Num[0]+&quot; &quot;+find2Num[1]);
+        return find2Num;
+    }
+</code></pre>
+<h2 id="使用位亦或-节约空间的数据交换"><a href="#使用位亦或-节约空间的数据交换" class="headerlink" title="使用位亦或\^节约空间的数据交换"></a>使用位亦或\^节约空间的数据交换</h2><p>原理：a亦或b=c，b亦或a=c，也就是亦或满足交换律；位亦或的逆运算，也就是<code>(a^b)^b=a</code>等于它自己。所以，只需三个亦或运算即可交换数据。看代码。</p>
+<pre><code>    a ^= b;
+    b ^= a;
+    a ^= b;
+</code></pre><h2 id="使用亦或加密"><a href="#使用亦或加密" class="headerlink" title="使用亦或加密"></a>使用亦或加密</h2><p>中文配合亦或加密再加上其他的一些加密算法可以很好的掩护原文。</p>
+<pre><code>        char  a1=&#39;晚&#39; ,  a2=&#39;上&#39; ,  a3=&#39;来&#39; ,  a4=&#39;我&#39;,  a5=&#39;家&#39; ; 
+        char secret=&#39;8&#39; ; 
+        a1=(char) (a1^secret); 
+        a2=(char) (a2^secret); 
+        a3=(char) (a3^secret); 
+        a4=(char) (a4^secret); 
+        a5=(char) (a5^secret); 
+        System.out.println(&quot;密文:&quot;+a1+a2+a3+a4+a5); 
+        a1=(char) (a1^secret); 
+        a2=(char) (a2^secret); 
+        a3=(char) (a3^secret); 
+        a4=(char) (a4^secret); 
+        a5=(char) (a5^secret); 
+        System.out.println(&quot;原文:&quot;+a1+a2+a3+a4+a5);
+</code></pre><h2 id="亦或判别IP地址是否相等"><a href="#亦或判别IP地址是否相等" class="headerlink" title="亦或判别IP地址是否相等"></a>亦或判别IP地址是否相等</h2><p>使用亦或在加上按位与的方式比==加&amp;&amp;的方式效率高。</p>
+<pre><code>    static int ipv6_addr_equal(int[] in6_addr_a1, int[] in6_addr_a2)
+    {
+    return (((in6_addr_a1[0] ^ in6_addr_a2[0]) |
+        (in6_addr_a1[1] ^ in6_addr_a2[1]) |
+        (in6_addr_a1[2] ^ in6_addr_a2[2]) |
+        (in6_addr_a1[3] ^ in6_addr_a2[3])) == 0);
+    }
+</code></pre><h1 id="关于按位与"><a href="#关于按位与" class="headerlink" title="关于按位与"></a>关于按位与</h1><p>按位与操作一般是与1配合 判断奇偶，或者判断某位是否为1；或保留下某位位数字(与位移结合)</p>
+<pre><code>a&amp;1 == 0    偶数
+a&amp;1 == 1    奇数
+</code></pre><h1 id="关于按位与-1"><a href="#关于按位与-1" class="headerlink" title="关于按位与"></a>关于按位与</h1><p>按位或操作一般与0配合 </p>
+<h1 id="按位左右移"><a href="#按位左右移" class="headerlink" title="按位左右移"></a>按位左右移</h1><p>左右移本质上就是以bit为单元进行二进制的操作，而二进制左右移n位在十进制就意味着乘以2^n或除以2^n.按位操作可以大大提升效率<br>港真，很多面试都有求幂的题目。很棒，刷题狗就喜欢做这种题，然而第一次碰到这题我懵逼的采用了树。傻缺了。</p>
+<p>将二进制数绕圈循环，取往左(右)第k个为头。很多题目里面有啊</p>
+<pre><code class="java">int a = a&lt;&lt;k | a &gt;&gt; (Integer.SIZE-k); //左数第k个当头
+int b = b&gt;&gt;k | b &gt;&gt; (Integer.SIZE-k); //右数第k个当头
+</code></pre>
+<p>第k位置1</p>
+<pre><code class="java">    a|(1&lt;&lt;k);
+</code></pre>
+<p>第k位置0</p>
+<pre><code>    a&amp;(~(1&lt;&lt;k));
+</code></pre><p>取第k位的数值</p>
+<pre><code>    a&gt;&gt;k&amp;1;
+</code></pre><p>后k位为0，其余为1</p>
+<pre><code>    (~0)&amp;(1&lt;&lt;(k+1));
+</code></pre><p>后k位为1，其余为0</p>
+<pre><code>    ~((~0)&lt;&lt;k);
+</code></pre><h2 id="左右移应用-二分求幂"><a href="#左右移应用-二分求幂" class="headerlink" title="左右移应用-二分求幂"></a>左右移应用-二分求幂</h2><p><strong> <font color="red">Caution！这个思想很重要!</font></strong>  </p>
+<blockquote>
+<p>思路：求a^b，如果b是一个2的整数幂，举个栗子，32，那可以进行这样的迭代，由于$32=2^5$,那么就可以这样求，</p>
+</blockquote>
+<ol>
+<li>第一次求 $a_1=a^2$  </li>
+<li>第二次求 $a_2=a^4=a^{2*2}={a_1}^2$  </li>
+<li>第三次求 $a_3=a^8=a^{4*2}={a_2}^2$  </li>
+<li>第四次求 $a_4=a^{16}=a^{8*2}={a_3}^2$</li>
+<li>第五次求 $a_5=a^{32}=a^{16*2}={a_4}^2$</li>
+</ol>
+<p>如果是通过迭代幂的次数，需要32次才能达到，然而通过分治的方式，只需要5次就能解算32次幂。那如果不是2的整数幂次方呢，很好办，通过将该整数分解成各个2的整数次幂的和，例如求取a的23次方,又$23=16+4+2=1$，所以原式可化为$a^{2^4+2^2+2^1+2^0}$,通过二分的方式，变形为$$(a^{16})\cdot (a^4)\cdot (a^1)\cdot (a^0)$$.<br>显然！上式就是二进制和十进制转换的过程，通过4+2+1=7次计算就可解出，而非单循环的23次。<br>其实，解算a的16次方中，即可用到$${a^4}^{2^2}$$,即计算a^的16次方只需用到2步，总共2+2+1=5次迭代就可计算完毕。<br>因而解决a^b次幂的步骤是  </p>
+<ul>
+<li>将幂次化为2进制  </li>
+<li>从低位遍历，为1则乘以当前幂次，为0则计算当前幂次，然后跳过，直接移至下一位  </li>
+<li>当幂指数的二进制推到最高位  </li>
+</ul>
+<pre><code class="java">    public static long Power(int a, int n){
+        long ans = 1;
+        System.out.println(&quot;幂指数二进制：&quot;+Integer.toBinaryString(n));
+        while (n &gt; 0) {
+            if ((n &amp; 1)!=0) {//末位不为零
+                ans *= a;
+            } 
+            a *= a;//计算当前幂次
+            n &gt;&gt;= 1;//迭代每次推一位
+        }
+        return ans;
+    }
+</code></pre>
+<p>递归版本可能更清晰</p>
+<pre><code class="java">    public static int power(int a,int n)  {  
+        if(n==1) return a;  
+        if(n&amp;1)  
+          return power(a,n-1) * a;  
+        else  
+        {  
+            int t=power(a,n&gt;&gt;1);  
+            return t*t;  
+        }  
+    }
+</code></pre>
+<p>下面还有更<strong>炸裂</strong>的</p>
+<h2 id="利用位移求二进制里1的奇偶"><a href="#利用位移求二进制里1的奇偶" class="headerlink" title="利用位移求二进制里1的奇偶"></a>利用位移求二进制里1的奇偶</h2><blockquote>
+<p>一般的思路就是，一位一位截末位，为1则亦或一下，为0则不管。对于Integer需要循环32次，对byte需要循环8次。</p>
+</blockquote>
+<p>1数量为奇则返回1，为偶数则返回0。</p>
+<pre><code class="java">    public static int get11Count(int x){
+            int i=0;
+            for(int j =0 ;j&lt;32;j++){
+                if((x&amp;1)==1)
+                    i ^= x&amp;1;  
+                x &gt;&gt;= 1;
+            }
+            return i;
+    }
+</code></pre>
+<blockquote>
+<p>但四，这个方式没有体现位移的优越性。通过分治的思想，由于结果只求1或0，那么通过1位表达2位的信息，通过2位表达4位的信息，通过4位表达8位的信息，通过8位表达16位的信息，通过16位表达32位的信息。通过五次<strong>表达</strong>，就可以求出结果。 </p>
+</blockquote>
+<p>先看代码</p>
+<pre><code class="java">    public static int get1Count(int x){
+    //返回二进制数有偶数还是奇数个1 偶数返回0 奇数返回1
+            x = x ^ (x &gt;&gt; 1);
+            x = x ^ (x &gt;&gt; 2);
+            x = x ^ (x &gt;&gt; 4);
+            x = x ^ (x &gt;&gt; 8);
+            x = x ^ (x &gt;&gt; 16);
+        return x&amp;1;
+    }
+</code></pre>
+<blockquote>
+<p>解析一下。先拿byte举个栗子。因为byte是1个字节8个bit，所以表达-128~127即$-2^7\sim 2^7$.按照上面的方式，只需右移三次.举个例子88，二进制为$2^6+2^4+2^3=1011000$</p>
+</blockquote>
+<p>第一次</p>
+<pre><code>
+        1011000
+         101100
+    xor -------
+        1110100  -&gt;这个是结果！
+</code></pre><p>结果的数值含义是，将原式中，这一位i与该位的上一位i+1做了一次亦或，结果式中每出现一个1，则代表原式中必然邻位相异。</p>
+<h2 id="进阶-计算二进制1的个数"><a href="#进阶-计算二进制1的个数" class="headerlink" title="进阶-计算二进制1的个数"></a>进阶-计算二进制1的个数</h2><h3 id="最原始的方式"><a href="#最原始的方式" class="headerlink" title="最原始的方式"></a>最原始的方式</h3><pre><code>    int BitCount(unsigned int n)
+    {
+        unsigned int c =0 ; // 计数器
+        while (n &gt;0)
+        {
+            if((n &amp;1) ==1) // 当前位是1
+                ++c ; // 计数器加1
+            n &gt;&gt;=1 ; // 移位
+        }
+        return c ;
+    }
+</code></pre><h3 id="原始方式的改进"><a href="#原始方式的改进" class="headerlink" title="原始方式的改进"></a>原始方式的改进</h3><pre><code>    int BitCount1(unsigned int n)
+    {
+        unsigned int c =0 ; // 计数器
+        for (c =0; n; n &gt;&gt;=1) // 循环移位
+            c += n &amp;1 ; // 如果当前位是1，则计数器加1
+        return c ;
+    }
+</code></pre><h3 id="亦或清1法"><a href="#亦或清1法" class="headerlink" title="亦或清1法"></a>亦或清1法</h3><pre><code>int BitCount2(unsigned int n)
+{
+    unsigned int c =0 ;
+    for (c =0; n; ++c)
+    {
+        n &amp;= (n -1) ; // 清除最低位的1
+    }
+    return c ;
+}
+</code></pre><h3 id="查表法1："><a href="#查表法1：" class="headerlink" title="查表法1："></a>查表法1：</h3><pre><code>int BitCount3(unsigned int n) 
+{ 
+    // 建表
+    unsigned char BitsSetTable256[256] = {0} ; 
+
+    // 初始化表 
+    for (int i =0; i &lt;256; i++) 
+    { 
+        BitsSetTable256[i] = (i &amp;1) + BitsSetTable256[i /2]; 
+    } 
+
+    unsigned int c =0 ; 
+
+    // 查表
+    unsigned char* p = (unsigned char*) &amp;n ; 
+
+    c = BitsSetTable256[p[0]] + 
+        BitsSetTable256[p[1]] + 
+        BitsSetTable256[p[2]] + 
+        BitsSetTable256[p[3]]; 
+
+    return c ; 
+}
+</code></pre><h3 id="查表法2：4bit查表"><a href="#查表法2：4bit查表" class="headerlink" title="查表法2：4bit查表"></a>查表法2：4bit查表</h3><pre><code>int BitCount4(unsigned int n)
+{
+    unsigned int table[16] = 
+    {
+        0, 1, 1, 2, 
+        1, 2, 2, 3, 
+        1, 2, 2, 3, 
+        2, 3, 3, 4
+    } ;
+
+    unsigned int count =0 ;
+    while (n)
+    {
+        count += table[n &amp;0xf] ;
+        n &gt;&gt;=4 ;
+    }
+    return count ;
+}
+</code></pre><h3 id="查表法3：8bit查表"><a href="#查表法3：8bit查表" class="headerlink" title="查表法3：8bit查表"></a>查表法3：8bit查表</h3><pre><code>int BitCount7(unsigned int n)
+{ 
+    unsigned int table[256] = 
+    { 
+        0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4, 
+        1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5, 
+        1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5, 
+        2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 
+        1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5, 
+        2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 
+        2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 
+        3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7, 
+        1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5, 
+        2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 
+        2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 
+        3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7, 
+        2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 
+        3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7, 
+        3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7, 
+        4, 5, 5, 6, 5, 6, 6, 7, 5, 6, 6, 7, 6, 7, 7, 8, 
+    }; 
+
+    return table[n &amp;0xff] +
+        table[(n &gt;&gt;8) &amp;0xff] +
+        table[(n &gt;&gt;16) &amp;0xff] +
+        table[(n &gt;&gt;24) &amp;0xff] ;
+}
+</code></pre><p>###炸裂的平行算法<br>邻位相加，重复这一过程，直到只剩一位。</p>
+<pre><code>    #include &lt;stdio.h&gt;
+    #include &lt;iostream&gt;
+
+    using namespace std;
+
+    int main(int argc, char *argv[]) {
+        int x;
+        while (cin &gt;&gt; x) {
+            x = (x &amp; 0x55555555) + ((x &gt;&gt; 1) &amp; 0x55555555);
+            x = (x &amp; 0x33333333) + ((x &gt;&gt; 2) &amp; 0x33333333);
+            x = (x &amp; 0x0F0F0F0F) + ((x &gt;&gt; 4) &amp; 0x0F0F0F0F);
+            x = (x &amp; 0x00FF00FF) + ((x &gt;&gt; 8) &amp; 0x00FF00FF);
+            x = (x &amp; 0x0000FFFF) + ((x &gt;&gt; 16) &amp; 0x0000FFFF);
+            cout &lt;&lt; x &lt;&lt; endl;
+        }
+        return 0;
+    }
+</code></pre><p>###终极大招</p>
+<pre><code>int BitCount5(unsigned int n) 
+{
+    unsigned int tmp = n - ((n &gt;&gt;1) &amp;033333333333) - ((n &gt;&gt;2) &amp;011111111111);
+    return ((tmp + (tmp &gt;&gt;3)) &amp;030707070707) %63;
+}
+</code></pre><h3 id="补充：位标志法"><a href="#补充：位标志法" class="headerlink" title="补充：位标志法"></a>补充：位标志法</h3><pre><code>struct _byte 
+{ 
+    unsigned a:1; 
+    unsigned b:1; 
+    unsigned c:1; 
+    unsigned d:1; 
+    unsigned e:1; 
+    unsigned f:1; 
+    unsigned g:1; 
+    unsigned h:1; 
+}; 
+
+long get_bit_count( unsigned char b ) 
+{
+    struct _byte *by = (struct _byte*)&amp;b; 
+    return (by-&gt;a+by-&gt;b+by-&gt;c+by-&gt;d+by-&gt;e+by-&gt;f+by-&gt;g+by-&gt;h); 
+}
+</code></pre><h2 id="求二进制最高位前0的个数"><a href="#求二进制最高位前0的个数" class="headerlink" title="求二进制最高位前0的个数"></a>求二进制最高位前0的个数</h2><pre><code>int nlz(unsigned x)
+{
+   int n;
+
+   if (x == 0) return(32);
+   n = 1;
+   if ((x &gt;&gt; 16) == 0) {n += 16; x &lt;&lt;= 16;}
+   if ((x &gt;&gt; 24) == 0) {n += 8; x &lt;&lt;= 8;}
+   if ((x &gt;&gt; 28) == 0) {n += 4; x &lt;&lt;= 4;}
+   if ((x &gt;&gt; 30) == 0) {n += 2; x &lt;&lt;= 2;}
+   n = n - (x &gt;&gt; 31);
+   return n;
+}
+</code></pre><h2 id="二进制逆序"><a href="#二进制逆序" class="headerlink" title="二进制逆序"></a>二进制逆序</h2><pre><code>int change(int x)
+{
+    x = (x &amp; 0x55555555) &lt;&lt; 1 | (x &amp; 0xAAAAAAAA) &gt;&gt; 1;
+    x = (x &amp; 0x33333333) &lt;&lt; 2 | (x &amp; 0xCCCCCCCC) &gt;&gt; 2;
+    x = (x &amp; 0x0F0F0F0F) &lt;&lt; 4 | (x &amp; 0xF0F0F0F0) &gt;&gt; 4;
+    x = (x &amp; 0x00FF00FF) &lt;&lt; 8 | (x &amp; 0xFF00FF00) &gt;&gt; 8;
+    x = (x &amp; 0x0000FFFF) &lt;&lt; 16 | (x &amp; 0xFFFF0000) &gt;&gt; 16;
+    return x;
+}
+</code></pre><h2 id="位移求绝对值"><a href="#位移求绝对值" class="headerlink" title="位移求绝对值"></a>位移求绝对值</h2><pre><code>x xor (not (x shr 31) + 1) + x shr 31
+x = x ^ ((~(x&gt;&gt;31))+1) + x&gt;&gt;31;
+</code></pre><h2 id="交换二进制高16位和低16位"><a href="#交换二进制高16位和低16位" class="headerlink" title="交换二进制高16位和低16位"></a>交换二进制高16位和低16位</h2><pre><code>int change(int x)
+{
+   return (x &gt;&gt; 16) | (x &lt;&lt; 16);
+   //byte可写成(x &gt;&gt; 4) | (x &lt;&lt; 4);
+}
+</code></pre><p>参考链接：  </p>
+<ol>
+<li><a href="https://www.lijinma.com/blog/2014/05/29/amazing-xor/" target="_blank" rel="external">https://www.lijinma.com/blog/2014/05/29/amazing-xor/</a>  </li>
+<li><a href="http://www.cnblogs.com/graphics/archive/2010/06/21/1752421.html" target="_blank" rel="external">http://www.cnblogs.com/graphics/archive/2010/06/21/1752421.html</a></li>
+</ol>
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/BitManipulattion/" rel="tag">#BitManipulattion</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/10/jQuery的两个坑/" rel="next" title="jQuery的三个坑">
+                <i class="fa fa-chevron-left"></i> jQuery的三个坑
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/05/12/位运算各种/" data-title="位运算各种" data-content="" data-url="http://ovjaywang.github.io/2016/05/12/位运算各种/">
+  <div class="ds-share-inline">
+    <ul class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/05/12/位运算各种/" data-title="位运算各种" data-url="http://ovjaywang.github.io/2016/05/12/位运算各种/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/xiaozaizi.png" alt="Jay Wang">
+          <p class="site-author-name" itemprop="name">Jay Wang</p>
+          <p class="site-description motion-element" itemprop="description">你猜?</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">105</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">60</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ovjaywang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/302060345" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/ov_beeshoot" target="_blank" title="douban">
+                  
+                    <i class="fa fa-globe"></i>
+                  
+                  douban
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/ohahabienaola" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-instagram"></i>
+                  
+                  Instagram
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://plus.google.com/112912013380614886638" target="_blank" title="Google">
+                  
+                    <i class="fa fa-google"></i>
+                  
+                  Google
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#几个运算符"><span class="nav-number">1.</span> <span class="nav-text">几个运算符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于取反"><span class="nav-number">2.</span> <span class="nav-text">关于取反</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于亦或"><span class="nav-number">3.</span> <span class="nav-text">关于亦或</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数组内只存在两个奇数次出现的数，其他都出现了偶数次，找出这两个数"><span class="nav-number">3.1.</span> <span class="nav-text">数组内只存在两个奇数次出现的数，其他都出现了偶数次，找出这两个数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用位亦或-节约空间的数据交换"><span class="nav-number">3.2.</span> <span class="nav-text">使用位亦或\^节约空间的数据交换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用亦或加密"><span class="nav-number">3.3.</span> <span class="nav-text">使用亦或加密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#亦或判别IP地址是否相等"><span class="nav-number">3.4.</span> <span class="nav-text">亦或判别IP地址是否相等</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于按位与"><span class="nav-number">4.</span> <span class="nav-text">关于按位与</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于按位与-1"><span class="nav-number">5.</span> <span class="nav-text">关于按位与</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#按位左右移"><span class="nav-number">6.</span> <span class="nav-text">按位左右移</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#左右移应用-二分求幂"><span class="nav-number">6.1.</span> <span class="nav-text">左右移应用-二分求幂</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用位移求二进制里1的奇偶"><span class="nav-number">6.2.</span> <span class="nav-text">利用位移求二进制里1的奇偶</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进阶-计算二进制1的个数"><span class="nav-number">6.3.</span> <span class="nav-text">进阶-计算二进制1的个数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最原始的方式"><span class="nav-number">6.3.1.</span> <span class="nav-text">最原始的方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原始方式的改进"><span class="nav-number">6.3.2.</span> <span class="nav-text">原始方式的改进</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#亦或清1法"><span class="nav-number">6.3.3.</span> <span class="nav-text">亦或清1法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查表法1："><span class="nav-number">6.3.4.</span> <span class="nav-text">查表法1：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查表法2：4bit查表"><span class="nav-number">6.3.5.</span> <span class="nav-text">查表法2：4bit查表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查表法3：8bit查表"><span class="nav-number">6.3.6.</span> <span class="nav-text">查表法3：8bit查表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#补充：位标志法"><span class="nav-number">6.3.7.</span> <span class="nav-text">补充：位标志法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#求二进制最高位前0的个数"><span class="nav-number">6.4.</span> <span class="nav-text">求二进制最高位前0的个数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二进制逆序"><span class="nav-number">6.5.</span> <span class="nav-text">二进制逆序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#位移求绝对值"><span class="nav-number">6.6.</span> <span class="nav-text">位移求绝对值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交换二进制高16位和低16位"><span class="nav-number">6.7.</span> <span class="nav-text">交换二进制高16位和低16位</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jay Wang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"mimimomo"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax --><!-- hexo-inject:end -->
+
+
+</body>
+</html>

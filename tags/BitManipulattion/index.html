@@ -82,16 +82,15 @@
 
 
 
-<meta name="description" content="第一章-创建和销毁对象 的一些 小tips">
-<meta property="og:type" content="article">
-<meta property="og:title" content="effective java 笔记--创建对象的几个tips">
-<meta property="og:url" content="http://ovjaywang.github.io/2016/04/27/effective java 笔记--创建对象的几个tips/index.html">
+<meta name="description" content="你猜?">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ov智商捉急">
+<meta property="og:url" content="http://ovjaywang.github.io/tags/BitManipulattion/index.html">
 <meta property="og:site_name" content="ov智商捉急">
-<meta property="og:description" content="第一章-创建和销毁对象 的一些 小tips">
-<meta property="og:updated_time" content="2016-04-28T16:36:57.000Z">
+<meta property="og:description" content="你猜?">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="effective java 笔记--创建对象的几个tips">
-<meta name="twitter:description" content="第一章-创建和销毁对象 的一些 小tips">
+<meta name="twitter:title" content="ov智商捉急">
+<meta name="twitter:description" content="你猜?">
 
 
 
@@ -109,7 +108,7 @@
   };
 </script>
 
-  <title> effective java 笔记--创建对象的几个tips | ov智商捉急 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> 标签: BitManipulattion | ov智商捉急 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -130,7 +129,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -274,294 +273,51 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
+  <div id="posts" class="posts-collapse">
+    <div class="collection-title">
+      <h2>
+        BitManipulattion
+        <small>标签</small>
+      </h2>
+    </div>
+
     
-
-  
-  
-
-  
-  
-  
+      
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
 
-    
-      <header class="post-header">
-
+      <h1 class="post-title">
         
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
+            <a class="post-title-link" href="/2016/05/12/位运算各种/" itemprop="url">
               
-                effective java 笔记--创建对象的几个tips
+                <span itemprop="name">位运算各种</span>
               
-            
-          </h1>
+            </a>
         
+      </h1>
 
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-27T11:50:01+08:00" content="2016-04-27">
-              2016-04-27
-            </time>
-          </span>
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2016-05-12T11:12:00+08:00" content="2016-05-12">
+          05-12
+        </time>
+      </div>
 
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/04/27/effective java 笔记--创建对象的几个tips/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/27/effective java 笔记--创建对象的几个tips/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-              &nbsp; | &nbsp;
-              <span class="page-pv"><i class="fa fa-file-o"></i>
-              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
-              </span>
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>第一章-创建和销毁对象 的一些 小tips</p>
-<a id="more"></a>
-<h1 id="不希望被实例化-又不想抽象化"><a href="#不希望被实例化-又不想抽象化" class="headerlink" title="不希望被实例化 又不想抽象化"></a>不希望被实例化 又不想抽象化</h1><p>某些类不希望被实例化出毫无意义的对象 但不编写显示构造器类会自定义一个隐式无参的构造器 因此可以用一下方式，编写不能实例化的类：</p>
-<pre><code class="java">
-  public class UtilityClass{
-    private UtilityClass(){
-      throw new AssertionError();//直接抛出assert验证异常 好坏
-    }
-  }
-</code></pre>
-<p>该构造器是私有的。其他类不能过访问（即使同包）。</p>
-<h1 id="不要创建没必要的对象"><a href="#不要创建没必要的对象" class="headerlink" title="不要创建没必要的对象"></a>不要创建没必要的对象</h1><p>不可变的对象一定要重用（singleton）；重用绝逼不会变的对象（例如计时初始时间、例如物种的属性）。例如，实例化Person对象的时候判断是不是计划生育年代出生的，即判断出生年份是否在1983-2015年。</p>
-<pre><code>
-class Person{
-   private final Date birthDate;
-   private static final Date BIRTH_START;
-   //这俩参数都是不变的 为了对比出生时间 
-   //没必要每次都创建一个日期对象，只在初始化时调用。
-   private static final Date BIRTH_END; 
-
-//静态块的方法 第一次声明Person对象时构建（不用实例化）
-// 后面占用一块内存 不用再次创建
-   static{
-        Calendar gmtCal = Calendar.getInstance(TimeZone.getTimeZone(&quot;GMT&quot;));
-        gmtCal.set(1983,Calendar.JANUARY,1,0,0,0);
-        //这里对日期做了时区判断 
-        //保证都是从某一客观时间点出生的
-        BIRTH_START = gmtCal.getTime();
-        gmtCal.set(2016,Calendar.JANUARY,1,0,0,0);
-        //截止2015年年底 所以取2016年年初
-        BIRTH_END = gmtCal.getTime();
-   }
-
-    public boolean isJiHuaShengYu(){
-        return birthDate.compareTo(BIRTH_START) &gt;=0 &amp;&amp;
-            birthDate.compareTo(BIRTH_END) &lt;=0;
-    }
-}
-</code></pre><p>如果isJiHuaShengYu方法<font color="red">从未调用</font>，这个方法就显得不合时宜了，这块静态块的内存就一直占着，因此，可以采用延时初始化的方式，在第一次调用该方法时调用。</p>
-<p>adapter适配器模式可以提供一个后备对象，使实例化次数减少（包括类适配器和对象适配器）；autoboxing自动装箱模式能够自动创建多余对象，所以尽量少用，而使用基本数据类型。</p>
-<h2 id="适配器Adapter"><a href="#适配器Adapter" class="headerlink" title="适配器Adapter"></a>适配器Adapter</h2><blockquote>
-<p>adapter工作场景</p>
-</blockquote>
-<p>适配器模式工作场景是：给定的一个接口不满足需求，需要其一些功能与其他的接口或类配合使用.正如已经给了电压和充电插座，但是插座电压与设备工作电压，这是时候就需要一个转换接头。</p>
-<blockquote>
-<p>adapter分类 </p>
-</blockquote>
-<p>一般分为类适配器和对象适配器。<strong>类适配器</strong>一般继承了给定接口的被适配类，同时拓展实现了标准的接口；而<strong>对象适配器</strong>则直接关联，以委托的方式完成已知接口的特殊功能。</p>
-<blockquote>
-<p>类适配器实例：Adaptee（已知的待适配的类） Target（目标类） Adapter（适配器类）</p>
-</blockquote>
-<p>可以看到，类适配器的方式通过继承或实现接口的方式，来传递某些功能或方法，以达到利用已知功能的目的。</p>
-<pre><code class="java">
-    // 已存在的、具有特殊功能、但不符合我们既有的标准接口的类
-class Adaptee {
-    public void specificRequest() {
-        System.out.println(&quot;被适配类具有 特殊功能...&quot;);
-    }
-}
-</code></pre>
-<pre><code class="java">
-// 目标接口，或称为标准接口
-interface Target {
-    public void request();
-}
-
-// 具体目标类，只提供普通功能
-class ConcreteTarget implements Target {
-    public void request() {
-        System.out.println(&quot;普通类 具有 普通功能...&quot;);
-    }
-}
-</code></pre>
-<pre><code class="java">
-// 适配器类，继承了被适配类，同时实现标准接口
-class Adapter extends Adaptee implements Target{
-    public void request() {
-        super.specificRequest();
-    }
-}
-</code></pre>
-<pre><code class="java">
-// 测试类
-    public class Client {
-        public static void main(String[] args) {
-            // 使用普通功能类
-            Target concreteTarget = new ConcreteTarget();
-            concreteTarget.request();
-
-            // 使用特殊功能类，即适配类
-            Target adapter = new Adapter();
-            adapter.request();
-        }
-    }
-</code></pre>
-<blockquote>
-<p>对象适配器实例 Adapter适配器类 被适配器同上</p>
-</blockquote>
-<p>对象适配器则通过对被适配类实例化，通过其对象获取其中部分功能，委托这一实例来完成想要传递的方法。</p>
-<pre><code>
-// 适配器类，直接关联被适配类，同时实现标准接口
-class Adapter implements Target{
-    // 直接关联被适配类
-    private Adaptee adaptee;
-
-    // 可以通过构造函数传入具体需要适配的被适配类对象
-    public Adapter (Adaptee adaptee) {
-        this.adaptee = adaptee;
-    }
-
-    public void request() {
-        // 这里是使用委托的方式完成特殊功能
-        this.adaptee.specificRequest();
-    }
-}
-</code></pre><pre><code>
-public class Client {
-    public static void main(String[] args) {
-        // 使用普通功能类
-        Target concreteTarget = new ConcreteTarget();
-        concreteTarget.request();
-
-        // 使用特殊功能类，即适配类，
-        // 需要先创建一个被适配类的对象作为参数
-        Target adapter = new Adapter(new Adaptee());
-        adapter.request();
-    }
-}
-</code></pre><p>参考<a href="http://haolloyin.blog.51cto.com/1177454/346128" target="_blank" rel="external">这里</a></p>
-<p>##</p>
-<blockquote>
-<p>autoboxing方式</p>
-</blockquote>
-      
-    </div>
-    
-    <div>
-      
-        
-      
-    </div>
-
-    <div>
-      
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2016/04/22/effective java--builer构造器/" rel="next" title="effective java--builer构造器">
-                <i class="fa fa-chevron-left"></i> effective java--builer构造器
-              </a>
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/04/27/hexo多客户端写作/" rel="prev" title="Hexo多客户端写作">
-                Hexo多客户端写作 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
+    </header>
   </article>
 
 
-
-    <div class="post-spread">
-      
-        <div class="ds-share flat" data-thread-key="2016/04/27/effective java 笔记--创建对象的几个tips/" data-title="effective java 笔记--创建对象的几个tips" data-content="" data-url="http://ovjaywang.github.io/2016/04/27/effective java 笔记--创建对象的几个tips/">
-  <div class="ds-share-inline">
-    <ul class="ds-share-icons-16">
-
-      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
-      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
-      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
-      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
-      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
-
-    </ul>
-    <div class="ds-share-icons-more">
-    </div>
+    
   </div>
-</div>
-      
-    </div>
-  </div>
+
+  
 
 
           </div>
           
 
-  <p>热评文章</p>
-  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
-
 
           
-  <div class="comments" id="comments">
-    
-      <div class="ds-thread" data-thread-key="2016/04/27/effective java 笔记--创建对象的几个tips/" data-title="effective java 笔记--创建对象的几个tips" data-url="http://ovjaywang.github.io/2016/04/27/effective java 笔记--创建对象的几个tips/">
-      </div>
-    
-  </div>
-
 
         </div>
         
@@ -581,17 +337,8 @@ public class Client {
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/xiaozaizi.png" alt="Jay Wang">
           <p class="site-author-name" itemprop="name">Jay Wang</p>
@@ -693,17 +440,6 @@ public class Client {
 
       </section>
 
-      
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-            
-              
-            
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#不希望被实例化-又不想抽象化"><span class="nav-number">1.</span> <span class="nav-text">不希望被实例化 又不想抽象化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#不要创建没必要的对象"><span class="nav-number">2.</span> <span class="nav-text">不要创建没必要的对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#适配器Adapter"><span class="nav-number">2.1.</span> <span class="nav-text">适配器Adapter</span></a></li></ol></li></ol></div>
-            
-          </div>
-        </section>
       
 
     </div>
@@ -816,10 +552,6 @@ public class Client {
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
-
-
 
   
 

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ovjaywang.github.io/"/>
-  <updated>2016-04-28T16:36:57.000Z</updated>
+  <updated>2016-05-19T18:52:00.000Z</updated>
   <id>http://ovjaywang.github.io/</id>
   
   <author>
@@ -14,6 +14,782 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>位运算各种</title>
+    <link href="http://ovjaywang.github.io/2016/05/12/%E4%BD%8D%E8%BF%90%E7%AE%97%E5%90%84%E7%A7%8D/"/>
+    <id>http://ovjaywang.github.io/2016/05/12/位运算各种/</id>
+    <published>2016-05-12T03:12:00.000Z</published>
+    <updated>2016-05-19T18:52:00.000Z</updated>
+    
+    <content type="html">&lt;p&gt;最近发现位运算在很多场合有很多运用啊。大概有以下几个方面:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;涉及二进制及其2^n进制的运算&lt;/li&gt;
+&lt;li&gt;很少字段的struct class的改写例如棋盘记录和模式比较&lt;/li&gt;
+&lt;li&gt;逼格&amp;amp;效率比较高的小心机&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;几个运算符&quot;&gt;&lt;a href=&quot;#几个运算符&quot; class=&quot;headerlink&quot; title=&quot;几个运算符&quot;&gt;&lt;/a&gt;几个运算符&lt;/h1&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;符号&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;名称&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;含义&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;&lt;code&gt;^&lt;/code&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;按位亦或&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;同为0，异为1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;竖线(打不了)&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;按位或&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;有1则1，双0为0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;&lt;code&gt;&amp;amp;&lt;/code&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;按位与&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;有0则0，双为1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;&lt;code&gt;~&lt;/code&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;按位取反&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;变1为0，变0为1（包含符号位）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;&lt;code&gt;&amp;lt;&amp;lt;&lt;/code&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;按位左移（包括符号）&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;对应二进制每移一位乘二&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&lt;/code&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;按位右移（包括符号）&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;对应二进制每移一位除二&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;&lt;code&gt;`&amp;gt;&amp;gt;&amp;gt;&lt;/code&gt;&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;按位无符号右移&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;对应二进制全指定的位数&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;以上均是按位操作，要区分逻辑运算&lt;code&gt;&amp;amp;&amp;amp; ||&lt;/code&gt;和位运算符&lt;code&gt;&amp;amp; |&lt;/code&gt;&lt;/p&gt;
+&lt;h1 id=&quot;关于取反&quot;&gt;&lt;a href=&quot;#关于取反&quot; class=&quot;headerlink&quot; title=&quot;关于取反&quot;&gt;&lt;/a&gt;关于取反&lt;/h1&gt;&lt;p&gt;普通的Integer char等按位操作都是直接按照它们的二进制补码操作，int直接使用该数字的补码，char则先按照ascii转换成二进制在进行操作。&lt;br&gt;e.g.&lt;code&gt;char a = &amp;#39;a&amp;#39;&lt;/code&gt;a的ascii码十进制为097，二进制原码为1100001，这里注意，作为char，它在java中是一个&lt;font color=&quot;red&quot;&gt;无符号16位的整数&lt;/font&gt;，所以补齐它的&lt;br&gt;二进制原码 补码 反码（非负数原码 补码 反码相同）&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;000000000 1100001&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;取反后的补码&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;111111111 0011110&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;取反后的反码&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;111111111 0011101&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;取反后的源码&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;100000000 1100010&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;十进制即为 &lt;strong&gt;-98&lt;/strong&gt;。&lt;br&gt;同理的，byte如果存储字符型也是按照先转成ascii码进行操作，即便是字符型的数字也一样。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;byte a = 2;
+int b = ~a;//输出b为-3
+byte c = &amp;#39;2&amp;#39;;
+int d = ~c;//输出d为-51 2的ascii为50(十进制) 32(十六进制)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&quot;关于亦或&quot;&gt;&lt;a href=&quot;#关于亦或&quot; class=&quot;headerlink&quot; title=&quot;关于亦或&quot;&gt;&lt;/a&gt;关于亦或&lt;/h1&gt;&lt;p&gt;亦或相当的特别同时阴森啊，有几个性质&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;a^a = 0 也就是亦或自己为0，因为每位都是相同的。&lt;/li&gt;
+&lt;li&gt;a^a^a = a^0 = 0^a  = a&lt;/li&gt;
+&lt;li&gt;a^b = b^a 符合交换律&lt;/li&gt;
+&lt;li&gt;(a^b)^c = a^(b^c) 符合结合律&lt;/li&gt;
+&lt;li&gt;e = a^b^c^d &amp;lt;-&amp;gt; e^a = b^c^d &amp;lt;-&amp;gt; e^a^b= c^d &amp;lt;-&amp;gt; e^a^b^c=d&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;既然满足交换律结合律，则如果出现这么一种情况，&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[一个数组里除了一个数值出现一次，其他都出现了两次。找出这个数值。]&lt;br&gt;将这个数组全部亦或一遍，则出现两次的都可以按照交换律结合律化为0，&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;数组内只存在两个奇数次出现的数，其他都出现了偶数次，找出这两个数&quot;&gt;&lt;a href=&quot;#数组内只存在两个奇数次出现的数，其他都出现了偶数次，找出这两个数&quot; class=&quot;headerlink&quot; title=&quot;数组内只存在两个奇数次出现的数，其他都出现了偶数次，找出这两个数&quot;&gt;&lt;/a&gt;数组内只存在两个奇数次出现的数，其他都出现了偶数次，找出这两个数&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;思路：这就是上面实例的改进，因为知道了其他数字都出现了偶数次，全体亦或的结果就是&lt;code&gt;x=a^b&lt;/code&gt; 其中a b分别是所要找的这两个数。由于a b不同，则x必然不为零，也必然存在为1的位（可以取从右第一次出现1的位置）。同时由于是亦或操作，这个1必然是a和b相异造成的。这样，把这一位为1的分一组，这一位为0的分一组，出现偶数次的依然会被分到一组通过亦或自己消除。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;    //从右寻找补码中1第一次出现的位置
+    public static int getFirst1(int num){
+        int index = 0;
+        while(index&amp;lt;32){//Integer有32位
+            if(((num&amp;amp;(1&amp;lt;&amp;lt;index))^(1&amp;lt;&amp;lt;index))==0)
+                return index+1;
+            else
+                index++;
+        }
+        return -1;
+    }
+
+    //判断这个数这一位是否为1
+    public static boolean is1AtPos(int num,int pos){    
+        return ((num&amp;gt;&amp;gt;(pos-1))&amp;amp;1)==1;
+    }
+
+    //寻找这两个数
+    public static int[] get2Num(int[] a){
+        int [] find2Num = new int[2];
+        //默认初始化0
+        int rs = 0;
+        for (int i : a) {
+            rs ^= i;//亦或全体求x
+        int pos=getFirst1(rs);//寻找第一个出现1的位
+        for (int j : a) {
+            if(is1AtPos(j,pos))//按这位是否位1分组
+                find2Num[0] ^= j;
+            else
+                find2Num[1] ^= j;           
+        }
+        System.out.println(find2Num[0]+&amp;quot; &amp;quot;+find2Num[1]);
+        return find2Num;
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;使用位亦或-节约空间的数据交换&quot;&gt;&lt;a href=&quot;#使用位亦或-节约空间的数据交换&quot; class=&quot;headerlink&quot; title=&quot;使用位亦或\^节约空间的数据交换&quot;&gt;&lt;/a&gt;使用位亦或\^节约空间的数据交换&lt;/h2&gt;&lt;p&gt;原理：a亦或b=c，b亦或a=c，也就是亦或满足交换律；位亦或的逆运算，也就是&lt;code&gt;(a^b)^b=a&lt;/code&gt;等于它自己。所以，只需三个亦或运算即可交换数据。看代码。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    a ^= b;
+    b ^= a;
+    a ^= b;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;使用亦或加密&quot;&gt;&lt;a href=&quot;#使用亦或加密&quot; class=&quot;headerlink&quot; title=&quot;使用亦或加密&quot;&gt;&lt;/a&gt;使用亦或加密&lt;/h2&gt;&lt;p&gt;中文配合亦或加密再加上其他的一些加密算法可以很好的掩护原文。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;        char  a1=&amp;#39;晚&amp;#39; ,  a2=&amp;#39;上&amp;#39; ,  a3=&amp;#39;来&amp;#39; ,  a4=&amp;#39;我&amp;#39;,  a5=&amp;#39;家&amp;#39; ; 
+        char secret=&amp;#39;8&amp;#39; ; 
+        a1=(char) (a1^secret); 
+        a2=(char) (a2^secret); 
+        a3=(char) (a3^secret); 
+        a4=(char) (a4^secret); 
+        a5=(char) (a5^secret); 
+        System.out.println(&amp;quot;密文:&amp;quot;+a1+a2+a3+a4+a5); 
+        a1=(char) (a1^secret); 
+        a2=(char) (a2^secret); 
+        a3=(char) (a3^secret); 
+        a4=(char) (a4^secret); 
+        a5=(char) (a5^secret); 
+        System.out.println(&amp;quot;原文:&amp;quot;+a1+a2+a3+a4+a5);
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;亦或判别IP地址是否相等&quot;&gt;&lt;a href=&quot;#亦或判别IP地址是否相等&quot; class=&quot;headerlink&quot; title=&quot;亦或判别IP地址是否相等&quot;&gt;&lt;/a&gt;亦或判别IP地址是否相等&lt;/h2&gt;&lt;p&gt;使用亦或在加上按位与的方式比==加&amp;amp;&amp;amp;的方式效率高。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    static int ipv6_addr_equal(int[] in6_addr_a1, int[] in6_addr_a2)
+    {
+    return (((in6_addr_a1[0] ^ in6_addr_a2[0]) |
+        (in6_addr_a1[1] ^ in6_addr_a2[1]) |
+        (in6_addr_a1[2] ^ in6_addr_a2[2]) |
+        (in6_addr_a1[3] ^ in6_addr_a2[3])) == 0);
+    }
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&quot;关于按位与&quot;&gt;&lt;a href=&quot;#关于按位与&quot; class=&quot;headerlink&quot; title=&quot;关于按位与&quot;&gt;&lt;/a&gt;关于按位与&lt;/h1&gt;&lt;p&gt;按位与操作一般是与1配合 判断奇偶，或者判断某位是否为1；或保留下某位位数字(与位移结合)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;a&amp;amp;1 == 0    偶数
+a&amp;amp;1 == 1    奇数
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&quot;关于按位与-1&quot;&gt;&lt;a href=&quot;#关于按位与-1&quot; class=&quot;headerlink&quot; title=&quot;关于按位与&quot;&gt;&lt;/a&gt;关于按位与&lt;/h1&gt;&lt;p&gt;按位或操作一般与0配合 &lt;/p&gt;
+&lt;h1 id=&quot;按位左右移&quot;&gt;&lt;a href=&quot;#按位左右移&quot; class=&quot;headerlink&quot; title=&quot;按位左右移&quot;&gt;&lt;/a&gt;按位左右移&lt;/h1&gt;&lt;p&gt;左右移本质上就是以bit为单元进行二进制的操作，而二进制左右移n位在十进制就意味着乘以2^n或除以2^n.按位操作可以大大提升效率&lt;br&gt;港真，很多面试都有求幂的题目。很棒，刷题狗就喜欢做这种题，然而第一次碰到这题我懵逼的采用了树。傻缺了。&lt;/p&gt;
+&lt;p&gt;将二进制数绕圈循环，取往左(右)第k个为头。很多题目里面有啊&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;int a = a&amp;lt;&amp;lt;k | a &amp;gt;&amp;gt; (Integer.SIZE-k); //左数第k个当头
+int b = b&amp;gt;&amp;gt;k | b &amp;gt;&amp;gt; (Integer.SIZE-k); //右数第k个当头
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;第k位置1&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;    a|(1&amp;lt;&amp;lt;k);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;第k位置0&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    a&amp;amp;(~(1&amp;lt;&amp;lt;k));
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;取第k位的数值&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    a&amp;gt;&amp;gt;k&amp;amp;1;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;后k位为0，其余为1&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    (~0)&amp;amp;(1&amp;lt;&amp;lt;(k+1));
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;后k位为1，其余为0&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    ~((~0)&amp;lt;&amp;lt;k);
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;左右移应用-二分求幂&quot;&gt;&lt;a href=&quot;#左右移应用-二分求幂&quot; class=&quot;headerlink&quot; title=&quot;左右移应用-二分求幂&quot;&gt;&lt;/a&gt;左右移应用-二分求幂&lt;/h2&gt;&lt;p&gt;&lt;strong&gt; &lt;font color=&quot;red&quot;&gt;Caution！这个思想很重要!&lt;/font&gt;&lt;/strong&gt;  &lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;思路：求a^b，如果b是一个2的整数幂，举个栗子，32，那可以进行这样的迭代，由于$32=2^5$,那么就可以这样求，&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;第一次求 $a_1=a^2$  &lt;/li&gt;
+&lt;li&gt;第二次求 $a_2=a^4=a^{2*2}={a_1}^2$  &lt;/li&gt;
+&lt;li&gt;第三次求 $a_3=a^8=a^{4*2}={a_2}^2$  &lt;/li&gt;
+&lt;li&gt;第四次求 $a_4=a^{16}=a^{8*2}={a_3}^2$&lt;/li&gt;
+&lt;li&gt;第五次求 $a_5=a^{32}=a^{16*2}={a_4}^2$&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;如果是通过迭代幂的次数，需要32次才能达到，然而通过分治的方式，只需要5次就能解算32次幂。那如果不是2的整数幂次方呢，很好办，通过将该整数分解成各个2的整数次幂的和，例如求取a的23次方,又$23=16+4+2=1$，所以原式可化为$a^{2^4+2^2+2^1+2^0}$,通过二分的方式，变形为$$(a^{16})\cdot (a^4)\cdot (a^1)\cdot (a^0)$$.&lt;br&gt;显然！上式就是二进制和十进制转换的过程，通过4+2+1=7次计算就可解出，而非单循环的23次。&lt;br&gt;其实，解算a的16次方中，即可用到$${a^4}^{2^2}$$,即计算a^的16次方只需用到2步，总共2+2+1=5次迭代就可计算完毕。&lt;br&gt;因而解决a^b次幂的步骤是  &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;将幂次化为2进制  &lt;/li&gt;
+&lt;li&gt;从低位遍历，为1则乘以当前幂次，为0则计算当前幂次，然后跳过，直接移至下一位  &lt;/li&gt;
+&lt;li&gt;当幂指数的二进制推到最高位  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;    public static long Power(int a, int n){
+        long ans = 1;
+        System.out.println(&amp;quot;幂指数二进制：&amp;quot;+Integer.toBinaryString(n));
+        while (n &amp;gt; 0) {
+            if ((n &amp;amp; 1)!=0) {//末位不为零
+                ans *= a;
+            } 
+            a *= a;//计算当前幂次
+            n &amp;gt;&amp;gt;= 1;//迭代每次推一位
+        }
+        return ans;
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;递归版本可能更清晰&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;    public static int power(int a,int n)  {  
+        if(n==1) return a;  
+        if(n&amp;amp;1)  
+          return power(a,n-1) * a;  
+        else  
+        {  
+            int t=power(a,n&amp;gt;&amp;gt;1);  
+            return t*t;  
+        }  
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;下面还有更&lt;strong&gt;炸裂&lt;/strong&gt;的&lt;/p&gt;
+&lt;h2 id=&quot;利用位移求二进制里1的奇偶&quot;&gt;&lt;a href=&quot;#利用位移求二进制里1的奇偶&quot; class=&quot;headerlink&quot; title=&quot;利用位移求二进制里1的奇偶&quot;&gt;&lt;/a&gt;利用位移求二进制里1的奇偶&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;一般的思路就是，一位一位截末位，为1则亦或一下，为0则不管。对于Integer需要循环32次，对byte需要循环8次。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;1数量为奇则返回1，为偶数则返回0。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;    public static int get11Count(int x){
+            int i=0;
+            for(int j =0 ;j&amp;lt;32;j++){
+                if((x&amp;amp;1)==1)
+                    i ^= x&amp;amp;1;  
+                x &amp;gt;&amp;gt;= 1;
+            }
+            return i;
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;但四，这个方式没有体现位移的优越性。通过分治的思想，由于结果只求1或0，那么通过1位表达2位的信息，通过2位表达4位的信息，通过4位表达8位的信息，通过8位表达16位的信息，通过16位表达32位的信息。通过五次&lt;strong&gt;表达&lt;/strong&gt;，就可以求出结果。 &lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;先看代码&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;    public static int get1Count(int x){
+    //返回二进制数有偶数还是奇数个1 偶数返回0 奇数返回1
+            x = x ^ (x &amp;gt;&amp;gt; 1);
+            x = x ^ (x &amp;gt;&amp;gt; 2);
+            x = x ^ (x &amp;gt;&amp;gt; 4);
+            x = x ^ (x &amp;gt;&amp;gt; 8);
+            x = x ^ (x &amp;gt;&amp;gt; 16);
+        return x&amp;amp;1;
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;解析一下。先拿byte举个栗子。因为byte是1个字节8个bit，所以表达-128~127即$-2^7\sim 2^7$.按照上面的方式，只需右移三次.举个例子88，二进制为$2^6+2^4+2^3=1011000$&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;第一次&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+        1011000
+         101100
+    xor -------
+        1110100  -&amp;gt;这个是结果！
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;结果的数值含义是，将原式中，这一位i与该位的上一位i+1做了一次亦或，结果式中每出现一个1，则代表原式中必然邻位相异。&lt;/p&gt;
+&lt;h2 id=&quot;进阶-计算二进制1的个数&quot;&gt;&lt;a href=&quot;#进阶-计算二进制1的个数&quot; class=&quot;headerlink&quot; title=&quot;进阶-计算二进制1的个数&quot;&gt;&lt;/a&gt;进阶-计算二进制1的个数&lt;/h2&gt;&lt;h3 id=&quot;最原始的方式&quot;&gt;&lt;a href=&quot;#最原始的方式&quot; class=&quot;headerlink&quot; title=&quot;最原始的方式&quot;&gt;&lt;/a&gt;最原始的方式&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;    int BitCount(unsigned int n)
+    {
+        unsigned int c =0 ; // 计数器
+        while (n &amp;gt;0)
+        {
+            if((n &amp;amp;1) ==1) // 当前位是1
+                ++c ; // 计数器加1
+            n &amp;gt;&amp;gt;=1 ; // 移位
+        }
+        return c ;
+    }
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;原始方式的改进&quot;&gt;&lt;a href=&quot;#原始方式的改进&quot; class=&quot;headerlink&quot; title=&quot;原始方式的改进&quot;&gt;&lt;/a&gt;原始方式的改进&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;    int BitCount1(unsigned int n)
+    {
+        unsigned int c =0 ; // 计数器
+        for (c =0; n; n &amp;gt;&amp;gt;=1) // 循环移位
+            c += n &amp;amp;1 ; // 如果当前位是1，则计数器加1
+        return c ;
+    }
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;亦或清1法&quot;&gt;&lt;a href=&quot;#亦或清1法&quot; class=&quot;headerlink&quot; title=&quot;亦或清1法&quot;&gt;&lt;/a&gt;亦或清1法&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;int BitCount2(unsigned int n)
+{
+    unsigned int c =0 ;
+    for (c =0; n; ++c)
+    {
+        n &amp;amp;= (n -1) ; // 清除最低位的1
+    }
+    return c ;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;查表法1：&quot;&gt;&lt;a href=&quot;#查表法1：&quot; class=&quot;headerlink&quot; title=&quot;查表法1：&quot;&gt;&lt;/a&gt;查表法1：&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;int BitCount3(unsigned int n) 
+{ 
+    // 建表
+    unsigned char BitsSetTable256[256] = {0} ; 
+
+    // 初始化表 
+    for (int i =0; i &amp;lt;256; i++) 
+    { 
+        BitsSetTable256[i] = (i &amp;amp;1) + BitsSetTable256[i /2]; 
+    } 
+
+    unsigned int c =0 ; 
+
+    // 查表
+    unsigned char* p = (unsigned char*) &amp;amp;n ; 
+
+    c = BitsSetTable256[p[0]] + 
+        BitsSetTable256[p[1]] + 
+        BitsSetTable256[p[2]] + 
+        BitsSetTable256[p[3]]; 
+
+    return c ; 
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;查表法2：4bit查表&quot;&gt;&lt;a href=&quot;#查表法2：4bit查表&quot; class=&quot;headerlink&quot; title=&quot;查表法2：4bit查表&quot;&gt;&lt;/a&gt;查表法2：4bit查表&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;int BitCount4(unsigned int n)
+{
+    unsigned int table[16] = 
+    {
+        0, 1, 1, 2, 
+        1, 2, 2, 3, 
+        1, 2, 2, 3, 
+        2, 3, 3, 4
+    } ;
+
+    unsigned int count =0 ;
+    while (n)
+    {
+        count += table[n &amp;amp;0xf] ;
+        n &amp;gt;&amp;gt;=4 ;
+    }
+    return count ;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;查表法3：8bit查表&quot;&gt;&lt;a href=&quot;#查表法3：8bit查表&quot; class=&quot;headerlink&quot; title=&quot;查表法3：8bit查表&quot;&gt;&lt;/a&gt;查表法3：8bit查表&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;int BitCount7(unsigned int n)
+{ 
+    unsigned int table[256] = 
+    { 
+        0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4, 
+        1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5, 
+        1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5, 
+        2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 
+        1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5, 
+        2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 
+        2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 
+        3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7, 
+        1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5, 
+        2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 
+        2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 
+        3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7, 
+        2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 
+        3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7, 
+        3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7, 
+        4, 5, 5, 6, 5, 6, 6, 7, 5, 6, 6, 7, 6, 7, 7, 8, 
+    }; 
+
+    return table[n &amp;amp;0xff] +
+        table[(n &amp;gt;&amp;gt;8) &amp;amp;0xff] +
+        table[(n &amp;gt;&amp;gt;16) &amp;amp;0xff] +
+        table[(n &amp;gt;&amp;gt;24) &amp;amp;0xff] ;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;###炸裂的平行算法&lt;br&gt;邻位相加，重复这一过程，直到只剩一位。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    #include &amp;lt;stdio.h&amp;gt;
+    #include &amp;lt;iostream&amp;gt;
+
+    using namespace std;
+
+    int main(int argc, char *argv[]) {
+        int x;
+        while (cin &amp;gt;&amp;gt; x) {
+            x = (x &amp;amp; 0x55555555) + ((x &amp;gt;&amp;gt; 1) &amp;amp; 0x55555555);
+            x = (x &amp;amp; 0x33333333) + ((x &amp;gt;&amp;gt; 2) &amp;amp; 0x33333333);
+            x = (x &amp;amp; 0x0F0F0F0F) + ((x &amp;gt;&amp;gt; 4) &amp;amp; 0x0F0F0F0F);
+            x = (x &amp;amp; 0x00FF00FF) + ((x &amp;gt;&amp;gt; 8) &amp;amp; 0x00FF00FF);
+            x = (x &amp;amp; 0x0000FFFF) + ((x &amp;gt;&amp;gt; 16) &amp;amp; 0x0000FFFF);
+            cout &amp;lt;&amp;lt; x &amp;lt;&amp;lt; endl;
+        }
+        return 0;
+    }
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;###终极大招&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;int BitCount5(unsigned int n) 
+{
+    unsigned int tmp = n - ((n &amp;gt;&amp;gt;1) &amp;amp;033333333333) - ((n &amp;gt;&amp;gt;2) &amp;amp;011111111111);
+    return ((tmp + (tmp &amp;gt;&amp;gt;3)) &amp;amp;030707070707) %63;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;补充：位标志法&quot;&gt;&lt;a href=&quot;#补充：位标志法&quot; class=&quot;headerlink&quot; title=&quot;补充：位标志法&quot;&gt;&lt;/a&gt;补充：位标志法&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;struct _byte 
+{ 
+    unsigned a:1; 
+    unsigned b:1; 
+    unsigned c:1; 
+    unsigned d:1; 
+    unsigned e:1; 
+    unsigned f:1; 
+    unsigned g:1; 
+    unsigned h:1; 
+}; 
+
+long get_bit_count( unsigned char b ) 
+{
+    struct _byte *by = (struct _byte*)&amp;amp;b; 
+    return (by-&amp;gt;a+by-&amp;gt;b+by-&amp;gt;c+by-&amp;gt;d+by-&amp;gt;e+by-&amp;gt;f+by-&amp;gt;g+by-&amp;gt;h); 
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;求二进制最高位前0的个数&quot;&gt;&lt;a href=&quot;#求二进制最高位前0的个数&quot; class=&quot;headerlink&quot; title=&quot;求二进制最高位前0的个数&quot;&gt;&lt;/a&gt;求二进制最高位前0的个数&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;int nlz(unsigned x)
+{
+   int n;
+
+   if (x == 0) return(32);
+   n = 1;
+   if ((x &amp;gt;&amp;gt; 16) == 0) {n += 16; x &amp;lt;&amp;lt;= 16;}
+   if ((x &amp;gt;&amp;gt; 24) == 0) {n += 8; x &amp;lt;&amp;lt;= 8;}
+   if ((x &amp;gt;&amp;gt; 28) == 0) {n += 4; x &amp;lt;&amp;lt;= 4;}
+   if ((x &amp;gt;&amp;gt; 30) == 0) {n += 2; x &amp;lt;&amp;lt;= 2;}
+   n = n - (x &amp;gt;&amp;gt; 31);
+   return n;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;二进制逆序&quot;&gt;&lt;a href=&quot;#二进制逆序&quot; class=&quot;headerlink&quot; title=&quot;二进制逆序&quot;&gt;&lt;/a&gt;二进制逆序&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;int change(int x)
+{
+    x = (x &amp;amp; 0x55555555) &amp;lt;&amp;lt; 1 | (x &amp;amp; 0xAAAAAAAA) &amp;gt;&amp;gt; 1;
+    x = (x &amp;amp; 0x33333333) &amp;lt;&amp;lt; 2 | (x &amp;amp; 0xCCCCCCCC) &amp;gt;&amp;gt; 2;
+    x = (x &amp;amp; 0x0F0F0F0F) &amp;lt;&amp;lt; 4 | (x &amp;amp; 0xF0F0F0F0) &amp;gt;&amp;gt; 4;
+    x = (x &amp;amp; 0x00FF00FF) &amp;lt;&amp;lt; 8 | (x &amp;amp; 0xFF00FF00) &amp;gt;&amp;gt; 8;
+    x = (x &amp;amp; 0x0000FFFF) &amp;lt;&amp;lt; 16 | (x &amp;amp; 0xFFFF0000) &amp;gt;&amp;gt; 16;
+    return x;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;位移求绝对值&quot;&gt;&lt;a href=&quot;#位移求绝对值&quot; class=&quot;headerlink&quot; title=&quot;位移求绝对值&quot;&gt;&lt;/a&gt;位移求绝对值&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;x xor (not (x shr 31) + 1) + x shr 31
+x = x ^ ((~(x&amp;gt;&amp;gt;31))+1) + x&amp;gt;&amp;gt;31;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;交换二进制高16位和低16位&quot;&gt;&lt;a href=&quot;#交换二进制高16位和低16位&quot; class=&quot;headerlink&quot; title=&quot;交换二进制高16位和低16位&quot;&gt;&lt;/a&gt;交换二进制高16位和低16位&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;int change(int x)
+{
+   return (x &amp;gt;&amp;gt; 16) | (x &amp;lt;&amp;lt; 16);
+   //byte可写成(x &amp;gt;&amp;gt; 4) | (x &amp;lt;&amp;lt; 4);
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;参考链接：  &lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.lijinma.com/blog/2014/05/29/amazing-xor/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.lijinma.com/blog/2014/05/29/amazing-xor/&lt;/a&gt;  &lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.cnblogs.com/graphics/archive/2010/06/21/1752421.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.cnblogs.com/graphics/archive/2010/06/21/1752421.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近发现位运算在很多场合有很多运用啊。大概有以下几个方面:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;涉及二进制及其2^n进制的运算&lt;/li&gt;
+&lt;li&gt;很少字段的struct class的改写例如棋盘记录和模式比较&lt;/li&gt;
+&lt;li&gt;逼格&amp;amp;效率比较高的小心机&lt;/li&gt;
+&lt;/ul&gt;
+
+    
+    </summary>
+    
+      <category term="代码狗" scheme="http://ovjaywang.github.io/categories/%E4%BB%A3%E7%A0%81%E7%8B%97/"/>
+    
+      <category term="学习log" scheme="http://ovjaywang.github.io/categories/%E4%BB%A3%E7%A0%81%E7%8B%97/%E5%AD%A6%E4%B9%A0log/"/>
+    
+    
+      <category term="BitManipulattion" scheme="http://ovjaywang.github.io/tags/BitManipulattion/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>jQuery的三个坑</title>
+    <link href="http://ovjaywang.github.io/2016/05/10/jQuery%E7%9A%84%E4%B8%A4%E4%B8%AA%E5%9D%91/"/>
+    <id>http://ovjaywang.github.io/2016/05/10/jQuery的两个坑/</id>
+    <published>2016-05-09T17:23:30.000Z</published>
+    <updated>2016-05-12T03:13:22.340Z</updated>
+    
+    <content type="html">&lt;p&gt;许久没用jquery，今天碰到三个坑。小记一下&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;br&gt;第一个是live()这个函数，在学习很早的资料，表示用来为被选元素附加一个或多个事件处理程序,形式为&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;$(selector).live(event,data,function)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;例如为button绑定一个单击事件，event为事件名，data为可选的传参，function为自定义函数。&lt;br&gt;测了半天没开F12一直以为代码有问题，，后来一看原来jquery1.9+以上不支持live了。先改成了delegate代理，后来又改成on,真特么烦人。  &lt;/p&gt;
+&lt;p&gt;应该值得注意到的是，改成on后，触发的事件在容器对象上，而live返回值在事件触发的对象上。&lt;br&gt;&lt;a href=&quot;http://jquery.com/upgrade-guide/1.9/#live-removed&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;是官方解释&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;一直以为&lt;code&gt;$(selector)&lt;/code&gt;能抓到所有的id啊。。。原来好像dom树的id不能明明一样的。（但在1.4-版本测试是可以的，不知道是改进了对id选择器的定义和方法加载，明确了id唯一这个特征）&lt;br&gt;要对类似的组件操作类似的方法，例如对tr表单下的td采用同个样式，a使用类似的连接，可以使用&lt;code&gt;$(.class)&lt;/code&gt;的方式获取。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;jquery1.9+以后不支持.attr属性的设置了，改成了.prop .妈蛋啊怎么改这么多好烦啊简直排错都不知道什么bug&lt;br&gt;炸裂看看1.9+的&lt;a href=&quot;http://www.ppblog.cn/jquery1-9live.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;更新&lt;/a&gt;  &lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;true false两个选项的属性用prop&lt;/li&gt;
+&lt;li&gt;添加属性名称该属性就生效用prop&lt;/li&gt;
+&lt;li&gt;其他可以用attr&lt;/li&gt;
+&lt;/ol&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;许久没用jquery，今天碰到三个坑。小记一下&lt;br&gt;
+    
+    </summary>
+    
+      <category term="代码狗" scheme="http://ovjaywang.github.io/categories/%E4%BB%A3%E7%A0%81%E7%8B%97/"/>
+    
+      <category term="学习log" scheme="http://ovjaywang.github.io/categories/%E4%BB%A3%E7%A0%81%E7%8B%97/%E5%AD%A6%E4%B9%A0log/"/>
+    
+    
+      <category term="jQuery" scheme="http://ovjaywang.github.io/tags/jQuery/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>树系列码集合[持更20160517]</title>
+    <link href="http://ovjaywang.github.io/2016/05/03/%E6%A0%91%E7%B3%BB%E5%88%97%E7%A0%81%E9%9B%86%E5%90%88-%E6%8C%81%E6%9B%B4/"/>
+    <id>http://ovjaywang.github.io/2016/05/03/树系列码集合-持更/</id>
+    <published>2016-05-03T15:06:28.000Z</published>
+    <updated>2016-05-18T02:26:24.567Z</updated>
+    
+    <content type="html">&lt;p&gt;本文持更树操作集合-码狗学习中&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;二叉查找树转双链表（c-）&quot;&gt;&lt;a href=&quot;#二叉查找树转双链表（c-）&quot; class=&quot;headerlink&quot; title=&quot;二叉查找树转双链表（c++）&quot;&gt;&lt;/a&gt;二叉查找树转双链表（c++）&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;需求就是一个二叉树查找树 ，要转成按顺序排列的双向链表&lt;/p&gt;
+&lt;p&gt;思路差不多就是：中序可以按顺序输出；左儿子指针指向相邻小的，右儿子指针指向相邻大的；相邻由中序控制,左右儿子改动的时候寄存在pre(前驱)和root(当前)下&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;关键代码&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;定义模版类及head pre指针&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;c++&quot;&gt;    template&amp;lt;class T&amp;gt;                  //模版结构体
+    struct TreeNode
+    {
+        T data;                       //节点的内容
+        TreeNode &amp;lt;T&amp;gt; *Lchild, *Rchild,*pParent; //节点的左子树和右子树
+    //可选择参数的默认构造函数
+    TreeNode(T nodeValue = T(), TreeNode&amp;lt;T&amp;gt; *leftNode = NULL, TreeNode&amp;lt;T&amp;gt; *rightNode = NULL, TreeNode&amp;lt;T&amp;gt; *parentNode = NULL)
+    :data(nodeValue),Lchild(leftNode),Rchild(rightNode),pParent(parentNode){}
+    };
+
+    TreeNode&amp;lt;int&amp;gt; * pHead =NULL;//存放头指针
+    TreeNode&amp;lt;int&amp;gt; * previous = NULL;//存放前驱
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;核心转换代码&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;c++&quot;&gt;    template&amp;lt;class T&amp;gt;
+    void Tranverse(TreeNode&amp;lt;T&amp;gt; * root)//记前序
+    {
+        if (root){
+            Tranverse(root-&amp;gt;Lchild);//很明显的中序遍历阿！
+            if (previous){
+                if (!pHead){//这个if可以不写啊 只是为了记录头结点而已
+                    pHead = previous;
+                }
+                previous-&amp;gt;Rchild = root;//前驱的右指针指向root
+                root-&amp;gt;Lchild = previous;//root的左指针指向前驱
+            }
+            previous = root;//前驱跑到下一个更新
+            Tranverse(root-&amp;gt;Rchild);
+        }
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;调用代码,我才懒得写insert代码啊，rootNode从哪里来的我也不管啊&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;c+&quot;&gt;    Tranverse(rootNode);
+    while (pHead != NULL){
+        cout &amp;lt;&amp;lt; pHead-&amp;gt;data &amp;lt;&amp;lt; endl;
+        pHead = pHead-&amp;gt;Rchild;
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;代码见&lt;a href=&quot;https://github.com/ovjaywang/TreeInvolved/tree/master/BSTree2DoubleLinkList&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;  &lt;/p&gt;
+&lt;h1 id=&quot;在二叉查找树里查找范围内数据-c&quot;&gt;&lt;a href=&quot;#在二叉查找树里查找范围内数据-c&quot; class=&quot;headerlink&quot; title=&quot;在二叉查找树里查找范围内数据(c++)&quot;&gt;&lt;/a&gt;在二叉查找树里查找范围内数据(c++)&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;二叉查找树对于范围查找效率比普通线性查找效率高，Point仍旧是中序按序输出。&lt;/p&gt;
+&lt;p&gt;思路：这次换一个c语言方式类typedef定义二叉树模版，以二叉按次序找到下限第一个，然后其后的数据与最大最小值比较，在范围内就输出。因此，在二叉查找树中序输出中中，加两个判断条件&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;进入左子树需要根节点比最小值大  &lt;/li&gt;
+&lt;li&gt;进入右子树需要根节点比最大值小&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;类模版定义&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;c&quot;&gt;typedef int KeyType;
+typedef struct TreeNode
+{
+    KeyType key;          //关键字
+    struct TreeNode * left;   //左孩子指针
+    struct TreeNode * right;  //右孩子指针
+    struct TreeNode * parent; //指向父节点指针
+}TreeNode, *PNode;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;关键代码 以范围搜索&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;c&quot;&gt;    set&amp;lt;KeyType&amp;gt; searchRange(KeyType min, KeyType max, set&amp;lt;KeyType&amp;gt; &amp;amp;vt, TreeNode *root){
+        if (!root) return vt ;
+        if (min &amp;lt; root-&amp;gt;key)
+            searchRange(min, max, vt,root-&amp;gt;left);
+        if (min &amp;lt;= root-&amp;gt;key &amp;amp;&amp;amp; max &amp;gt;= root-&amp;gt;key){
+            vt.insert(root-&amp;gt;key);
+        }
+        if (max&amp;gt;root-&amp;gt;key)
+            searchRange(min, max, vt,root-&amp;gt;right);
+        return vt;
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;调用代码&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;c&quot;&gt;    set&amp;lt;int&amp;gt; ss = set&amp;lt;int&amp;gt;();
+    //很多地方都会把set带进函数迭代传递
+    ss = searchRange(0, 3, ss, root);
+    cout &amp;lt;&amp;lt; &amp;quot;vv.size() &amp;quot;&amp;lt;&amp;lt;ss.size()&amp;lt;&amp;lt;endl&amp;lt;&amp;lt;&amp;quot;范围内包含节点有:&amp;quot;&amp;lt;&amp;lt;endl;
+    for each (int item in ss)
+    {
+        cout &amp;lt;&amp;lt; item&amp;lt;&amp;lt;&amp;quot; &amp;quot;;
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;代码见&lt;a href=&quot;https://github.com/ovjaywang/TreeInvolved/tree/master/FindInBSTree&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;输出-平衡-二叉树所有和为某值的路径&quot;&gt;&lt;a href=&quot;#输出-平衡-二叉树所有和为某值的路径&quot; class=&quot;headerlink&quot; title=&quot;输出(平衡)二叉树所有和为某值的路径&quot;&gt;&lt;/a&gt;输出(平衡)二叉树所有和为某值的路径&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;需求：一条路径就是从根到叶子所有节点，路径数就是叶子数。要输出所有满足路径上所有节点和为某值的路径。&lt;/p&gt;
+&lt;p&gt;思路：为了保证效率，不能每次从头遍历到每个叶子才输出一次。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;使用栈压入根到当前节点的路径所有制，以便求和&lt;/li&gt;
+&lt;li&gt;栈和超过值可以不继续寻找当前路径的儿子&lt;/li&gt;
+&lt;li&gt;找一个儿子就在栈压入一个数值，跳回一个根就弹出一个儿子的值&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;当然，我很无聊，试一试平衡二叉(AVL).平衡二叉防止了直接建立查找二叉时候的随机，保证了时间复杂式始终在log(n).但建立AVL时候的插入删除代价也相对较大。&lt;/p&gt;
+&lt;p&gt;AVL模版类的声明，多了一个height（高度）属性。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;c++&quot;&gt;    template &amp;lt;class T&amp;gt;
+    class AVLTreeNode{
+    public:
+        T key;                // 关键字(键值)
+        int height;         // 高度
+        AVLTreeNode *left;    // 左孩子
+        AVLTreeNode *right;    // 右孩子
+        //构造函数
+        AVLTreeNode(T value, AVLTreeNode *l, AVLTreeNode *r) :
+            key(value), height(0), left(l), right(r) {}
+    };
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;AVLtree类中包含了函数声明和一个&lt;code&gt;AVLTreeNode&amp;lt;T&amp;gt; *mRoot;&lt;/code&gt;作为根节点；一个public的函数&lt;code&gt;void SearchPath(const T value);&lt;/code&gt;给外部调用；一个private的函数&lt;code&gt;void SearchPath(AVLTreeNode&amp;lt;T&amp;gt;* root, T* seq, T top, T sumCount, const T value);&lt;/code&gt;作为自迭代的函数，传入当前节点指针，当前线性表指针，栈顶指针(栈压入的数目)，当前和以及目标值。&lt;/p&gt;
+&lt;p&gt;关键代码，使用的是栈，但其实就是个顺序表，系统自动建立内存空间，每次进栈自增。&lt;br&gt;公有函数&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;c++&quot;&gt;    template&amp;lt;class T&amp;gt;
+    void AVLTree&amp;lt;T&amp;gt;::SearchPath(const T value){
+        T * seq = new int[0];
+        T sumCount = 0;//当前累积值
+        T top = 0;
+        return SearchPath(mRoot, seq, top, sumCount, value);
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;私有函数  &lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;c++&quot;&gt;    //遍历次序无所谓的 反正要遍历所有叶子
+    template&amp;lt;class T&amp;gt;
+    void AVLTree&amp;lt;T&amp;gt;::SearchPath(AVLTreeNode&amp;lt;T&amp;gt;* root, T* seq, T top, T sumCount, const T value)//按值传递回溯不用恢复参数值和栈顶  
+    {
+        seq[top++] = root-&amp;gt;key;//入栈
+        sumCount += root-&amp;gt;key;//累加和
+        //if(sumCount &amp;gt; value) return;//当值为正数时可加上这句话
+        if (root-&amp;gt;left == NULL &amp;amp;&amp;amp; root-&amp;gt;right == NULL){//为叶子节点
+            if (sumCount == value)
+                for (int i = 0; i&amp;lt;top; i++)
+                    cout &amp;lt;&amp;lt; seq[i] &amp;lt;&amp;lt; &amp;quot; &amp;quot;;
+        }
+        else{
+            if (root-&amp;gt;left)
+                SearchPath(root-&amp;gt;left, seq, top, sumCount, value);
+            if (root-&amp;gt;right)
+                SearchPath(root-&amp;gt;right, seq, top, sumCount, value);
+        }
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;调用代码  &lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;c++&quot;&gt;    AVLTree&amp;lt;int&amp;gt;* tree = new AVLTree&amp;lt;int&amp;gt;();
+    int const value = 16;//目标和
+    tree-&amp;gt;SearchPath(value);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;代码见&lt;a href=&quot;https://github.com/ovjaywang/TreeInvolved/tree/master/FindSumEqualNumInAVL&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;求树高的几种方式&quot;&gt;&lt;a href=&quot;#求树高的几种方式&quot; class=&quot;headerlink&quot; title=&quot;求树高的几种方式&quot;&gt;&lt;/a&gt;求树高的几种方式&lt;/h1&gt;&lt;p&gt;首先定义一波树结构属性名字&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;c++&quot;&gt;    typedef struct TreeNode{
+        char data;
+        struct TreeNode *lchild, *rchild;
+    }TreeNode, *BiTree;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;后序遍历，栈求高，最大栈长度为树高&quot;&gt;&lt;a href=&quot;#后序遍历，栈求高，最大栈长度为树高&quot; class=&quot;headerlink&quot; title=&quot;后序遍历，栈求高，最大栈长度为树高&quot;&gt;&lt;/a&gt;后序遍历，栈求高，最大栈长度为树高&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;思路：进左右子则入栈，返回根节点则出栈。每次左右子树检查完毕就比较一次栈长度是否大于最大高度&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code class=&quot;c++&quot;&gt;    int BT_high(BiTree T){
+        BiTree p = T, r = NULL;
+        int max = 0;//记录最大树高  
+        stack&amp;lt;BiTree&amp;gt; s;//声明一个堆 存放树根节点
+        while (p || !s.empty()){//节点非空且堆栈非空
+            if (p != NULL){
+                s.push(p);//入栈
+                p = p-&amp;gt;lchild;
+            }
+            else{
+                p = s.top();
+                if (p-&amp;gt;rchild != NULL &amp;amp;&amp;amp; p-&amp;gt;rchild != r)
+                //判断是否从右子树返回根
+                    p = p-&amp;gt;rchild;
+                else{//左右子树都算完了 比较一下
+                    if (s.size()&amp;gt;max) max = s.size();//最大层次即为高度  
+                    r = p;
+                    s.pop();//出栈
+                    p = NULL;
+                }
+            }
+        }
+        return max;
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;层次遍历-层高即树高&quot;&gt;&lt;a href=&quot;#层次遍历-层高即树高&quot; class=&quot;headerlink&quot; title=&quot;层次遍历 层高即树高&quot;&gt;&lt;/a&gt;层次遍历 层高即树高&lt;/h2&gt;&lt;p&gt;层次遍历服用队列或堆栈效果更佳！  &lt;/p&gt;
+&lt;h3 id=&quot;层次遍历-单数组&quot;&gt;&lt;a href=&quot;#层次遍历-单数组&quot; class=&quot;headerlink&quot; title=&quot;层次遍历-单数组&quot;&gt;&lt;/a&gt;层次遍历-单数组&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;思路：按层将树输入到数组，下标记下本层元素头尾，从头遍历到尾加入它们的儿子，不断循环&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code class=&quot;c++&quot;&gt;int BT_level_depth(BiTree T)
+{
+    if (!T)  return 0;
+    BiTree p = T, Q[100];//队列
+    int front = -1, rear = -1, last = 0, level = 0;
+    //定义首指针 尾指针 上层尾元素 当前高度
+    Q[++rear] = p;//入队列
+    while (front&amp;lt;rear){
+        p = Q[++front];//先设置本次循环的根
+        if (p-&amp;gt;lchild)//加入根的左儿子 同时移动尾
+            Q[++rear] = p-&amp;gt;lchild;
+        if (p-&amp;gt;rchild)//加入根的右儿子 同时移动尾
+            Q[++rear] = p-&amp;gt;rchild;
+        if (front == last){//当头指针遍历完本层所有元素
+            last = rear;
+            level++;//层次+1  
+        }
+    }
+    return level;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;层次遍历-双端队列&quot;&gt;&lt;a href=&quot;#层次遍历-双端队列&quot; class=&quot;headerlink&quot; title=&quot;层次遍历-双端队列&quot;&gt;&lt;/a&gt;层次遍历-双端队列&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;思路：按层将树输入到双端队列，一个队列记录上一层所有节点，另一个队列加入所有另一个队列的儿子，不断交替。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code class=&quot;c++&quot;&gt;int BT_level_depth222(BiTree T)
+{
+    int  max = 0;
+    deque&amp;lt;TreeNode*&amp;gt; q_first, q_second;
+    q_first.push_back(T);
+    while (!q_first.empty()) {
+        while (!q_first.empty()) {
+            TreeNode *temp = q_first.front();
+            q_first.pop_front();
+            cout &amp;lt;&amp;lt; (int)temp-&amp;gt;data &amp;lt;&amp;lt; &amp;quot; &amp;quot;;
+            if (temp-&amp;gt;lchild)
+                q_second.push_back(temp-&amp;gt;lchild);
+            if (temp-&amp;gt;rchild)
+                q_second.push_back(temp-&amp;gt;rchild);
+        }
+        cout &amp;lt;&amp;lt; endl;
+        max++;
+        q_first.swap(q_second);
+    }
+    return max;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;递归求树高&quot;&gt;&lt;a href=&quot;#递归求树高&quot; class=&quot;headerlink&quot; title=&quot;递归求树高&quot;&gt;&lt;/a&gt;递归求树高&lt;/h2&gt;&lt;h3 id=&quot;后序递归带深度求高&quot;&gt;&lt;a href=&quot;#后序递归带深度求高&quot; class=&quot;headerlink&quot; title=&quot;后序递归带深度求高&quot;&gt;&lt;/a&gt;后序递归带深度求高&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;思路:后序遍历所有节点，递归调用并检查当前节点是否为最大值。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code class=&quot;c++&quot;&gt;int max1 = 0;//树高  
+int BT_depth1(BiTree T, int depth)
+{
+    if (T)
+    {
+        if (T-&amp;gt;lchild)
+            BT_depth1(T-&amp;gt;lchild, depth + 1);
+        if (T-&amp;gt;rchild)
+            BT_depth1(T-&amp;gt;rchild, depth + 1);
+    }
+    if (depth&amp;gt;max1)
+        max1 = depth;
+    return depth;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;左右子树递归求树高&quot;&gt;&lt;a href=&quot;#左右子树递归求树高&quot; class=&quot;headerlink&quot; title=&quot;左右子树递归求树高&quot;&gt;&lt;/a&gt;左右子树递归求树高&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;思路： 求左右子树的高度，分别又把左右子树当做根求他们的子树。每次迭代返回当前左右子树高的那一个。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;int Height(BiTree T)
+{
+    if (T == NULL) return 0;
+    else
+    {
+        int m = Height(T-&amp;gt;lchild);
+        int n = Height(T-&amp;gt;rchild);
+        return (m &amp;gt; n) ? (m + 1) : (n + 1);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;代码见&lt;a href=&quot;https://github.com/ovjaywang/TreeInvolved/tree/master/GetMaxDepth&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;&lt;/p&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文持更树操作集合-码狗学习中&lt;br&gt;
+    
+    </summary>
+    
+      <category term="代码狗" scheme="http://ovjaywang.github.io/categories/%E4%BB%A3%E7%A0%81%E7%8B%97/"/>
+    
+      <category term="学习log" scheme="http://ovjaywang.github.io/categories/%E4%BB%A3%E7%A0%81%E7%8B%97/%E5%AD%A6%E4%B9%A0log/"/>
+    
+    
+      <category term="code" scheme="http://ovjaywang.github.io/tags/code/"/>
+    
+  </entry>
   
   <entry>
     <title>svm初探</title>
@@ -38,7 +814,7 @@
     <link href="http://ovjaywang.github.io/2016/04/27/hexo%E5%A4%9A%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%86%99%E4%BD%9C/"/>
     <id>http://ovjaywang.github.io/2016/04/27/hexo多客户端写作/</id>
     <published>2016-04-27T03:50:01.000Z</published>
-    <updated>2016-04-28T16:36:57.000Z</updated>
+    <updated>2016-04-28T17:37:37.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;Hexo是很棒的静态博客，简单的安装配置即可专注写作。&lt;br&gt;但是强迫症就是很爱折腾。倘若：&lt;/p&gt;
@@ -313,7 +1089,7 @@ public class Client {
     <link href="http://ovjaywang.github.io/2016/04/22/effective%20java--builer%E6%9E%84%E9%80%A0%E5%99%A8/"/>
     <id>http://ovjaywang.github.io/2016/04/22/effective java--builer构造器/</id>
     <published>2016-04-22T09:10:48.000Z</published>
-    <updated>2016-04-28T16:36:57.000Z</updated>
+    <updated>2016-05-16T13:18:24.708Z</updated>
     
     <content type="html">&lt;p&gt;一个实体类往往有不同的属性 属性有的用于构造器 视为构造时的必需参数 而有的可有可无 类似json和xml一般，有多少个属性，每个属性有多少个赋值都不确定 。e.g.动物 名称string name和是否有尾巴istail是必须的，是否吃草iseatgrass 多重weight 交配手段sexmethod 科目等为非必须字段。解决这一构造问题一般有三种方式。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;ol&gt;
@@ -325,8 +1101,7 @@ public class Client {
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;最丑的长字段实体类原本是这么写的&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;
-class Animal{
+&lt;pre&gt;&lt;code&gt;class Animal{
     private string name;//必须参数
     private bool isTail;//必须参数
     private bool isEatGrass;//可选参数
@@ -361,14 +1136,12 @@ class Animal{
     }
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;在某处调用就可能是这样&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;
-Animal animal = new Animal(&amp;quot;caonima&amp;quot;,true,true,-1,3);
+&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;Animal animal = new Animal(&amp;quot;caonima&amp;quot;,true,true,-1,3);
 //由于我并不想知道体重，但又因为构造函数的关系不得不加上。
 //所以相当繁琐。当字段达到几十个时，调用构造函数都分不清参数是否对应上。
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;​将上文的动物实体类以builder的方式写出来，大概是这样的&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;
-class Animal{
+&lt;pre&gt;&lt;code&gt;class Animal{
     private final string name;
     private final bool isTail;
     private final bool isEatGrass;
@@ -405,7 +1178,6 @@ class Animal{
             return new Animal(this);
         }
     }
-
     //当然 在animal类的最后 也需要把builder的参数取出来
     private Animal(Builder builder){
         name = builder.name;
@@ -416,11 +1188,9 @@ class Animal{
     }
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;在某处构造该类对象时，即可像下面一样声明&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;
-    Animal dog = new Animal.Builder(&amp;quot;旺财&amp;quot;,true).setIsEatGrass(false).setSexMethod(3).setWeight(20.0)
+&lt;pre&gt;&lt;code&gt;    Animal dog = new Animal.Builder(&amp;quot;旺财&amp;quot;,true).setIsEatGrass(false).setSexMethod(3).setWeight(20.0)
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;builder类似一个抽象工厂 客户端可以将这样一个builder传给方法，在方法中生成需要数量的对象。1.5+版本可以使用泛型定义。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;
-public interface Builder{
+&lt;pre&gt;&lt;code&gt;public interface Builder{
     public T build();
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;在类似生成二叉树，kd树的时候，往往用户只需要将数据push进入，然后调用一个builder整棵树就构造好了。这种方式往往类似于带限制通配符类型的builder.&lt;/p&gt;
@@ -454,7 +1224,7 @@ public interface Builder{
     <link href="http://ovjaywang.github.io/2016/04/22/what-the-hell-of-sdf/"/>
     <id>http://ovjaywang.github.io/2016/04/22/what-the-hell-of-sdf/</id>
     <published>2016-04-22T08:38:11.000Z</published>
-    <updated>2016-04-28T16:36:57.000Z</updated>
+    <updated>2016-04-23T12:18:50.416Z</updated>
     
     <content type="html">&lt;p&gt;cmomit的时候发现一个&lt;strong&gt;.sdf&lt;/strong&gt;的文件特别大，项目才不到2m，一个sdf就30多m了。能不能删？&lt;br&gt;谷歌了一下，提示sdf文件和iph文件是存放预编译头和Intellisense的。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;blockquote&gt;
@@ -485,7 +1255,7 @@ public interface Builder{
     <link href="http://ovjaywang.github.io/2016/04/13/effective%20java--%E9%9D%99%E6%80%81%E5%B7%A5%E5%8E%82/"/>
     <id>http://ovjaywang.github.io/2016/04/13/effective java--静态工厂/</id>
     <published>2016-04-13T07:15:14.000Z</published>
-    <updated>2016-04-28T16:36:57.000Z</updated>
+    <updated>2016-05-16T15:21:17.911Z</updated>
     
     <content type="html">&lt;h1 id=&quot;静态工厂&quot;&gt;&lt;a href=&quot;#静态工厂&quot; class=&quot;headerlink&quot; title=&quot;静态工厂&quot;&gt;&lt;/a&gt;静态工厂&lt;/h1&gt;&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;    public static Boolean valueOf (boolean b){
         return b?Boolean.True:Boolean.False;
@@ -498,9 +1268,7 @@ public interface Builder{
 &lt;/blockquote&gt;
 &lt;p&gt;与不同参数的构造函数不同，不同参数的静态工厂可能返回同一属性的该(子)类的对象。该方式抛弃了重复冗杂的new形式，在C#常见newInstance()构造新对象，而在Java里就比较少的出现，一般都是左右对等的。&lt;/p&gt;
 &lt;p&gt;最上面这段代码最有趣的地方在于，它是Boolean的包装类，输入的是值类型而返回的是Boolean对象,当然Boolean只实例化了两个对象。但当新的子类构建，简单的静态工厂必须重写，常用的改进方法有：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;反射机制+配置&lt;br&gt;例如下面一段就是根据不同的类名，返回不同的对象&lt;/li&gt;
-&lt;/ul&gt;
+&lt;h2 id=&quot;反射机制-配置&quot;&gt;&lt;a href=&quot;#反射机制-配置&quot; class=&quot;headerlink&quot; title=&quot;反射机制+配置&quot;&gt;&lt;/a&gt;反射机制+配置&lt;/h2&gt;&lt;p&gt;  例如下面一段就是根据不同的类名，返回不同的对象&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;java&quot;&gt;    public static InterFace_Name staticFactory(String name)throws
                                 InstantiationException,
                                 IllegalAccessException,
@@ -510,37 +1278,105 @@ public interface Builder{
         return (InterFace_Name) Class.forName(name).newInstance();
     }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;ul&gt;
-&lt;li&gt;注册方式(Service Provider Framework)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;注册需要(服务提供者编写的)服务接口、(服务提供者创建服务的实例)而提供的接口(可选)、(服务提供者)注册API、(使用者编写的)服务访问API&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;最常见的实例就是JDBC(Java DataBase Connection)。下面这段最常见的连接mysql的标准函数就很好的体现了注册的方式。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;java&quot;&gt;    public synchronized static Connection getCon() 
-        throws ClassNotFoundException, SQLException
-    {
-        //服务提供者接口
-          String DRIVERNAME = &amp;quot;com.mysql.jdbc.Driver&amp;quot;;
-          //java.sql.Driver.class这个是服务提供者接口，服务提供者可以使mysql
-          //那就使用&amp;quot;com.mysql.jdbc.Driver&amp;quot;；
-          //如果是sql server，那就使用&amp;quot;com.microsoft.sqlserver.jdbc.SQLServerDriver&amp;quot;;
-          //如果是Oracle，那就要用&amp;quot;oracle.jdbc.driver.OracleDriver&amp;quot;...
-          String URL = &amp;quot;jdbc:mysql://URL/DataBase_Names&amp;quot;;
-          String USER = &amp;quot;USER&amp;quot;;
-          String PWD = &amp;quot;PWD&amp;quot;; 
-          Connection connection = null;//接口 由服务提供者提供并实现具体服务 
-          Class.forName(DRIVERNAME);//这里映射通过DriverManager判断获取的是哪个服务
-          connection = (Connection) DriverManager.getConnection(URL, USER,PWD);
-          //链接数据库  mysql已经在驱动管理注册了API(本机装mysql的时候)
-          //这里使用者编写的服务访问getConnection这个API，
-          if(connection!=null){return connection;}
-          else{return null;}//具体的数据库操作逻辑   
-    }
+&lt;h2 id=&quot;注册方式-Service-Provider-Framework&quot;&gt;&lt;a href=&quot;#注册方式-Service-Provider-Framework&quot; class=&quot;headerlink&quot; title=&quot;注册方式(Service Provider Framework)&quot;&gt;&lt;/a&gt;注册方式(Service Provider Framework)&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;注册方式需要&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;服务具体实现类(由服务提供商实现)&lt;/li&gt;
+&lt;li&gt;服务提供者实现类，1为2的实例，(由服务提供商实现)&lt;/li&gt;
+&lt;li&gt;服务定义接口，定义服务内容，不包含实现。&lt;/li&gt;
+&lt;li&gt;服务提供者接口，3为4的实例，定义获取提供者的方式，不包含实现。&lt;/li&gt;
+&lt;li&gt;服务提供者注册类&lt;br&gt;最常见的实例就是JDBC(Java DataBase Connection)。下面这段最常见的连接mysql的标准函数就很好的体现了注册的方式。&lt;pre&gt;&lt;code class=&quot;java&quot;&gt; public synchronized static Connection getCon() 
+     throws ClassNotFoundException, SQLException
+ {
+     //服务提供者接口
+       String DRIVERNAME = &amp;quot;com.mysql.jdbc.Driver&amp;quot;;
+       //java.sql.Driver.class这个是服务提供者接口，
+       //服务提供者若使mysql，那就使用&amp;quot;com.mysql.jdbc.Driver&amp;quot;；
+       //如果是sql server，那就使用&amp;quot;com.microsoft.sqlserver.jdbc.SQLServerDriver&amp;quot;;
+       //如果是Oracle，那就要用&amp;quot;oracle.jdbc.driver.OracleDriver&amp;quot;...
+       String URL = &amp;quot;jdbc:mysql://URL/DataBase_Names&amp;quot;;
+       String USER = &amp;quot;USER&amp;quot;;
+       String PWD = &amp;quot;PWD&amp;quot;; 
+       Connection connection = null;//接口 由服务提供者提供并实现具体服务 
+       Class.forName(DRIVERNAME);
+       //这里映射通过DriverManager判断获取的是哪个服务
+       connection = (Connection) DriverManager.getConnection(URL, USER,PWD);
+       //链接数据库  mysql已经在驱动管理注册了API(本机装mysql的时候)
+       //这里使用者编写的服务访问getConnection这个API，
+       if(connection!=null){return connection;}
+       else{return null;}//具体的数据库操作逻辑   
+ }
 &lt;/code&gt;&lt;/pre&gt;
+上式的意义就是，使用&lt;strong&gt;Java&lt;/strong&gt;连接上&lt;strong&gt;数据库&lt;/strong&gt;。注意，不是某种数据库，是数据库。数据库的提供商按照定义的接口（Java提供的,增删改查等数据库操作），都可以顺利的连接上它们的数据库。  &lt;/li&gt;
+&lt;/ol&gt;
 &lt;ul&gt;
-&lt;li&gt;这种方式已经不推荐-工厂模式&lt;br&gt;&lt;a href=&quot;https://zh.wikipedia.org/wiki/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;工厂方法&lt;/a&gt;  &lt;a href=&quot;https://zh.wikipedia.org/wiki/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;抽象工厂&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Class.forName(&amp;quot;...&amp;quot;)&lt;/code&gt;这句实例化一个mysql等数据库提供商的&lt;font color=&quot;red&quot;&gt;服务提供者实现类&lt;/font&gt;，并将这个类的实例注册到DriverManager即&lt;font color=&quot;red&quot;&gt;服务提供者注册类&lt;/font&gt;。&lt;/li&gt;
+&lt;li&gt;通过URL指明连接的地址和端口，判断所连接的数据库类别，在利用USERNAME PWD参数连接到数据库获取操作数据库的一个连接Connection。&lt;/li&gt;
+&lt;li&gt;Connection作为一个实现类，客户端的程序得到了这个实例就可以操作各种数据库，但其内部的原理对客户端不可见的，这就是所谓的面向接口编程。&lt;/li&gt;
 &lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这里举一个炸裂的例子。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;具体服务接口定义了live和die，然后实现类实现了具体的方法&lt;/li&gt;
+&lt;li&gt;服务提供者接口定义了获取服务实例的函数，然后服务提供者实现类实现了注册方式获取实例&lt;/li&gt;
+&lt;li&gt;注册类则对ClassName和服务提供者接口进行绑定。相当于，对不同的服务提供商通过名字进行映射&lt;/li&gt;
+&lt;li&gt;调用类则通过常规步骤，调用具体服务。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;HaInterface.java&lt;br&gt;&lt;pre&gt;&lt;code&gt;package com.gua.com;
+public interface HaInterface {
+    public void Live();
+    public void Die();
+}&lt;/code&gt;&lt;/pre&gt;&lt;br&gt;HaClass.java&lt;br&gt;&lt;pre&gt;&lt;code&gt;package com.gua.com;
+public class HaClass implements HaInterface{
+    @Override
+    public void Live() {
+        System.out.println(&quot;给你们一些人生经验&quot;);
+    }
+    @Override
+    public void Die() {
+        System.out.println(&quot;又想搞大新闻!&quot;);
+    }
+}&lt;/code&gt;&lt;/pre&gt;&lt;br&gt;Xuyimiao.java&lt;br&gt;&lt;pre&gt;&lt;code&gt;package com.gua.com;
+public interface Xuyimiao {
+    public HaInterface HahaGo();
+}&lt;/code&gt;&lt;/pre&gt;&lt;br&gt;WoyaoXuyimiao.java&lt;br&gt;&lt;pre&gt;&lt;code&gt;package com.gua.com;
+public class WoyaoXuyimiao implements  Xuyimiao{
+    static{
+        MingwangManager.registerProvider(&quot;辣妹子辣&quot;, new WoyaoXuyimiao());  
+    }
+    @Override
+    public HaInterface HahaGo() {
+        return new HaClass(); 
+    }
+}&lt;/code&gt;&lt;/pre&gt;&lt;br&gt;MingwangManager.java&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;package com.gua.com;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+public class MingwangManager {
+    public MingwangManager(){};
+    private static final Map&amp;lt;String, Xuyimiao&amp;gt; providers = new ConcurrentHashMap&amp;lt;String, Xuyimiao&amp;gt;();  
+    public static void registerProvider(String name, Xuyimiao p) {
+            providers.put(name, p);  
+        }  
+    public static HaInterface getService(String name) {       
+            Xuyimiao p = providers.get(name);  
+            if (p == null) {  
+                throw new IllegalArgumentException(  
+                        &amp;quot;No provider registered with name:&amp;quot; + name);  
+            } 
+            return p.HahaGo();
+        }  
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;TestHa.java&lt;br&gt;&lt;pre&gt;&lt;code&gt;package com.gua.com; 
+public class TestHa {  
+    public static void main(String[] args) throws ClassNotFoundException {
+        Class.forName(&quot;com.gua.com.WoyaoXuyimiao&quot;);  
+        HaInterface hi = MingwangManager.getService(&quot;辣妹子辣&quot;);  
+        hi.Live();  
+        hi.Die();  
+    }
+}&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;
+&lt;h2 id=&quot;这种方式已经不推荐-工厂模式&quot;&gt;&lt;a href=&quot;#这种方式已经不推荐-工厂模式&quot; class=&quot;headerlink&quot; title=&quot;这种方式已经不推荐-工厂模式&quot;&gt;&lt;/a&gt;这种方式已经不推荐-工厂模式&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://zh.wikipedia.org/wiki/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;工厂方法&lt;/a&gt;  &lt;a href=&quot;https://zh.wikipedia.org/wiki/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;抽象工厂&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;参考文章:&lt;a href=&quot;(http://liwenshui322.iteye.com/blog/1267202)&quot;&gt;JAVA 服务提供者框架介绍&lt;/a&gt;、&lt;a href=&quot;(http://blog.csdn.net/csdn0123/article/details/7388445)&quot;&gt;构造器和静态方法&lt;/a&gt;&lt;/p&gt;
 &lt;script src=&quot;../../../../js/highlight.min.js&quot;&gt;&lt;/script&gt;
 &lt;link href=&quot;../../../../css/monokai_sublime.min.css&quot; rel=&quot;stylesheet&quot;&gt;
@@ -570,7 +1406,7 @@ public interface Builder{
     <link href="http://ovjaywang.github.io/2016/04/10/Hello-Hexo/"/>
     <id>http://ovjaywang.github.io/2016/04/10/Hello-Hexo/</id>
     <published>2016-04-10T14:51:49.000Z</published>
-    <updated>2016-04-28T16:36:57.000Z</updated>
+    <updated>2016-05-16T05:33:28.615Z</updated>
     
     <content type="html">&lt;p&gt;感谢&lt;a href=&quot;http://zipperary.com/2013/05/28/hexo-guide-2/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个教程&lt;/a&gt;&lt;br&gt;还有&lt;a href=&quot;http://ibruce.info/2013/11/22/hexo-your-blog/?utm_source=tuicool&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个&lt;/a&gt;&lt;br&gt;解决了好多bugs的&lt;a href=&quot;http://www.jianshu.com/p/35e197cb1273&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个&lt;/a&gt;&lt;br&gt;优化cdn图床缓冲的&lt;a href=&quot;http://lukang.me/2015/optimization-of-hexo-2.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://www.dute.me/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个&lt;/a&gt;让我找到了便宜的狗爹优惠码&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;从一开始的阵地wp搬到这里来了。后会有期了dooby.me 再见了WordPress  
@@ -579,6 +1415,10 @@ public interface Builder{
 &lt;/code&gt;&lt;/pre&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;p&gt;hexo坑还是挺多的。&lt;br&gt;$$ \begin{bmatrix} x \\ y \\ 1&lt;br&gt;\end{bmatrix} \sim \begin{bmatrix} f &amp;amp; 0 &amp;amp; 0 &amp;amp; 0 \\ 0 &amp;amp; f &amp;amp; 0 &amp;amp; 0 \\ 0 &amp;amp; 0 &amp;amp; 1 &amp;amp; 0 \end{bmatrix} \begin{bmatrix} r_11 &amp;amp; r_12 &amp;amp; r_13 &amp;amp; t_x \\ r_21 &amp;amp; r_22 &amp;amp; r_23 &amp;amp; t_y \\ r_31 &amp;amp; r_32&amp;amp; r_33 &amp;amp; t_z \\ 0 &amp;amp; 0 &amp;amp; 0 &amp;amp; 1 \end{bmatrix} \begin{bmatrix} p \\ q \\ 0 \\ 1 \end{bmatrix} \sim \begin{bmatrix} fr_11 &amp;amp; fr_12 &amp;amp; ft_x \\ fr_21 &amp;amp; fr_22 &amp;amp; ft_y \\ r_31 &amp;amp; r_32 &amp;amp; t_z \end{bmatrix} \begin{bmatrix} p \\ q \\ 1 \end{bmatrix}&lt;br&gt;$$$$\sim \begin{bmatrix} h_11 &amp;amp; h_12&amp;amp;h_13 \\ h_21 &amp;amp; h_22 &amp;amp; h_23 \\ h_31 &amp;amp; h_32 &amp;amp; h_33 \end{bmatrix} \begin{bmatrix} p \\ q \\ 1 \end{bmatrix}$$&lt;/p&gt;
 &lt;h1 id=&quot;WordPress迁移&quot;&gt;&lt;a href=&quot;#WordPress迁移&quot; class=&quot;headerlink&quot; title=&quot;WordPress迁移&quot;&gt;&lt;/a&gt;WordPress迁移&lt;/h1&gt;&lt;p&gt;这个使用hexo-migrate-wordpress插件还不错 但是切记导出的xml是文章 tag和category会自动建好。否则使用hexo migrate wordpress 会报错&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;沙扬娜拉dooby.me&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;http://ooo.0o0.ooo/2016/05/02/5727757865698.png&quot; alt=&quot;dooby.me&quot;&gt;&lt;/p&gt;
 &lt;h1 id=&quot;Github和Coding双备份&quot;&gt;&lt;a href=&quot;#Github和Coding双备份&quot; class=&quot;headerlink&quot; title=&quot;Github和Coding双备份&quot;&gt;&lt;/a&gt;Github和Coding双备份&lt;/h1&gt;&lt;p&gt;按照一般的教程都能配置好Github的。但是Coding对国内线路速度相对较快（好蛋疼GitCafe已经被收了）配置文档差不多是这样&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;markdown&quot;&gt;deploy:
    type: git
@@ -590,6 +1430,17 @@ public interface Builder{
 &lt;h1 id=&quot;SEO是极好的&quot;&gt;&lt;a href=&quot;#SEO是极好的&quot; class=&quot;headerlink&quot; title=&quot;SEO是极好的&quot;&gt;&lt;/a&gt;SEO是极好的&lt;/h1&gt;&lt;p&gt;切莫贪杯 google就好 但是 切记！标题不要带有‘&amp;amp;’。年少无知，这个符号不能正常解析出xml会报错&lt;/p&gt;
 &lt;h1 id=&quot;域名绑定&quot;&gt;&lt;a href=&quot;#域名绑定&quot; class=&quot;headerlink&quot; title=&quot;域名绑定&quot;&gt;&lt;/a&gt;域名绑定&lt;/h1&gt;&lt;p&gt;切记@解析的是{YOUR_ID}.github.io的地址而不是github.com的 CNAME需要放在source下才能被generate。dnspod被企鹅注资后ui变得相当土了&lt;/p&gt;
 &lt;h1 id=&quot;专注写作&quot;&gt;&lt;a href=&quot;#专注写作&quot; class=&quot;headerlink&quot; title=&quot;专注写作&quot;&gt;&lt;/a&gt;专注写作&lt;/h1&gt;&lt;p&gt;放弃各种挂饰 插件 统计吧 seo和评论就足够了。多写作多讨论 当然很想适时的学一发nodejs因为折腾了好久ig的照片还是没能get进来。&lt;/p&gt;
+&lt;script src=&quot;//gist.github.com/86cc40065a691b7c4534e483249583dd.js?file=transValue.java&quot;&gt;&lt;/script&gt;
+&lt;blockquote&gt;&lt;p&gt;NEW: DevDocs now comes with syntax highlighting. &lt;a href=&quot;http://devdocs.io&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://devdocs.io&lt;/a&gt;&lt;/p&gt;&lt;footer&gt;&lt;strong&gt;@DevDocs&lt;/strong&gt;&lt;cite&gt;&lt;a href=&quot;https://twitter.com/devdocs/status/356095192085962752&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;twitter.com/devdocs/status/356095192085962752&lt;/a&gt;&lt;/cite&gt;&lt;/footer&gt;&lt;/blockquote&gt;
+&lt;blockquote&gt;&lt;p&gt;Do not just seek happiness for yourself. Seek happiness for all. Through kindness. Through mercy.&lt;/p&gt;&lt;footer&gt;&lt;strong&gt;David Levithan&lt;/strong&gt;&lt;cite&gt;Wide Awake&lt;/cite&gt;&lt;/footer&gt;&lt;/blockquote&gt;
+&lt;blockquote&gt;&lt;p&gt;Every interaction is both precious and an opportunity to delight.&lt;/p&gt;&lt;footer&gt;&lt;strong&gt;Seth Godin&lt;/strong&gt;&lt;cite&gt;&lt;a href=&quot;http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Welcome to Island Marketing&lt;/a&gt;&lt;/cite&gt;&lt;/footer&gt;&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;void transValue(int a,int b){
+        a ^= b;
+        b ^= a;
+        a ^=b;
+    }&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;alert(&#39;Hello World!&#39;);&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote class=&quot;pullquote [class]&quot;&gt;&lt;p&gt;blah blah blah&lt;/p&gt;&lt;/blockquote&gt;
 &lt;p&gt;2016.04.11&lt;/p&gt;</content>
     
     <summary type="html">
@@ -614,7 +1465,7 @@ public interface Builder{
     <link href="http://ovjaywang.github.io/2016/04/01/%E8%AE%B0%E9%9D%99%E6%80%81ip%E7%9A%84%E5%9D%91/"/>
     <id>http://ovjaywang.github.io/2016/04/01/记静态ip的坑/</id>
     <published>2016-04-01T08:06:32.000Z</published>
-    <updated>2016-04-28T16:36:57.000Z</updated>
+    <updated>2016-04-23T12:21:11.330Z</updated>
     
     <content type="html">&lt;p&gt;明明在hadoop配置静态IP的时候被坑过一次，却完全想不起来怎么解决的。尤其是在ssh登录的时候需要记下host和ip的对应，才能直接输出主机名来访问局域网内的其他主机。&lt;br&gt;现在记下来。&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
@@ -649,7 +1500,7 @@ public interface Builder{
     <link href="http://ovjaywang.github.io/2016/03/08/%E6%9C%80%E8%BF%91demo%20%E6%A8%A1%E5%9D%97%20%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/"/>
     <id>http://ovjaywang.github.io/2016/03/08/最近demo 模块 算法总结/</id>
     <published>2016-03-08T09:43:56.000Z</published>
-    <updated>2016-04-28T16:36:57.000Z</updated>
+    <updated>2016-04-23T12:22:24.295Z</updated>
     
     <content type="html">&lt;p&gt;&lt;a href=&quot;http://ju.outofmemory.cn/entry/106397&quot; title=&quot;http://ju.outofmemory.cn/entry/106397&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://ju.outofmemory.cn/entry/106397&lt;/a&gt; 【坑妹填完】&lt;/p&gt;
 &lt;p&gt;最近各种乱整。。文章妹时间管光顾着折腾手头派下来的事情了。再加上每天固定的复习提高一下。小论文完全没有头绪。&lt;br&gt;最近get到的实用方法还是很多阿。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
@@ -1366,7 +2217,7 @@ boolean isScreenOn = pm.isScreenOn();
     <link href="http://ovjaywang.github.io/2015/11/18/%E5%90%8E%E6%96%B9%E4%BA%A4%E4%BC%9A%E6%A3%80%E6%A0%A1(8)--%E5%85%89%E6%9D%9F%E6%B3%95%E5%8C%BA%E5%9F%9F%E5%B9%B3%E5%B7%AE%20bundle%20block%20adjustment/"/>
     <id>http://ovjaywang.github.io/2015/11/18/后方交会检校(8)--光束法区域平差 bundle block adjustment/</id>
     <published>2015-11-18T15:17:39.000Z</published>
-    <updated>2016-04-28T16:36:57.000Z</updated>
+    <updated>2016-04-11T14:09:45.581Z</updated>
     
     <content type="html">&lt;font size=&quot;3&quot;&gt;航空摄影最终的目标都是，将某一波段的图像（传感器接收的某一宽度波长的电磁波），在一定范围（地理空间范畴）内融合在一起。原因有：&lt;/font&gt;&lt;br&gt;&lt;br&gt;&lt;font size=&quot;3&quot;&gt;①拍摄的每幅图像幅宽有限（高的分辨率不够低了拍的面积不够多）&lt;/font&gt;
 
@@ -1408,7 +2259,7 @@ boolean isScreenOn = pm.isScreenOn();
     <link href="http://ovjaywang.github.io/2015/11/09/%E5%90%8E%E6%96%B9%E4%BA%A4%E4%BC%9A%E6%A3%80%E6%A0%A1(7)--%E5%90%8E%E6%96%B9%E6%A3%80%E6%A0%A1%E7%B2%BE%E5%BA%A6%E7%9A%84%E6%A3%80%E9%AA%8C/"/>
     <id>http://ovjaywang.github.io/2015/11/09/后方交会检校(7)--后方检校精度的检验/</id>
     <published>2015-11-09T09:39:06.000Z</published>
-    <updated>2016-04-28T16:36:57.000Z</updated>
+    <updated>2016-04-11T14:09:45.581Z</updated>
     
     <content type="html">&lt;p&gt;后方交会得到的结果，除了使用平差误差表达式来计算之外，还可以通过以下方式进行检验和矫正。&lt;/p&gt;
 &lt;p&gt;①利用旋转矩阵，使用物放三维数据，反算二维坐标点，比较二者之差。&lt;/p&gt;
@@ -1446,7 +2297,7 @@ boolean isScreenOn = pm.isScreenOn();
     <link href="http://ovjaywang.github.io/2015/11/08/2015.11.08%E5%AE%89%E8%A3%85google%20%E6%A1%86%E6%9E%B6%20service%20%E4%B8%80%E7%B3%BB%E5%88%97/"/>
     <id>http://ovjaywang.github.io/2015/11/08/2015.11.08安装google 框架 service 一系列/</id>
     <published>2015-11-08T15:53:53.000Z</published>
-    <updated>2016-04-28T16:36:57.000Z</updated>
+    <updated>2016-04-11T14:09:45.581Z</updated>
     
     <content type="html">&lt;p&gt;装了cm还有其他一些国产ui直接滤掉了google的一系列被墙的服务。&lt;/p&gt;
 &lt;p&gt;但明明又不可或缺。尤其是最近无可救药的爱上了google相册，那无限制的容量让人流口水。&lt;/p&gt;
@@ -1475,243 +2326,6 @@ boolean isScreenOn = pm.isScreenOn();
       <category term="Android" scheme="http://ovjaywang.github.io/tags/Android/"/>
     
       <category term="gms" scheme="http://ovjaywang.github.io/tags/gms/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>无人机影像相关--拍摄、校正、平差、拼接</title>
-    <link href="http://ovjaywang.github.io/2015/11/04/uac-involved/"/>
-    <id>http://ovjaywang.github.io/2015/11/04/uac-involved/</id>
-    <published>2015-11-04T13:12:46.000Z</published>
-    <updated>2016-04-28T16:36:57.000Z</updated>
-    
-    <content type="html">&lt;p&gt;无人机在近地拍摄全色或者多光谱数据，进行近景摄影测量，成图为后期的制图反演批处理提供数据来源。一般对像片各项操作，都需要知道像片的&lt;font color=&quot;#FF0000&quot;&gt;空中姿态及其位置&lt;/font&gt;。然而，无人机自身系统受外界干扰较大，飞行姿态难以准确控制，同时缺乏监测飞机姿态的设备，处理无人机数据不能完全采用传统航摄流程进行作业。&lt;/p&gt;
-&lt;p&gt;关于摄影平台——无人机或带着单数码相机或组合相机，或带着遥感平台。常用的大面阵数码航摄相机，有DMC和UC（UCD UCX UCXp UCE）。DMC由4个全色4个多光谱镜头组成，4个中心投影拼接合成一副具有虚拟投影中心固定虚拟焦距的投影合成影像。UC4个全色波段对应3*3矩阵排列的9个CCD面阵，分别为&lt;font color=&quot;#FF0000&quot;&gt;4221&lt;/font&gt;（分别对应二行左二（东南东北西南西北），二行左一（正南正北），二行左三（正东正西），二行左四（中心））.如下图所示，UC革新的将四个角的镜头设为主镜头（master cone）其他三个为从属镜头（slave cone）为的是控制相机区域，尽量覆盖完整视场角，其他3个镜头的影响依据它进行精确配准保证输出的影响具有强健刚性的严格中心投影。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://ww3.sinaimg.cn/large/68eb7c93gw1exq55pwc5xj20l30cyjt1.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;几个全色影像CCD之间存在重叠（航向258旁向262），通过重叠部分&lt;font color=&quot;#FF0000&quot;&gt;影像精确配准&lt;/font&gt;，消除曝光时间带来的误差影响，生成一个完整的中心投影影像。图为四个镜头在不同时刻曝光，最后生成虚拟影像。值得一提的是，UC系统四个镜头虽然在不同时刻曝光拍摄，但是&lt;font color=&quot;#FF0000&quot;&gt;&lt;strong&gt;选取了合适了速度并沿着第二行相机方向飞行&lt;/strong&gt;&lt;/font&gt;时，每个曝光的相机都几乎在同一时空位置，因此得到的是一个完整的中心投影大幅面全色影像。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://ww1.sinaimg.cn/large/68eb7c93gw1exq5bny66wj21180koag8.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;关于数码航摄仪——若采用多相机进行拍摄，扩大VOF（view of field），或采取张大仰角或采取移轴摄影，都需要对多相机进行合成，&lt;font color=&quot;#FF0000&quot;&gt;组成一张虚拟影像&lt;/font&gt;，来达到对后面平差拼接做前期准备，因此精度相当重要。&lt;/p&gt;
-&lt;p&gt;关于图像拼接——无人机搭载的数码相机虽然提高了影像的分辨率，但焦距有限视野较小，获得整个飞行区域的完整影像设计&lt;font color=&quot;#FF0000&quot;&gt;像片的拼接问题&lt;/font&gt;。影像拼接涉及匀光匀色等色彩处理、对误差较大的图像进行粗提取、采用某些算计对影像提取特征点或者利用空间位置进行拼接等步骤。&lt;/p&gt;
-&lt;p&gt;这里可以参考的文献有，&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://www.cnki.net/KCMS/detail/detail.aspx?QueryID=2&amp;amp;CurRec=1&amp;amp;recid=&amp;amp;filename=TJDZ201205018&amp;amp;dbname=CJFD2012&amp;amp;dbcode=CJFQ&amp;amp;pr=&amp;amp;urlid=&amp;amp;yx=&amp;amp;uid=WEEvREcwSlJHSldRa1FhalpDTFRFYlpBY0d5OVdscE1hTndUdWJEd0ZyRGtESXlzS2lQZ1pVUkVRNVNOL1VwNmlRPT0=$9A4hF_YAuvQ5obgVAqNKPCYcEjKensW4IQMovwHtwkF4VYPoHbKxJw!!&amp;amp;v=MTk3OTZVTDdKTVNmUGRMRzRIOVBNcW85RWJJUjhlWDFMdXhZUzdEaDFUM3FUcldNMUZyQ1VSTCtlWnVackZDam4=&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;基于光束法自由网平差的无人机影像严格拼接&lt;/a&gt;&amp;nbsp;主要总结了航摄基本方法（空三方式利用野外控制点加密测出大量控制点、通过灭点建立影像直线段与方位元素的关系、自检校光束区域平差利用定向参数解求外方位元素、量测直线段长度确定外方位元素、区域平差及SIFT+一定数量控制点针对不同尺度三维影像进行拼接、光束法区域平差+秩亏可以解决缺少控制信息的像片）&lt;/p&gt;
-&lt;div class=&quot;PoweredByWebStory&quot; style=&quot;margin-top:15px;margin-bottom:10px&quot;&gt;&lt;a href=&quot;http://sns.juziyue.com/webinvite.php?u=94887&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;&lt;/a&gt;&amp;nbsp;今天你&lt;a href=&quot;http://sns.juziyue.com/webinvite.php?u=94887&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;菊子曰&lt;/a&gt;了么？&lt;/div&gt;</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;无人机在近地拍摄全色或者多光谱数据，进行近景摄影测量，成图为后期的制图反演批处理提供数据来源。一般对像片各项操作，都需要知道像片的&lt;font color=&quot;#FF0000&quot;&gt;空中姿态及其位置&lt;/font&gt;。然而，无人机自身系统受外界干扰较大，飞行姿态难以准确控制，同时缺乏监
-    
-    </summary>
-    
-      <category term="什么都学一下" scheme="http://ovjaywang.github.io/categories/%E4%BB%80%E4%B9%88%E9%83%BD%E5%AD%A6%E4%B8%80%E4%B8%8B/"/>
-    
-      <category term="学习log" scheme="http://ovjaywang.github.io/categories/%E4%BB%80%E4%B9%88%E9%83%BD%E5%AD%A6%E4%B8%80%E4%B8%8B/%E5%AD%A6%E4%B9%A0log/"/>
-    
-    
-      <category term="航空摄影测量" scheme="http://ovjaywang.github.io/tags/%E8%88%AA%E7%A9%BA%E6%91%84%E5%BD%B1%E6%B5%8B%E9%87%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>后方交会检校(6)--后方交会的补充及DLT和角锥体法</title>
-    <link href="http://ovjaywang.github.io/2015/11/04/%E5%90%8E%E6%96%B9%E4%BA%A4%E4%BC%9A%E6%A3%80%E6%A0%A1(6)--%E5%90%8E%E6%96%B9%E4%BA%A4%E4%BC%9A%E7%9A%84%E8%A1%A5%E5%85%85%E5%8F%8ADLT%E5%92%8C%E8%A7%92%E9%94%A5%E4%BD%93%E6%B3%95/"/>
-    <id>http://ovjaywang.github.io/2015/11/04/后方交会检校(6)--后方交会的补充及DLT和角锥体法/</id>
-    <published>2015-11-04T07:29:32.000Z</published>
-    <updated>2016-04-28T16:36:57.000Z</updated>
-    
-    <content type="html">&lt;p&gt;除了后方交会之外，常用的进行内外参数检校的方法还有DLT和角锥体法。&lt;/p&gt;
-&lt;p&gt;写在前面：DLT可在&lt;font color=&quot;#FF0000&quot;&gt;未提供初值&lt;/font&gt;的情况下推导内外方位元素，同时&lt;font color=&quot;#FF0000&quot;&gt;不需要迭代&lt;/font&gt;，但精度相比后方交会较低；&lt;font color=&quot;#FF0000&quot;&gt;DLT与后方交会等价&lt;/font&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;#FF0000&quot; size=&quot;5&quot;&gt;内容提要&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#DLT基本原理与公式&quot;&gt;DLT基本原理与公式&lt;/a&gt;&amp;nbsp; &lt;a href=&quot;#其中&quot;&gt;L的基本形式&lt;/a&gt;&amp;nbsp;&amp;nbsp;&lt;a href=&quot;#根据求得的li计算各参数&quot;&gt;用Li表示内外参数&lt;/a&gt;&amp;nbsp;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#非正交与比例尺不一致因素&quot;&gt;非正交与比例尺不一致因素&lt;/a&gt;&amp;nbsp; &lt;a href=&quot;#DLT的真正一般形式&quot;&gt;DLT的真正一般形式&lt;/a&gt;&amp;nbsp; &lt;a href=&quot;#包含2项因素的Li表达内外参数&quot;&gt;包含2项因素的Li表达内外参数&lt;/a&gt;&amp;nbsp;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#包含畸变参数校正的DLT&quot;&gt;包含畸变参数校正的DLT&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a name=&quot;DLT基本原理与公式&quot;&gt;DLT基本原理与公式&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;基本原理：将物方点坐标（X,Y,Z）和(x,y)看做是空间中的某种线性变换，可以互为函数。一般地，将x,y用X,Y,Z表示。&lt;/p&gt;
-&lt;p&gt;基本公式：&lt;/p&gt;
-&lt;p&gt;$$!\left{\begin{matrix}x+\frac{L&lt;em&gt;{1}X+L&lt;/em&gt;{2}Y+L&lt;em&gt;{3}Z+L&lt;/em&gt;{4}}{L&lt;em&gt;{9}X+L&lt;/em&gt;{10}Y+L&lt;em&gt;{11}Z+1}=0\y+\frac{L&lt;/em&gt;{5}X+L&lt;em&gt;{6}Y+L&lt;/em&gt;{7}Z+L&lt;em&gt;{8}}{L&lt;/em&gt;{9}X+L&lt;em&gt;{10}Y+L&lt;/em&gt;{11}Z+1}=0\end{matrix}\right.$$&lt;/p&gt;
-&lt;p&gt;DLT误差方程：&lt;/p&gt;
-&lt;font color=&quot;#FF0000&quot;&gt;$$!\begin{pmatrix}v&lt;em&gt;{x}\v&lt;/em&gt;{y}\end{pmatrix}=\begin{pmatrix}X&amp;amp;Y&amp;amp;Z&amp;amp;1&amp;amp;0&amp;amp;0&amp;amp;0&amp;amp;0&amp;amp;xX&amp;amp;xY&amp;amp;xZ\0&amp;amp;0&amp;amp;0&amp;amp;0&amp;amp;X&amp;amp;Y&amp;amp;Z&amp;amp;1&amp;amp;yX&amp;amp;yY&amp;amp;yZ\end{pmatrix}\begin{pmatrix}L&lt;em&gt;{1}\L&lt;/em&gt;{2}\L&lt;em&gt;{3}\L&lt;/em&gt;{4}\L&lt;em&gt;{5}\L&lt;/em&gt;{6}\L&lt;em&gt;{7}\L&lt;/em&gt;{8}\L&lt;em&gt;{9}\L&lt;/em&gt;{10}\L&lt;em&gt;{11}\end{pmatrix}+\begin{pmatrix}l&lt;/em&gt;{x}\l_{y}\end{pmatrix}$$&lt;/font&gt;
-
-&lt;p&gt;与后方交会一样，若有n个控制点，则A矩阵有2n行。还是利用求改正数的公式求取。&lt;/p&gt;
-&lt;p&gt;DLT推导过程如下：&lt;/p&gt;
-&lt;p&gt;根据共线方程的后方交会形式：&lt;/p&gt;
-&lt;p&gt;$$!x-x&lt;em&gt;{0}+f&lt;/em&gt;{x}\frac{a&lt;em&gt;{1}(X-X&lt;/em&gt;{s})+b&lt;em&gt;{1}(Y-Y&lt;/em&gt;{s})+c&lt;em&gt;{1}(Z-Z&lt;/em&gt;{s})}{a&lt;em&gt;{3}(X-X&lt;/em&gt;{s})+b&lt;em&gt;{3}(Y-Y&lt;/em&gt;{s})+c&lt;em&gt;{3}(Z-Z&lt;/em&gt;{s})}=0$$&lt;/p&gt;
-&lt;p&gt;$$!y-y&lt;em&gt;{0}+f&lt;/em&gt;{y}\frac{a&lt;em&gt;{2}(X-X&lt;/em&gt;{s})+b&lt;em&gt;{2}(Y-Y&lt;/em&gt;{s})+c&lt;em&gt;{2}(Z-Z&lt;/em&gt;{s})}{a&lt;em&gt;{3}(X-X&lt;/em&gt;{s})+b&lt;em&gt;{3}(Y-Y&lt;/em&gt;{s})+c&lt;em&gt;{3}(Z-Z&lt;/em&gt;{s})}=0$$&lt;/p&gt;
-&lt;p&gt;这里，f分为fx和fy，即主距在像空系中这两个分量的投影。因为有的单个ccd xy方向上的大小不一致，即不是正方形。&lt;/p&gt;
-&lt;p&gt;将X，Y，Z和Xs，Ys，Zs分离，将之看作是摄影中心的变换坐标。&lt;/p&gt;
-&lt;font color=&quot;#FF0000&quot;&gt;$$!\left{\begin{matrix}r&lt;em&gt;{1}=-(a&lt;/em&gt;{1}X&lt;em&gt;{s}+b&lt;/em&gt;{1}Y&lt;em&gt;{s}+c&lt;/em&gt;{1}Z&lt;em&gt;{s})\r&lt;/em&gt;{2}=-(a&lt;em&gt;{2}X&lt;/em&gt;{s}+b&lt;em&gt;{2}Y&lt;/em&gt;{s}+c&lt;em&gt;{2}Z&lt;/em&gt;{s})\r&lt;em&gt;{3}=-(a&lt;/em&gt;{3}X&lt;em&gt;{s}+b&lt;/em&gt;{3}Y&lt;em&gt;{s}+c&lt;/em&gt;{3}Z_{s})\end{matrix}\right.$$&lt;/font&gt;
-
-&lt;p&gt;化简可得&lt;/p&gt;
-&lt;p&gt;$$!x-x&lt;em&gt;{0}+f&lt;/em&gt;{x}\frac{a&lt;em&gt;{1}X+b&lt;/em&gt;{1}Y+c&lt;em&gt;{1}Z+r&lt;/em&gt;{1}}{a&lt;em&gt;{3}X+b&lt;/em&gt;{3}Y+c&lt;em&gt;{3}Z+r&lt;/em&gt;{3}}=0$$&lt;/p&gt;
-&lt;p&gt;$$!y-y&lt;em&gt;{0}+f&lt;/em&gt;{y}\frac{a&lt;em&gt;{2}X+b&lt;/em&gt;{2}Y+c&lt;em&gt;{2}Z+r&lt;/em&gt;{1}}{a&lt;em&gt;{3}X+b&lt;/em&gt;{3}Y+c&lt;em&gt;{3}Z+r&lt;/em&gt;{3}}=0$$&lt;/p&gt;
-&lt;p&gt;将x0，y0通分。&lt;/p&gt;
-&lt;p&gt;$$!x+\frac{(a&lt;em&gt;{1}f&lt;/em&gt;{x}-a&lt;em&gt;{3}x&lt;/em&gt;{0})X+(b&lt;em&gt;{1}f&lt;/em&gt;{x}-b&lt;em&gt;{3}x&lt;/em&gt;{0})Y+(c&lt;em&gt;{1}f&lt;/em&gt;{x}-c&lt;em&gt;{3}x&lt;/em&gt;{0})Z+(r&lt;em&gt;{1}f&lt;/em&gt;{x}-r&lt;em&gt;{3}x&lt;/em&gt;{0})}{a&lt;em&gt;{3}X+b&lt;/em&gt;{3}Y+c&lt;em&gt;{3}Z+r&lt;/em&gt;{3}}=0$$&lt;/p&gt;
-&lt;p&gt;$$!y+\frac{(a&lt;em&gt;{2}f&lt;/em&gt;{y}-a&lt;em&gt;{3}y&lt;/em&gt;{0})X+(b&lt;em&gt;{2}f&lt;/em&gt;{y}-b&lt;em&gt;{3}y&lt;/em&gt;{0})Y+(c&lt;em&gt;{2}f&lt;/em&gt;{y}-c&lt;em&gt;{3}y&lt;/em&gt;{0})Z+(r&lt;em&gt;{2}f&lt;/em&gt;{y}-r&lt;em&gt;{3}y&lt;/em&gt;{0})}{a&lt;em&gt;{3}X+b&lt;/em&gt;{3}Y+c&lt;em&gt;{3}Z+r&lt;/em&gt;{3}}=0$$&lt;/p&gt;
-&lt;p&gt;将X、Y、Z的系数简化为L，即&lt;/p&gt;
-&lt;p&gt;$$!x+\frac{L&lt;em&gt;{1}X+L&lt;/em&gt;{2}Y+L&lt;em&gt;{3}Z+L&lt;/em&gt;{4}}{L&lt;em&gt;{9}X+L&lt;/em&gt;{10}Y+L_{11}Z+1}=0$$&lt;/p&gt;
-&lt;p&gt;$$!y+\frac{L&lt;em&gt;{5}X+L&lt;/em&gt;{6}Y+L&lt;em&gt;{7}Z+L&lt;/em&gt;{8}}{L&lt;em&gt;{9}X+L&lt;/em&gt;{10}Y+L_{11}Z+1}=0$$&lt;/p&gt;
-&lt;p&gt;&lt;a name=&quot;其中&quot;&gt;其中，L为：&lt;/a&gt;&lt;/p&gt;
-&lt;font color=&quot;#FF0000&quot;&gt;$$!L=\begin{bmatrix}L&lt;em&gt;{1}&amp;amp;L&lt;/em&gt;{2}&amp;amp;L&lt;em&gt;{3}&amp;amp;L&lt;/em&gt;{4}\L&lt;em&gt;{5}&amp;amp;L&lt;/em&gt;{6}&amp;amp;L&lt;em&gt;{7}&amp;amp;L&lt;/em&gt;{8}\L&lt;em&gt;{9}&amp;amp;L&lt;/em&gt;{10}&amp;amp;L&lt;em&gt;{11}&amp;amp;L&lt;/em&gt;{12}\end{bmatrix}$$&lt;/font&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://www.dooby.me/wp-content/uploads/2015/11/151C86750F1FFF17ECE621971610488CBAE13A81.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;该公式表示像点测量坐标与物方点坐标直接的变化，无需内方位元素。从另一个角度看，L矩阵其实是二维坐标通过三次矩阵变换得到的三维坐标，即：&lt;/p&gt;
-&lt;p&gt;$$!L=\frac{1}{r&lt;em&gt;{3}}\begin{bmatrix}f&lt;/em&gt;{x}&amp;amp;0&amp;amp;-x&lt;em&gt;{0}\0&amp;amp;f&lt;/em&gt;{y}&amp;amp;-y&lt;em&gt;{0}\0&amp;amp;0&amp;amp;1\end{bmatrix}\begin{bmatrix}a&lt;/em&gt;{1}&amp;amp;b&lt;em&gt;{1}&amp;amp;c&lt;/em&gt;{1}\a&lt;em&gt;{2}&amp;amp;b&lt;/em&gt;{2}&amp;amp;c&lt;em&gt;{2}\a&lt;/em&gt;{3}&amp;amp;b&lt;em&gt;{3}&amp;amp;c&lt;/em&gt;{3}\end{bmatrix}\begin{bmatrix}1&amp;amp;0&amp;amp;0&amp;amp;X&lt;em&gt;{s}\0&amp;amp;1&amp;amp;0&amp;amp;Y&lt;/em&gt;{s}\0&amp;amp;0&amp;amp;1&amp;amp;Z&lt;em&gt;{s}\end{bmatrix}=\frac{1}{r&lt;/em&gt;{3}}\begin{bmatrix}f&lt;em&gt;{x}&amp;amp;0&amp;amp;-x&lt;/em&gt;{0}\0&amp;amp;f&lt;em&gt;{y}&amp;amp;-y&lt;/em&gt;{0}\0&amp;amp;0&amp;amp;1\end{bmatrix}\begin{bmatrix}R&amp;amp;t\0^{T}&amp;amp;1\end{bmatrix}$$&lt;/p&gt;
-&lt;p&gt;第一个矩阵由内方位元素组成，是辅助坐标和像平面坐标的平移和比例关系；第二个矩阵是外方位元素的角元素，表达物方系和地辅系的坐标旋转关系；第三个矩阵是外方位线元素，表达物方坐标和地辅系坐标的原点平移关系。&lt;/p&gt;
-&lt;p&gt;由于计算机视觉中使用齐次坐标，即如下形式&lt;/p&gt;
-&lt;p&gt;$$!\begin{pmatrix}x\y\1\end{pmatrix}=L\begin{pmatrix}X\Y\Z\1\end{pmatrix}=\begin{bmatrix}L&lt;em&gt;{1}&amp;amp;L&lt;/em&gt;{2}&amp;amp;L&lt;em&gt;{3}&amp;amp;L&lt;/em&gt;{4}\L&lt;em&gt;{5}&amp;amp;L&lt;/em&gt;{6}&amp;amp;L&lt;em&gt;{7}&amp;amp;L&lt;/em&gt;{8}\L&lt;em&gt;{9}&amp;amp;L&lt;/em&gt;{10}&amp;amp;L&lt;em&gt;{11}&amp;amp;L&lt;/em&gt;{12}\end{bmatrix}\begin{pmatrix}X\Y\Z\1\end{pmatrix}$$因此形成了上红色式子。&lt;/p&gt;
-&lt;p&gt;&lt;a name=&quot;根据求得的li计算各参数&quot;&gt;根据求得的li计算各参数&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;重要参数的求解：&lt;/p&gt;
-&lt;p&gt;$$!r&lt;em&gt;{3}=\frac{1}{(L&lt;/em&gt;{9}^{2}+L&lt;em&gt;{10}^{2}+L&lt;/em&gt;{11}^{2})^{1/2}}$$&lt;/p&gt;
-&lt;p&gt;(1)内方位元素&lt;/p&gt;
-&lt;p&gt;$$!x&lt;em&gt;{0}=-(L&lt;/em&gt;{1}L&lt;em&gt;{9}+L&lt;/em&gt;{2}L&lt;em&gt;{10}+L&lt;/em&gt;{3}L&lt;em&gt;{11})/(L&lt;/em&gt;{9}^{2}+&lt;em&gt;{10}^{2}+L&lt;/em&gt;{11}^{2})$$&lt;/p&gt;
-&lt;p&gt;$$!y&lt;em&gt;{0}=-(L&lt;/em&gt;{5}L&lt;em&gt;{9}+L&lt;/em&gt;{6}L&lt;em&gt;{10}+L&lt;/em&gt;{7}L&lt;em&gt;{11})/(L&lt;/em&gt;{9}^{2}+&lt;em&gt;{10}^{2}+L&lt;/em&gt;{11}^{2})$$&lt;/p&gt;
-&lt;p&gt;$$!f&lt;em&gt;{x}^{2}=-x&lt;/em&gt;{0}^{2}+(L&lt;em&gt;{1}^{2}+L&lt;/em&gt;{2}^{2}+L&lt;em&gt;{3}^{2})/(L&lt;/em&gt;{9}^{2}+&lt;em&gt;{10}^{2}+L&lt;/em&gt;{11}^{2})$$&lt;/p&gt;
-&lt;p&gt;$$!f&lt;em&gt;{y}^{2}=-y&lt;/em&gt;{0}^{2}+(L&lt;em&gt;{4}^{2}+L&lt;/em&gt;{5}^{2}+L&lt;em&gt;{6}^{2})/(L&lt;/em&gt;{9}^{2}+&lt;em&gt;{10}^{2}+L&lt;/em&gt;{11}^{2})$$&lt;/p&gt;
-&lt;p&gt;$$!f=\frac{1}{2}(f&lt;em&gt;{x}+f&lt;/em&gt;{y})$$&lt;/p&gt;
-&lt;p&gt;(2)外方位角元素&lt;/p&gt;
-&lt;p&gt;$$!\begin{bmatrix}a&lt;em&gt;{1}&amp;amp;b&lt;/em&gt;{1}&amp;amp;c&lt;em&gt;{1}\end{bmatrix}=\frac{1}{f&lt;/em&gt;{x}}\begin{bmatrix}\frac{L&lt;em&gt;{1}}{(L&lt;/em&gt;{9}^{2}+L&lt;em&gt;{10}^{2}+L&lt;/em&gt;{11}^{2})^{1/2}}+a&lt;em&gt;{3}x&lt;/em&gt;{0}\frac{L&lt;em&gt;{2}}{(L&lt;/em&gt;{9}^{2}+L&lt;em&gt;{10}^{2}+L&lt;/em&gt;{11}^{2})^{1/2}}+b&lt;em&gt;{3}x&lt;/em&gt;{0}\frac{L&lt;em&gt;{3}}{(L&lt;/em&gt;{9}^{2}+L&lt;em&gt;{10}^{2}+L&lt;/em&gt;{11}^{2})^{1/2}}+c&lt;em&gt;{3}x&lt;/em&gt;{0}\end{bmatrix}$$&lt;/p&gt;
-&lt;p&gt;$$!\begin{bmatrix}a&lt;em&gt;{2}&amp;amp;b&lt;/em&gt;{2}&amp;amp;c&lt;em&gt;{2}\end{bmatrix}=\frac{1}{f&lt;/em&gt;{y}}\begin{bmatrix}\frac{L&lt;em&gt;{5}}{(L&lt;/em&gt;{9}^{2}+L&lt;em&gt;{10}^{2}+L&lt;/em&gt;{11}^{2})^{1/2}}+a&lt;em&gt;{3}y&lt;/em&gt;{0}\frac{L&lt;em&gt;{6}}{(L&lt;/em&gt;{9}^{2}+L&lt;em&gt;{10}^{2}+L&lt;/em&gt;{11}^{2})^{1/2}}+b&lt;em&gt;{3}y&lt;/em&gt;{0}\frac{L&lt;em&gt;{7}}{(L&lt;/em&gt;{9}^{2}+L&lt;em&gt;{10}^{2}+L&lt;/em&gt;{11}^{2})^{1/2}}+c&lt;em&gt;{3}y&lt;/em&gt;{0}\end{bmatrix}$$&lt;/p&gt;
-&lt;p&gt;$$!\begin{bmatrix}a&lt;em&gt;{3}&amp;amp;b&lt;/em&gt;{3}&amp;amp;c&lt;em&gt;{3}\end{bmatrix}=\frac{1}{(L&lt;/em&gt;{9}^{2}+L&lt;em&gt;{10^{2}}+L&lt;/em&gt;{11}^{2})^{1/2}}\begin{bmatrix}L&lt;em&gt;{9}&amp;amp;L&lt;/em&gt;{10}&amp;amp;L_{11}\end{bmatrix}$$&lt;/p&gt;
-&lt;p&gt;可以注意到的是，DLT解求内外方位元素是有次序的，因为外方位元素解求的公式中包含有所有的内方位元素。&lt;/p&gt;
-&lt;p&gt;$$!\left{\begin{matrix}\varphi =arctan(\frac{a&lt;em&gt;{3}}{c&lt;/em&gt;{3}})=arctan(\frac{l&lt;em&gt;{9}}{l&lt;/em&gt;{11}})\\omega =arcsin(-b&lt;em&gt;{3})=arcsin(-\frac{l&lt;/em&gt;{10}}{l&lt;em&gt;{9}^2+l&lt;/em&gt;{10}^{2}+l&lt;em&gt;{11}^{2}})\\kappa =arctan(\frac{b&lt;/em&gt;{1}}{b&lt;em&gt;{2}})=arctan(\frac{f&lt;/em&gt;{y}[x&lt;em&gt;{0}\frac{L&lt;/em&gt;{2}}{(L&lt;em&gt;{9}^{2}+L&lt;/em&gt;{10}^{2}+L&lt;em&gt;{11}^{2})^{1/2}}+b&lt;/em&gt;{3}]}{f&lt;em&gt;{x}[y&lt;/em&gt;{0}\frac{L&lt;em&gt;{6}}{(L&lt;/em&gt;{9}^{2}+L&lt;em&gt;{10}^{2}+L&lt;/em&gt;{11}^{2})^{1/2}}+b_{3}]})\end{matrix}\right.$$&lt;/p&gt;
-&lt;p&gt;(3)外方位线元素&lt;br&gt; 则需要根据如下方程解出&lt;/p&gt;
-&lt;p&gt;$$!a&lt;em&gt;{3}X&lt;/em&gt;{s}+b&lt;em&gt;{3}Y&lt;/em&gt;{s}+c&lt;em&gt;{3}Z&lt;/em&gt;{s}+r_{3}$$&lt;/p&gt;
-&lt;p&gt;$$!\frac{a&lt;em&gt;{1}f&lt;/em&gt;{x}-a&lt;em&gt;{3}x&lt;/em&gt;{0}}{r&lt;em&gt;{3}}X&lt;/em&gt;{s}+\frac{b&lt;em&gt;{1}f&lt;/em&gt;{x}-b&lt;em&gt;{3}x&lt;/em&gt;{0}}{r&lt;em&gt;{3}}Y&lt;/em&gt;{s}+\frac{c&lt;em&gt;{1}f&lt;/em&gt;{x}-c&lt;em&gt;{3}x&lt;/em&gt;{0}}{r&lt;em&gt;{3}}+L&lt;/em&gt;{4}=0$$&lt;/p&gt;
-&lt;p&gt;$$!\frac{a&lt;em&gt;{2}f&lt;/em&gt;{y}-a&lt;em&gt;{3}y&lt;/em&gt;{0}}{r&lt;em&gt;{3}}X&lt;/em&gt;{s}+\frac{b&lt;em&gt;{2}f&lt;/em&gt;{y}-b&lt;em&gt;{3}y&lt;/em&gt;{0}}{r&lt;em&gt;{3}}Y&lt;/em&gt;{s}+\frac{c&lt;em&gt;{2}f&lt;/em&gt;{y}-c&lt;em&gt;{3}y&lt;/em&gt;{0}}{r&lt;em&gt;{3}}+L&lt;/em&gt;{8}=0$$&lt;/p&gt;
-&lt;p&gt;&amp;nbsp;&lt;/p&gt;
-&lt;p&gt;DLT实质上与共线方程等价，Li之间的相关性，因为2个条件=11个参数-必要观测个数&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;以上是只解求内外方位元素的时候，Li与各参数的关系，如果加上光学畸变、非正交比例、比例尺不一致等误差，光学畸变在前文中提到。&lt;/p&gt;
-&lt;p&gt;x轴方向上比例系数为1，y轴方向比例系数为(1+ds).则&lt;/p&gt;
-&lt;p&gt;x轴方向上的主距为fx，y轴方向上的主距为fy=fx/(1+ds).&lt;/p&gt;
-&lt;p&gt;对数字相机，比例尺不一致可认为是襄垣x、y方向长度不等引起的；而不正交性误差可认为是像元x、y方向排列不垂直引起的。&lt;/p&gt;
-&lt;p&gt;&lt;a name=&quot;非正交与比例尺不一致因素&quot;&gt;如图展现了以上两种误差的原因。&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://www.dooby.me/wp-content/uploads/2015/11/C99CDEAA218715286FA9FE07A8E69B343C345FAA.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;以下表述中，小括号代表坐标系，中括号代表坐标值。&lt;/p&gt;
-&lt;p&gt;$$!(\overline{x},\overline{y})[on&lt;em&gt;{2},on&lt;/em&gt;{1}]$$——以像主点为原点（像平面坐标系的原点），不包含线性误差的&lt;font color=&quot;#FF0000&quot;&gt;某像点p的坐标&lt;/font&gt;&lt;/p&gt;
-&lt;p&gt;$$!(x,y)[om&lt;em&gt;{2},0m&lt;/em&gt;{1}]$$——以像主点为原点，不包含正交性dβ误差的像点p坐标。&lt;/p&gt;
-&lt;p&gt;$$!(x,y)[om&lt;em&gt;{2},om&lt;/em&gt;{1}^{‘}]$$——以像主点为原点，不包括正交性dβ误差及比例尺不一致误差ds的像点坐标p&lt;/p&gt;
-&lt;p&gt;则从图中可知，$$!\delta x=on&lt;em&gt;{2}-om&lt;/em&gt;{2}=m&lt;em&gt;{2}p\cdot sin d\beta=om&lt;/em&gt;{1}\cdot sin d\beta=(1+ds)(y-y&lt;em&gt;{0})sind\beta\approx (y-y&lt;/em&gt;{0})sind\beta$$&lt;/p&gt;
-&lt;p&gt;$$!\delta y=on&lt;em&gt;{1}-om&lt;/em&gt;{1}^{‘}=om&lt;em&gt;{1}\cdot cosd\beta -om&lt;/em&gt;{1}^{‘}=(1+ds)(y-y&lt;em&gt;{0})\cdot cosd\beta-(y-y&lt;/em&gt;{0})=&lt;a href=&quot;y-y_{0}&quot;&gt;(1+ds)\cdot cosd\beta -1&lt;/a&gt;\approx (y-y_{0})\cdot ds$$&lt;/p&gt;
-&lt;p&gt;将上式2值带入线性方程&lt;font color=&quot;#FF0000&quot;&gt;有线性误差的形式&lt;/font&gt;：式中有11个独立参数，3个内方位x0,yo,fx6个外方位Xs，Ys，Zs，φ，ω，k，比例尺不一致系数ds，xy轴不正交系数dβ。&lt;/p&gt;
-&lt;p&gt;$$!\left{\begin{matrix}x-x&lt;em&gt;{0}+(1+ds)(y-y&lt;/em&gt;{0})\cdot sind\beta +f&lt;em&gt;{x}\frac{a&lt;/em&gt;{1}(X-X&lt;em&gt;{s}+b&lt;/em&gt;{1}(Y-Y&lt;em&gt;{s})+c&lt;/em&gt;{1}(Z-Z&lt;em&gt;{s})}{a&lt;/em&gt;{3}(X-X&lt;em&gt;{s})+b&lt;/em&gt;{3}(Y-Y&lt;em&gt;{s})+c&lt;/em&gt;{3}(Z-Z&lt;em&gt;{s})}=0\y-y&lt;/em&gt;{0}+[(1+ds)\cdot cosd\beta-1] (y-y&lt;em&gt;{0})+f&lt;/em&gt;{x}\frac{a&lt;em&gt;{1}(X-X&lt;/em&gt;{s}+b&lt;em&gt;{1}(Y-Y&lt;/em&gt;{s})+c&lt;em&gt;{1}(Z-Z&lt;/em&gt;{s})}{a&lt;em&gt;{3}(X-X&lt;/em&gt;{s})+b&lt;em&gt;{3}(Y-Y&lt;/em&gt;{s})+c&lt;em&gt;{3}(Z-Z&lt;/em&gt;{s})}=0\end{matrix}\right.$$&lt;/p&gt;
-&lt;p&gt;通过一系列的化简，如前面介绍不带线性误差一样，提取出r1，r2，r3，&lt;a name=&quot;DLT的真正一般形式&quot;&gt;得到：&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;$$!x+\frac{\frac{1}{r&lt;em&gt;{3}}(a&lt;/em&gt;{1}f&lt;em&gt;{x}-a&lt;/em&gt;{2}f&lt;em&gt;{x}tand\beta -a&lt;/em&gt;{3}x&lt;em&gt;{0})}{\frac{a&lt;/em&gt;{3}}{r&lt;em&gt;{3}}X+\frac{b&lt;/em&gt;{3}}{r&lt;em&gt;{3}}Y+\frac{c&lt;/em&gt;{3}}{r&lt;em&gt;{3}}Z+1}\cdot X+\frac{\frac{1}{r&lt;/em&gt;{3}}(b&lt;em&gt;{1}f&lt;/em&gt;{x}-b&lt;em&gt;{2}f&lt;/em&gt;{x}tand\beta -b&lt;em&gt;{3}x&lt;/em&gt;{0})}{\frac{a&lt;em&gt;{3}}{r&lt;/em&gt;{3}}X+\frac{b&lt;em&gt;{3}}{r&lt;/em&gt;{3}}Y+\frac{c&lt;em&gt;{3}}{r&lt;/em&gt;{3}}Z+1}\cdot Y+\frac{\frac{1}{r&lt;em&gt;{3}}(c&lt;/em&gt;{1}f&lt;em&gt;{x}-c&lt;/em&gt;{2}f&lt;em&gt;{x}tand\beta -c&lt;/em&gt;{3}x&lt;em&gt;{0})}{\frac{a&lt;/em&gt;{3}}{r&lt;em&gt;{3}}X+\frac{b&lt;/em&gt;{3}}{r&lt;em&gt;{3}}Y+\frac{c&lt;/em&gt;{3}}{r&lt;em&gt;{3}}Z+1}\cdot Z+\frac{\frac{1}{r&lt;/em&gt;{3}}(r&lt;em&gt;{1}f&lt;/em&gt;{x}-r&lt;em&gt;{2}f&lt;/em&gt;{x}tand\beta -r&lt;em&gt;{3}x&lt;/em&gt;{0})}{\frac{a&lt;em&gt;{3}}{r&lt;/em&gt;{3}}X+\frac{b&lt;em&gt;{3}}{r&lt;/em&gt;{3}}Y+\frac{c&lt;em&gt;{3}}{r&lt;/em&gt;{3}}Z+1}=0$$&lt;/p&gt;
-&lt;p&gt;$$!y+\frac{\frac{1}{r&lt;em&gt;{3}}[\frac{a&lt;/em&gt;{2}f&lt;em&gt;{x}}{(1+ds)cosd\beta }-a&lt;/em&gt;{3}\cdot y&lt;em&gt;{0}]}{\frac{a&lt;/em&gt;{3}}{r&lt;em&gt;{3}}X+\frac{b&lt;/em&gt;{3}}{r&lt;em&gt;{3}}Y+\frac{c&lt;/em&gt;{3}}{r&lt;em&gt;{3}}Z+1}\cdot X+\frac{\frac{1}{r&lt;/em&gt;{3}}[\frac{b&lt;em&gt;{2}f&lt;/em&gt;{x}}{(1+ds)cosd\beta }-b&lt;em&gt;{3}\cdot y&lt;/em&gt;{0}]}{\frac{a&lt;em&gt;{3}}{r&lt;/em&gt;{3}}X+\frac{b&lt;em&gt;{3}}{r&lt;/em&gt;{3}}Y+\frac{c&lt;em&gt;{3}}{r&lt;/em&gt;{3}}Z+1}\cdot Y+\frac{\frac{1}{r&lt;em&gt;{3}}[\frac{c&lt;/em&gt;{2}f}{(1+ds)cosd\beta }-c&lt;em&gt;{3}\cdot y&lt;/em&gt;{0}]}{\frac{a&lt;em&gt;{3}}{r&lt;/em&gt;{3}}X+\frac{b&lt;em&gt;{3}}{r&lt;/em&gt;{3}}Y+\frac{c&lt;em&gt;{3}}{r&lt;/em&gt;{3}}Z+1}\cdot Z+\frac{\frac{1}{r&lt;em&gt;{3}}[\frac{r&lt;/em&gt;{2}f&lt;em&gt;{x}}{(1+ds)cosd\beta }-r&lt;/em&gt;{3}\cdot y&lt;em&gt;{0}]}{\frac{a&lt;/em&gt;{3}}{r&lt;em&gt;{3}}X+\frac{b&lt;/em&gt;{3}}{r&lt;em&gt;{3}}Y+\frac{c&lt;/em&gt;{3}}{r_{3}}Z+1}=0$$&lt;/p&gt;
-&lt;p&gt;则上式即可化为基本式：&lt;/p&gt;
-&lt;p&gt;$$!x+\frac{l&lt;em&gt;{1}X+l&lt;/em&gt;{2}Y+l&lt;em&gt;{3}Z+l&lt;/em&gt;{4}}{l&lt;em&gt;{9}X+l&lt;/em&gt;{10}Y+l_{11}Z+1}=0$$&lt;/p&gt;
-&lt;p&gt;$$!y+\frac{l&lt;em&gt;{5}X+l&lt;/em&gt;{6}Y+l&lt;em&gt;{7}Z+l&lt;/em&gt;{8}}{l&lt;em&gt;{9}X+l&lt;/em&gt;{10}Y+l_{11}Z+1}=0$$&lt;/p&gt;
-&lt;p&gt;其中，l4、l8可化简：&lt;/p&gt;
-&lt;p&gt;$$!l&lt;em&gt;{8}=\frac{1}{r&lt;/em&gt;{3}}[\frac{r&lt;em&gt;{2}f&lt;/em&gt;{x}}{(1+ds)\cdot d\beta}-r&lt;em&gt;{3}\cdot y&lt;/em&gt;{0}]=\frac{1}{r&lt;em&gt;{3}}[\frac{-(a&lt;/em&gt;{2}Xs+b&lt;em&gt;{2}Y&lt;/em&gt;{s}+c&lt;em&gt;{2}Z&lt;/em&gt;{s})f&lt;em&gt;{x}}{(1+ds)\cdot cosd\beta }+(a&lt;/em&gt;{3}X&lt;em&gt;{s}+b&lt;/em&gt;{3}Y&lt;em&gt;{s}+c&lt;/em&gt;{3}Z&lt;em&gt;{s})\cdot y&lt;/em&gt;{0}]=-\frac{1}{r&lt;em&gt;{3}}[(\frac{a&lt;/em&gt;{2}f&lt;em&gt;{x}}{(1+ds)\cdot cosd\beta }-a&lt;/em&gt;{3}y&lt;em&gt;{0})X&lt;/em&gt;{s}+(\frac{b&lt;em&gt;{2}f&lt;/em&gt;{x}}{(1+ds)\cdot cosd\beta }-b&lt;em&gt;{3}y&lt;/em&gt;{0})Y&lt;em&gt;{s}+(\frac{c&lt;/em&gt;{2}f&lt;em&gt;{x}}{(1+ds)\cdot cosd\beta }-c&lt;/em&gt;{3}y&lt;em&gt;{0})Z&lt;/em&gt;{s}]=-(l&lt;em&gt;{5}X&lt;/em&gt;{s}+l&lt;em&gt;{6}Y&lt;/em&gt;{s}+l&lt;em&gt;{7}Z&lt;/em&gt;{s})$$&lt;/p&gt;
-&lt;p&gt;$$!l&lt;em&gt;{4}=\frac{1}{r&lt;/em&gt;{3}}(r&lt;em&gt;{1}f&lt;/em&gt;{x}-r&lt;em&gt;{2}f&lt;/em&gt;{x}tand\beta -r&lt;em&gt;{3}x&lt;/em&gt;{0})=-(l&lt;em&gt;{1}X&lt;/em&gt;{s}+l&lt;em&gt;{2}Y&lt;/em&gt;{s}+l&lt;em&gt;{3}Z&lt;/em&gt;{s})$$&lt;/p&gt;
-&lt;p&gt;由于未知数是11个，因此最少需要布置6个控制点。&lt;/p&gt;
-&lt;p&gt;值得一提的是，像主点的求解公式与没有畸变参与&lt;a name=&quot;包含2项因素的Li表达内外参数&quot;&gt;相同&lt;/a&gt;，&lt;/p&gt;
-&lt;p&gt;$$!x&lt;em&gt;{0}=-(L&lt;/em&gt;{1}L&lt;em&gt;{9}+L&lt;/em&gt;{2}L&lt;em&gt;{10}+L&lt;/em&gt;{3}L&lt;em&gt;{11})/(L&lt;/em&gt;{9}^{2}+&lt;em&gt;{10}^{2}+L&lt;/em&gt;{11}^{2})$$&lt;/p&gt;
-&lt;p&gt;$$!y&lt;em&gt;{0}=-(L&lt;/em&gt;{5}L&lt;em&gt;{9}+L&lt;/em&gt;{6}L&lt;em&gt;{10}+L&lt;/em&gt;{7}L&lt;em&gt;{11})/(L&lt;/em&gt;{9}^{2}+&lt;em&gt;{10}^{2}+L&lt;/em&gt;{11}^{2})$$&lt;/p&gt;
-&lt;p&gt;最重要的ds和dβ，设：&lt;/p&gt;
-&lt;p&gt;$$!\overline{A}=r&lt;em&gt;{3}^{2}(l&lt;/em&gt;{1}^{2}+l&lt;em&gt;{2}^{2}+l&lt;/em&gt;{3}^{2})-x&lt;em&gt;{0}^{2}=\frac{f&lt;/em&gt;{x}^{2}}{cos^{2}d\beta }$$&lt;/p&gt;
-&lt;p&gt;$$!B=r&lt;em&gt;{3}^{2}(l&lt;/em&gt;{5}^{2}+l&lt;em&gt;{6}^{2}+l&lt;/em&gt;{7}^{2})-y&lt;em&gt;{0}^{2}=\frac{f&lt;/em&gt;{x}^{2}}{(1+ds)^{2}cos^{2}d\beta }$$&lt;/p&gt;
-&lt;p&gt;$$!C=r&lt;em&gt;{3}^{2}(l&lt;/em&gt;{1}l&lt;em&gt;{5}+l&lt;/em&gt;{2}l&lt;em&gt;{6}+l&lt;/em&gt;{3}l&lt;em&gt;{7})-x&lt;/em&gt;{0}y&lt;em&gt;{0}=\frac{-f&lt;/em&gt;{x}^{2}sind\beta }{(1+ds)cos^{2}d\beta }$$&lt;/p&gt;
-&lt;p&gt;$$!ds=\sqrt{\frac{\overline{A}}{B}-1}$$&lt;/p&gt;
-&lt;p&gt;$$!sind\beta =\pm \sqrt{\frac{C^{2}}{\overline{A}B}}$$&lt;/p&gt;
-&lt;p&gt;而主距的公式变为：&lt;/p&gt;
-&lt;p&gt;$$!f_{x}=\sqrt{\overline{A}}cosd\beta $$&lt;/p&gt;
-&lt;p&gt;$$!f&lt;em&gt;{y}=\frac{f&lt;/em&gt;{x}}{1+ds}$$&lt;/p&gt;
-&lt;p&gt;外方位角元素：&lt;/p&gt;
-&lt;p&gt;$$!tan\varphi =\frac{a&lt;em&gt;{3}}{c&lt;/em&gt;{3}}$$&lt;/p&gt;
-&lt;p&gt;$$!sin\omega =-b_{3}$$&lt;/p&gt;
-&lt;p&gt;$$!tan\kappa =\frac{b&lt;em&gt;{1}}{b&lt;/em&gt;{2}}$$&lt;/p&gt;
-&lt;p&gt;其中，$$a&lt;em&gt;{3}=r&lt;/em&gt;{3}l&lt;em&gt;{9},b&lt;/em&gt;{3}=r&lt;em&gt;{3}l&lt;/em&gt;{10},c&lt;em&gt;{3}=r&lt;/em&gt;{3}l_{11}$$&lt;/p&gt;
-&lt;p&gt;而外方位线元素由以下三个式子构成：&lt;/p&gt;
-&lt;p&gt;$$!l&lt;em&gt;{1}X&lt;/em&gt;{s}+l&lt;em&gt;{2}Y&lt;/em&gt;{s}+l&lt;em&gt;{3}Z&lt;/em&gt;{s}=-l_{4}$$&lt;/p&gt;
-&lt;p&gt;$$!l&lt;em&gt;{5}X&lt;/em&gt;{s}+l&lt;em&gt;{6}Y&lt;/em&gt;{s}+l&lt;em&gt;{7}Z&lt;/em&gt;{s}=-l_{8}$$&lt;/p&gt;
-&lt;p&gt;$$!l&lt;em&gt;{9}X&lt;/em&gt;{s}+l&lt;em&gt;{10}Y&lt;/em&gt;{s}+l&lt;em&gt;{11}Z&lt;/em&gt;{s}=\frac{a&lt;em&gt;{3}}{r&lt;/em&gt;{3}}X&lt;em&gt;{s}+\frac{b&lt;/em&gt;{3}}{r&lt;em&gt;{3}}Y&lt;/em&gt;{s}+\frac{c&lt;em&gt;{3}}{r&lt;/em&gt;{3}}Z&lt;em&gt;{s}=-\frac{a&lt;/em&gt;{3}Xs+b&lt;em&gt;{3}Y&lt;/em&gt;{s}+c&lt;em&gt;{3}Z&lt;/em&gt;{s}}{a&lt;em&gt;{3}Xs+b&lt;/em&gt;{3}Y&lt;em&gt;{s}+c&lt;/em&gt;{3}Z_{s}}=-1$$&lt;/p&gt;
-&lt;p&gt;到这里，能解求出包含非正交比例和xy不一致比例，但缺乏了对镜头畸变的改正。若将镜头畸变写入DLT方程式，则变为：&lt;/p&gt;
-&lt;p&gt;$$!x+v&lt;em&gt;{x}+\Delta x+\frac{l&lt;/em&gt;{1}X+l&lt;em&gt;{2}Y+l&lt;/em&gt;{3}Z+l&lt;em&gt;{4}}{l&lt;/em&gt;{9}X+l&lt;em&gt;{10}Y+l&lt;/em&gt;{11}Z+1}=0$$&lt;/p&gt;
-&lt;p&gt;$$!y+v&lt;em&gt;{y}+\Delta y+\frac{l&lt;/em&gt;{5}X+l&lt;em&gt;{6}Y+l&lt;/em&gt;{7}Z+l&lt;em&gt;{8}}{l&lt;/em&gt;{9}X+l&lt;em&gt;{10}Y+l&lt;/em&gt;{11}Z+1}=0$$&lt;/p&gt;
-&lt;p&gt;其中，vx vy是残差，△x △y是畸变的改正数，若忽略切向畸变且只去一项径向畸变的参数作为例子，&lt;/p&gt;
-&lt;p&gt;$$!\left{\begin{matrix}\Delta x=(x-x&lt;em&gt;{0})r^{2}k&lt;/em&gt;{1}\\Delta y=(y-y&lt;em&gt;{0})r^{2}k&lt;/em&gt;{1}\end{matrix}\right.$$&lt;/p&gt;
-&lt;p&gt;再令$$A=l&lt;em&gt;{9}X+l&lt;/em&gt;{10}Y+l_{11}Z+1$$&lt;/p&gt;
-&lt;p&gt;以li为未知数，列误差方程，则DLT&lt;a name=&quot;包含畸变参数校正的DLT&quot;&gt;公式可化简为&lt;/a&gt;：&lt;/p&gt;
-&lt;p&gt;$$!v&lt;em&gt;{x}=-\frac{1}{A}[Xl&lt;/em&gt;{1}+Yl&lt;em&gt;{2}+Zl&lt;/em&gt;{3}+l&lt;em&gt;{4}+xXl&lt;/em&gt;{9}+xYl&lt;em&gt;{10}+xZl&lt;/em&gt;{11}+A(x-x&lt;em&gt;{0}^{2})r^{2}k&lt;/em&gt;{1}+x]$$&lt;/p&gt;
-&lt;p&gt;$$!v&lt;em&gt;{y}=-\frac{1}{A}[Xl&lt;/em&gt;{5}+Yl&lt;em&gt;{6}+Zl&lt;/em&gt;{7}+l&lt;em&gt;{8}+yXl&lt;/em&gt;{9}+yYl&lt;em&gt;{10}+yZl&lt;/em&gt;{11}+A(y-y&lt;em&gt;{0}^{2})r^{2}k&lt;/em&gt;{1}+x]$$&lt;/p&gt;
-&lt;p&gt;矩阵的形式则可写为（以物方坐标表示像点坐标）：&lt;/p&gt;
-&lt;font color=&quot;#FF0000&quot;&gt;$$!\begin{bmatrix}v&lt;em&gt;{x}\v&lt;/em&gt;{y}\end{bmatrix}=\begin{bmatrix}\frac{X}{A}&amp;amp;\frac{Y}{A}&amp;amp;\frac{Z}{A}&amp;amp;\frac{1}{A}&amp;amp;0&amp;amp;0&amp;amp;0&amp;amp;0&amp;amp;\frac{xX}{A}&amp;amp;\frac{xY}{A}&amp;amp;\frac{xZ}{A}&amp;amp;(x-x&lt;em&gt;{0})r^{2}\0&amp;amp;0&amp;amp;0&amp;amp;0&amp;amp;\frac{X}{A}&amp;amp;\frac{Y}{A}&amp;amp;\frac{Z}{A}&amp;amp;\frac{1}{A}&amp;amp;\frac{yX}{A}&amp;amp;\frac{yY}{A}&amp;amp;\frac{yZ}{A}&amp;amp;(y-y&lt;/em&gt;{0})r^{2}\end{bmatrix}\begin{bmatrix}l&lt;em&gt;{1}\l&lt;/em&gt;{2}\l&lt;em&gt;{3}\l&lt;/em&gt;{4}\l&lt;em&gt;{5}\l&lt;/em&gt;{6}\l&lt;em&gt;{7}\l&lt;/em&gt;{8}\l&lt;em&gt;{9}\l&lt;/em&gt;{10}\l&lt;em&gt;{11}\k&lt;/em&gt;{1}\end{bmatrix}-\begin{bmatrix}\frac{x}{A}\\frac{y}{A}\end{bmatrix}$$&lt;/font&gt;
-
-&lt;p&gt;可简写为:&lt;/p&gt;
-&lt;p&gt;$$!V=AL+BX-W$$&lt;/p&gt;
-&lt;p&gt;其中L是11个（二维DLT是可能是8个）li参数，X是单独提出来计算的畸变系数，在后交时通常加载改正数值里，当学要加入更多畸变参数时，需要确定更多的B矩阵中的形式。W一般是x/A,y/A.&lt;/p&gt;
-&lt;p&gt;A和B的求取也是迭代计算，每次迭代A的值计算是通过控制点求得的。对不同控制点像点坐标列误差方程，A的值也不同。&lt;/p&gt;
-&lt;p&gt;简单提一下以像方坐标表示物放坐标的DLT公式：&lt;/p&gt;
-&lt;p&gt;$$!(l&lt;em&gt;{1}+\overline{x}l&lt;/em&gt;{9})X+(l&lt;em&gt;{2}+\overline{x}l&lt;/em&gt;{10})Y+(l&lt;em&gt;{3}+\overline{x}l&lt;/em&gt;{11})Z+(l_{4}+\overline{x})=0$$&lt;/p&gt;
-&lt;p&gt;$$!(l&lt;em&gt;{5}+\overline{y}l&lt;/em&gt;{9})X+(l&lt;em&gt;{6}+\overline{y}l&lt;/em&gt;{10})Y+(l&lt;em&gt;{7}+\overline{y}l&lt;/em&gt;{11})Z+(l_{8}+\overline{y})=0$$&lt;/p&gt;
-&lt;p&gt;直接线性变换的精度：可提供1/5000摄影距离精度的测量成果。影响DLT解法精度的是：控制点分布数量质量、像点坐标的测量精度、两张相片主光轴的交会角、像片张数、非线性畸变误差的改正数。&lt;/p&gt;
-&lt;div class=&quot;PoweredByWebStory&quot; style=&quot;margin-top:15px;margin-bottom:10px&quot;&gt;&lt;a href=&quot;http://sns.juziyue.com/webinvite.php?u=94887&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;&lt;/a&gt;&amp;nbsp;今天你&lt;a href=&quot;http://sns.juziyue.com/webinvite.php?u=94887&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;菊子曰&lt;/a&gt;了么？&lt;/div&gt;</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;除了后方交会之外，常用的进行内外参数检校的方法还有DLT和角锥体法。&lt;/p&gt;
-&lt;p&gt;写在前面：DLT可在&lt;font color=&quot;#FF0000&quot;&gt;未提供初值&lt;/font&gt;的情况下推导内外方位元素，同时&lt;font color=&quot;#FF0000&quot;&gt;不需要迭代&lt;/font&gt;，但
-    
-    </summary>
-    
-      <category term="什么都学一下" scheme="http://ovjaywang.github.io/categories/%E4%BB%80%E4%B9%88%E9%83%BD%E5%AD%A6%E4%B8%80%E4%B8%8B/"/>
-    
-      <category term="学习log" scheme="http://ovjaywang.github.io/categories/%E4%BB%80%E4%B9%88%E9%83%BD%E5%AD%A6%E4%B8%80%E4%B8%8B/%E5%AD%A6%E4%B9%A0log/"/>
-    
-    
-      <category term="检校" scheme="http://ovjaywang.github.io/tags/%E6%A3%80%E6%A0%A1/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>后方交会检校(5)--多片后方交会&amp;相对绝对定向</title>
-    <link href="http://ovjaywang.github.io/2015/11/04/%E5%90%8E%E6%96%B9%E4%BA%A4%E4%BC%9A%E6%A3%80%E6%A0%A1(5)--%E5%A4%9A%E7%89%87%E5%90%8E%E6%96%B9%E4%BA%A4%E4%BC%9A%20%E7%9B%B8%E5%AF%B9%E7%BB%9D%E5%AF%B9%E5%AE%9A%E5%90%91/"/>
-    <id>http://ovjaywang.github.io/2015/11/04/后方交会检校(5)--多片后方交会 相对绝对定向/</id>
-    <published>2015-11-04T04:00:00.000Z</published>
-    <updated>2016-04-28T16:36:57.000Z</updated>
-    
-    <content type="html">&lt;p&gt;&lt;a href=&quot;#多片交会&quot;&gt;多片检校方程&lt;/a&gt;&amp;nbsp;&lt;a href=&quot;#相对定向完成标志&quot;&gt;相对定向完成标志&lt;/a&gt;&amp;nbsp;&amp;nbsp;&lt;a href=&quot;#两种方式&quot;&gt;相对定向解答的两种方式&lt;/a&gt;&amp;nbsp;&lt;a href=&quot;#图解&quot;&gt;图解连续像片和单独像对&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;单片检校主要目的是精确测量相机的内方位元素和检校相机镜头畸变。由于只使用一幅影像进行参数的解算，使用了较少的几何约束条件和观测值，最容易产生内方位元素x0 y0 与外方位元素Xs Ys的不定解或强相关，使检校结果稳定性和可靠性受到影响。多片后方交会则可以更精确的解算这些参数，尤其是&lt;font color=&quot;#FF0000&quot;&gt;主点位置的精度&lt;/font&gt;问题。多片空间后方交会与单片空间后方交会的根本区别是：在不同的位置拍摄多张照片，由于各像片在同一主距条件下拍摄，因而解算所得的各相片的&lt;font color=&quot;#FF0000&quot;&gt;外方位元素不同&lt;/font&gt;，解算的&lt;font color=&quot;#FF0000&quot;&gt;内方位元素和畸变参数被认为相同&lt;/font&gt;。&lt;/p&gt;
-&lt;p&gt;这样，就可以用下式方程表达&lt;a name=&quot;多片交会&quot;&gt;多片交会&lt;/a&gt;：&lt;/p&gt;
-&lt;p&gt;$$!\begin{bmatrix}A&lt;em&gt;{I}&amp;amp;0&amp;amp;\cdot&amp;amp;\cdot&amp;amp;\cdot&amp;amp;0&amp;amp;B&lt;/em&gt;{I}&amp;amp;C&lt;em&gt;{I}\0&amp;amp;A&lt;/em&gt;{II}&amp;amp;.&amp;amp;.&amp;amp;.&amp;amp;0&amp;amp;B&lt;em&gt;{II}&amp;amp;C&lt;/em&gt;{II}\.&amp;amp;.&amp;amp; &amp;amp; &amp;amp; &amp;amp;0&amp;amp;.&amp;amp;.\.&amp;amp;.&amp;amp; &amp;amp; &amp;amp; &amp;amp;0&amp;amp;.&amp;amp;.\0&amp;amp;.&amp;amp;.&amp;amp;.&amp;amp;.&amp;amp;A&lt;em&gt;{n}&amp;amp;B&lt;/em&gt;{n}&amp;amp;C&lt;em&gt;{n}\end{bmatrix}&lt;/em&gt;{2n\times (6n+7)}\begin{bmatrix}X&lt;em&gt;{out&lt;/em&gt;{I}}\X&lt;em&gt;{out&lt;/em&gt;{II}}\.\.\.\X&lt;em&gt;{out&lt;/em&gt;{n}}\X&lt;em&gt;{in}\X&lt;/em&gt;{res}\end{bmatrix}&lt;em&gt;{(6n+7)\times1}-\begin{bmatrix}xy&lt;/em&gt;{res 1}\xy&lt;em&gt;{res 2}\.\.\.\xy&lt;/em&gt;{res n}\end{bmatrix}_{2\times1}=0$$&lt;/p&gt;
-&lt;p&gt;这一点与图像配准极其相似，用一副影像作为参考影像去配准多幅图像的结果显然没有用周边多幅图像组为参考标准的结果令人信服。由于每张相片的外方位元素不同（一般都是围绕检校场左中右进行拍摄），所以良好的消除了外方位元素和内方位元素的强相关性。&lt;/p&gt;
-&lt;p&gt;针对多片，提出了相对定向和绝对定向的概念，绝对定向即利用共线方程检校计算出的外方位元素绝对值，这是以物方坐标系的原点作为参考值；而相对定向则是以被检校出的某一张像片为参考，计算出其余像片在其坐标系的坐标值，即相对关系。相对关系的求取的精度对图像拼接有至关重要的影像。&lt;/p&gt;
-&lt;p&gt;&lt;a name=&quot;相对定向完成标志&quot;&gt;&lt;font color=&quot;#FF0000&quot;&gt;相对定向完成的标志&lt;/font&gt;&lt;/a&gt;：同名光线对对相交。所有点在其承影面上的上下视差为零。即通过矩阵变换改变投影器的相对位置，使光线相交。&lt;font color=&quot;#FF0000&quot;&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/font&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a name=&quot;两种方式&quot;&gt;&lt;font color=&quot;#FF0000&quot;&gt;相对定向有两种方式&lt;/font&gt;&lt;/a&gt;：①根据单片分别解算出的不同像片（可以使同相机可以不同）物方坐标系下的外方位元素绝对值，计算相对定向的五个元素，By,Bz,φ2，ω2，k2;或多片解算的某一相机的物方绝对值（必须统一相机，保证内方位元素相同），同样计算相对定向元素。可以作为航拍的连续拍摄的相对方位的确定，也可以作为立体固定的某些相机之间的相对方位的确定②直接根据同名点的像点坐标（6组以上），计算相对定向的旋转矩阵[R|t]，&lt;font color=&quot;#FF0000&quot;&gt;不需要地面控制点！&lt;/font&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;a name=&quot;图解&quot;&gt;图解①方式的连续像对和单独像对&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;上面提到的连续像对，如下图所示，By Bz决定了摄影基线（即摄影中心移动的向量），φ2，ω2，k2决定了右片光束对于左光束的旋转。固定一个光束，旋转和移动第二个，便可以确定两个光束之间的相对方位，第三张相片可以和第二张相片确定相对方位，一次类推，所形成的相对方位元素称为连续像对系统。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://ww4.sinaimg.cn/large/68eb7c93gw1eyb8jft5rpj20ln0fmgoj.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;而单独相对，即可以取左片摄影中心XZ平面为主核面，摄影基线为X轴的右手空间直角坐标系。由φ1，ω1，k1,φ2，ω2，k2组成。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://ww3.sinaimg.cn/large/68eb7c93gw1eyb93i6vwcj20lg0d0dii.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&amp;nbsp;&lt;/p&gt;
-&lt;p&gt;相对定向共面条件&lt;/p&gt;
-&lt;p&gt;在相对定向中，答解相对元素的重要依据就是共面条件，当光线相交时，易知B（摄影基线，即S1S2）,S1a1,S2a2共面。如图可以看到，解求相对定向元素就是解求两个摄影中心的像方辅助坐标系的转换。共面条件方程形式为：&lt;/p&gt;
-&lt;p&gt;$$!\overrightarrow{S&lt;em&gt;{1}S&lt;/em&gt;{2}}\cdot (\overrightarrow{S&lt;em&gt;{1}a&lt;/em&gt;{1}}\times \overrightarrow{S&lt;em&gt;{2}a&lt;/em&gt;{2}})=0$$&lt;/p&gt;
-&lt;p&gt;共面条件方程无需地面控制点，一个同名点列一个方程。必须有5个以上定向点。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://ww4.sinaimg.cn/large/68eb7c93gw1eyb9drztouj20lz0ig782.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;如图，设像点a1、a2在大地坐标系坐标分别为(X1,Y1,Z1)、(X2,Y2,Z2).摄站S1、S2在大地坐标系坐标分别为$$(X&lt;em&gt;{S1},Y&lt;/em&gt;{S1},Z&lt;em&gt;{S1}),(X&lt;/em&gt;{S2},Y&lt;em&gt;{S2},Z&lt;/em&gt;{S2})$$,则上式在即可表示为向量形式的行列式。&lt;/p&gt;
-&lt;p&gt;$$!\begin{vmatrix}X&lt;em&gt;{S2}-X&lt;/em&gt;{S1}&amp;amp;Y&lt;em&gt;{S2}-Y&lt;/em&gt;{S1}&amp;amp;Z&lt;em&gt;{S2}-Z&lt;/em&gt;{S1}\X&lt;em&gt;{1}-X&lt;/em&gt;{S1}&amp;amp;Y&lt;em&gt;{1}-Y&lt;/em&gt;{S1}&amp;amp;Z&lt;em&gt;{1}-Z&lt;/em&gt;{S1}\X&lt;em&gt;{2}-X&lt;/em&gt;{S2}&amp;amp;Y&lt;em&gt;{2}-Y&lt;/em&gt;{S2}&amp;amp;Z&lt;em&gt;{2}-Z&lt;/em&gt;{S2}\end{vmatrix}$$&lt;/p&gt;
-&lt;p&gt;又令(X,Y,Z)、(Bx,By,Bz)为a1,S2在S1的像辅系S1-XYZ中的坐标，(X’,Y’,Z’)为a2在S2像辅系S2-XYZ中的坐标。由三点共面的方程，&lt;/p&gt;
-&lt;p&gt;$$!\begin{vmatrix}B&lt;em&gt;{X}&amp;amp;B&lt;/em&gt;{Y}&amp;amp;B_{Z}\X&amp;amp;Y&amp;amp;Z\X’&amp;amp;Y’&amp;amp;Z’\end{vmatrix}=0$$上式可改写为：&lt;/p&gt;
-&lt;p&gt;$$!\begin{bmatrix}B&lt;em&gt;{X}&amp;amp;B&lt;/em&gt;{Y}&amp;amp;B_{Z}\end{bmatrix}\begin{bmatrix}0&amp;amp;-Z&amp;amp;Y\Z&amp;amp;0&amp;amp;-X\-Y&amp;amp;X&amp;amp;0\end{bmatrix}\begin{bmatrix}X’\Y’\Z’\end{bmatrix}=0$$&lt;/p&gt;
-&lt;p&gt;光线是否成对相交与摄影测量坐标系的选择无关，但可以&lt;font color=&quot;#FF0000&quot;&gt;选择适当的像辅系&lt;/font&gt;，改变共面条件便于实际应用。&lt;/p&gt;
-&lt;p&gt;（1）&lt;font color=&quot;#FF0000&quot;&gt;选择左侧像空系&lt;/font&gt;——连续像对系统。此时R1=E，即左系的旋转矩阵为0，像平面的z坐标均为-f；或为右片的旋转矩阵。则，公式未改变。&lt;/p&gt;
-&lt;p&gt;$$!\begin{vmatrix}B&lt;em&gt;{X}&amp;amp;B&lt;/em&gt;{Y}&amp;amp;B_{Z}\X&amp;amp;Y&amp;amp;Z\X’&amp;amp;Y’&amp;amp;Z’\end{vmatrix}=0$$&lt;/p&gt;
-&lt;p&gt;（2）选择基线坐标系——单独像对系统。此时，$$B&lt;em&gt;{Y}=B&lt;/em&gt;{Z}=0$$，即需要求取两个像片对基线坐标系的旋转。&lt;/p&gt;
-&lt;div class=&quot;PoweredByWebStory&quot; style=&quot;margin-top:15px;margin-bottom:10px&quot;&gt;&lt;a href=&quot;http://sns.juziyue.com/webinvite.php?u=94887&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;&lt;/a&gt;&amp;nbsp;今天你&lt;a href=&quot;http://sns.juziyue.com/webinvite.php?u=94887&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;菊子曰&lt;/a&gt;了么？&lt;/div&gt;</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;a href=&quot;#多片交会&quot;&gt;多片检校方程&lt;/a&gt;&amp;nbsp;&lt;a href=&quot;#相对定向完成标志&quot;&gt;相对定向完成标志&lt;/a&gt;&amp;nbsp;&amp;nbsp;&lt;a href=&quot;#两种方式&quot;&gt;相对定向解答的两种方式&lt;/a&gt;&amp;nbsp;&lt;a href=&quot;#图解&quot;&gt;图解连续像片和单独像
-    
-    </summary>
-    
-      <category term="什么都学一下" scheme="http://ovjaywang.github.io/categories/%E4%BB%80%E4%B9%88%E9%83%BD%E5%AD%A6%E4%B8%80%E4%B8%8B/"/>
-    
-      <category term="学习log" scheme="http://ovjaywang.github.io/categories/%E4%BB%80%E4%B9%88%E9%83%BD%E5%AD%A6%E4%B8%80%E4%B8%8B/%E5%AD%A6%E4%B9%A0log/"/>
-    
-    
-      <category term="后方交会" scheme="http://ovjaywang.github.io/tags/%E5%90%8E%E6%96%B9%E4%BA%A4%E4%BC%9A/"/>
     
   </entry>
   

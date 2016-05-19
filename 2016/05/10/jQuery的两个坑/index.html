@@ -64,7 +64,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="jQuery,">
 
 
 
@@ -82,16 +82,16 @@
 
 
 
-<meta name="description" content="第一章-创建和销毁对象 的一些 小tips">
+<meta name="description" content="许久没用jquery，今天碰到三个坑。小记一下">
 <meta property="og:type" content="article">
-<meta property="og:title" content="effective java 笔记--创建对象的几个tips">
-<meta property="og:url" content="http://ovjaywang.github.io/2016/04/27/effective java 笔记--创建对象的几个tips/index.html">
+<meta property="og:title" content="jQuery的三个坑">
+<meta property="og:url" content="http://ovjaywang.github.io/2016/05/10/jQuery的两个坑/index.html">
 <meta property="og:site_name" content="ov智商捉急">
-<meta property="og:description" content="第一章-创建和销毁对象 的一些 小tips">
-<meta property="og:updated_time" content="2016-04-28T16:36:57.000Z">
+<meta property="og:description" content="许久没用jquery，今天碰到三个坑。小记一下">
+<meta property="og:updated_time" content="2016-05-12T03:13:22.340Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="effective java 笔记--创建对象的几个tips">
-<meta name="twitter:description" content="第一章-创建和销毁对象 的一些 小tips">
+<meta name="twitter:title" content="jQuery的三个坑">
+<meta name="twitter:description" content="许久没用jquery，今天碰到三个坑。小记一下">
 
 
 
@@ -109,7 +109,7 @@
   };
 </script>
 
-  <title> effective java 笔记--创建对象的几个tips | ov智商捉急 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> jQuery的三个坑 | ov智商捉急 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -295,7 +295,7 @@
             
             
               
-                effective java 笔记--创建对象的几个tips
+                jQuery的三个坑
               
             
           </h1>
@@ -307,19 +307,50 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-27T11:50:01+08:00" content="2016-04-27">
-              2016-04-27
+            <time itemprop="dateCreated" datetime="2016-05-10T01:23:30+08:00" content="2016-05-10">
+              2016-05-10
             </time>
           </span>
 
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/代码狗/" itemprop="url" rel="index">
+                    <span itemprop="name">代码狗</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/代码狗/学习log/" itemprop="url" rel="index">
+                    <span itemprop="name">学习log</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
           
 
           
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/04/27/effective java 笔记--创建对象的几个tips/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/27/effective java 笔记--创建对象的几个tips/" itemprop="commentsCount"></span>
+                <a href="/2016/05/10/jQuery的两个坑/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/10/jQuery的两个坑/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -347,139 +378,20 @@
       
 
       
-        <p>第一章-创建和销毁对象 的一些 小tips</p>
-<a id="more"></a>
-<h1 id="不希望被实例化-又不想抽象化"><a href="#不希望被实例化-又不想抽象化" class="headerlink" title="不希望被实例化 又不想抽象化"></a>不希望被实例化 又不想抽象化</h1><p>某些类不希望被实例化出毫无意义的对象 但不编写显示构造器类会自定义一个隐式无参的构造器 因此可以用一下方式，编写不能实例化的类：</p>
-<pre><code class="java">
-  public class UtilityClass{
-    private UtilityClass(){
-      throw new AssertionError();//直接抛出assert验证异常 好坏
-    }
-  }
+        <p>许久没用jquery，今天碰到三个坑。小记一下<br><a id="more"></a><br>第一个是live()这个函数，在学习很早的资料，表示用来为被选元素附加一个或多个事件处理程序,形式为</p>
+<pre><code class="javascript">$(selector).live(event,data,function)
 </code></pre>
-<p>该构造器是私有的。其他类不能过访问（即使同包）。</p>
-<h1 id="不要创建没必要的对象"><a href="#不要创建没必要的对象" class="headerlink" title="不要创建没必要的对象"></a>不要创建没必要的对象</h1><p>不可变的对象一定要重用（singleton）；重用绝逼不会变的对象（例如计时初始时间、例如物种的属性）。例如，实例化Person对象的时候判断是不是计划生育年代出生的，即判断出生年份是否在1983-2015年。</p>
-<pre><code>
-class Person{
-   private final Date birthDate;
-   private static final Date BIRTH_START;
-   //这俩参数都是不变的 为了对比出生时间 
-   //没必要每次都创建一个日期对象，只在初始化时调用。
-   private static final Date BIRTH_END; 
-
-//静态块的方法 第一次声明Person对象时构建（不用实例化）
-// 后面占用一块内存 不用再次创建
-   static{
-        Calendar gmtCal = Calendar.getInstance(TimeZone.getTimeZone(&quot;GMT&quot;));
-        gmtCal.set(1983,Calendar.JANUARY,1,0,0,0);
-        //这里对日期做了时区判断 
-        //保证都是从某一客观时间点出生的
-        BIRTH_START = gmtCal.getTime();
-        gmtCal.set(2016,Calendar.JANUARY,1,0,0,0);
-        //截止2015年年底 所以取2016年年初
-        BIRTH_END = gmtCal.getTime();
-   }
-
-    public boolean isJiHuaShengYu(){
-        return birthDate.compareTo(BIRTH_START) &gt;=0 &amp;&amp;
-            birthDate.compareTo(BIRTH_END) &lt;=0;
-    }
-}
-</code></pre><p>如果isJiHuaShengYu方法<font color="red">从未调用</font>，这个方法就显得不合时宜了，这块静态块的内存就一直占着，因此，可以采用延时初始化的方式，在第一次调用该方法时调用。</p>
-<p>adapter适配器模式可以提供一个后备对象，使实例化次数减少（包括类适配器和对象适配器）；autoboxing自动装箱模式能够自动创建多余对象，所以尽量少用，而使用基本数据类型。</p>
-<h2 id="适配器Adapter"><a href="#适配器Adapter" class="headerlink" title="适配器Adapter"></a>适配器Adapter</h2><blockquote>
-<p>adapter工作场景</p>
-</blockquote>
-<p>适配器模式工作场景是：给定的一个接口不满足需求，需要其一些功能与其他的接口或类配合使用.正如已经给了电压和充电插座，但是插座电压与设备工作电压，这是时候就需要一个转换接头。</p>
-<blockquote>
-<p>adapter分类 </p>
-</blockquote>
-<p>一般分为类适配器和对象适配器。<strong>类适配器</strong>一般继承了给定接口的被适配类，同时拓展实现了标准的接口；而<strong>对象适配器</strong>则直接关联，以委托的方式完成已知接口的特殊功能。</p>
-<blockquote>
-<p>类适配器实例：Adaptee（已知的待适配的类） Target（目标类） Adapter（适配器类）</p>
-</blockquote>
-<p>可以看到，类适配器的方式通过继承或实现接口的方式，来传递某些功能或方法，以达到利用已知功能的目的。</p>
-<pre><code class="java">
-    // 已存在的、具有特殊功能、但不符合我们既有的标准接口的类
-class Adaptee {
-    public void specificRequest() {
-        System.out.println(&quot;被适配类具有 特殊功能...&quot;);
-    }
-}
-</code></pre>
-<pre><code class="java">
-// 目标接口，或称为标准接口
-interface Target {
-    public void request();
-}
-
-// 具体目标类，只提供普通功能
-class ConcreteTarget implements Target {
-    public void request() {
-        System.out.println(&quot;普通类 具有 普通功能...&quot;);
-    }
-}
-</code></pre>
-<pre><code class="java">
-// 适配器类，继承了被适配类，同时实现标准接口
-class Adapter extends Adaptee implements Target{
-    public void request() {
-        super.specificRequest();
-    }
-}
-</code></pre>
-<pre><code class="java">
-// 测试类
-    public class Client {
-        public static void main(String[] args) {
-            // 使用普通功能类
-            Target concreteTarget = new ConcreteTarget();
-            concreteTarget.request();
-
-            // 使用特殊功能类，即适配类
-            Target adapter = new Adapter();
-            adapter.request();
-        }
-    }
-</code></pre>
-<blockquote>
-<p>对象适配器实例 Adapter适配器类 被适配器同上</p>
-</blockquote>
-<p>对象适配器则通过对被适配类实例化，通过其对象获取其中部分功能，委托这一实例来完成想要传递的方法。</p>
-<pre><code>
-// 适配器类，直接关联被适配类，同时实现标准接口
-class Adapter implements Target{
-    // 直接关联被适配类
-    private Adaptee adaptee;
-
-    // 可以通过构造函数传入具体需要适配的被适配类对象
-    public Adapter (Adaptee adaptee) {
-        this.adaptee = adaptee;
-    }
-
-    public void request() {
-        // 这里是使用委托的方式完成特殊功能
-        this.adaptee.specificRequest();
-    }
-}
-</code></pre><pre><code>
-public class Client {
-    public static void main(String[] args) {
-        // 使用普通功能类
-        Target concreteTarget = new ConcreteTarget();
-        concreteTarget.request();
-
-        // 使用特殊功能类，即适配类，
-        // 需要先创建一个被适配类的对象作为参数
-        Target adapter = new Adapter(new Adaptee());
-        adapter.request();
-    }
-}
-</code></pre><p>参考<a href="http://haolloyin.blog.51cto.com/1177454/346128" target="_blank" rel="external">这里</a></p>
-<p>##</p>
-<blockquote>
-<p>autoboxing方式</p>
-</blockquote>
+<p>例如为button绑定一个单击事件，event为事件名，data为可选的传参，function为自定义函数。<br>测了半天没开F12一直以为代码有问题，，后来一看原来jquery1.9+以上不支持live了。先改成了delegate代理，后来又改成on,真特么烦人。  </p>
+<p>应该值得注意到的是，改成on后，触发的事件在容器对象上，而live返回值在事件触发的对象上。<br><a href="http://jquery.com/upgrade-guide/1.9/#live-removed" target="_blank" rel="external">这里</a>是官方解释</p>
+<hr>
+<p>一直以为<code>$(selector)</code>能抓到所有的id啊。。。原来好像dom树的id不能明明一样的。（但在1.4-版本测试是可以的，不知道是改进了对id选择器的定义和方法加载，明确了id唯一这个特征）<br>要对类似的组件操作类似的方法，例如对tr表单下的td采用同个样式，a使用类似的连接，可以使用<code>$(.class)</code>的方式获取。</p>
+<hr>
+<p>jquery1.9+以后不支持.attr属性的设置了，改成了.prop .妈蛋啊怎么改这么多好烦啊简直排错都不知道什么bug<br>炸裂看看1.9+的<a href="http://www.ppblog.cn/jquery1-9live.html" target="_blank" rel="external">更新</a>  </p>
+<ol>
+<li>true false两个选项的属性用prop</li>
+<li>添加属性名称该属性就生效用prop</li>
+<li>其他可以用attr</li>
+</ol>
       
     </div>
     
@@ -497,21 +409,27 @@ public class Client {
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/jQuery/" rel="tag">#jQuery</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/04/22/effective java--builer构造器/" rel="next" title="effective java--builer构造器">
-                <i class="fa fa-chevron-left"></i> effective java--builer构造器
+              <a href="/2016/05/03/树系列码集合-持更/" rel="next" title="树系列码集合[持更20160517]">
+                <i class="fa fa-chevron-left"></i> 树系列码集合[持更20160517]
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/04/27/hexo多客户端写作/" rel="prev" title="Hexo多客户端写作">
-                Hexo多客户端写作 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/05/12/位运算各种/" rel="prev" title="位运算各种">
+                位运算各种 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -527,7 +445,7 @@ public class Client {
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/04/27/effective java 笔记--创建对象的几个tips/" data-title="effective java 笔记--创建对象的几个tips" data-content="" data-url="http://ovjaywang.github.io/2016/04/27/effective java 笔记--创建对象的几个tips/">
+        <div class="ds-share flat" data-thread-key="2016/05/10/jQuery的两个坑/" data-title="jQuery的三个坑" data-content="" data-url="http://ovjaywang.github.io/2016/05/10/jQuery的两个坑/">
   <div class="ds-share-inline">
     <ul class="ds-share-icons-16">
 
@@ -557,7 +475,7 @@ public class Client {
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/04/27/effective java 笔记--创建对象的几个tips/" data-title="effective java 笔记--创建对象的几个tips" data-url="http://ovjaywang.github.io/2016/04/27/effective java 笔记--创建对象的几个tips/">
+      <div class="ds-thread" data-thread-key="2016/05/10/jQuery的两个坑/" data-title="jQuery的三个坑" data-url="http://ovjaywang.github.io/2016/05/10/jQuery的两个坑/">
       </div>
     
   </div>
@@ -700,7 +618,7 @@ public class Client {
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#不希望被实例化-又不想抽象化"><span class="nav-number">1.</span> <span class="nav-text">不希望被实例化 又不想抽象化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#不要创建没必要的对象"><span class="nav-number">2.</span> <span class="nav-text">不要创建没必要的对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#适配器Adapter"><span class="nav-number">2.1.</span> <span class="nav-text">适配器Adapter</span></a></li></ol></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目录</p>
             
           </div>
         </section>
