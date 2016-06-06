@@ -19,3 +19,7 @@ date: 2016-05-16 00:15:07
 {% centerquote%}
 {% fi http://ooo.0o0.ooo/2016/05/16/573a80bba3ba9.png, "丹麦女孩", "丹麦女孩" %}
 {% endcenterquote %}
+
+{% centerquote 爱在黄昏日落时%}我记得在那个时候 我并不觉得和谁结婚这个问题很重要 一个人并不是你生命的全部 到头来这只是一种负责的表现
+{% fi https://ooo.0o0.ooo/2016/06/05/5754608fc9a52.png, "爱在黄昏日落时", "爱在黄昏日落时" %}
+{% endcenterquote %}
