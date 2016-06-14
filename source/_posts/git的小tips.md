@@ -76,19 +76,19 @@ e.g.
 git log --pretty=format:"%h - %an, %ar : %s" 
 ```
 上式以一个很优美的显示方案：哈希字符串、对象、时间、提交的说明 一行一个提交显示。
-| 选项        | 说明           |
-| :-------------:|:-------------:|
-| -p  |  按补丁格式显示每个更新之间的差异。| 
-| --word-diff |  按 word diff 格式显示差异。|
-|--stat  |显示每次更新的文件修改统计信息。|
-|--shortstat    | 只显示 --stat 中最后的行数修改添加移除统计。|
-|--name-only   |  仅在提交信息后显示已修改的文件清单。|
-|--name-status  | 显示新增、修改、删除的文件清单。|
-|--abbrev-commit  |   仅显示 SHA-1 的前几个字符，而非所有的 40 个字符。|
-|--relative-date   |  使用较短的相对时间显示（比如，“2 weeks ago”）。|
-|--graph  |   显示 ASCII 图形表示的分支合并历史。|
-|--pretty  |  使用其他格式显示历史提交信息。可用的选项包括oneline，short，full，fuller 和 format（后跟指定格式）。|
-|--oneline |  --pretty=oneline --abbrev-commit 的简化用法。|
-| zebra stripes | are neat      |
+|     选项       | 说明           | 
+| :-------------:|:-------------:| 
+| -p             |  按补丁格式显示每个更新之间的差异。| 
+| --word-diff    |  按 word diff 格式显示差异。| 
+| --stat  |显示每次更新的文件修改统计信息。| 
+| --shortstat    | 只显示 --stat 中最后的行数修改添加移除统计。| 
+| --name-only   |  仅在提交信息后显示已修改的文件清单。| 
+| --name-status  | 显示新增、修改、删除的文件清单。| 
+| --abbrev-commit  |   仅显示 SHA-1 的前几个字符，而非所有的 40 个字符。| 
+| --relative-date   |  使用较短的相对时间显示（比如，“2 weeks ago”）。| 
+| --graph  |   显示 ASCII 图形表示的分支合并历史。| 
+| --pretty  |使用其他格式显示历史提交信息。可用的选项包括oneline，short，full，fuller 和 format（后跟指定格式）。| 
+|--oneline |  --pretty=oneline --abbrev-commit 的简化用法。| 
+
 ## 自动补全-命令别名
 直接看[这里](http://www.fenby.com/courses/sections/ji-qiao-he-qiao-men/)
