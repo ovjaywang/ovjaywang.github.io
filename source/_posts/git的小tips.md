@@ -4,7 +4,7 @@ date: 2016-06-14 20:59:12
 tags: git
 ---
 Git是当下最流行最舒适的版本控制系统。这里大致把git容易忘记的事情做小结。
-
+<!-- more -->
 # Git Tips
 
 ---
@@ -76,19 +76,124 @@ e.g.
 git log --pretty=format:"%h - %an, %ar : %s" 
 ```
 上式以一个很优美的显示方案：哈希字符串、对象、时间、提交的说明 一行一个提交显示。
-|   选项     |   说明       |
-| :--------------------: |:-------------------------------------------------:|
-| ``-p``      |按补丁格式显示每个更新之间的差异。 |
-| ``--word-diff`` | 按 word diff 格式显示差异。  |
-| ``--stat``      |  显示每次更新的文件修改统计信息。  |
-|``--shortstat``      |只显示 --stat 中最后的行数修改添加移除统计。|
-|``--name-only``|仅在提交信息后显示已修改的文件清单。|
-|``--name-status``|显示新增、修改、删除的文件清单。|
-|``--abbrev-commit``|仅显示 SHA-1 的前几个字符，而非所有的 40 个字符。|
-|``--relative-date``|按位无符号右移|
-|``--graph``|显示 ASCII 图形表示的分支合并历史。|
-|``--pretty``|使用其他格式显示历史提交信息。可用的选项包括oneline，short，full，fuller 和 format（后跟指定格式）。|
-|``--online``|--pretty=oneline --abbrev-commit 的简化用法。|
+对于可显示选项，可选用下表备用词。
+<table class="table table-bordered table-striped table-condensed">
+    <tr>
+        <td>选项 </td>
+        <td>说明</td>
+    </tr>
+    <tr>
+        <td>-p </td>
+        <td>按补丁格式显示每个更新之间的差异。</td>
+    </tr>
+    <tr>
+        <td>--word-diff </td>
+        <td>按 word diff 格式显示差异。</td>
+    </tr>
+    <tr>
+        <td>--stat </td>
+        <td>显示每次更新的文件修改统计信息。</td>
+    </tr>
+    <tr>
+        <td>--shortstat </td>
+        <td>只显示 --stat 中最后的行数修改添加移除统计。</td>
+    </tr>
+    <tr>
+        <td>--name-only </td>
+        <td>仅在提交信息后显示已修改的文件清单。</td>
+    </tr>
+    <tr>
+        <td>--name-status </td>
+        <td>显示新增、修改、删除的文件清单。</td>
+    </tr>
+    <tr>
+        <td>--abbrev-commit </td>
+        <td>仅显示 SHA-1 的前几个字符，而非所有的 40 个字符。</td>
+    </tr>
+    <tr>
+        <td>--relative-date </td>
+        <td>使用较短的相对时间显示（比如，“2 weeks ago”）。</td>
+    </tr>
+    <tr>
+        <td>--graph </td>
+        <td>显示 ASCII 图形表示的分支合并历史。</td>
+    </tr>
+    <tr>
+        <td>--pretty </td>
+        <td>使用其他格式显示历史提交信息。可用的选项包括 oneline，short，full，fuller 和 format（后跟指定格式）。</td>
+    </tr>
+    <tr>
+        <td>--oneline </td>
+        <td>--pretty=oneline --abbrev-commit 的简化用法。</td>
+    </tr>
+</table>
+而对于pretty中的格式，可以自由设定，如下表标注。
+<table>
+    <tr>
+        <td>选项 </td>
+        <td>说明</td>
+    </tr>
+    <tr>
+        <td>%H </td>
+        <td>提交对象（commit）的完整哈希字串</td>
+    </tr>
+    <tr>
+        <td>%h </td>
+        <td>提交对象的简短哈希字串</td>
+    </tr>
+    <tr>
+        <td>%T </td>
+        <td>树对象（tree）的完整哈希字串</td>
+    </tr>
+    <tr>
+        <td>%t </td>
+        <td>树对象的简短哈希字串</td>
+    </tr>
+    <tr>
+        <td>%P </td>
+        <td>父对象（parent）的完整哈希字串</td>
+    </tr>
+    <tr>
+        <td>%p </td>
+        <td>父对象的简短哈希字串</td>
+    </tr>
+    <tr>
+        <td>%an </td>
+        <td>作者（author）的名字</td>
+    </tr>
+    <tr>
+        <td>%ae </td>
+        <td>作者的电子邮件地址</td>
+    </tr>
+    <tr>
+        <td>%ad </td>
+        <td>作者修订日期（可以用 -date= 选项定制格式）</td>
+    </tr>
+    <tr>
+        <td>%ar </td>
+        <td>作者修订日期，按多久以前的方式显示</td>
+    </tr>
+    <tr>
+        <td>%cn </td>
+        <td>提交者(committer)的名字</td>
+    </tr>
+    <tr>
+        <td>%ce </td>
+        <td>提交者的电子邮件地址</td>
+    </tr>
+    <tr>
+        <td>%cd </td>
+        <td>提交日期</td>
+    </tr>
+    <tr>
+        <td>%cr </td>
+        <td>提交日期，按多久以前的方式显示</td>
+    </tr>
+    <tr>
+        <td>%s </td>
+        <td>提交说明</td>
+    </tr>
+</table>
 
 ## 自动补全-命令别名
-直接看[这里](http://www.fenby.com/courses/sections/ji-qiao-he-qiao-men/)
+相当酷炫而有用。直接看[这里](http://www.fenby.com/courses/sections/ji-qiao-he-qiao-men/)
