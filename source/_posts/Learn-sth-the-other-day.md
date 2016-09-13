@@ -1,8 +1,10 @@
 ---
 title: Learn sth. the other day
 date: 2016-08-18 18:58:03
-tags: [learn]
-categories: 槽
+tags:
+  - learn
+categories:
+  - 学习log
 --- 
 
 16-08-31
@@ -15,11 +17,12 @@ $$ \pi =\frac{2Pa}{L} $$
 2. **概率密度函数法**    
 另一种方式根据概率，针中点距离最近的一条线的距离x和与线成的角度y服从独立分布，其中x∈[0,L/2],y∈[0,π/2].相交的情况就是.P(x,y)=X<a×cos(y)
 
-$$f(x,y)=\left\{\begin{matrix}
+$$f(x,y)=\left\\{\begin{matrix}
 \frac{4}{m}& 0<x<\frac{a}{2},0<y<\frac{\pi }{2} \\\\
 0 & Others
-\end{matrix}\right.$$
+\end{matrix}\right.$$    
 
+所以
 16-08-29
 py的机器学习包调用的好的好简单啊。。数据清洗和筛选都很舒服。。
 
