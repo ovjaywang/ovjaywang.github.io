@@ -12,12 +12,12 @@ software
 web  
 **[v2ex](https://v2ex.com)** 启蒙网站   
 **[老D](http://laod.cn/)** host较全更新 移动端不挂ss省电
-
+**[hihocode](http://hihocoder.com/)** 每周思考一道算法的题
 web-tools
 **[encode](http://tool.oschina.net/encode)** 解码ascii utf-8 Unicode等
 **[图床集合](http://upload.otar.im/)** 三个图床源 一般用七牛的smms
-**[颜色转换](http://www.365mini.com/page/convert-color-in-rgb-hex-hsl.htm)* rgb<->hex<->hsl三颜色系统转换
-
+**[颜色转换](http://www.365mini.com/page/convert-color-in-rgb-hex-hsl.htm)** rgb<->hex<->hsl三颜色系统转换
+**[Latex](http://latex.codecogs.com/eqneditor/editor.php)** Latex在线公式编辑，本博公式编辑来源。
    
 tips
 **download youbute video** 在直接在youtube后+ '1s' （续一秒！）Enter即可下载!鉴于Flash Video Downloader、Internet Download Manger等已经招安从良还是这个方法靠谱   
