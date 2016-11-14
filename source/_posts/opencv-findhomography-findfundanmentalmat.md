@@ -50,9 +50,9 @@ opencv 中，进行**图像拼接(全景拼接 航摄拼接 三维重建 街景�
 **灭线vanishing line（消隐线 ）** ：不同的灭线连线，即灭线。如果两组不同的平行线，都平行于大地，则他们的连线就是地平线（horizon line）
 
 * * *
-# 1. 第一个矩阵Essential本质矩阵
+#  第一个矩阵Essential本质矩阵
 
-由于拍摄物体时，摄影中并不能被反映在图像中。如果让第二个观察者同时拍摄下某摄影中心和它所拍的照片呢?
+由于拍摄物体时，摄影中心并不能被反映在图像中。如果让第二个观察者同时拍摄下某摄影中心和它所拍的照片呢?
 
 <center>![](http://ooo.0o0.ooo/2016/02/25/56cfbd34f3c9e.png)</center>
 
@@ -60,11 +60,11 @@ opencv 中，进行**图像拼接(全景拼接 航摄拼接 三维重建 街景�
 
 <center>![](http://ooo.0o0.ooo/2016/02/25/56cfc06a0ddc5.png)</center>
 
-**极线约束的理论就是左侧的物体成像在右侧的同名点一定在erpr上。**反映左右极线关系的就是表达向量和右向量之间的约束关系的——**本质矩阵****Eseential Matrix****。**但大多数情况下，别的摄影中心并不一定会被成像，即极点不在相片中。如下图
+**极线约束的理论就是左侧的物体成像在右侧的同名点一定在erpr上。**反映左右极线关系的就是表达向量和右向量之间的约束关系的——**本质矩阵**即**Eseential Matrix**。但大多数情况下，别的摄影中心并不一定会被成像，即极点不在相片中。如下图
 
 <center>![](http://ooo.0o0.ooo/2016/02/25/56cfc2d883aab.png)</center>
 
-具体的矩阵运算参考**  **[**计算机视觉基础4——对极几何(Epipolar Geometry)**](http://www.cnblogs.com/gemstone/archive/2011/12/20/2294551.html) ，原理为三线同面（下图蓝色区域三边）  
+具体的矩阵运算参考 [**计算机视觉基础4——对极几何(Epipolar Geometry)**](http://www.cnblogs.com/gemstone/archive/2011/12/20/2294551.html) ，原理为**三线同面**（下图蓝色区域三边）  
 
 <center>![](http://ooo.0o0.ooo/2016/02/24/56ce77dc874bc.png) </center>
 
@@ -72,7 +72,7 @@ opencv 中，进行**图像拼接(全景拼接 航摄拼接 三维重建 街景�
 
 <center>![](http://ooo.0o0.ooo/2016/02/24/56ce77fc78812.png)</center>
 
-**本质矩阵** 采用的是相机的外部参数，也就是说采用相机坐标(The essential matrix uses CAMERA coordinates)，不涉及相机内参数，如果要分析数字图像，则要考虑坐标(u,v)，此时需要用到内部参数(To use image coordinates we must consider the INTRINSIC camera parameters)
+**本质矩阵** 采用的是相机的**外部参数**，也就是说采用相机坐标(The essential matrix uses CAMERA coordinates)，不涉及相机内参数，如果要分析数字图像，则要考虑坐标(u,v)，此时需要用到内部参数(To use image coordinates we must consider the INTRINSIC camera parameters)
 
 ** 谨记1：Essential Matrix是连结两个摄影中心指向同名点的向量的矩阵，秩为2。**
 
@@ -82,7 +82,7 @@ opencv 中，进行**图像拼接(全景拼接 航摄拼接 三维重建 街景�
 
 **<center>![](http://ooo.0o0.ooo/2016/02/25/56cfcab0b492e.png)</center>**
 
-由向量引申而出的，是同名点的像素坐标，原理是共线方程。
+上式Pr Pl均基于物方三维坐标。同理由向量引申而出的，则是同名点的像素坐标，原理是**共线方程**。
 
 **二维同名点**
 
@@ -116,13 +116,13 @@ opencv 中，进行**图像拼接(全景拼接 航摄拼接 三维重建 街景�
 
 * * *
 
-# ** 2.第2个矩阵 Fundamental基础矩阵**
+# ** 第2个矩阵 Fundamental基础矩阵**
 
 另一个需要提到的概念是基础矩阵。
 
 Essential矩阵使用CameraCoords相机坐标系。尽管其中可计算像素坐标，但仍然以摄影中心为原点，像平面所有点z值都是f。当考虑相机内参数时，这就是FundamentalMatrix基础矩阵
 <center>![](http://ooo.0o0.ooo/2016/01/22/56a2556c54d1d.png)</center>
-该图显示了fundamentalmatrix（基础矩阵）的基本内涵。p q分别为同名点。计算基础矩阵需要考虑到内参数的仿射变换。M为内参数的矩阵，包含6个参数的3*3矩阵。
+该图显示了fundamentalmatrix（基础矩阵）的基本内涵。p q分别为同名点。计算基础矩阵需要考虑到内参数的**仿射变换**。M为内参数的矩阵，包含6个参数的3*3矩阵。
 <center>![](http://ooo.0o0.ooo/2016/02/26/56d069db39519.png)</center>
 将上式中的Camera坐标提到一边，带入基本矩阵解求对极同名点的方程，即可得到F的表达式.
 <center>![](http://ooo.0o0.ooo/2016/02/24/56ce7854f3d64.jpg)</center>
@@ -196,7 +196,7 @@ T是单位矩阵，代表左图的极点，可由E计算。其余的参数：
 <center>![](http://ooo.0o0.ooo/2016/02/29/56d3f7745f920.png)</center>
 
 ***
-# ** 3. 第二个矩阵 Homography（单映）矩阵**
+# **  第二个矩阵 Homography（单映）矩阵**
 
 findhomography的前提是2D的转换，本意为单映（包含平移、仿射、尺度三种变换），试图找到一个3*3的投影矩阵，能够把1图中所有的点，通过某种形变，匹配到2图中去。当基线很小的时候(视差变化小，扭曲形变也少)，这个方法能够计算出精度极高的解。
 当然可以首先参考opencv的[文档](http://docs.opencv.org/2.4/modules/calib3d/doc/camera_calibration_and_3d_reconstruction.html?highlight=findhomography) 这里首先介绍二维映射的单映（homography）矩阵
@@ -254,7 +254,7 @@ $$$$\sim \begin{bmatrix} h_11 & h_12&h_13 \\\\ h_21 & h_22 & h_23 \\\\ h_31 & h_
 
 * * *
 
-# ** 4. Homography（单映）矩阵的求取**
+# **  Homography（单映）矩阵的求取**
 
 参考[这里](http://www.robots.ox.ac.uk/~vgg/presentations/bmvc97/criminispaper/node3.html)  只要大于4个匹配点，都认为是冗余测量，必须融合数据。文章里提到了三种解求二维面到面的单应矩阵的球法。
 

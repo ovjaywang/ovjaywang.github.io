@@ -17,7 +17,7 @@ categories: 槽
 <!-- more -->
 hexo坑还是挺多的。
 $$ \begin{bmatrix} x \\\\ y \\\\ 1 
-\end{bmatrix} \sim \begin{bmatrix} f & 0 & 0 & 0 \\\\ 0 & f & 0 & 0 \\\\ 0 & 0 & 1 & 0 \end{bmatrix} \begin{bmatrix} r_11 & r_12 & r_13 & t_x \\\\ r_21 & r_22 & r_23 & t_y \\\\ r_31 & r_32& r_33 & t_z \\\\ 0 & 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} p \\\\ q \\\\ 0 \\\\ 1 \end{bmatrix} \sim \begin{bmatrix} fr_11 & fr_12 & ft_x \\\\ fr_21 & fr_22 & ft_y \\\\ r_31 & r_32 & t_z \end{bmatrix} \begin{bmatrix} p \\\\ q \\\\ 1 \end{bmatrix} 
+\end{bmatrix} \sim \begin{bmatrix} f & 0 & 0 & 0 \\\\ 0 & f & 0 & 0 \\\\ 0 & 0 & 1 & 0 \end{bmatrix} \begin{bmatrix} r\_{11} & r\_{12} & r\_{13} & t_x \\\\ r\_{21} & r\_{22} & r\_{23} & t_y \\\\ r\_{31} & r\_{32}& r\_{33} & t_z \\\\ 0 & 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} p \\\\ q \\\\ 0 \\\\ 1 \end{bmatrix} \sim \begin{bmatrix} fr_11 & fr_12 & ft_x \\\\ fr_21 & fr_22 & ft_y \\\\ r\_{31} & r_32 & t_z \end{bmatrix} \begin{bmatrix} p \\\\ q \\\\ 1 \end{bmatrix} 
 $$$$\sim \begin{bmatrix} h_11 & h_12&h_13 \\\\ h_21 & h_22 & h_23 \\\\ h_31 & h_32 & h_33 \end{bmatrix} \begin{bmatrix} p \\\\ q \\\\ 1 \end{bmatrix}$$
 
 
