@@ -20,16 +20,24 @@ $$ \begin{bmatrix} x \\\\ y \\\\ 1
 \end{bmatrix} \sim \begin{bmatrix} f & 0 & 0 & 0 \\\\ 0 & f & 0 & 0 \\\\ 0 & 0 & 1 & 0 \end{bmatrix} \begin{bmatrix} r\_{11} & r\_{12} & r\_{13} & t_x \\\\ r\_{21} & r\_{22} & r\_{23} & t_y \\\\ r\_{31} & r\_{32}& r\_{33} & t_z \\\\ 0 & 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} p \\\\ q \\\\ 0 \\\\ 1 \end{bmatrix} \sim \begin{bmatrix} fr_11 & fr_12 & ft_x \\\\ fr_21 & fr_22 & ft_y \\\\ r\_{31} & r_32 & t_z \end{bmatrix} \begin{bmatrix} p \\\\ q \\\\ 1 \end{bmatrix} 
 $$$$\sim \begin{bmatrix} h_11 & h_12&h_13 \\\\ h_21 & h_22 & h_23 \\\\ h_31 & h_32 & h_33 \end{bmatrix} \begin{bmatrix} p \\\\ q \\\\ 1 \end{bmatrix}$$
 
+$$\begin{pmatrix}
+     1 & a\_1 & a\_1^2 & \cdots & a\_1^n \\\\
+     1 & a\_2 & a\_2^2 & \cdots & a\_2^n \\\\
+     \vdots  & \vdots& \vdots & \ddots & \vdots \\\\
+     1 & a\_m & a\_m^2 & \cdots & a\_m^n    
+\end{pmatrix}$$
 
 $$f(x,y)=\left\\{\begin{matrix}
 \frac{4}{m}& 0<x<\frac{a}{2},0<y<\frac{\pi }{2} \\\\
 0 & Others
 \end{matrix}\right.$$
 
-# 公式和Markdown冲突#
+# 公式和Markdown冲突 #
 由于下划线在LaTex公式编辑器和MarkDown中都有，因此如果在公式中有两个xiahuaxian"_"则必须注意不要发生冲突，需加入反斜杠在下划线前！！在SublimeText中也可以看到如果又两个双下划线字体已变成斜体。
-
 $$ 2H\_2 = 2O\_2+H\_2$$
+
+# 括号随比例显示不出  #
+呵呵哒，无解。只能用小的。切记不能用\left \right将左右公式包含进来
 
 # WordPress迁移 #
 这个使用hexo-migrate-wordpress插件还不错 但是切记导出的xml是文章 tag和category会自动建好。否则使用hexo migrate wordpress 会报错
@@ -56,7 +64,8 @@ deploy:
 # 专注写作 #
 放弃各种挂饰 插件 统计吧 seo和评论就足够了。多写作多讨论 当然很想适时的学一发nodejs因为折腾了好久ig的照片还是没能get进来。
 
-
+# Latex公式 #
+[Latex公式与Marked.js共存](http://blog.csdn.net/emptyset110/article/details/50123231)，否则，需要转义编写个别字符
 {% gist 86cc40065a691b7c4534e483249583dd transValue.java %}
 
 {% blockquote @DevDocs https://twitter.com/devdocs/status/356095192085962752 %}
