@@ -89,3 +89,4 @@ deploy:
    repo: 
       github: https://ovjaywang:wjy20051129@github.com/ovjaywang/ovjaywang.github.io.git,master
       coding: https://ovjaywang:wjy20051129@git.coding.net/ovjaywang/ovjaywang.git,master
+      gitlab: https://ovjaywang:wjy20051129@gitlab.com/ovjaywang/ovjaywang.gitlab.io.git,master
