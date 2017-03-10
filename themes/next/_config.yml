@@ -34,6 +34,7 @@ menu:
   tags: /tags
   sth: /sth
   pic-movie: /a-pic-a-movie 
+  bi: /biger
   #commonweal: /404.html
 
 
@@ -53,6 +54,7 @@ menu_icons:
   commonweal: heartbeat
   sth: child
   pic-movie: film
+  bi: fa-thumbs-up
 
 
 
