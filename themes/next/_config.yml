@@ -48,13 +48,13 @@ menu_icons:
   #KeyMapsToMenuItemKey: NameOfTheIconFromFontAwesome
   home: home
   about: user
-  categories: th
+  #categories: th
   tags: tags
   archives: archive
-  commonweal: heartbeat
+  #commonweal: heartbeat
   sth: child
   pic-movie: film
-  bi: fa-thumbs-up
+  bi: thumbs-o-up
 
 
 

@@ -13,12 +13,34 @@ date: 2017-03-10 15:39:38
 
 2017.03
 
+sony h.ear on Wireless NC MDR-100ABN无线降噪立体声耳机
+
+- 朱砂红(骚)
+
+- 1499¥
+
+- 主动降噪
+
+- 无线+有线
+
+- jd-500神券
+
+  ![MDR-1--ABN](https://ooo.0o0.ooo/2017/03/17/58cb8692557c4.jpg)
+
+  ​
+
+------
+
+
+
+2017.03
+
 sony NW-A35HN HIFI播放器
 - 配降噪耳塞
 - 骚红
 - 1588¥
 - 张大妈
-![xiaozaizi](https://ooo.0o0.ooo/2017/03/10/58c25e529f2e1.jpg)
+  ![xiaozaizi](https://ooo.0o0.ooo/2017/03/10/58c25e529f2e1.jpg)
 
 ------
 

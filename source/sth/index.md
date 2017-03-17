@@ -20,7 +20,7 @@ date: 2016-04-25 01:02:50
 
 **[fileexplore-iOS](https://itunes.apple.com/cn/app/id510282524?uo=4&at=10lJSw )** 多平台文件共享管理软件。iOS通过局域网直接浏览三平台pc的共享文件
 
-
+**[nearlock](http://nearlock.me/)**  iOS蓝牙或wifi自动锁定和解锁mac 包括密码输入
 
 ## websites  
 
