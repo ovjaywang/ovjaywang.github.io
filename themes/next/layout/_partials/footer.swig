@@ -1,5 +1,4 @@
 <div class="copyright" >
-  <% if (page.mathjax){ %> <%- partial('plugin/mathjax') %> <% } %> 
   {% set current = date(Date.now(), "YYYY") %}
   &copy; {% if theme.since and theme.since != current %} {{ theme.since }} - {% endif %}
   <span itemprop="copyrightYear">{{ current }}</span>
