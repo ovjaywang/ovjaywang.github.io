@@ -1,0 +1,894 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/ven/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.useso.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/ven/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="检校,后方交会,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ov智商捉急" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="各种文档看得累。条理不清结构不明缺斤少两。决定自己总结一个。（公式较多，墙外浏览更顺哟）
+ 一些注意
+   后方交会是为了获取影像的内外方位数据，其中外方位数据可以通过GPS、INS（惯性导航系统）、雷达、星相摄像机来获取；然而由于穷穷穷，只能利用影响覆盖范围内的一定控制点来计算空间坐标与影响坐标之间的关系，来反算外方位元素。
+   多片检校基于单片检校。在矩阵组合时分别解算外方位元素。但使用同一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="后方交会检校(1)--前景 共线方程及其线性化">
+<meta property="og:url" content="http://ovjaywang.github.io/2015/10/10/后方交会检校(1)/index.html">
+<meta property="og:site_name" content="ov智商捉急">
+<meta property="og:description" content="各种文档看得累。条理不清结构不明缺斤少两。决定自己总结一个。（公式较多，墙外浏览更顺哟）
+ 一些注意
+   后方交会是为了获取影像的内外方位数据，其中外方位数据可以通过GPS、INS（惯性导航系统）、雷达、星相摄像机来获取；然而由于穷穷穷，只能利用影响覆盖范围内的一定控制点来计算空间坐标与影响坐标之间的关系，来反算外方位元素。
+   多片检校基于单片检校。在矩阵组合时分别解算外方位元素。但使用同一">
+<meta property="og:updated_time" content="2017-01-17T16:44:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="后方交会检校(1)--前景 共线方程及其线性化">
+<meta name="twitter:description" content="各种文档看得累。条理不清结构不明缺斤少两。决定自己总结一个。（公式较多，墙外浏览更顺哟）
+ 一些注意
+   后方交会是为了获取影像的内外方位数据，其中外方位数据可以通过GPS、INS（惯性导航系统）、雷达、星相摄像机来获取；然而由于穷穷穷，只能利用影响覆盖范围内的一定控制点来计算空间坐标与影响坐标之间的关系，来反算外方位元素。
+   多片检校基于单片检校。在矩阵组合时分别解算外方位元素。但使用同一">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 后方交会检校(1)--前景 共线方程及其线性化 | ov智商捉急 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+    <div class="site-meta-headline">
+      <a>
+        <img class="custom-logo-image" src="/images/touxiang.jpg" alt="ov智商捉急">
+      </a>
+    </div>
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">ov智商捉急</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/me" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sth">
+          <a href="/sth" rel="section">
+            
+              <i class="menu-item-icon fa fa-child fa-fw"></i> <br>
+            
+            有料
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-pic-movie">
+          <a href="/a-pic-a-movie" rel="section">
+            
+              <i class="menu-item-icon fa fa-film fa-fw"></i> <br>
+            
+            一影一图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-bi">
+          <a href="/bigger" rel="section">
+            
+              <i class="menu-item-icon fa fa-thumbs-o-up fa-fw"></i> <br>
+            
+            装逼
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ZtWPUvzBjdXDQ7iNrTbW','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                后方交会检校(1)--前景 共线方程及其线性化
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-10-10T23:29:57+08:00" content="2015-10-10">
+              2015-10-10
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/什么都学一下/" itemprop="url" rel="index">
+                    <span itemprop="name">什么都学一下</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/什么都学一下/学习log/" itemprop="url" rel="index">
+                    <span itemprop="name">学习log</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/10/10/后方交会检校(1)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/10/后方交会检校(1)/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>各种文档看得累。条理不清结构不明缺斤少两。决定自己总结一个。（公式较多，墙外浏览更顺哟）</p>
+<p> 一些注意</p>
+<p><strong>   后方交会是为了获取影像的内外方位数据，其中外方位数据可以通过GPS、INS（惯性导航系统）、雷达、星相摄像机来获取；然而由于穷穷穷，只能利用影响覆盖范围内的一定控制点来计算空间坐标与影响坐标之间的关系，来反算外方位元素。
+</strong>   多片检校基于单片检校。在矩阵组合时分别解算外方位元素。但使用同一组内方位元素。在一个大矩阵内进行。<br><strong>   后方交会可以只检校外方位元素。当需要进行畸变差校正时（即畸变差不可忽略时），可在方程中加入畸变差项进行迭代；当需要进行内方位元素检校时（即内方位元素精度没有达到需求），可在方程中加入内方位元素进行迭代。
+</strong>   对于畸变差校正，包括径向畸变、切向畸变、薄棱镜畸变，其中多数情况考察径向畸变的前两项系数k1 k2和切向畸变p1 p2 ，在某些组合相机的畸变模型中，还包括α像素非正方形比例和βccd非正交性畸变系数。<br><strong>   对于内方位元素检校，有的地方将f分为fx和fy即f在坐标两个方向上的像素值（由于有的xy不是同一比例尺即不是正方形）
+</strong>   检校，就是纠正相机各个方面的误差和精度，可以得到相机内部的主点、焦距、畸变的客观信息，这些信息在大部分情况下不会轻易改变；而相机外部的空间位置时时刻刻都在改变，但一些论文指出，在焦距变化、空间位置变化、移轴、高空拍摄情况下，相机的焦距、主点位置也会随之或多或少的改变，因此迭代时最好能带上这些参数一起进行平差。</p>
+<p><strong> 一些重要概念</strong><br>后方交会基于<span style="COLOR: #ff0000"><strong>共线方程</strong></span>，物理含义为同一个三维坐标系中投影中心、物方点、像平面投影的点在同一条直线上。</p>
+<p> $$x-x_{0}=-f\cdot \frac{a_{1}(X-X_{s})+b_{1}(Y-Y_{s})+c_{1}(Z-Z_{s})}{a_{3}(X-X_{s})+b_{3}(Y-Y_{s})+c_{3}(Z-Z_{s})}$$</p>
+<p> $$y-y_{0}=-f\cdot \frac{a_{2}(X-X_{s})+b_{2}(Y-Y_{s})+c_{2}(Z-Z_{s})}{a_{3}(X-X_{s})+b_{3}(Y-Y_{s})+c_{3}(Z-Z_{s})}$$</p>
+<p> 上式中，包含留个外方位元素，即Xs、Ys、Zs、φ、Ω、k。只有确定了六个外方位元素，才能确定摄影中心在物方空间的位置。a1、a2、a3、b1、b2、b3、c1、c2、c3是需要计算的直线方程的系数，其物理性质是3个外方位角元素组成的9个方向余弦。该方程利用了相似三角形的性质；f是焦距长，X Y Z均值控制点的测量坐标，默认为精确的，因此物方控制点测量的精度很大程度上决定了最后检校的精度；x y是X Y Z对应的像平面的坐标，x0，y0是主点在像平面的坐标，有时当作已知并不再改变，有时也参与迭代计算。</p>
+<p> 共线条件方程用途有：</p>
+<ol>
+<li>单像、多像空间后方交会；多像空间前方交会</li>
+<li>解析空中三角测量的光束法平差</li>
+<li>数字投影的基础</li>
+<li>计算模拟影像数据（已知内外方位元素和物方坐标点求像点）</li>
+<li>DEM与共线方程制作正射影像</li>
+<li>DEM与共线方程进行单幅影像测图</li>
+</ol>
+<blockquote>
+<p><strong>注意 一个方程代表一个点在像平面和物方世界的关系，因此一个点对应两个方程，若有n个控制点，则对应2n个方程</strong></p>
+</blockquote>
+<p> 若f x0 y0当作已知，则有外方位元素6个未知数，因此需要6个方程，即3个控制点的方程；若f x0 y0当作未知，则有9个未知数，因此需要至少5个控制点的方程。当然，很多文章也指出，<strong>越多的冗余数据</strong>参与计算得到的结果也越精确；<strong>越多的像片</strong>参与计算，得到的结果越精确；<strong>更均匀的控制点分布</strong>，能更多的控制整张像片，均匀的分布在边缘，得到的结果更精确。</p>
+<p> 一般情况下，令<br> $$\overline{X}=a_{1}(X-X_{s})+b_{1}(Y-Y_{s})+c_{1}(Z-Z_{s})$$</p>
+<p>$$\overline{Y}=a_{2}(X-X_{s})+b_{2}(Y-Y_{s})+c_{2}(Z-Z_{s})$$</p>
+<p>$$\overline{Z}=a_{3}(X-X_{s})+b_{3}(Y-Y_{s})+c_{3}(Z-Z_{s})$$</p>
+<p> 而用矩阵的形式可以表示为：</p>
+<p> $$\begin{pmatrix}\overline{X}\\\overline{Y}\\\overline{Z}\end{pmatrix}=\begin{pmatrix}a_{1}&amp;b_{1}&amp;c_{1}\\a_{2}&amp;b_{2}&amp;c_{2}\\a_{3}&amp;b_{3}&amp;c_{3}\end{pmatrix}\cdot\begin{pmatrix}X-Xs\\Y-Ys\\Z-Zs\end{pmatrix}=R^{T}\begin{pmatrix}X-Xs\\Y-Ys\\Z-Zs\end{pmatrix}$$</p>
+<p>这里R是旋转矩阵，且$R^{T}=R^{-1}$,行列式的值为0，即任意元素等于其代数余子式的值.则共线方程变为：</p>
+<p> $$x-x_{0}=-f\cdot \frac{\overline{X}}{\overline{Z}},y-y_{0}=-f\cdot \frac{\overline{Y}}{\overline{Z}}$$</p>
+<p> 由于上式是共线方程的变形，因此Fx和Fy是六个外方位元素为参数的函数。由于方程是非线性的，因此不能解求数值，<strong>需要对方程进行线性化</strong>。思路是，对上式按泰勒级数在初值处展开并保留一次项，将非线性方程转化为各参数<span style="COLOR: #ff0000"><strong>改正数</strong></span>的线性方程</p>
+<p> 设<span style="COLOR: #ff0000">初值</span>为$$X_{S}^{0},X_{S}^{0},Z_{S}^{0},\varphi^{0},\omega^{0},\kappa {0},X^{0},Y^{0},Z^{0},x_{0}^{0},y_{0}^{0},f^{0}$$</p>
+<p> 相应的<span style="COLOR: #ff0000">改正数</span>为</p>
+<p> $$dXs=\triangle Xs=Xs-Xs^{0},dYs=\triangle Ys=Ys-Ys^{0},dZs=\triangle Zs=Zs-Zs^{0}$$</p>
+<p> $$d\varphi=\triangle \varphi=\varphi-\varphi^{0},d\omega=\triangle \omega=\omega-\omega^{0},d\kappa=\triangle \kappa=\kappa-\kappa^{0}$$</p>
+<p> $$dX=\triangle X=X-X^{0},dY=\triangle Y=Y-Y^{0},dZ=\triangle Z=Z-Z^{0}$$</p>
+<p> &nbsp;则<font color="#FF0000" size="5">共线方程的泰勒一次展开一般式</font>为<font color="#FF0000" size="5">①</font></p>
+<p> $$x=(x)+\frac{\partial x}{\partial Xs}dXs+\frac{\partial x}{\partial Ys}dYs+\frac{\partial x}{\partial Zs}dZs+\frac{\partial x}{\partial \varphi }d\varphi +\frac{\partial x}{\partial \omega }d\omega +\frac{\partial x}{\partial \kappa }d\kappa +\frac{\partial x}{\partial X}dX+\frac{\partial x}{\partial Y}dY+\frac{\partial x}{\partial x_{0}}dx_{0}+\frac{\partial x}{\partial y_{0}}dy_{0}+\frac{\partial x}{\partial f}df$$</p>
+<p>$$y=(y)+\frac{\partial y}{\partial Xs}dXs+\frac{\partial y}{\partial Ys}dYs+\frac{\partial y}{\partial Zs}dZs+\frac{\partial y}{\partial \varphi }d\varphi +\frac{\partial y}{\partial \omega }d\omega +\frac{\partial y}{\partial \kappa }d\kappa +\frac{\partial y}{\partial X}dX+\frac{\partial y}{\partial Y}dY+\frac{\partial y}{\partial x_{0}}dx_{0}+\frac{\partial y}{\partial y_{0}}dy_{0}+\frac{\partial y}{\partial f}df$$</p>
+<p>这是一个重要的总结性公式。(x)(y)分别是内方位元素x，y的初值。式中包含了所有内外元素和物放测量点。当进行不同矩阵运算时，可以选择需要的精度不足够的进行迭代计算。</p>
+<p>其中，对x和y求各未知项的偏导：</p>
+<p> $$\frac{\partial x}{\partial Xs}=-f\cdot \frac{\frac{\partial \overline{X}}{\partial Xs}\overline{Z}-\frac{\partial \overline{Z}}{\partial Xs}\overline{X}}{\overline{Z}^{2}}=-\frac{f}{\overline{Z}^{2}}(-a_{1}\overline{Z}+a_{3}\overline{X})=\frac{1}{\overline{Z}}[a_{1}f-a_{3}f\frac{\overline{X}}{\overline{Z}}]=\frac{1}{\overline{Z}}[a_{1}f+a_{3}(x-x_{0})]$$</p>
+<p> 同理，其他的偏导为</p>
+<p> $$\begin{align}<br> \frac{\partial x}{\partial Ys} &amp; =\frac{1}{\overline{Z}}[b_{1}f+b_{3}(x-x_{0})] \\<br> \frac{\partial x}{\partial Zs} &amp; =\frac{1}{\overline{Z}}[c_{1}f+b_{3}(x-x_{0})] \\<br> \frac{\partial y}{\partial Xs} &amp; =\frac{1}{\overline{Z}}[a_{2}f+a_{3}(x-x_{0})] \\<br> \frac{\partial y}{\partial Ys} &amp; =\frac{1}{\overline{Z}}[b_{2}f+b_{3}(x-x_{0})] \\<br> \frac{\partial y}{\partial Zs} &amp; = \frac{1}{\overline{Z}}[c_{2}f+c_{3}(x-x_{0})] \\<br>\frac{\partial x}{\partial f} &amp; =\frac{x-x_{0}}{f}=-\frac{\overline{X}}{\overline{Z}} \\<br>\frac{\partial y}{\partial f} &amp; =\frac{y-y_{0}}{f}=-\frac{\overline{Y}}{\overline{Z}} \\<br>\frac{\partial x}{\partial x_{0}} &amp; =1,\frac{\partial x}{\partial y_{0}}=0\\<br>\frac{\partial y}{\partial x_{0}} &amp; =0,\frac{\partial y}{\partial y_{0}}=1<br>\end{align}$$</p>
+<p> 这里相对比较难解决的是角元素的偏导，关于角度的问题可以参考第三篇。</p>
+<p> 角度的变换在这里不再详述，两个坐标系之间的转换可以归结为变换矩阵的求取。三个角元素共同构成了矩阵的元素确定。 由于</p>
+<p>$$R^{T}=R_{\kappa }^{T}R_{\omega }^{T}R_{\varphi }^{T} $$</p>
+<p>因而，难度转到求取$\overline{X}\overline{Y} \overline{Z} $对角元素的偏导上。对角元素求偏导可以分为三个步骤：</p>
+<p>①求各个方向余弦$a_{i},b_{i},c_{i}$对ω、k、φ的偏导数。共27个。</p>
+<p>②求$\overline{X},\overline{Y},\overline{Z}$对ω、k、φ的偏导数，共9个。</p>
+<p>③求x、y对ω、k、φ的偏导数，共6个。</p>
+<p>如下是$\overline{X},\overline{Y},\overline{Z}$对φ的偏导，三个参数写在矩阵中，有的地方也展开写成每一项的等式形式。</p>
+<p>$$\begin{align}<br>\frac{\partial }{\partial \varphi }\begin{pmatrix}\overline{X}\\\overline{Y}\\\overline{Z}\end{pmatrix}&amp;=R_{\kappa }^{T}R_{\omega }^{T}\frac{\partial R_{\varphi }^{T}}{\partial \varphi }\begin{pmatrix}X-Xs\ Y-Ys\ Z-Zs\end{pmatrix}=R_{\kappa }^{T}R_{\omega }^{T}\frac{\partial R_{\varphi }^{T}}{\partial \varphi }(R^{T})^{-1}\begin{pmatrix}\overline{X}\ \overline{Y}\ \overline{Z}\end{pmatrix}=R_{\kappa }^{T}R_{\omega }^{T}\frac{\partial R_{\varphi }^{T}}{\partial \varphi }R\begin{pmatrix}\overline{X}\ \overline{Y}\ \overline{Z}\end{pmatrix}\\\ &amp;=R_{\kappa }^{T}R_{\omega }^{T}(R_{\varphi }^{T}R_{\varphi })\frac{\partial R_{\varphi }^{T}}{\partial \varphi }R\begin{pmatrix}\overline{X}\ \overline{Y}\ \overline{Z}\end{pmatrix}=R^{T}R_{\varphi }\frac{\partial R_{\varphi }^{T}}{\partial \varphi }R\begin{pmatrix}\overline{X}\ \overline{Y}\ \overline{Z}\end{pmatrix}<br>\end{align}$$</p>
+<p>带入具体系数，上式可变形为<br>$$<br>\begin{matrix}<br>\begin{pmatrix}a_{1} &amp; b_{1} &amp; c_{1}\\a_{2} &amp; b_{2} &amp; c_{2}\\a_{3} &amp; b_{3} &amp; c_{3}\end{pmatrix}\begin{pmatrix}0 &amp; 0 &amp;1\\0 &amp; 0 &amp; 0\\\ -1 &amp; 0 &amp; 0\end{pmatrix}\begin{pmatrix}a_{1} &amp; a_{2} &amp; a_{3}\\b_{1} &amp; b_{2} &amp; b_{3}\\c_{1} &amp; c_{2}&amp;c_{3} \end{pmatrix}\begin{pmatrix}\overline{X}\\\overline{Y}\\\overline{Z} \end{pmatrix}\\<br>=\begin{pmatrix}0 &amp;-a_{2}c_{1}+a_{1}c_{2}&amp;-a_{3}c_{1}+a_{1}c_{3}\\\ -a_{1}c_{2}+a_{2}c_{1} &amp; 0 &amp; -a_{3}c_{2}+a_{2}c_{3}\\\ -a_{1}c_{3}+a_{3}c_{1}&amp; -a_{2}c_{3}+a_{3}c_{2} &amp;0\end{pmatrix}\begin{pmatrix}\overline{X}\\\overline{Y}\\\overline{Z} \end{pmatrix} \\<br>= \begin{pmatrix}0 &amp; -b_{3} &amp; b_{2}\\b_{3}&amp;0&amp;-b_{1}\\\ -b_{2}&amp;b_{1}&amp;0\end{pmatrix}\begin{pmatrix}\overline{X}\\\overline{Y}\\\overline{Z} \end{pmatrix}<br>\end{matrix}<br>$$<br>其中利用了旋转矩阵一个元素的值<font color="#FF0000">等于代数余子式的值</font>。如下是$\overline{X},\overline{Y},\overline{Z}$对ω的偏导。</p>
+<p>$$\begin{align}<br>\frac{\partial }{\partial \omega }\begin{pmatrix}\overline{X}\\\overline{Y}\\\overline{Z}\end{pmatrix} &amp;=R_{\kappa }^{T}\frac{\partial R_{\omega}^{T}}{\partial \omega }R_{\varphi }^{T}\begin{pmatrix}X-Xs\\Y-Ys\\Z-Zs\end{pmatrix}=R_{\kappa}^{T}\frac{\partial R_{\omega }^{T}}{\partial \omega }R_{\varphi }^{T}(R_{\varphi }R_{\omega }R_{\kappa })\begin{pmatrix}\overline{X}\\\overline{Y}\\\overline{Z}\end{pmatrix}\\<br>&amp;=R_{\kappa }^{T}\frac{\partial R_{\omega }^{T}}{\partial \omega}R_{\omega }R_{\kappa }\begin{pmatrix}\overline{X}\ \overline{Y}\ \overline{Z}\end{pmatrix}=<br>\begin{pmatrix}0&amp;0&amp;sin\kappa\\\ 0&amp;0&amp;cos\kappa \\\ -sin\kappa&amp;-cos \kappa&amp;0\end{pmatrix}\begin{pmatrix}\overline{X}\ \overline{Y}\ \overline{Z}\end{pmatrix}<br>\end{align}$$其中，这里用到了</p>
+<p>$$\begin{pmatrix}\overline{X}\\\overline{Y}\\\overline{Z}\end{pmatrix}=R^{T}\begin{pmatrix}X-Xs\\Y-Ys\\Z-Zs\end{pmatrix}=(R_{\varphi}R_{\omega}R_{\kappa })^{T}\begin{pmatrix}X-Xs\\Y-Ys\\Z-Zs\end{pmatrix}=R_{\kappa }^{T}R_{\omega }^{T}R_{\varphi }^{T}\begin{pmatrix}X-Xs\\Y-Ys\\Z-Zs\end{pmatrix}$$</p>
+<p>$$\begin{pmatrix}X-Xs\\Y-Ys\\Z-Zs\end{pmatrix}=(R^{T})^{-1}\begin{pmatrix}\overline{X}\\\overline{Y}\\\overline{Z}\end{pmatrix}=R\begin{pmatrix}\overline{X}\\\overline{Y}\\\overline{Z}\end{pmatrix}=R_{\varphi }R_{\omega }R_{\kappa }\begin{pmatrix}\overline{X}\\\overline{Y}\\\overline{Z}\end{pmatrix}$$</p>
+<p>如下是$\overline{X},\overline{Y},\overline{Z}$对k的偏导。</p>
+<p>$$\begin{align}<br>\frac{\partial }{\partial \kappa }\begin{pmatrix}\overline{X}\ \overline{Y}\ \overline{Z}\end{pmatrix}&amp;=\frac{\partial R_{\kappa }^{T}}{\partial \kappa }R_{\omega }^{T}R_{\varphi }^{T}\begin{pmatrix}X-Xs\\Y-Ys\\Z-Zs\end{pmatrix}\\&amp;=\frac{\partial R_{\kappa }^{T}}{\partial \kappa }(R_{\kappa }R_{\kappa }^{T})R_{\omega }^{T}R_{\varphi }^{T}\begin{pmatrix}X-Xs\\Y-Ys\\Z-Zs\end{pmatrix}\\<br>&amp;=\frac{\partial R_{\kappa }^{T}}{\partial \kappa }R_{\kappa }\begin{pmatrix}\overline{X}\ \overline{Y}\ \overline{Z}\end{pmatrix}=\begin{pmatrix}\overline{Y} \\\- \overline{X}\\0\end{pmatrix}<br>\end{align}$$<br> 通过以上三式可得到x和y对各角元素未知数的偏导。有的地方，将x，y先分别除以$\overline{Z}$,这样可以在求取偏导的时候减少计算量。<br>$$<br>\begin{align}<br>\frac{\partial x}{\partial \varphi}<br>&amp; = -\frac{f}{\overline{Z}^{2}}(\frac{\partial \overline{X}}{\partial \varphi }\overline{Z}-\frac{\partial \overline{Z}}{\partial \varphi }\overline{X}) \\<br> &amp; = -\frac{f}{\overline{Z}^{2}}(-b_{3}\overline{Y}+b_{2}\overline{Z})\overline{Z}+\frac{f}{\overline{Z}^{2}}(b_{2}\overline{X}-b_{1}\overline{Y})\overline{X} \\<br>  &amp; = -(y-y_{0})b_{3}-fb_{2}-\frac{(x-x_{0})^{2}}{f}b_{2}+\frac{(x-x_{0})(y-y_{0})}{f}b_{1} \\<br> &amp; = \frac{(x-x_{0})(y-y_{0})}{f}b_{1}-(f+\frac{(x-x_{0})^{2}}{f})b_{2}-(y-y_{0})b_{3}<br>\end{align}<br>$$<br>其他以此类推<br>$$<br>\begin{align}<br>\frac{\partial x}{\partial \omega } &amp;=<br>\frac{(x-x_{0})^{2}}{f}sin\kappa-\frac{(x-x_{0})(y-y_{0})}{f}cos\kappa -fsin\kappa \\\ <br>\frac{\partial x}{\partial \kappa } &amp;=<br>(f+\frac{(y-y_{0}^{2})}{f})b_{1}-\frac{(x-x_{0})(y-y_{0})}{f}b_{2}-(x-x_{0})b_{3} \\<br>\frac{\partial y}{\partial \omega } &amp;=<br>-\frac{(x-x_{0})(y-y_{0})}{f}sin\kappa -\frac{(y-y_{0})^{2}}{f}cos\kappa -fcos\kappa \\<br>\frac{\partial y}{\partial \kappa }&amp;=-(x-x_{0})<br>\end{align} $$<br>以上求出了所有的偏导，则①式的公式可变为<font color="#FF0000" size="5">更重要的</font>式<font color="#FF0000">②</font></p>
+<p>$$\begin{aligned}<br>c_{11}dXs+c_{12}dYs+c_{13}dZs+c_{14}d\phi +c_{15}d\omega &amp;+c_{16}d\kappa \\\ -c_{11}dX &amp;-c_{12}dY-c_{13}dZ+c_{17}df+c_{18}dx_{0}+c_{19}dy_{0}-lx=0<br>\end{aligned}$$<br>$$\begin{aligned}<br>c_{21}dXs+c_{22}dYs+c_{23}dZs+c_{24}d\phi +c_{25}d\omega &amp;+c_{26}d\kappa \\\ -c_{21}dX &amp;-c_{22}dY-c_{23}dZ+c_{27}df+c_{28}dx_{0}+c_{29}dy_{0}-ly=0<br>\end{aligned}$$<br>这里可以看到，Xs和X Ys和Y Zs和Z的偏导互为相反数，因此12个未知数只需要求解9个。 其中c的系数分别为：<br>$$\begin{align}<br>c_{11}&amp; = \frac{1}{\overline{Z}}(a_{1}f+a_{3}(x-x_{0})) \\<br>c_{12}&amp; = \frac{1}{\overline{Z}}(b_{1}f+b_{3}(x-x_{0})) \\<br>c_{13}&amp; = \frac{1}{\overline{Z}}(c_{1}f+c_{3}(x-x_{0})) \\<br>c_{14}&amp; = \frac{(x-x_{0})(y-y_{0})}{f}b_{1}-(f+\frac{(x-x_{0})^{2}}{f})b_{2}-(y-y_{0})b_{3} \\<br>c_{15}&amp; = -\frac{(x-x_{0})^{2}}{f}sin\kappa -\frac{(x-x_{0})(y-y_{0})}{f}cos\kappa -fsin\kappa \\<br>c_{16}&amp; = y-y_{0}\\<br>c_{17}&amp; = \frac{x-x_{0}}{f},c_{18}=1,c_{19}=0,lx=x-x_{cal}\\<br>c_{21} &amp;= \frac{1}{\overline{Z}}(a_{2}f+a_{3}(y-y_{0}))\\<br>c_{22} &amp;= \frac{1}{\overline{Z}}(b_{2}f+b_{3}(y-y_{0}))\\<br>c_{23} &amp;= \frac{1}{\overline{Z}}(c_{2}f+c_{3}(y-y_{0}))\\<br>c_{24} &amp;= (f+\frac{(y-y_{0})^{2}}{f})b_{1}-\frac{(x-x_{0})(y-y_{0})}{f}b_{2}+(x-x_{0})b_{3}\\<br>c_{25} &amp;= -\frac{(x-x_{0})(y-y_{0})}{f}sin\kappa -\frac{(y-y_{0})^{2}}{f}cos\kappa -fcos\kappa \\<br>c_{26} &amp;= -(x-x_{0})\\<br>c_{27}&amp;=\frac{y-y_{0}}{f},c_{28}=0,c_{29}=1,ly=y-y_{cal}\end{align} $$</p>
+<p>在正摄影像近似垂直时，可以采用φ≈ω≈k≈0,$\overline{Z}\approx -H$的取值带入系数中，则②式可化简为<font color="#FF0000">本篇最终的结果式③</font>：</p>
+<p>$$\left\{\begin{matrix}v_{x}=-\frac{f}{H}dXs-\frac{x-x_{0}}{H}dZs-[f+\frac{(x-x_{0})^{2}}{f}]d\varphi-\frac{(x-x_{0})(y-y_{0})}{f}d\omega+(y-y_{0})d\kappa+\frac{f}{H}dX+\frac{x-x_{0}}{H}dZ+\frac{x-x_{0}}{f}df+dx_{0}-(x-x_{cal})\\v_{y}=-\frac{f}{H}dYs-\frac{y-y_{0}}{H}dZs-\frac{(x-x_{0})(y-y_{0})}{f}d\varphi-[f+\frac{(y-y_{0})^{2}}{f}]d\omega+(x-x_{0})d\kappa+\frac{f}{H}dY+\frac{y-y_{0}}{H}dZ+\frac{y-y_{0}}{f}df+dy_{0}-(y-y_{cal})\end{matrix}\right.$$</p>
+<p>式中相对①式添加了改正项，为了平衡一次项以下的展开式对结果的影响，是平差方程中重要的一部。误差方程将在下文提到。</p>
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/检校/" rel="tag">#检校</a>
+          
+            <a href="/tags/后方交会/" rel="tag">#后方交会</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/09/红包在哪里/" rel="next" title="红包在哪里">
+                <i class="fa fa-chevron-left"></i> 红包在哪里
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/10/12/后方交会检校(2)/" rel="prev" title="后方交会检校(2)--误差方程及各项系数解求及精度">
+                后方交会检校(2)--误差方程及各项系数解求及精度 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2015/10/10/后方交会检校(1)/" data-title="后方交会检校(1)--前景 共线方程及其线性化" data-content="" data-url="http://ovjaywang.github.io/2015/10/10/后方交会检校(1)/">
+  <div class="ds-share-inline">
+    <ul class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/10/10/后方交会检校(1)/" data-title="后方交会检校(1)--前景 共线方程及其线性化" data-url="http://ovjaywang.github.io/2015/10/10/后方交会检校(1)/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/xiaozaizi.png" alt="Jay Wang">
+          <p class="site-author-name" itemprop="name">Jay Wang</p>
+          <p class="site-description motion-element" itemprop="description">你猜?</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ovjaywang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/302060345" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/ov_beeshoot" target="_blank" title="douban">
+                  
+                    <i class="fa fa-globe"></i>
+                  
+                  douban
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/ohahabienaola" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-instagram"></i>
+                  
+                  Instagram
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://plus.google.com/112912013380614886638" target="_blank" title="Google">
+                  
+                    <i class="fa fa-google"></i>
+                  
+                  Google
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jay Wang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/ven/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/ven/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/ven/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/ven/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/ven/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/ven/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"mimimomo"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax --><!-- hexo-inject:end -->
+
+
+</body>
+</html>

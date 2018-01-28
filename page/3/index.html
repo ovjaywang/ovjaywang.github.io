@@ -27,7 +27,7 @@
 
 
 
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/ven/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -59,7 +59,7 @@
 
 
 
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+<link href="/ven/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
 
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
@@ -216,6 +216,26 @@
           </a>
         </li>
       
+        
+        <li class="menu-item menu-item-pic-movie">
+          <a href="/a-pic-a-movie" rel="section">
+            
+              <i class="menu-item-icon fa fa-film fa-fw"></i> <br>
+            
+            一影一图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-bi">
+          <a href="/bigger" rel="section">
+            
+              <i class="menu-item-icon fa fa-thumbs-o-up fa-fw"></i> <br>
+            
+            装逼
+          </a>
+        </li>
+      
 
       
         <li class="menu-item menu-item-search">
@@ -285,8 +305,1480 @@
             
               
                 
-                <a class="post-title-link" href="/2015/05/12/harris-python-to-exe/" itemprop="url">
-                  Harri特征角点检测&特征匹配的python实现&PyInstaller编译成可执行文件exe
+                <a class="post-title-link" href="/2015/11/04/后方交会检校(5)/" itemprop="url">
+                  后方交会检校(5)--相对绝对定向
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-11-04T12:00:00+08:00" content="2015-11-04">
+              2015-11-04
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/什么都学一下/" itemprop="url" rel="index">
+                    <span itemprop="name">什么都学一下</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/什么都学一下/学习log/" itemprop="url" rel="index">
+                    <span itemprop="name">学习log</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/11/04/后方交会检校(5)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/04/后方交会检校(5)/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="#多片交会">多片检校方程</a>&nbsp;<a href="#相对定向完成标志">相对定向完成标志</a>&nbsp;&nbsp;<a href="#两种方式">相对定向解答的两种方式</a>&nbsp;<a href="#图解">图解连续像片和单独像对</a></p>
+<p>单片检校主要目的是精确测量相机的内方位元素和检校相机镜头畸变。由于只使用一幅影像进行参数的解算，使用了较少的几何约束条件和观测值，最容易产生内方位元素x0 y0 与外方位元素Xs Ys的不定解或强相关，使检校结果稳定性和可靠性受到影响。多片后方交会则可以更精确的解算这些参数，尤其是<font color="#FF0000">主点位置的精度</font>问题。多片空间后方交会与单片空间后方交会的根本区别是：在不同的位置拍摄多张照片，由于各像片在同一主距条件下拍摄，因而解算所得的各相片的<font color="#FF0000">外方位元素不同</font>，解算的<font color="#FF0000">内方位元素和畸变参数被认为相同</font>。</p>
+<p>这样，就可以用下式方程表达<a name="多片交会">多片交会</a>：</p>
+<p>$$\begin{bmatrix}A_{I}&amp;0&amp;.&amp;.&amp;.&amp;0&amp;B_{I}&amp;C_{I}\\0&amp;A_{II}&amp;.&amp;.&amp;.&amp;0&amp;B_{II}&amp;C_{II}\\\ .&amp;.&amp;.&amp;.&amp;.&amp;.&amp;.&amp;.\\0&amp;.&amp;.&amp;.&amp;.&amp;A_{n}&amp;B_{n}&amp;C_{n}\end{bmatrix}_{2n\times (6n+7)}\begin{bmatrix}X_{out_{I}}\\X_{out_{II}}\\\ .\\\ .\\\ .\\X_{out_{n}}\\X_{in}\\X_{res}\end{bmatrix}_{(6n+7)\times1}-\begin{bmatrix}xy_{res 1}\\xy_{res 2}\\\ .\\\ .\\\ .\\xy_{res n}\end{bmatrix}_{2\times1}=0$$</p>
+<p>这一点与图像配准极其相似，用一副影像作为参考影像去配准多幅图像的结果显然没有用周边多幅图像组为参考标准的结果令人信服。由于每张相片的外方位元素不同（一般都是围绕检校场左中右进行拍摄），所以良好的消除了外方位元素和内方位元素的强相关性。</p>
+<p>针对多片，提出了相对定向和绝对定向的概念，绝对定向即利用共线方程检校计算出的外方位元素绝对值，这是以物方坐标系的原点作为参考值；而相对定向则是以被检校出的某一张像片为参考，计算出其余像片在其坐标系的坐标值，即相对关系。相对关系的求取的精度对图像拼接有至关重要的影像。</p>
+<p><a name="相对定向完成标志"><font color="#FF0000">相对定向完成的标志</font></a>：同名光线对对相交。所有点在其承影面上的上下视差为零。即通过矩阵变换改变投影器的相对位置，使光线相交。<font color="#FF0000">&nbsp;&nbsp;&nbsp;</font></p>
+<p><a name="两种方式"><font color="#FF0000">相对定向有两种方式</font></a>：①根据单片分别解算出的不同像片（可以使同相机可以不同）物方坐标系下的外方位元素绝对值，计算相对定向的五个元素，By,Bz,φ2，ω2，k2;或多片解算的某一相机的物方绝对值（必须统一相机，保证内方位元素相同），同样计算相对定向元素。可以作为航拍的连续拍摄的相对方位的确定，也可以作为立体固定的某些相机之间的相对方位的确定②直接根据同名点的像点坐标（6组以上），计算相对定向的旋转矩阵[R|t]，<font color="#FF0000">不需要地面控制点！</font>。</p>
+<p><a name="图解">图解①方式的连续像对和单独像对</a></p>
+<p>上面提到的连续像对，如下图所示，By Bz决定了摄影基线（即摄影中心移动的向量），φ2，ω2，k2决定了右片光束对于左光束的旋转。固定一个光束，旋转和移动第二个，便可以确定两个光束之间的相对方位，第三张相片可以和第二张相片确定相对方位，一次类推，所形成的相对方位元素称为连续像对系统。</p>
+<p><img src="http://ww4.sinaimg.cn/large/68eb7c93gw1eyb8jft5rpj20ln0fmgoj.jpg" alt=""></p>
+<p>而单独相对，即可以取左片摄影中心XZ平面为主核面，摄影基线为X轴的右手空间直角坐标系。由φ1，ω1，k1,φ2，ω2，k2组成。</p>
+<p><img src="http://ww3.sinaimg.cn/large/68eb7c93gw1eyb93i6vwcj20lg0d0dii.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>相对定向共面条件</p>
+<p>在相对定向中，答解相对元素的重要依据就是共面条件，当光线相交时，易知B（摄影基线，即S1S2）,S1a1,S2a2共面。如图可以看到，解求相对定向元素就是解求两个摄影中心的像方辅助坐标系的转换。共面条件方程形式为：</p>
+<p>$$\overrightarrow{S_{1}S_{2}}\cdot (\overrightarrow{S_{1}a_{1}}\times \overrightarrow{S_{2}a_{2}})=0$$</p>
+<p>共面条件方程无需地面控制点，一个同名点列一个方程。必须有5个以上定向点。</p>
+<p><img src="http://ww4.sinaimg.cn/large/68eb7c93gw1eyb9drztouj20lz0ig782.jpg" alt=""></p>
+<p>如图，设像点a1、a2在大地坐标系坐标分别为(X1,Y1,Z1)、(X2,Y2,Z2).摄站S1、S2在大地坐标系坐标分别为$$(X_{S1},Y_{S1},Z_{S1}),(X_{S2},Y_{S2},Z_{S2})$$,则上式在即可表示为向量形式的行列式。</p>
+<p>$$\begin{vmatrix}X_{S2}-X_{S1}&amp;Y_{S2}-Y_{S1}&amp;Z_{S2}-Z_{S1}\\X_{1}-X_{S1}&amp;Y_{1}-Y_{S1}&amp;Z_{1}-Z_{S1}\\X_{2}-X_{S2}&amp;Y_{2}-Y_{S2}&amp;Z_{2}-Z_{S2}\end{vmatrix}$$</p>
+<p>又令(X,Y,Z)、(Bx,By,Bz)为a1,S2在S1的像辅系S1-XYZ中的坐标，(X’,Y’,Z’)为a2在S2像辅系S2-XYZ中的坐标。由三点共面的方程，</p>
+<p>$$\begin{vmatrix}B_{X}&amp;B_{Y}&amp;B_{Z}\\X&amp;Y&amp;Z\\X’&amp;Y’&amp;Z’\end{vmatrix}=0$$上式可改写为：</p>
+<p>$$\begin{bmatrix}B_{X}&amp;B_{Y}&amp;B_{Z}\end{bmatrix}\begin{bmatrix}0&amp;-Z&amp;Y\\Z&amp;0&amp;-X\\\  -Y&amp;X&amp;0\end{bmatrix}\begin{bmatrix}X’\\Y’\\Z’\end{bmatrix}=0$$</p>
+<p>光线是否成对相交与摄影测量坐标系的选择无关，但可以<font color="#FF0000">选择适当的像辅系</font>，改变共面条件便于实际应用。</p>
+<p>（1）<font color="#FF0000">选择左侧像空系</font>——连续像对系统。此时R1=E，即左系的旋转矩阵为0，像平面的z坐标均为-f；或为右片的旋转矩阵。则，公式未改变。</p>
+<p>$$\begin{vmatrix}B_{X}&amp;B_{Y}&amp;B_{Z}\\X&amp;Y&amp;Z\\X’&amp;Y’&amp;Z’\end{vmatrix}=0$$</p>
+<p>（2）选择基线坐标系——单独像对系统。此时，$$B_{Y}=B_{Z}=0$$，即需要求取两个像片对基线坐标系的旋转。</p>
+<div class="PoweredByWebStory" style="margin-top:15px;margin-bottom:10px"><a href="http://sns.juziyue.com/webinvite.php?u=94887" target="_blank" rel="external"></a>&nbsp;今天你<a href="http://sns.juziyue.com/webinvite.php?u=94887" target="_blank" rel="external">菊子曰</a>了么？</div>
+          
+        
+      
+    </div>
+    
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/10/28/后方交会检校(4)/" itemprop="url">
+                  后方交会检校(4)--畸变差矫正
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-10-28T21:19:08+08:00" content="2015-10-28">
+              2015-10-28
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/什么都学一下/" itemprop="url" rel="index">
+                    <span itemprop="name">什么都学一下</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/什么都学一下/学习log/" itemprop="url" rel="index">
+                    <span itemprop="name">学习log</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/10/28/后方交会检校(4)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/28/后方交会检校(4)/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>为毛要做畸变差矫正?</p>
+<p>单片检校主要目的是精确测量相机的内方位元素和检校相机镜头畸变。而多片后方交会则可以更精确的解算这些参数，还可以同时在平差中解求各个物方测量点的精确估值，也可以利用这些大容量的信息进行基于空间位置的组合镜头多片拼接和航带拼接。本篇主要介绍多片后方交会的应用。</p>
+<p> 航摄中常用的三种用于加密控制点的方法有<span style="COLOR: #ff0000">航带法、独立模型法、光束法</span>。其中航带法精度较低，不能用于高精度的测量。独立模型法较前者精度略高，光束法则是精度最高同时计算量最大的模型，适用于高精度航摄。<br> 但粗差同样对于精度的影响极大，自检较光束则是最广泛应用的做法。其基本思想是选用一个由若干个参数组成的系统误差模型，将这些附加参数作为未知数与区域网的其他参数一起解求，从而达到在平差过程中自动消除系统误差的目的。其缺点是①<span style="COLOR: #ff0000">附加参数人为选择</span>，选择不当会导致迭代结果不收敛恶化计算结果。②附加参数与区域网参数一起解求，会使<span style="COLOR: #ff0000">计算量明显上升</span>。</p>
+<div class="PoweredByWebStory" style="margin-top:15px;margin-bottom:10px"><a href="http://sns.juziyue.com/webinvite.php?u=94887" target="_blank" rel="external"></a>&nbsp;今天你<a href="http://sns.juziyue.com/webinvite.php?u=94887" target="_blank" rel="external">菊子曰</a>了么？</div>
+          
+        
+      
+    </div>
+    
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/10/28/后方交会检校(3)/" itemprop="url">
+                  后方交会检校(3)--角度、坐标及其应用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-10-28T19:55:49+08:00" content="2015-10-28">
+              2015-10-28
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/什么都学一下/" itemprop="url" rel="index">
+                    <span itemprop="name">什么都学一下</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/什么都学一下/学习log/" itemprop="url" rel="index">
+                    <span itemprop="name">学习log</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/10/28/后方交会检校(3)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/28/后方交会检校(3)/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>本片涉及前文中叙述到的三个角元素含义及外延，包含与角元素相关的旋转矩阵R并简明介绍几个常用坐标系。</p>
+<p>内容提要：</p>
+<p><a href="#几个概念：">几个概念</a>（视场 像场 视场角）&nbsp;</p>
+<p><a href="#几个坐标系">几个坐标系</a></p>
+<p><a href="#共线方程的推导">共线方程的推导</a></p>
+<p>&nbsp;<a href="#坐标旋转即共线方程的应用">坐标旋转即共线方程的应用</a></p>
+<p><a href="#坐标旋转">坐标旋转</a></p>
+<p><a href="#像片水平与倾斜像点坐标的关系">像片水平与倾斜像点坐标的关系</a></p>
+<font size="5"><strong><a name="几个概念：">几个概念：</a></strong></font>&nbsp;<br><br>视场：光线通过物镜后，焦面上照度不均匀的光亮圆为镜头的视场。<br><br>像场：摄影时，影像相当清晰的一部分视场内的光亮圆。<br><br>视场角（filed of view）：由镜头后节点向市场边缘射出的光线所张开的角，用2β表示。常角&lt;75&deg;，宽角75&deg;~100&deg;，特宽角&gt;100&deg;<br><br><img src="http://www.dooby.me/wp-content/uploads/2015/11/E31B0C36B248ADD81D8147EE808E68085B42914E.jpg" alt=""><br><br>数码相机的瞬时视场角IFOV与空间分辨率的关系：$$R_{g}=2\sqrt{2}IFOV$$<br><br><font size="5"><strong><a name="几个坐标系">几个坐标系：</a></strong></font>
+
+<font color="#FF0000">像素坐标系</font>-2D-IAJ以像片左上角为坐标原点，下为y正，右为x正。坐标一般用(u,v)表示。<br><br>$$x=J\Delta -x_{0}$$,$$y=-(I\Delta -y_{0})$$<br><br><img src="http://www.dooby.me/wp-content/uploads/2015/11/6E6CFB3A2924474655DD2222F8223CABE46AD6FC.jpg" alt=""><br><br>这里，值得一提的是，坐标单位一般是像素。而一般以中心为基准的坐标系（像平面坐标系，一般用(x,y)表示的单位是毫米。这两个坐标系之间的转换公式形式可以写为:<br><br>$$!\left\{\begin{matrix}u=\frac{x}{d_{x}}+u_{0}=x<em>s_{x+u_{0}}\\v=\frac{y}{d_{y}}+v_{0}=y</em>s_{y}+v_{0}\end{matrix}\right.$$<br><br>这里，dx dy分别代表每个像素在横轴x和纵轴y的物理尺寸，单位是mm per pixel。而sx和sy分别是二者的导数。或可以用矩阵的形式：<br><br>$$!\begin{pmatrix}u\\v\\1\end{pmatrix}=\begin{pmatrix}s_{x}&amp;0&amp;c_{x}\\0&amp;s_{y}&amp;c_{y}\\0&amp;0&amp;1\end{pmatrix}\begin{pmatrix}x\\y\\1\end{pmatrix}$$<br><br><font color="#FF0000">像空间坐标系</font>-3D-Sxyz表示<font color="#FF0000">像点</font>在<font color="#FF0000">像方空间</font>位置的空间直角坐标系。原点即投影中心，xy轴分别平行于像平面xy轴，z轴即主光轴的方向。在该坐标系中，所有像点的z坐标都是-f。几何含义就是，投影中心在投向焦平面的时候，与设计上认为的像点（像平面几何中心）相比，投偏了多少。像平面坐标+内方位元素就可以定位所有穿过像平面到达物放世界的光束的形状；该坐标系的方位就代表了像片的空间方位，像空间坐标系绕原点的旋转就代表了像片绕投影中心的旋转。下图中S为投影中心，O为投影中心，a为任意一个像点，其坐标为(x,y,-f)<br><br><img src="http://www.dooby.me/wp-content/uploads/2015/11/B91663ACDA13BB74808431E1CBA1F9DEB72AAA10.jpg" alt=""><br><br><font color="#FF0000">物方空间坐标系</font>-3D-O-XdYdZd测绘系统选择一定的原点，进行测绘测量的世界真实坐标，描述点的空间位置。摄影测量的成果最终要转到该坐标系中。<br><br>地面辅助坐标系-3D-O-XtYtZt 一般称地辅系，<font color="#FF0000">Z轴铅锤，X Y轴与物空系平行</font>。在摄影测量中，<font color="#FF0000">原点都默认设为摄影中心S</font>。因此该坐标系<font color="#FF0000">与物空系不需要进行旋转，只需要平移</font>，即坐标轴加减运算。这是中间成果和数学运算常用的坐标系。下图是地辅系、像空系、像平面坐标系在一起的示意图。而共线方程就是依据这几个坐标系空间转换得到的。原理为三角形相似。<br><br><img src="http://www.dooby.me/wp-content/uploads/2015/11/13598A8CB4E7FDBD56C5B595E2AD0624D9A2FD14.jpg" alt=""><br><br><font color="#FF0000">像素坐标系→像平面坐标系（内方位元素）</font>
+
+<font color="#FF0000">地面辅助坐标系→像平面坐标系（外方位元素）</font>
+
+<p>共线方程的物理含义就是三点一线，两点一系（理想状况下，摄影瞬间像点、投影中心位于同一直线。）如图所示：</p>
+<p><img src="http://www.dooby.me/wp-content/uploads/2015/11/1AF795ADEC60BCB2F0396B5F841F4844E636A283.jpg" alt=""></p>
+<p>图中浅蓝色坐标系是<font color="#00FFFF"><u>地辅系</u></font>（这里 地辅系通过投影中心 连接物空系和像空系），a点是像平面上的投影，A点是地面控制点，红色坐标系是<font color="#FF0000"><u>物方空间坐标系</u></font>，黄色坐标是<font color="#FFC800"><u>像空系</u></font>（像空系垂直与像平面），λ即投影比例尺，二维坐标各自成比例，形成了共线方程的最基本形式。也可以用向量的方式来解释。其中Xs &nbsp;Ys&nbsp; Zs是投影中心在物方空间的坐标，$$X_{A}&nbsp; Y_{A}&nbsp; Z_{A}$$是真实世界某控制点的物方坐标。两者相减，即得到相对位置，即地辅系的坐标。该方程是<font color="#FF0000"><strong>建立在地辅系上</strong></font>的。</p>
+<p><strong><a name="共线方程的推导">共线方程的推导</a></strong></p>
+<p>→<strong>点的坐标变换</strong>（一点两系）：目标是建立同一个点在空间坐标系与地面辅助坐标系中坐标值之间的对应关系。坐标点一般的转换关系为：</p>
+<p>$$!\begin{pmatrix}X\\Y\\Z\end{pmatrix}=R\begin{pmatrix}x\\y\\z\end{pmatrix}$$</p>
+<p>$$!\begin{pmatrix}x\\y\\z\end{pmatrix}=R^{T}\begin{pmatrix}X\\Y\\Z\end{pmatrix}$$</p>
+<p>则R称为旋转矩阵。</p>
+<p>点a、A位于两个坐标系，分别用两组坐标来表示。S-xyz示意像空系，S-XYZ示意地辅系。</p>
+<table width="80%" border="0"> <tbody> <tr> <td width="26%">点\坐标系</td> <td width="26%">S-xyz</td> <td width="26%">S-XYZ</td> </tr> <tr> <td width="26%">a</td> <td width="26%">x,y,-f</td> <td width="26%">Xa，Ya，Za</td> </tr> <tr> <td width="26%">A</td> <td width="26%">xA,yA,zA</td> <td width="26%">X,Y,Z</td> </tr> </tbody> </table>
+
+<p>由于旋转矩阵相同，两个点可表示为：</p>
+<p>$$!\begin{pmatrix}X\\Y\\Z\end{pmatrix}=R\begin{pmatrix}x_{A}\\y_{A}\\z_{A}\end{pmatrix}$$</p>
+<p>$$!\begin{pmatrix}X_{a}\\Y_{a}\\Z_{a}\end{pmatrix}=R\begin{pmatrix}x\\y\-f\end{pmatrix}$$</p>
+<p>则，$$!\begin{pmatrix}x_{A}\\y_{A}\\z_{A}\end{pmatrix}=R^{T}\begin{pmatrix}X\\Y\\Z\end{pmatrix}$$</p>
+<p>→点的共线关系（两点一系）：目标是建立像点和物方点的坐标关系。易知，两点一线时，可以用一个点的齐次方程表示另一个点。即：</p>
+<p>$$!\left\{\begin{matrix}x_{A}=a_{1}X+b_{1}Y+c_{1}Z\\y_{A}=a_{2}X+b_{2}Y+c_{2}Z\\y_{A}=a_{3}X+b_{3}Y+c_{3}Z\end{matrix}\right.$$</p>
+<p><img src="http://www.dooby.me/wp-content/uploads/2015/11/7238D8A7EF534575B5EE48B9CCA41FF8E4903B6C.jpg" alt=""></p>
+<p>上图中可建立的方程有，（该方程建立在像空系中）</p>
+<p>$$!\frac{x_{A}}{x}=\frac{y_{A}}{y}=\frac{z_{A}}{-f}=\lambda \Rightarrow\left\{\begin{matrix}x=-f\frac{x_{A}}{z_{A}}\\y=-f\frac{y_{A}}{z_{A}}\end{matrix}\right.$$</p>
+<p>联立坐标转换方程和像空系方程，化简即可得到传说中的共线条件方程。</p>
+<p>用<font color="#FF0000">地面点</font>坐标表示<font color="#FF0000">像点</font>坐标的共线方程（地辅系形式）</p>
+<p>$$!x=-f\frac{a_{1}(X_{T}-X_{S})+b_{1}(Y_{T}-Y_{S})+c_{1}(Z_{T}-Z_{S})}{a_{3}(X_{T}-X_{S})+b_{3}(Y_{T}-Y_{S})+c_{3}(Z_{T}-Z_{S})}$$</p>
+<p>$$!y=-f\frac{a_{2}(X_{T}-X_{S})+b_{2}(Y_{T}-Y_{S})+c_{2}(Z_{T}-Z_{S})}{a_{3}(X_{T}-X_{S})+b_{3}(Y_{T}-Y_{S})+c_{3}(Z_{T}-Z_{S})}$$</p>
+<p>或（物空系形式）</p>
+<p>$$!x=-f\frac{a_{1}(X-X_{S})+b_{1}(Y-Y_{S})+c_{1}(Z-Z_{S})}{a_{3}(X-X_{S})+b_{3}(Y-Y_{S})+c_{3}(Z-Z_{S})}$$</p>
+<p>$$!y=-f\frac{a_{2}(X-X_{S})+b_{2}(Y-Y_{S})+c_{2}(Z-Z_{S})}{a_{3}(X-X_{S})+b_{3}(Y-Y_{S})+c_{3}(Z-Z_{S})}$$</p>
+<p>同理，利用蓝图中在地辅系的共线方程，可以建立用<font color="#FF0000">像点</font>坐标表达<font color="#FF0000">地面坐标</font>的方程（物空系形式）</p>
+<p>$$!X=X_{s}+(Z-Z_{s})\frac{a_{1}x+a_{2}y-a_{3}f}{c_{1}x+c_{2}y-c_{3}f}$$</p>
+<p>$$!Y=Y_{s}+(Z-Z_{s})\frac{b_{1}x+b_{2}y-b_{3}f}{c_{1}x+c_{2}y-c_{3}f}$$</p>
+<p>上式也成为了前方交会解算的基本方程。</p>
+<hr>
+<p><strong><a name="坐标旋转即共线方程的应用">坐标旋转即共线方程的应用</a></strong></p>
+<p>①<strong>求像点坐标</strong></p>
+<ul>
+<li>已知Xs Ys Zs ai bi ci f(物方真值 旋转矩阵)</li>
+<li>求x y（像平面坐标）</li>
+</ul>
+<p>依赖方程：</p>
+<p>$$!x=-f\frac{a_{1}(X-X_{S})+b_{1}(Y-Y_{S})+c_{1}(Z-Z_{S})}{a_{3}(X-X_{S})+b_{3}(Y-Y_{S})+c_{3}(Z-Z_{S})}$$</p>
+<p>$$!y=-f\frac{a_{2}(X-X_{S})+b_{2}(Y-Y_{S})+c_{2}(Z-Z_{S})}{a_{3}(X-X_{S})+b_{3}(Y-Y_{S})+c_{3}(Z-Z_{S})}$$</p>
+<p>②<strong>答解外方位元素</strong>(后方交会基本原理)</p>
+<ul>
+<li>已知$$x_{i}^{‘} y_{i}^{‘} X_{i} Y_{i} Z_{i} x_{0} y_{0} f$$（像坐标观测值 物方观测值 内方位元素）</li>
+<li>求Xs Ys Zs ai bi ci（外方位元素）</li>
+</ul>
+<p>依赖方程：</p>
+<p>$$!x^{‘}-x_{0}=-f\frac{a_{1}(X-X_{S})+b_{1}(Y-Y_{S})+c_{1}(Z-Z_{S})}{a_{3}(X-X_{S})+b_{3}(Y-Y_{S})+c_{3}(Z-Z_{S})}$$</p>
+<p>$$!y^{‘}-y_{0}=-f\frac{a_{2}(X-X_{S})+b_{2}(Y-Y_{S})+c_{2}(Z-Z_{S})}{a_{3}(X-X_{S})+b_{3}(Y-Y_{S})+c_{3}(Z-Z_{S})}$$</p>
+<p>③<strong>求地面点坐标</strong></p>
+<ul>
+<li>已知x，y，Xs，Ys，Zs，ai，bi，ci，f(外方位元素，像点坐标观测值，焦距)</li>
+<li>求X，Y，Z（求未知物方点坐标,这里，大部分都知道DEM，即(X,Y)坐标下的Z高程的信息）</li>
+</ul>
+<p>依赖方程(单片定位)：</p>
+<p>$$!\frac{X-X_{S}}{Z-Z_{S}}=\frac{a_{1}x+a_{2}y-a_{3}f}{c_{1}x+c_{2}y-c_{3}f}$$</p>
+<p>$$!\frac{Y-Y_{S}}{Z-Z_{S}}=\frac{b_{1}x+b_{2}y-b_{3}f}{c_{1}x+c_{2}y-c_{3}f}$$</p>
+<p>依赖方程（立体像对定位）–4个方程解算3个未知数。(前方交会后方交会同时进行)</p>
+<p><img src="http://www.dooby.me/wp-content/uploads/2015/11/5F3074FF98FA07ED1F357962C68FF593E047311B.jpg" alt=""></p>
+<p>$$!\frac{X-X_{S}}{Z-Z_{S}}=\frac{a_{1}x+a_{2}y-a_{3}f}{c_{1}x+c_{2}y-c_{3}f}$$</p>
+<p>$$!\frac{Y-Y_{S}}{Z-Z_{S}}=\frac{b_{1}x+b_{2}y-b_{3}f}{c_{1}x+c_{2}y-c_{3}f}$$</p>
+<p>$$!\frac{X-X_{S}^{‘}}{Z-Z_{S}^{‘}}=\frac{a_{1}^{‘}x^{‘}+a_{2}^{‘}y^{‘}-a_{3}^{‘}f}{c_{1}^{‘}x^{‘}+c_{2}^{‘}y^{‘}-c_{3}^{‘}f}$$</p>
+<p>$$!\frac{Y-Y_{S}^{‘}}{Z-Z_{S}^{‘}}=\frac{b_{1}^{‘}x^{‘}+b_{2}^{‘}y^{‘}-b_{3}^{‘}f}{c_{1}^{‘}x^{‘}+c_{2}^{‘}y^{‘}-c_{3}^{‘}f}$$</p>
+<hr>
+<p><a name="坐标旋转">坐标旋转</a></p>
+<p>从物方空间坐标系到像空间坐标系的转换其实就是一个<font color="#FF0000">平移</font>（平移到地辅系）再<font color="#FF0000">旋转</font>的过程，这就是常见的[R|t]。旋转真正的含义就是对3个坐标轴作二维角度上的旋转，3个旋转合成一个旋转矩阵R。坐标轴旋转θ角度，等同于目标点绕坐标原点反方向旋转同样的角度θ。选择的旋转3个坐标系的方式有很多，常用的就是以Y轴为主轴的φ，ω,k的系统。</p>
+<p><strong>航向倾角φ</strong>（pitching）：z轴在<font color="#FF0000">XZ坐标面内的投影</font>（即过z轴所做的XZ面的垂面与XZ面的交线）<font color="#FF0000">与Z轴的夹角</font>，叫做航向倾角。从Z轴算起，由Y轴的负方向逆时针为正。如图为正。</p>
+<p><img src="http://www.dooby.me/wp-content/uploads/2015/11/98B5D21FDF0802661E47A2C3089CF683E856F014.jpg" alt=""></p>
+<p><strong>旁向倾角ω</strong>（roll）：z轴与XZ坐标面之间的夹角，即z轴与它在XZ面上投影之间的夹角，叫做旁向倾角。从z轴的投影算起，由X轴的正方向看逆时针为正。如图为正。</p>
+<p><img src="http://www.dooby.me/wp-content/uploads/2015/11/5A4A8734E57C7C288466AFAF21FE3D1DA7F17C1B.jpg" alt=""></p>
+<p><strong>像片旋角k</strong>（yaw）：Y轴在xy坐标系面上的投影与y轴的夹角，叫做旋角。从投影算起，由z轴正方向看逆时针为正。如图k为正。</p>
+<ul>
+<li>二维平面的坐标旋转</li>
+</ul>
+<p>如图所示，旋转是可逆变化，两套坐标之间可以用矩阵和逆矩阵进行转换。</p>
+<p><img src="http://www.dooby.me/wp-content/uploads/2015/11/9C02C1C63C5D098E97E8A04FBBDFB60F02221B34.jpg" alt=""></p>
+<p>$$!\begin{bmatrix}x^{‘}\\y^{‘}\end{bmatrix}=A\begin{bmatrix}x\\y\end{bmatrix},\begin{bmatrix}x\\y\end{bmatrix}=A^{-1}\begin{bmatrix}x^{‘}\\y^{‘}\end{bmatrix}$$</p>
+<p>$$!A=\begin{bmatrix}a_{1}&amp;a_{2}\\b_{1}&amp;b_{2}\end{bmatrix}=\begin{bmatrix}cos \widehat{x^{‘}x}&amp;cos \widehat{x^{‘}y}\\cos\widehat{y^{‘}x}&amp;cos \widehat{y^{‘}y}\end{bmatrix}=\begin{bmatrix}cos \kappa&amp;sin \kappa\-sin \kappa&amp;cos\kappa\end{bmatrix}$$</p>
+<p>式中</p>
+<p>a1是x’轴与x轴夹角的余弦；a1=cos k</p>
+<p>b1是x’轴与y轴夹角的余弦：b1=cos(90&deg;-k)=sin k</p>
+<p>a2是y’轴与x轴夹角的余弦：a2=cos(90&deg;+k)=-sin k</p>
+<p>b2是y’轴与y轴夹角的余弦：b2=cos k</p>
+<ul>
+<li>三维空间的坐标旋转</li>
+</ul>
+<p>从像空间直角坐标系到像空间辅助坐标系之间的转换可以通过<font color="#FF0000">三次二维坐标转换完成</font>。</p>
+<p><img src="http://www.dooby.me/wp-content/uploads/2015/11/A203A33F40A9904D7EA2D966CB486C277511405E.jpg" alt=""></p>
+<p>$$!\begin{bmatrix}X\\Y\\Z\end{bmatrix}=R\begin{bmatrix}x\\y\-f\end{bmatrix}$$</p>
+<p>$$!R=\begin{bmatrix}a_{1}&amp;a_{2}&amp;a_{3}\\b_{1}&amp;b_{2}&amp;b_{3}\\c_{1}&amp;c_{2}&amp;c_{3}\end{bmatrix}=\begin{bmatrix}cos\widehat{Xx}&amp;cos\widehat{Xy}&amp;cos\widehat{Xz}\\cos\widehat{Yx}&amp;cos\widehat{Yy}&amp;cos\widehat{Yz}\\cos\widehat{Zx}&amp;cos\widehat{Zy}&amp;cos\widehat{Zz}\end{bmatrix}$$</p>
+<p>①S-XYZ<font color="#FF0000">绕Y轴旋转φ</font>到S-XφYφZφ，在XSZ平面内，以S点位圆心旋转XSZ至XφSZφ</p>
+<p>$$!\begin{bmatrix}X\\Y\\Z\end{bmatrix}=R_{\varphi}\begin{bmatrix}X_{\varphi }\\Y_{\varphi }\\Z_{\varphi }\end{bmatrix}=\begin{bmatrix}cos\varphi&amp;0&amp;-sin\varphi\\0&amp;1&amp;0\\sin\varphi&amp;0&amp;cos\varphi\end{bmatrix}\begin{bmatrix}X_{\varphi }\\Y_{\varphi }\\Z_{\varphi }\end{bmatrix}$$</p>
+<p><img src="http://www.dooby.me/wp-content/uploads/2015/11/6F2D6EC82C1793253C32825B3180B3F84A68D11B.jpg" alt=""></p>
+<p>该次变换中，由于是绕Y轴旋转的，因此Y坐标值没有改变，相当于在二维XSZ平面做了旋转，下同。</p>
+<p>②S-XφYφZφ绕Xφ旋转ω角到S-XφωYφωZφω，在YφSZφ平面内，以S点为圆心旋转YφSZφ到YφωSZφω。这次变化中，x轴坐标值没有改变。</p>
+<p>$$!\begin{bmatrix}X_{\varphi}\\Y_{\varphi}\\Z_{\varphi}\end{bmatrix}=R_{\omega}\begin{bmatrix}X_{\varphi\omega}\\Y_{\varphi \omega}\\Z_{\varphi\omega}\end{bmatrix}=\begin{bmatrix}1&amp;0&amp;0\\0&amp;cos \omega&amp;-sin \omega\\0&amp;sin \omega&amp;cos \omega \end{bmatrix}\begin{bmatrix}X_{\varphi\omega}\\Y_{\varphi \omega}\\Z_{\varphi\omega}\end{bmatrix}$$</p>
+<p><img src="http://www.dooby.me/wp-content/uploads/2015/11/3669611136A21AC23885E7932C6D17D84AEC1C27.jpg" alt=""></p>
+<p>③S-XφωYφωZφω绕Zφω轴旋转k角度到S-xyz，在XφSYω平面内，以S点为圆心转到XφωSYφω至xSy。</p>
+<p>$$!\begin{bmatrix}X_{\varphi\omega}\\Y_{\varphi\omega}\\Z_{\varphi\omega}\end{bmatrix}=R_{\kappa}\begin{bmatrix}x\\y\-f\end{bmatrix}=\begin{bmatrix}cos \kappa&amp;-sin \kappa&amp;0\\sin \kappa&amp;cos \kappa&amp;0\\0&amp;0&amp;1\end{bmatrix}\begin{bmatrix}x\\y\-f\end{bmatrix}$$</p>
+<p><img src="http://www.dooby.me/wp-content/uploads/2015/11/3C453D9DA7CF479D4624D8465171F8FAF1F9E701.jpg" alt=""></p>
+<p>联立之前三个旋转矩阵即可得到三维下的旋转矩阵R</p>
+<p>$$!\begin{bmatrix}X\\Y\\Z\end{bmatrix}=R_{\varphi}R_{\omega}R_{\kappa}\begin{bmatrix}x\\y\-f\end{bmatrix}=\begin{bmatrix}cos\varphi&amp;0&amp;-sin\varphi\\0&amp;1&amp;0\\sin\varphi&amp;0&amp;cos\varphi\end{bmatrix}\begin{bmatrix}1&amp;0&amp;0\\0&amp;cos \omega&amp;-sin \omega\\0&amp;sin \omega&amp;cos \omega \end{bmatrix}\begin{bmatrix}cos \kappa&amp;-sin \kappa&amp;0\\sin \kappa&amp;cos \kappa&amp;0\\0&amp;0&amp;1\end{bmatrix}\begin{bmatrix}x\\y\-f\end{bmatrix}=\begin{bmatrix}a_{1}&amp;a_{2}&amp;a_{3}\\b_{1}&amp;b_{2}&amp;b_{3}\\c_{1}&amp;c_{2}&amp;c_{3} \end{bmatrix}\begin{bmatrix}x\\y\-f\end{bmatrix}=R\begin{bmatrix}x\\y\-f\end{bmatrix}$$</p>
+<p>旋转矩阵R因此由外方位元素φ，ω，k确定。其中a1,a2,a3,b1,b2,b3,c1,c2,c3是9个方向的<font color="#FF0000">方向余弦</font>。</p>
+<p>$$!a_{1}=cos\varphi cos\kappa-sin\varphi sin\omega sin\kappa$$</p>
+<p>$$!a_{2}=-cos\varphi sin\kappa -sin\varphi sin\omega cos\kappa$$</p>
+<p>$$!a_{3}=-sin\varphi cos\omega$$</p>
+<p>$$!b_{1}=cos\omega sin\kappa$$</p>
+<p>$$!b_{2}=cos\omega cos\kappa$$</p>
+<p>$$!b_{3}=-sin\omega$$</p>
+<p>$$!c_{1}=sin\varphi cos\kappa+cos\varphi sin\omega sin\kappa $$</p>
+<p>$$!c_{2}=-sin\varphi sin\kappa +cos\varphi sin\omega cos\kappa $$</p>
+<p>$$!c_{3}=cos\varphi cos\omega $$</p>
+<p>通过解算可知</p>
+<p>$$!R\cdot R^{T}=\begin{bmatrix}a_{1}&amp;a_{2}&amp;a_{3}\\b_{1}&amp;b_{2}&amp;b_{3}\\c_{1}&amp;c_{2}&amp;c_{3} \end{bmatrix}\cdot \begin{bmatrix}a_{1}&amp;b_{1}&amp;c_{1}\\a_{2}&amp;b_{2}&amp;c_{2}\\a_{3}&amp;b_{3}&amp;c_{3}\end{bmatrix}=\begin{bmatrix}1&amp;0&amp;0\\0&amp;1&amp;0\\0&amp;0&amp;1\end{bmatrix}$$</p>
+<p>$$!R^{T}\cdot R =\begin{bmatrix}a_{1}&amp;b_{1}&amp;c_{1}\\a_{2}&amp;b_{2}&amp;c_{2}\\a_{3}&amp;b_{3}&amp;c_{3}\end{bmatrix}\cdot \begin{bmatrix}a_{1}&amp;a_{2}&amp;a_{3}\\b_{1}&amp;b_{2}&amp;b_{3}\\c_{1}&amp;c_{2}&amp;c_{3} \end{bmatrix}=\begin{bmatrix}1&amp;0&amp;0\\0&amp;1&amp;0\\0&amp;0&amp;1\end{bmatrix}$$</p>
+<p>很明显，意味着R与$$R^{T}$$互为逆矩阵。这也验证了R矩阵是两个坐标系之间相互转换的矩阵。由$$RR^{T}=I$$可得：</p>
+<p>（1）同行（列）列的各元素自乘之和为1</p>
+<p>（2）任意两行（列）的对应元素相乘之和为0（正交）</p>
+<p>（3）旋转矩阵行列式为|R|=1</p>
+<p>（4）每行元素等于其代数余子式</p>
+<p>（5）每个元素为变换前后坐标轴夹角的余弦值<br> 易知</p>
+<p>$$!\varphi =-arctan(\frac{a_{3}}{c_{3}}),\omega =-arcsin(b_{3}),\kappa =-arctan(\frac{b_{1}}{b_{2}})$$</p>
+<p>$$!a_{1}^{2}+a_{2}^{2}+a_{3}^{2}=1,b_{1}^{2}+b_{2}^{2}+b_{3}^{2}=1,c_{1}^{2}+c_{2}^{2}+c_{3}^{2}=1$$</p>
+<p>$$!a_{1}b_{1}+a_{2}b_{2}+a_{3}b_{3}=0,a_{1}c_{1}+a_{2}c_{2}+a_{3}c_{3}=0,b_{1}c_{1}+b_{2}c_{2}+b_{3}c_{3}=0$$</p>
+<p>$$!a_{1}^{2}+b_{1}^{2}+c_{1}^{2}=1,a_{2}^{2}+b_{2}^{2}+c_{2}^{2}=1,a_{3}^{2}+b_{3}^{2}+c_{3}^{2}=1$$</p>
+<p>$$!a_{1}a_{2}+b_{1}b_{2}+c_{1}c_{2}=0,a_{1}a_{3}+b_{1}b_{3}+c_{1}c_{3}=0,a_{2}a_{3}+b_{2}b_{3}+c_{2}c_{3}=0$$</p>
+<font size="+0"><strong><a name="像片水平与倾斜像点坐标的关系">像片水平与倾斜像点坐标的关系</a></strong></font>。（这里，以摄影中心<font color="#FF0000">S点为像片旋转中心</font>，因此外方位元素中，<font color="#FF0000">主距依旧是f</font>，<font color="#FF0000">线元素没有改变</font>）<br><br>已知：外方位元素Xs Ys Zs φ ω k(即九个方向余弦)<br><br><font color="#FF0000">对于某高程</font>，摄影中心在该高程Z方向的投影N坐标为(Xs,Ys,Zs-$$H_{N}$$)–<font color="#FF0000">物方坐标系</font>
+
+<p><font color="#FF0000">对于某高程</font>，摄影中心在该高程的垂线与像平面的交点n坐标为$$(-f\frac{c_{1}}{c_{3}},-f\frac{c_{2}}{c_{3}})$$–<font color="#FF0000">像方坐标</font>，可将上点带入共线条件方程后方交会求得↓↓↓</p>
+<p><img src="http://www.dooby.me/wp-content/uploads/2015/11/A1BBA5EFFED4F68C01CF47FBC61FC4FA7087739E.jpg" alt=""></p>
+<p>又根据共线方程前方交会公式，在水平图像的平面上，物方任意点A(X,Y,Z)-（物方坐标）在像平面的成像点a为$$(x^{0},y^{0})$$-（像平面坐标）或$$(x^{0},y^{0},-f)$$像空间坐标系。↓↓↓</p>
+<p><img src="http://www.dooby.me/wp-content/uploads/2015/11/3C7C83AD827FB7A7BD4108090804ED13131E82D7.jpg" alt=""></p>
+<p>值得注意的是，主光轴正好是垂直于大地水平面，所以，地辅系与像空系只需要在XSY平面上旋转即可。</p>
+<p>在倾斜形态中，由像点表示物方点坐标点的公式为：</p>
+<p>$$!\frac{X-X_{S}}{Z-Z_{S}}=\frac{a_{1}x+a_{2}y-a_{3}f}{c_{1}x+c_{2}y-c_{3}f}$$</p>
+<p>$$!\frac{Y-Y_{S}}{Z-Z_{S}}=\frac{b_{1}x+b_{2}y-b_{3}f}{c_{1}x+c_{2}y-c_{3}f}$$</p>
+<p>在垂直形态中，三个角元素严格为0，因次带入之前的矩阵公式得到：</p>
+<p>a1=1 a2=0 a3=0 b1=0 b2=1 b3=0 c1=0 c2=0 c3=1</p>
+<p>$$!\frac{X-X_{S}}{Z-Z_{S}}=\frac{x^{0}}{-f}$$</p>
+<p>$$!\frac{Y-Y_{S}}{Z-Z_{S}}=\frac{y^{0}}{-f}$$</p>
+<p>其中$$x^{0},y^{0}$$分别表示水平状态的像点坐标。</p>
+<p>上两式的外方位角元素不同，而线元素是相同的。因此联立可得<font color="#FF0000">水平纠正的基本公式</font>：</p>
+<p>$$!\left\{\begin{matrix}x^{0}=-f\frac{a_{1}x+a_{2}y-a_{3}f}{c_{1}x+c_{2}y-c_{3}f}\\y^{0}=-f\frac{b_{1}x+b_{2}y-b_{3}f}{c_{1}x+c_{2}y-c_{3}f}\end{matrix}\right.$$</p>
+<p>&nbsp;</p>
+<div class="PoweredByWebStory" style="margin-top:15px;margin-bottom:10px"><a href="http://sns.juziyue.com/webinvite.php?u=94887" target="_blank" rel="external"></a>&nbsp;今天你<a href="http://sns.juziyue.com/webinvite.php?u=94887" target="_blank" rel="external">菊子曰</a>了么？</div>
+          
+        
+      
+    </div>
+    
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/10/12/后方交会检校(2)/" itemprop="url">
+                  后方交会检校(2)--误差方程及各项系数解求及精度
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-10-12T17:16:52+08:00" content="2015-10-12">
+              2015-10-12
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/什么都学一下/" itemprop="url" rel="index">
+                    <span itemprop="name">什么都学一下</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/什么都学一下/学习log/" itemprop="url" rel="index">
+                    <span itemprop="name">学习log</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/10/12/后方交会检校(2)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/12/后方交会检校(2)/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>上文中明确了两个式子：<br>$$<br>\lbrace<br>\begin{matrix}\frac{f}{\overline{Z}}dXs+\frac{x}{\overline{Z}}dZs-(f+\frac{x^{2}}{f})d\varphi-\frac{xy}{f}d\omega+yd\kappa -\frac{f}{\overline{Z}}dX-\frac{x}{\overline{Z}}dZ+\frac{x}{f}df+dx_{0}-(x-x_{cal})=0 \\\ \frac{f}{\overline{Z}}dYs+\frac{y}{\overline{Z}}dZs -\frac{xy}{f}d\varphi-(f+\frac{x^{2}}{f})d\omega-xd\kappa -\frac{f}{\overline{Z}}dX-\frac{y}{\overline{Z}}dZ+\frac{y}{f}df+dy_{0}-(y-y_{cal})=0<br>\end{matrix}$$</p>
+<p> 上式即称为<font color="#FF0000">线性化的共线方程</font>。</p>
+<p>$$\lbrace \begin{matrix}\frac{f}{\overline{Z}}dXs+\frac{x}{\overline{Z}}dZs-(f+\frac{x^{2}}{f})d\varphi-\frac{xy}{f}d\omega+yd\kappa -\frac{f}{\overline{Z}}dX-\frac{x}{\overline{Z}}dZ+\frac{x}{f}df+dx_{0}-(x-x_{cal})=v_{x}\\\\\frac{f}{\overline{Z}}dYs+\frac{y}{\overline{Z}}dZs -\frac{xy}{f}d\varphi-(f+\frac{x^{2}}{f})d\omega-xd\kappa -\frac{f}{\overline{Z}}dX-\frac{y}{\overline{Z}}dZ+\frac{y}{f}df+dy_{0}-(y-y_{cal})=v_{y}\end{matrix}$$</p>
+<p>上式则称为<font color="#FF0000">误差方程</font>。</p>
+<p>这里面$-(x-x_{cal})$即<strong>每一步计算后的值与实际测量值的差</strong>，在平差计算过程中，多余的观测数据就是为了进行平差计算获得更精确更均匀的结果。分别命名为$-l_{x}$和$-l_{y}$.一个控制点物方坐标和一个像点坐标组成的两个方程也就有两个误差方程，误差方程的基本公式为</p>
+<p>$$V=AX-L$$</p>
+<p>有的地方也写为</p>
+<p>$$V=A\Delta -L$$</p>
+<p> 其中V代表误差矩阵，X是待求解的每个元素的改正数矩阵，L是x-x计 y-y计的矩阵。</p>
+<p>通常，不会解算物方空间的坐标，同时加入对畸变系数的解算和矫正(将在第四篇提到)，将X分为$X_{in}$、$X_{out}$、$X_{distortion}$，则上式变形为</p>
+<p>$$V=AX_{out}+BX_{in}+CX_{distortion}-(xy)_{res}$$</p>
+<p>其中，A B C都是各项未知数的系数，$xy_{res}$是像点坐标的误差</p>
+<p>$$\lbrace<br>\begin{matrix}x_{res}=x-x_{cal}+x_{dis}\\\\y_{res}=y-y_{cal}+y_{dis}\end{matrix}$$</p>
+<p>其中，右边三项分别为像点观测坐标，像点计算坐标，畸变误差。<br> 在后方交会时，当只计算外方位元素时：</p>
+<p> $$V_{2n\times 1}=A_{2n\times6}X_{6\times1}-L_{2n\times1}$$.</p>
+<p> 其中，式子每两行具体为</p>
+<p>$$\begin{bmatrix}v_{x}\\\\v_{y}\end{bmatrix}=\begin{bmatrix}\frac{f}{\overline{Z}}&amp;0&amp;\frac{x}{\overline{Z}}&amp;-(f+\frac{x^{2}}{f})&amp;-\frac{xy}{f}&amp;y\\\\0&amp;\frac{f}{\overline{Z}}&amp;\frac{y}{\overline{Z}}&amp;-\frac{xy}{f}&amp;-(f+\frac{y^{2}}{f})&amp;-x\end{bmatrix}\begin{bmatrix}dXs\\\\dYs\\\\dZs\\\\d\varphi\\\\d\omega\\\\d\kappa\end{bmatrix}-\begin{bmatrix}l_{x}\\\\l_{y}\end{bmatrix}$$</p>
+<p>若要求出V方程的最佳估计值，在摄影测量中，一般按照最小二乘原理进行解答，即<font color="#FF0000"><strong>$$V^{T}V=min$$</strong></font>这就转化为了对该式求极值的问题。</p>
+<p>$$V^{T}V=(AX-L)^{T}(AX-L)=X^{T}A^{T}AX-2X^{T}A^{T}L+L^{T}L\Rightarrow \frac{\partial V^{T}V}{\partial X}=2A^{T}AX-2A^{T}L=0$$</p>
+<p>上式中大X的含义是待求解的每个元素的残差矩阵包含了Xs Ys Zs Ω φ k，而不是实际测量三维点坐标X。此外，推导过程中对$V^{T}V$求导，则可得到对应6个残差的最佳估计值。这个过程称为误差方程式的<font color="#FF0000"><strong>法化</strong></font>。</p>
+<p>上式整理后可得$$A^{T}AX-A^{T}L=A^{T}(AX-L)=0$$</p>
+<p>有的地方亦写作$$A^{T}P(A\Delta -L)=0$$Δ与X同含义，而P是测量平差中进行稳健估计而使用的权矩阵，即<br>$$\begin{bmatrix}P_{1}&amp;&amp;&amp;&amp;&amp;\\&amp;P_{2}&amp;&amp;&amp;&amp;\\&amp;&amp;.&amp;&amp;&amp;\\&amp;&amp;&amp;.&amp;&amp;\\&amp;&amp;&amp;&amp;.&amp;\\&amp;&amp;&amp;&amp;&amp;P_{n}\end{bmatrix}$$<br>非主要内容略微说一下测量平差的估值。主要目的是处理含有误差（其中一些误差可能较大，定义为比最大偶然误差还要大的误差，称为粗差）依赖一定的数学模型，包含<font color="#FF0000"><strong>函数模型和随即模型</strong></font>，按照某种估计准则，求出未知参数的<font color="#FF0000"><strong>最优估值</strong></font>，并评定其精度。当粗差归为函数模型，粗差表现为观测量误差绝对值较大且偏离群体，处理思想是在正式进行最小二乘平差之前探测和定位粗差，然后剔除含有粗差的观测值，得到一组比较净化的观测值，模型为<font color="#FF0000"><strong>均值漂移模型</strong></font>；将粗差归为随机模型，粗差即表现为先验随机模型和实际随机模型的差异过大，处理方法为根据逐次迭代平差的结果不断地改变观测值的权或者方差，最终使粗差观测值的权趋于零或者方差趋于无穷大，模型为<font color="#FF0000"><strong>方差膨胀模型</strong></font>。</p>
+<p>该方法的实践逻辑是由于不大准确知道观测数据中有效信息和有害信息所占的比例及其它们具体包含在哪些观测中，要冒着损失一些效率的风险，去获得较可靠的、具有实际意义的、较有效的估值。针对极大似然估计的稳健估计模型主要使用M估计。而M估计应用最广的是选权迭代法。而P可以使等权独立观测的P=I，也可以是权函数矩阵代替观测权阵P。这里不展开来讲。</p>
+<p>法化后的方程称为<font color="#FF0000"><strong>法方程式</strong></font>，一般写作</p>
+<p>$$NX=A^{T}L$$,其中$N=A^{T}A$也把<font color="#FF0000"><strong>N称为法方程的系数</strong>。</font></p>
+<p>上两式就是法方程，也是△Xs，△Ys，△Zs，△k，△φ，△ω的解。</p>
+<font color="#FF0000"><strong>答解改正数</strong></font>：$$X=(A^{T}A)^{-1}A^{T}L$$或$$\Delta =(A^{T}PA)^{-1}A^{T}PL$$<br><br>计算每一步<font color="#FF0000"><strong>迭代值</strong></font>：$$X_{s}^{k+1}=X_{s}^{k}+dXs^{k+1},Y_{s}^{k+1}=Y_{s}^{k}+dYs^{k+1},Z_{s}^{k+1}=Z_{s}^{k}+dZs^{k+1}$$<br>$$\varphi ^{k+1}=\varphi ^{k}+d\varphi ^{k+1},\omega ^{k+1}=\omega ^{k}+d\omega ^{k+1},\kappa ^{k+1}=\kappa ^{k}+d\kappa ^{k+1}$$<br><br>这里注意，<font color="#FF0000"><strong>平坦地区不适宜内外元素同时答解</strong></font>，因为dXs0与dx0相关，dYs0与dy0相关。<br><br>空间后方交会的平面二维坐标的选点，应尽可能的布满整个区域。或者覆盖中心和边缘的更全面的位置，如图。不均匀以及不足够数量的控制点参与迭代会极大的影响最终计算的精度。<br><br><img src="http://ww4.sinaimg.cn/large/68eb7c93gw1exesrtmyzlj20rr0iiq5q.jpg" alt=""><br><br><font color="#FF0000"><strong>具体的迭代流程</strong></font>如下：<br><br><font color="#FF0000">①确定各未知数的初值$X_{s}^{0},Y_{s}^{0},Z_{s}^{0},\varphi ^{0},\omega ^{0},\kappa ^{0}$</font><br><font color="#FF0000">      ②对每个控制点计算误差方程系数aij和lx、ly。按照最上面的公式列出误差方程。</font>
+
+<font color="#FF0000"><br>③答解线性方程组，得到△Xs，△Ys，△Zs，△k，△ω，△φ</font>
+
+<p><font color="#FF0000"><br>④将增量△和初值相加，得到新的一个外方位元素。</font></p>
+<p><font color="#FF0000">      ⑤各个增量△与一个给定的限差作比较，若小于则停止迭代运算；若不是则重复②到⑤</font><br>​<br>分别对上式各步骤进行解释：<br>①$X_{s}^{0},Y_{s}^{0}$可以利用X Y的物方点均值设置，$Z_{s}^{0}$一般为H即航摄高度，有时也用mf表示。m是航摄比例尺，f是相机焦距。这些值也可以直接给定某个初值。三个角元素则一般设为0,k有时可根据航迹图给定。</p>
+<p>②该步骤可分解为计算旋转矩阵R（R的具体值参考下文）、计算得到的变换坐标$\overline{X},\overline{Y},\overline{Z}$（其实就是地面辅助坐标系的坐标）、计算x计、y计（即由<font color="#FF0000"><strong>相应地面坐标点</strong></font>和<font color="#FF0000"><strong>外方位元素</strong></font>计算得到的像点坐标，$$x_{cal}=-f\frac{\overline{X}}{\overline{Z}},y_{cal}=-f\frac{\overline{Y}}{\overline{Z}}$$、计算误差方程各项系数、组成误差方程V=AX-L</p>
+<p>③该步骤其实就是矩阵运算，求出$A^{T}PA$   ($A^{T}A$) 及其逆矩阵。求出$A^{T}L$ ($A^{T}PL$)，两式相乘求取X[△Xs,△Ys,△Zs,△k,△ω,△φ]</p>
+<p>④根据改正数的值加上上一步的值得到各项新值。</p>
+<p>⑤检查是否收敛时，一般只对角元素改正数设定限差，为0.1’（按弧度值是<span style="WHITE-SPACE: normal; WORD-SPACING: 0px; TEXT-TRANSFORM: none; FLOAT: none; COLOR: rgb(0,0,0); TEXT-ALIGN: left; FONT: 13px/30px arial; WIDOWS: 1; DISPLAY: inline !important; LETTER-SPACING: normal; BACKGROUND-COLOR: rgb(255,255,255); TEXT-INDENT: 0px; -webkit-text-stroke-width: 0px">0.0000291rad</span>）当三个角改正数都小于限差时迭代结束。<br>平差理论中，单位权中的误差为</p>
+<p>$$m_{0}=\sqrt{\frac{\sum v_{i}^{2}}{2n-t}}​$$其中m0为单位权中误差。vi是第i个方程的残差，n是控制点个数，t是未知数个数。只解求外方位精度则只有6个精度。</p>
+<p>根据传播定律，$$m^{2}=N^{-1}m_{0}^{2}$$式中$N^{-1}$是法方程系数矩阵的逆矩阵。即</p>
+<p>$$N^{-1}=\begin{bmatrix}Q_{11}&amp;Q_{12}&amp;.&amp;.&amp;.&amp;Q_{1t}\\Q_{21}&amp;Q_{22}&amp;.&amp;.&amp;.&amp;Q_{2t} \\\ .&amp;.&amp;.&amp;.&amp;.&amp;.\\\ .&amp;.&amp;.&amp;.&amp;.&amp;.\\\ .&amp;.&amp;.&amp;.&amp;.&amp;.\\Q_{t1}&amp;Q_{t2}&amp;.&amp;.&amp;.&amp;Q_{tt}\end{bmatrix}$$,则<font color="#FF0000"><strong>第i个未知数中的误差</strong></font>为:</p>
+<p>$m_{i}=\sqrt{Q_{ii}}m_{0}$,其中$Q_{ii}$为$N^{-1}$的各项系数的对角元素,也称为第i个未知数的权倒数。</p>
+<p>——<strong><font color="#FF0000">一点说明</font></strong></p>
+<p>再次声明，无论半片还是全片，增加控制点都可以提高精度，但精度提高的不是很大；采用相同数量控制点，全片比半片精度成倍的提高，分布良好更有利于精度改善。</p>
+          
+        
+      
+    </div>
+    
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/10/10/后方交会检校(1)/" itemprop="url">
+                  后方交会检校(1)--前景 共线方程及其线性化
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-10-10T23:29:57+08:00" content="2015-10-10">
+              2015-10-10
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/什么都学一下/" itemprop="url" rel="index">
+                    <span itemprop="name">什么都学一下</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/什么都学一下/学习log/" itemprop="url" rel="index">
+                    <span itemprop="name">学习log</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/10/10/后方交会检校(1)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/10/后方交会检校(1)/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>各种文档看得累。条理不清结构不明缺斤少两。决定自己总结一个。（公式较多，墙外浏览更顺哟）</p>
+<p> 一些注意</p>
+<p><strong>   后方交会是为了获取影像的内外方位数据，其中外方位数据可以通过GPS、INS（惯性导航系统）、雷达、星相摄像机来获取；然而由于穷穷穷，只能利用影响覆盖范围内的一定控制点来计算空间坐标与影响坐标之间的关系，来反算外方位元素。
+</strong>   多片检校基于单片检校。在矩阵组合时分别解算外方位元素。但使用同一组内方位元素。在一个大矩阵内进行。<br><strong>   后方交会可以只检校外方位元素。当需要进行畸变差校正时（即畸变差不可忽略时），可在方程中加入畸变差项进行迭代；当需要进行内方位元素检校时（即内方位元素精度没有达到需求），可在方程中加入内方位元素进行迭代。
+</strong>   对于畸变差校正，包括径向畸变、切向畸变、薄棱镜畸变，其中多数情况考察径向畸变的前两项系数k1 k2和切向畸变p1 p2 ，在某些组合相机的畸变模型中，还包括α像素非正方形比例和βccd非正交性畸变系数。<br><strong>   对于内方位元素检校，有的地方将f分为fx和fy即f在坐标两个方向上的像素值（由于有的xy不是同一比例尺即不是正方形）
+</strong>   检校，就是纠正相机各个方面的误差和精度，可以得到相机内部的主点、焦距、畸变的客观信息，这些信息在大部分情况下不会轻易改变；而相机外部的空间位置时时刻刻都在改变，但一些论文指出，在焦距变化、空间位置变化、移轴、高空拍摄情况下，相机的焦距、主点位置也会随之或多或少的改变，因此迭代时最好能带上这些参数一起进行平差。</p>
+<p><strong> 一些重要概念</strong><br>后方交会基于<span style="COLOR: #ff0000"><strong>共线方程</strong></span>，物理含义为同一个三维坐标系中投影中心、物方点、像平面投影的点在同一条直线上。</p>
+<p> $$x-x_{0}=-f\cdot \frac{a_{1}(X-X_{s})+b_{1}(Y-Y_{s})+c_{1}(Z-Z_{s})}{a_{3}(X-X_{s})+b_{3}(Y-Y_{s})+c_{3}(Z-Z_{s})}$$</p>
+<p> $$y-y_{0}=-f\cdot \frac{a_{2}(X-X_{s})+b_{2}(Y-Y_{s})+c_{2}(Z-Z_{s})}{a_{3}(X-X_{s})+b_{3}(Y-Y_{s})+c_{3}(Z-Z_{s})}$$</p>
+<p> 上式中，包含留个外方位元素，即Xs、Ys、Zs、φ、Ω、k。只有确定了六个外方位元素，才能确定摄影中心在物方空间的位置。a1、a2、a3、b1、b2、b3、c1、c2、c3是需要计算的直线方程的系数，其物理性质是3个外方位角元素组成的9个方向余弦。该方程利用了相似三角形的性质；f是焦距长，X Y Z均值控制点的测量坐标，默认为精确的，因此物方控制点测量的精度很大程度上决定了最后检校的精度；x y是X Y Z对应的像平面的坐标，x0，y0是主点在像平面的坐标，有时当作已知并不再改变，有时也参与迭代计算。</p>
+<p> 共线条件方程用途有：</p>
+<ol>
+<li>单像、多像空间后方交会；多像空间前方交会</li>
+<li>解析空中三角测量的光束法平差</li>
+<li>数字投影的基础</li>
+<li>计算模拟影像数据（已知内外方位元素和物方坐标点求像点）</li>
+<li>DEM与共线方程制作正射影像</li>
+<li>DEM与共线方程进行单幅影像测图</li>
+</ol>
+<blockquote>
+<p><strong>注意 一个方程代表一个点在像平面和物方世界的关系，因此一个点对应两个方程，若有n个控制点，则对应2n个方程</strong></p>
+</blockquote>
+<p> 若f x0 y0当作已知，则有外方位元素6个未知数，因此需要6个方程，即3个控制点的方程；若f x0 y0当作未知，则有9个未知数，因此需要至少5个控制点的方程。当然，很多文章也指出，<strong>越多的冗余数据</strong>参与计算得到的结果也越精确；<strong>越多的像片</strong>参与计算，得到的结果越精确；<strong>更均匀的控制点分布</strong>，能更多的控制整张像片，均匀的分布在边缘，得到的结果更精确。</p>
+<p> 一般情况下，令<br> $$\overline{X}=a_{1}(X-X_{s})+b_{1}(Y-Y_{s})+c_{1}(Z-Z_{s})$$</p>
+<p>$$\overline{Y}=a_{2}(X-X_{s})+b_{2}(Y-Y_{s})+c_{2}(Z-Z_{s})$$</p>
+<p>$$\overline{Z}=a_{3}(X-X_{s})+b_{3}(Y-Y_{s})+c_{3}(Z-Z_{s})$$</p>
+<p> 而用矩阵的形式可以表示为：</p>
+<p> $$\begin{pmatrix}\overline{X}\\\overline{Y}\\\overline{Z}\end{pmatrix}=\begin{pmatrix}a_{1}&amp;b_{1}&amp;c_{1}\\a_{2}&amp;b_{2}&amp;c_{2}\\a_{3}&amp;b_{3}&amp;c_{3}\end{pmatrix}\cdot\begin{pmatrix}X-Xs\\Y-Ys\\Z-Zs\end{pmatrix}=R^{T}\begin{pmatrix}X-Xs\\Y-Ys\\Z-Zs\end{pmatrix}$$</p>
+<p>这里R是旋转矩阵，且$R^{T}=R^{-1}$,行列式的值为0，即任意元素等于其代数余子式的值.则共线方程变为：</p>
+<p> $$x-x_{0}=-f\cdot \frac{\overline{X}}{\overline{Z}},y-y_{0}=-f\cdot \frac{\overline{Y}}{\overline{Z}}$$</p>
+<p> 由于上式是共线方程的变形，因此Fx和Fy是六个外方位元素为参数的函数。由于方程是非线性的，因此不能解求数值，<strong>需要对方程进行线性化</strong>。思路是，对上式按泰勒级数在初值处展开并保留一次项，将非线性方程转化为各参数<span style="COLOR: #ff0000"><strong>改正数</strong></span>的线性方程</p>
+<p> 设<span style="COLOR: #ff0000">初值</span>为$$X_{S}^{0},X_{S}^{0},Z_{S}^{0},\varphi^{0},\omega^{0},\kappa {0},X^{0},Y^{0},Z^{0},x_{0}^{0},y_{0}^{0},f^{0}$$</p>
+<p> 相应的<span style="COLOR: #ff0000">改正数</span>为</p>
+<p> $$dXs=\triangle Xs=Xs-Xs^{0},dYs=\triangle Ys=Ys-Ys^{0},dZs=\triangle Zs=Zs-Zs^{0}$$</p>
+<p> $$d\varphi=\triangle \varphi=\varphi-\varphi^{0},d\omega=\triangle \omega=\omega-\omega^{0},d\kappa=\triangle \kappa=\kappa-\kappa^{0}$$</p>
+<p> $$dX=\triangle X=X-X^{0},dY=\triangle Y=Y-Y^{0},dZ=\triangle Z=Z-Z^{0}$$</p>
+<p> &nbsp;则<font color="#FF0000" size="5">共线方程的泰勒一次展开一般式</font>为<font color="#FF0000" size="5">①</font></p>
+<p> $$x=(x)+\frac{\partial x}{\partial Xs}dXs+\frac{\partial x}{\partial Ys}dYs+\frac{\partial x}{\partial Zs}dZs+\frac{\partial x}{\partial \varphi }d\varphi +\frac{\partial x}{\partial \omega }d\omega +\frac{\partial x}{\partial \kappa }d\kappa +\frac{\partial x}{\partial X}dX+\frac{\partial x}{\partial Y}dY+\frac{\partial x}{\partial x_{0}}dx_{0}+\frac{\partial x}{\partial y_{0}}dy_{0}+\frac{\partial x}{\partial f}df$$</p>
+<p>$$y=(y)+\frac{\partial y}{\partial Xs}dXs+\frac{\partial y}{\partial Ys}dYs+\frac{\partial y}{\partial Zs}dZs+\frac{\partial y}{\partial \varphi }d\varphi +\frac{\partial y}{\partial \omega }d\omega +\frac{\partial y}{\partial \kappa }d\kappa +\frac{\partial y}{\partial X}dX+\frac{\partial y}{\partial Y}dY+\frac{\partial y}{\partial x_{0}}dx_{0}+\frac{\partial y}{\partial y_{0}}dy_{0}+\frac{\partial y}{\partial f}df$$</p>
+<p>这是一个重要的总结性公式。(x)(y)分别是内方位元素x，y的初值。式中包含了所有内外元素和物放测量点。当进行不同矩阵运算时，可以选择需要的精度不足够的进行迭代计算。</p>
+<p>其中，对x和y求各未知项的偏导：</p>
+<p> $$\frac{\partial x}{\partial Xs}=-f\cdot \frac{\frac{\partial \overline{X}}{\partial Xs}\overline{Z}-\frac{\partial \overline{Z}}{\partial Xs}\overline{X}}{\overline{Z}^{2}}=-\frac{f}{\overline{Z}^{2}}(-a_{1}\overline{Z}+a_{3}\overline{X})=\frac{1}{\overline{Z}}[a_{1}f-a_{3}f\frac{\overline{X}}{\overline{Z}}]=\frac{1}{\overline{Z}}[a_{1}f+a_{3}(x-x_{0})]$$</p>
+<p> 同理，其他的偏导为</p>
+<p> $$\begin{align}<br> \frac{\partial x}{\partial Ys} &amp; =\frac{1}{\overline{Z}}[b_{1}f+b_{3}(x-x_{0})] \\<br> \frac{\partial x}{\partial Zs} &amp; =\frac{1}{\overline{Z}}[c_{1}f+b_{3}(x-x_{0})] \\<br> \frac{\partial y}{\partial Xs} &amp; =\frac{1}{\overline{Z}}[a_{2}f+a_{3}(x-x_{0})] \\<br> \frac{\partial y}{\partial Ys} &amp; =\frac{1}{\overline{Z}}[b_{2}f+b_{3}(x-x_{0})] \\<br> \frac{\partial y}{\partial Zs} &amp; = \frac{1}{\overline{Z}}[c_{2}f+c_{3}(x-x_{0})] \\<br>\frac{\partial x}{\partial f} &amp; =\frac{x-x_{0}}{f}=-\frac{\overline{X}}{\overline{Z}} \\<br>\frac{\partial y}{\partial f} &amp; =\frac{y-y_{0}}{f}=-\frac{\overline{Y}}{\overline{Z}} \\<br>\frac{\partial x}{\partial x_{0}} &amp; =1,\frac{\partial x}{\partial y_{0}}=0\\<br>\frac{\partial y}{\partial x_{0}} &amp; =0,\frac{\partial y}{\partial y_{0}}=1<br>\end{align}$$</p>
+<p> 这里相对比较难解决的是角元素的偏导，关于角度的问题可以参考第三篇。</p>
+<p> 角度的变换在这里不再详述，两个坐标系之间的转换可以归结为变换矩阵的求取。三个角元素共同构成了矩阵的元素确定。 由于</p>
+<p>$$R^{T}=R_{\kappa }^{T}R_{\omega }^{T}R_{\varphi }^{T} $$</p>
+<p>因而，难度转到求取$\overline{X}\overline{Y} \overline{Z} $对角元素的偏导上。对角元素求偏导可以分为三个步骤：</p>
+<p>①求各个方向余弦$a_{i},b_{i},c_{i}$对ω、k、φ的偏导数。共27个。</p>
+<p>②求$\overline{X},\overline{Y},\overline{Z}$对ω、k、φ的偏导数，共9个。</p>
+<p>③求x、y对ω、k、φ的偏导数，共6个。</p>
+<p>如下是$\overline{X},\overline{Y},\overline{Z}$对φ的偏导，三个参数写在矩阵中，有的地方也展开写成每一项的等式形式。</p>
+<p>$$\begin{align}<br>\frac{\partial }{\partial \varphi }\begin{pmatrix}\overline{X}\\\overline{Y}\\\overline{Z}\end{pmatrix}&amp;=R_{\kappa }^{T}R_{\omega }^{T}\frac{\partial R_{\varphi }^{T}}{\partial \varphi }\begin{pmatrix}X-Xs\ Y-Ys\ Z-Zs\end{pmatrix}=R_{\kappa }^{T}R_{\omega }^{T}\frac{\partial R_{\varphi }^{T}}{\partial \varphi }(R^{T})^{-1}\begin{pmatrix}\overline{X}\ \overline{Y}\ \overline{Z}\end{pmatrix}=R_{\kappa }^{T}R_{\omega }^{T}\frac{\partial R_{\varphi }^{T}}{\partial \varphi }R\begin{pmatrix}\overline{X}\ \overline{Y}\ \overline{Z}\end{pmatrix}\\\ &amp;=R_{\kappa }^{T}R_{\omega }^{T}(R_{\varphi }^{T}R_{\varphi })\frac{\partial R_{\varphi }^{T}}{\partial \varphi }R\begin{pmatrix}\overline{X}\ \overline{Y}\ \overline{Z}\end{pmatrix}=R^{T}R_{\varphi }\frac{\partial R_{\varphi }^{T}}{\partial \varphi }R\begin{pmatrix}\overline{X}\ \overline{Y}\ \overline{Z}\end{pmatrix}<br>\end{align}$$</p>
+<p>带入具体系数，上式可变形为<br>$$<br>\begin{matrix}<br>\begin{pmatrix}a_{1} &amp; b_{1} &amp; c_{1}\\a_{2} &amp; b_{2} &amp; c_{2}\\a_{3} &amp; b_{3} &amp; c_{3}\end{pmatrix}\begin{pmatrix}0 &amp; 0 &amp;1\\0 &amp; 0 &amp; 0\\\ -1 &amp; 0 &amp; 0\end{pmatrix}\begin{pmatrix}a_{1} &amp; a_{2} &amp; a_{3}\\b_{1} &amp; b_{2} &amp; b_{3}\\c_{1} &amp; c_{2}&amp;c_{3} \end{pmatrix}\begin{pmatrix}\overline{X}\\\overline{Y}\\\overline{Z} \end{pmatrix}\\<br>=\begin{pmatrix}0 &amp;-a_{2}c_{1}+a_{1}c_{2}&amp;-a_{3}c_{1}+a_{1}c_{3}\\\ -a_{1}c_{2}+a_{2}c_{1} &amp; 0 &amp; -a_{3}c_{2}+a_{2}c_{3}\\\ -a_{1}c_{3}+a_{3}c_{1}&amp; -a_{2}c_{3}+a_{3}c_{2} &amp;0\end{pmatrix}\begin{pmatrix}\overline{X}\\\overline{Y}\\\overline{Z} \end{pmatrix} \\<br>= \begin{pmatrix}0 &amp; -b_{3} &amp; b_{2}\\b_{3}&amp;0&amp;-b_{1}\\\ -b_{2}&amp;b_{1}&amp;0\end{pmatrix}\begin{pmatrix}\overline{X}\\\overline{Y}\\\overline{Z} \end{pmatrix}<br>\end{matrix}<br>$$<br>其中利用了旋转矩阵一个元素的值<font color="#FF0000">等于代数余子式的值</font>。如下是$\overline{X},\overline{Y},\overline{Z}$对ω的偏导。</p>
+<p>$$\begin{align}<br>\frac{\partial }{\partial \omega }\begin{pmatrix}\overline{X}\\\overline{Y}\\\overline{Z}\end{pmatrix} &amp;=R_{\kappa }^{T}\frac{\partial R_{\omega}^{T}}{\partial \omega }R_{\varphi }^{T}\begin{pmatrix}X-Xs\\Y-Ys\\Z-Zs\end{pmatrix}=R_{\kappa}^{T}\frac{\partial R_{\omega }^{T}}{\partial \omega }R_{\varphi }^{T}(R_{\varphi }R_{\omega }R_{\kappa })\begin{pmatrix}\overline{X}\\\overline{Y}\\\overline{Z}\end{pmatrix}\\<br>&amp;=R_{\kappa }^{T}\frac{\partial R_{\omega }^{T}}{\partial \omega}R_{\omega }R_{\kappa }\begin{pmatrix}\overline{X}\ \overline{Y}\ \overline{Z}\end{pmatrix}=<br>\begin{pmatrix}0&amp;0&amp;sin\kappa\\\ 0&amp;0&amp;cos\kappa \\\ -sin\kappa&amp;-cos \kappa&amp;0\end{pmatrix}\begin{pmatrix}\overline{X}\ \overline{Y}\ \overline{Z}\end{pmatrix}<br>\end{align}$$其中，这里用到了</p>
+<p>$$\begin{pmatrix}\overline{X}\\\overline{Y}\\\overline{Z}\end{pmatrix}=R^{T}\begin{pmatrix}X-Xs\\Y-Ys\\Z-Zs\end{pmatrix}=(R_{\varphi}R_{\omega}R_{\kappa })^{T}\begin{pmatrix}X-Xs\\Y-Ys\\Z-Zs\end{pmatrix}=R_{\kappa }^{T}R_{\omega }^{T}R_{\varphi }^{T}\begin{pmatrix}X-Xs\\Y-Ys\\Z-Zs\end{pmatrix}$$</p>
+<p>$$\begin{pmatrix}X-Xs\\Y-Ys\\Z-Zs\end{pmatrix}=(R^{T})^{-1}\begin{pmatrix}\overline{X}\\\overline{Y}\\\overline{Z}\end{pmatrix}=R\begin{pmatrix}\overline{X}\\\overline{Y}\\\overline{Z}\end{pmatrix}=R_{\varphi }R_{\omega }R_{\kappa }\begin{pmatrix}\overline{X}\\\overline{Y}\\\overline{Z}\end{pmatrix}$$</p>
+<p>如下是$\overline{X},\overline{Y},\overline{Z}$对k的偏导。</p>
+<p>$$\begin{align}<br>\frac{\partial }{\partial \kappa }\begin{pmatrix}\overline{X}\ \overline{Y}\ \overline{Z}\end{pmatrix}&amp;=\frac{\partial R_{\kappa }^{T}}{\partial \kappa }R_{\omega }^{T}R_{\varphi }^{T}\begin{pmatrix}X-Xs\\Y-Ys\\Z-Zs\end{pmatrix}\\&amp;=\frac{\partial R_{\kappa }^{T}}{\partial \kappa }(R_{\kappa }R_{\kappa }^{T})R_{\omega }^{T}R_{\varphi }^{T}\begin{pmatrix}X-Xs\\Y-Ys\\Z-Zs\end{pmatrix}\\<br>&amp;=\frac{\partial R_{\kappa }^{T}}{\partial \kappa }R_{\kappa }\begin{pmatrix}\overline{X}\ \overline{Y}\ \overline{Z}\end{pmatrix}=\begin{pmatrix}\overline{Y} \\\- \overline{X}\\0\end{pmatrix}<br>\end{align}$$<br> 通过以上三式可得到x和y对各角元素未知数的偏导。有的地方，将x，y先分别除以$\overline{Z}$,这样可以在求取偏导的时候减少计算量。<br>$$<br>\begin{align}<br>\frac{\partial x}{\partial \varphi}<br>&amp; = -\frac{f}{\overline{Z}^{2}}(\frac{\partial \overline{X}}{\partial \varphi }\overline{Z}-\frac{\partial \overline{Z}}{\partial \varphi }\overline{X}) \\<br> &amp; = -\frac{f}{\overline{Z}^{2}}(-b_{3}\overline{Y}+b_{2}\overline{Z})\overline{Z}+\frac{f}{\overline{Z}^{2}}(b_{2}\overline{X}-b_{1}\overline{Y})\overline{X} \\<br>  &amp; = -(y-y_{0})b_{3}-fb_{2}-\frac{(x-x_{0})^{2}}{f}b_{2}+\frac{(x-x_{0})(y-y_{0})}{f}b_{1} \\<br> &amp; = \frac{(x-x_{0})(y-y_{0})}{f}b_{1}-(f+\frac{(x-x_{0})^{2}}{f})b_{2}-(y-y_{0})b_{3}<br>\end{align}<br>$$<br>其他以此类推<br>$$<br>\begin{align}<br>\frac{\partial x}{\partial \omega } &amp;=<br>\frac{(x-x_{0})^{2}}{f}sin\kappa-\frac{(x-x_{0})(y-y_{0})}{f}cos\kappa -fsin\kappa \\\ <br>\frac{\partial x}{\partial \kappa } &amp;=<br>(f+\frac{(y-y_{0}^{2})}{f})b_{1}-\frac{(x-x_{0})(y-y_{0})}{f}b_{2}-(x-x_{0})b_{3} \\<br>\frac{\partial y}{\partial \omega } &amp;=<br>-\frac{(x-x_{0})(y-y_{0})}{f}sin\kappa -\frac{(y-y_{0})^{2}}{f}cos\kappa -fcos\kappa \\<br>\frac{\partial y}{\partial \kappa }&amp;=-(x-x_{0})<br>\end{align} $$<br>以上求出了所有的偏导，则①式的公式可变为<font color="#FF0000" size="5">更重要的</font>式<font color="#FF0000">②</font></p>
+<p>$$\begin{aligned}<br>c_{11}dXs+c_{12}dYs+c_{13}dZs+c_{14}d\phi +c_{15}d\omega &amp;+c_{16}d\kappa \\\ -c_{11}dX &amp;-c_{12}dY-c_{13}dZ+c_{17}df+c_{18}dx_{0}+c_{19}dy_{0}-lx=0<br>\end{aligned}$$<br>$$\begin{aligned}<br>c_{21}dXs+c_{22}dYs+c_{23}dZs+c_{24}d\phi +c_{25}d\omega &amp;+c_{26}d\kappa \\\ -c_{21}dX &amp;-c_{22}dY-c_{23}dZ+c_{27}df+c_{28}dx_{0}+c_{29}dy_{0}-ly=0<br>\end{aligned}$$<br>这里可以看到，Xs和X Ys和Y Zs和Z的偏导互为相反数，因此12个未知数只需要求解9个。 其中c的系数分别为：<br>$$\begin{align}<br>c_{11}&amp; = \frac{1}{\overline{Z}}(a_{1}f+a_{3}(x-x_{0})) \\<br>c_{12}&amp; = \frac{1}{\overline{Z}}(b_{1}f+b_{3}(x-x_{0})) \\<br>c_{13}&amp; = \frac{1}{\overline{Z}}(c_{1}f+c_{3}(x-x_{0})) \\<br>c_{14}&amp; = \frac{(x-x_{0})(y-y_{0})}{f}b_{1}-(f+\frac{(x-x_{0})^{2}}{f})b_{2}-(y-y_{0})b_{3} \\<br>c_{15}&amp; = -\frac{(x-x_{0})^{2}}{f}sin\kappa -\frac{(x-x_{0})(y-y_{0})}{f}cos\kappa -fsin\kappa \\<br>c_{16}&amp; = y-y_{0}\\<br>c_{17}&amp; = \frac{x-x_{0}}{f},c_{18}=1,c_{19}=0,lx=x-x_{cal}\\<br>c_{21} &amp;= \frac{1}{\overline{Z}}(a_{2}f+a_{3}(y-y_{0}))\\<br>c_{22} &amp;= \frac{1}{\overline{Z}}(b_{2}f+b_{3}(y-y_{0}))\\<br>c_{23} &amp;= \frac{1}{\overline{Z}}(c_{2}f+c_{3}(y-y_{0}))\\<br>c_{24} &amp;= (f+\frac{(y-y_{0})^{2}}{f})b_{1}-\frac{(x-x_{0})(y-y_{0})}{f}b_{2}+(x-x_{0})b_{3}\\<br>c_{25} &amp;= -\frac{(x-x_{0})(y-y_{0})}{f}sin\kappa -\frac{(y-y_{0})^{2}}{f}cos\kappa -fcos\kappa \\<br>c_{26} &amp;= -(x-x_{0})\\<br>c_{27}&amp;=\frac{y-y_{0}}{f},c_{28}=0,c_{29}=1,ly=y-y_{cal}\end{align} $$</p>
+<p>在正摄影像近似垂直时，可以采用φ≈ω≈k≈0,$\overline{Z}\approx -H$的取值带入系数中，则②式可化简为<font color="#FF0000">本篇最终的结果式③</font>：</p>
+<p>$$\left\{\begin{matrix}v_{x}=-\frac{f}{H}dXs-\frac{x-x_{0}}{H}dZs-[f+\frac{(x-x_{0})^{2}}{f}]d\varphi-\frac{(x-x_{0})(y-y_{0})}{f}d\omega+(y-y_{0})d\kappa+\frac{f}{H}dX+\frac{x-x_{0}}{H}dZ+\frac{x-x_{0}}{f}df+dx_{0}-(x-x_{cal})\\v_{y}=-\frac{f}{H}dYs-\frac{y-y_{0}}{H}dZs-\frac{(x-x_{0})(y-y_{0})}{f}d\varphi-[f+\frac{(y-y_{0})^{2}}{f}]d\omega+(x-x_{0})d\kappa+\frac{f}{H}dY+\frac{y-y_{0}}{H}dZ+\frac{y-y_{0}}{f}df+dy_{0}-(y-y_{cal})\end{matrix}\right.$$</p>
+<p>式中相对①式添加了改正项，为了平衡一次项以下的展开式对结果的影响，是平差方程中重要的一部。误差方程将在下文提到。</p>
+          
+        
+      
+    </div>
+    
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/10/09/红包在哪里/" itemprop="url">
+                  红包在哪里
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-10-09T02:16:05+08:00" content="2015-10-09">
+              2015-10-09
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/槽/" itemprop="url" rel="index">
+                    <span itemprop="name">槽</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/10/09/红包在哪里/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/09/红包在哪里/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在 2015 年这一年，这种从相杀到相爱的事情已经发生了三次：<br>2015 年 2 月 14 日，滴滴和快的宣布合并；<br>2015 年 4 月 17 日，58 与赶集宣布合并；<br>2015 年 10 月 8 日，美团与大众点评宣布合并。</p>
+          
+        
+      
+    </div>
+    
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/06/21/一个装机清单/" itemprop="url">
+                  一个装机清单
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-06-21T16:36:25+08:00" content="2015-06-21">
+              2015-06-21
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/App强推/" itemprop="url" rel="index">
+                    <span itemprop="name">App强推</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/App强推/软文/" itemprop="url" rel="index">
+                    <span itemprop="name">软文</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/06/21/一个装机清单/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/21/一个装机清单/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>分享一个装机<a href="https://qdan.me/list/VYA83-njGa_t4EkD" target="_blank" rel="external">清单</a>。</p>
+          
+        
+      
+    </div>
+    
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/05/30/最近听的音乐/" itemprop="url">
+                  最近听的音乐
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-05-30T18:10:51+08:00" content="2015-05-30">
+              2015-05-30
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/槽/" itemprop="url" rel="index">
+                    <span itemprop="name">槽</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/30/最近听的音乐/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/30/最近听的音乐/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>今天。听李志和陈粒</p>
+          
+        
+      
+    </div>
+    
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/05/12/sift-with-python/" itemprop="url">
+                  记录一次心酸而无终的悲催却又惊喜的Python添加sift类库过程
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-05-12T17:17:45+08:00" content="2015-05-12">
+              2015-05-12
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/代码狗/" itemprop="url" rel="index">
+                    <span itemprop="name">代码狗</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/代码狗/学习log/" itemprop="url" rel="index">
+                    <span itemprop="name">学习log</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/12/sift-with-python/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/12/sift-with-python/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>基于上回对Harris的角点检测和匹配的过程，试想这学习一下另一种角点检测和匹配算法sift.<br>在《Python计算机视觉》书中，由于Python实现所有步骤的效率并不是很高，提到了VLFeat工具进行SIFT兴趣点的检测。</p>
+<p>好的，那就去<a href="http://www.vlfeat.org/" target="_blank" rel="external">官网</a>找。它明确写着Windows Mac Linux都可用。太好了。但是主要提供的是c 和 MATLAB 的api，在python中只能利用shell进行接口的调用。将目录下的\bin\arch\sift.exe 添加到path环境路径，就能在cmd控制台使用shell。可是测试了几次，依据<a href="http://www.vlfeat.org/man/sift.html#EXAMPLES" target="_blank" rel="external">例子</a>或者普林斯顿的<a href="http://vision.cs.princeton.edu/pvt/SiftFu/SiftFu/SIFTransac/vlfeat/doc/man/sift.html" target="_blank" rel="external">抄袭版本</a>，都只能打开可视化的界面，不能输入需要的.sift或者frame图像。</p>
+<p>好吧换个方案，听说Python有一个包装器。找到了供github下的<a href="https://github.com/mmmikael/vlfeat/tree/python-wrappers/python" target="_blank" rel="external">pyhton wrappers主页</a>（居然是寄生在MATLAB的插件下面）可是。。可是。在它的readme发现只能在linux和Mac OX使用。。书中亦提到包装器的安装需要非常高的技巧。好吧放弃。</p>
+<p>再次寻找。发现一个python官网提供的一个<a href="https://pypi.python.org/pypi/pyvlfeat" target="_blank" rel="external">python插件</a>。直接可以利用setup.py insatll进行安装。好了进行安装</p>
+<pre class="brush: shell; gutter: true">python setup.py install
+</pre>
+
+<p>居然出现了bug</p>
+<pre class="brush: shell; gutter: true">Unable to find vcvarsall.bat
+</pre>
+
+<p>找到一些<a href="http://stackoverflow.com/questions/2817869/error-unable-to-find-vcvarsall-bat" target="_blank" rel="external">讨论</a>，大家都说是要安MinGW，找到它的官网，<a href="http://sourceforge.net/projects/mingw/files/Installer/" target="_blank" rel="external">这个</a>看起来不错。默认选择了安装路径，又安装了一堆.bin 的类库。输入</p>
+<pre class="brush: shell; gutter: true">setup.py install build --compiler=mingw32
+</pre>
+
+<p>又出现了bug</p>
+<pre class="brush: shell; gutter: true">error: numpy/arrayobject.h: No such file or directory
+</pre>
+
+<p>日了狗了。在<a href="http://stackoverflow.com/questions/14657375/cython-fatal-error-numpy-arrayobject-h-no-such-file-or-directory" target="_blank" rel="external">这里</a>说需要加点什么路径，然后又在<a href="http://stackoverflow.com/questions/14657375/cython-fatal-error-numpy-arrayobject-h-no-such-file-or-directory" target="_blank" rel="external">这里</a>发现了说是它的mingw已经很旧了不太能匹配新的版本的软件了。可以找到一个<a href="https://github.com/develersrl/gccwinbinaries" target="_blank" rel="external">非官方版本</a>。</p>
+<p>好吧。开心的安上。再一次安了gcc等一系列乱七八糟的bin库。然后执行。。。shit。又是bug arraypobjects.h又找不到。。</p>
+<p>好吧超出了我的技能点了。顺带在半路还捡到一个非官方的python类库，叫做<a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/" target="_blank" rel="external">unofficial windows binaries for python extention package</a><br>..</p>
+<p>正在绝望之时。。居然在csdn发现了这本书的<a href="http://download.csdn.net/detail/shidecai1230/8255391#comment" target="_blank" rel="external">源代码</a>oh wtf。居然它的自带vlfeat能用。好吧到此结束了。直接用命令行好了。py中利用</p>
+<pre class="brush: python; gutter: true">os.system(&#039;cmd&#039;)</pre>
+
+<p>使用命令行进行编写。</p>
+          
+        
+      
+    </div>
+    
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/05/12/python角点检测及生成exe/" itemprop="url">
+                  Python角点检测及生成exe
                 </a>
               
             
@@ -341,8 +1833,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/05/12/harris-python-to-exe/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/12/harris-python-to-exe/" itemprop="commentsCount"></span>
+                <a href="/2015/05/12/python角点检测及生成exe/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/12/python角点检测及生成exe/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -974,7 +2466,7 @@ hiddenimports = [&#039;scipy.special._ufuncs_cxx&#039;]</pre>
 <p><span style="color: #000000">考虑到这一点，我们可以从函数 <img src="http://upload.wikimedia.org/math/8/0/0/800618943025315f869e4e1f09471012.png" alt="F"> 的局部极小值的初始估计 <img src="http://upload.wikimedia.org/math/c/d/5/cd5146b777ca8406c51d8ba8da7fe901.png" alt="\mathbf{x}_0"> 出发，并考虑如下序列 <img src="http://upload.wikimedia.org/math/e/3/6/e36041cdf241095ff7a0e0169a8d405e.png" alt="\mathbf{x}_0, \mathbf{x}_1, \mathbf{x}_2, \dots"> 使得</span></p>
 <dl><dd><span style="color: #000000"><img src="http://upload.wikimedia.org/math/8/b/0/8b0e3f1c41429f48f4788cfee9fe57ee.png" alt="\mathbf{x}_{n+1}=\mathbf{x}_n-\gamma_n \nabla F(\mathbf{x}_n),\ n \ge 0."></span></dd></dl>
 
-<p><span style="color: #000000">因此可得到</span><img src="http://upload.wikimedia.org/math/3/e/a/3ea251fcbc5ebc8b22f515e171570797.png" alt="F(\mathbf{x}_0)\ge F(\mathbf{x}_1)\ge F(\mathbf{x}_2)\ge \cdots,">如果顺利的话序列 <img src="http://upload.wikimedia.org/math/c/a/c/cac7a8ab62b2a332af1981678d0504e3.png" alt="(\mathbf{x}_n)"> 收敛到期望的极值。<span style="color: #000000">注意每次迭代<em>步长</em> <img src="http://upload.wikimedia.org/math/3/3/4/334de1ea38b615839e4ee6b65ee1b103.png" alt="\gamma"> 可以改变。假设 <img src="http://upload.wikimedia.org/math/8/0/0/800618943025315f869e4e1f09471012.png" alt="F"> 定义在平面上，并且函数图像是一个碗型。蓝色的曲线是等高线，即函数 <img src="http://upload.wikimedia.org/math/8/0/0/800618943025315f869e4e1f09471012.png" alt="F"> 为常数的集合构成的曲线。红色的箭头指向该点梯度的反方向。（一点处的梯度方向与通过该点的等高线的垂线。沿着梯度<em>下降</em>方向，将最终到达碗底，即函数 <img src="http://upload.wikimedia.org/math/8/0/0/800618943025315f869e4e1f09471012.png" alt="F"> 值最小的点。</span></p>
+<p><span style="color: #000000">因此可得到</span><img src="http://upload.wikimedia.org/math/3/e/a/3ea251fcbc5ebc8b22f515e171570797.png" alt="F(\mathbf{x}_0)\ge F(\mathbf{x}_1)\ge F(\mathbf{x}_2)\ge \cdots,">如果顺利的话序列 <img src="http://upload.wikimedia.org/math/c/a/c/cac7a8ab62b2a332af1981678d0504e3.png" alt="(\mathbf{x}_n)"> 收敛到期望的极值。<span style="color: #000000">注意每次迭代_步长_ <img src="http://upload.wikimedia.org/math/3/3/4/334de1ea38b615839e4ee6b65ee1b103.png" alt="\gamma"> 可以改变。假设 <img src="http://upload.wikimedia.org/math/8/0/0/800618943025315f869e4e1f09471012.png" alt="F"> 定义在平面上，并且函数图像是一个碗型。蓝色的曲线是等高线，即函数 <img src="http://upload.wikimedia.org/math/8/0/0/800618943025315f869e4e1f09471012.png" alt="F"> 为常数的集合构成的曲线。红色的箭头指向该点梯度的反方向。（一点处的梯度方向与通过该点的等高线的垂线。沿着梯度_下降_方向，将最终到达碗底，即函数 <img src="http://upload.wikimedia.org/math/8/0/0/800618943025315f869e4e1f09471012.png" alt="F"> 值最小的点。</span></p>
 <p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Gradient_descent.png/350px-Gradient_descent.png" alt=""></p>
 <p>&nbsp;</p>
           
@@ -1025,8 +2517,8 @@ hiddenimports = [&#039;scipy.special._ufuncs_cxx&#039;]</pre>
             
               
                 
-                <a class="post-title-link" href="/2015/04/21/cmakeqt5-0-with-opengl-e7-bc-96-e8-af-91cloudcompare/" itemprop="url">
-                  Cmake+qt5.0 with Opengl编译CloudCompare
+                <a class="post-title-link" href="/2015/04/21/cmake-cloudcompare/" itemprop="url">
+                  编译CloudCompare
                 </a>
               
             
@@ -1081,8 +2573,8 @@ hiddenimports = [&#039;scipy.special._ufuncs_cxx&#039;]</pre>
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/04/21/cmakeqt5-0-with-opengl-e7-bc-96-e8-af-91cloudcompare/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/21/cmakeqt5-0-with-opengl-e7-bc-96-e8-af-91cloudcompare/" itemprop="commentsCount"></span>
+                <a href="/2015/04/21/cmake-cloudcompare/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/21/cmake-cloudcompare/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1175,7 +2667,7 @@ hiddenimports = [&#039;scipy.special._ufuncs_cxx&#039;]</pre>
             
               
                 
-                <a class="post-title-link" href="/2015/03/03/【电影】【2015】 〇二次点评/" itemprop="url">
+                <a class="post-title-link" href="/2015/03/03/2015-movie-2/" itemprop="url">
                   【电影】【2015】 〇二次点评
                 </a>
               
@@ -1219,8 +2711,8 @@ hiddenimports = [&#039;scipy.special._ufuncs_cxx&#039;]</pre>
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/03/03/【电影】【2015】 〇二次点评/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/03/【电影】【2015】 〇二次点评/" itemprop="commentsCount"></span>
+                <a href="/2015/03/03/2015-movie-2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/03/2015-movie-2/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1298,1619 +2790,6 @@ hiddenimports = [&#039;scipy.special._ufuncs_cxx&#039;]</pre>
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/02/01/【电影】【2015】〇一次点评/" itemprop="url">
-                  【电影】【2015】〇一次点评
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-02-01T04:07:13+08:00" content="2015-02-01">
-              2015-02-01
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/槽/" itemprop="url" rel="index">
-                    <span itemprop="name">槽</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/02/01/【电影】【2015】〇一次点评/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/02/01/【电影】【2015】〇一次点评/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近闲的慌 拔草了许多电影 有当下上映的 也有各种高分&nbsp;&nbsp;【重返20岁】</p>
-<p><a href="http://ww3.sinaimg.cn/large/68eb7c93gw1eotcq3l0l9j21kw16o13e.jpg" target="_blank" rel="external"><img src="http://ww3.sinaimg.cn/large/68eb7c93gw1eotcq3l0l9j21kw16o13e.jpg" alt=""></a><br>尽管是中文版【奇怪的她】 对白和情节上也不仅相似 但是剧情在中国化的喜剧氛围后 在幽默之余更加动人 讲述了60岁老太太进入青春照相馆穿越回20岁重回亲朋身边的逗趣温馨故事 &nbsp;贴近百姓人心的穿越让本显得平庸的幻想片令人动容 婆媳关系 婆婆的唠叨 祖辈对晚辈的疼爱 都和中国家庭的生活息息相关应该是举家都适合观看的好电影 推荐 ★★★★★</p>
-<p>&nbsp;【博物馆奇妙夜3】</p>
-<p><a href="http://ww3.sinaimg.cn/large/68eb7c93gw1eotbmtz5rxj21kw16othr.jpg" target="_blank" rel="external"><img src="http://ww3.sinaimg.cn/large/68eb7c93gw1eotbmtz5rxj21kw16othr.jpg" alt=""></a>个人感觉这样的穿越就显得有些苍白 尽管秉承了1和2的故事串联和笑点 但是终归只能作为商业喜剧 凭借着一流的但却不入流的特效展示和脸谱化的人物和动物 使得笑点单调不具深意 终归是围绕着如何防止一块会褪色的石头褪色的故事展开 在大英博物馆碰到各种大变活人的化石疯跑了好几圈终于找到咪咪的俗套剧情 重口的爱情 木乃伊一家的温情 仅仅是难得的喜剧之外的意外 不推荐&nbsp;★★★</p>
-<p>&nbsp;&nbsp;</p>
-<p>【辩护人】</p>
-<p><img src="http://ww1.sinaimg.cn/large/68eb7c93gw1eotbu6095ej211y0lcwkg.jpg" alt=""></p>
-<p>韩国电影最近经常入我的眼球 除了一贯的感情戏让人缠绵得撕心裂肺 更高的立意也是值得国产电影学习的地方 辩护人类似的主题若是在国内上映应该是冷处理禁播状态 结社游行反共主义 都是大忌讳 更甚的是提到了民主主义 权力交给人民 法律真正能凌驾于人制之上 从微观一个发际的律师心态的变化 到宏观上整个社会的响应整个律师界的声援 充满了正义（敢于与政府抵触）和正气 我宁愿相信学生是社会的源动力 科技的变革 政治和思潮的涌动 都是从底层接受教育感受最清澈的思维发出的 社会是个大熔炉 不进去不知道疾苦 但是进去了也便只晓得尝到疾苦了 剧中律师和家人的纠结 律师和阿玛的纠结 律师和法官和原告的纠结 都影射了整个社会的人际关系和人情来往对法制的影响 无论社会主义资本主义 暴力机关大抵上都是为了统治阶级服务的 但是能发声 能自由的发声 能自由的不加掩饰的发声 也便只有某些地方 才有罢 推荐★★★★★&nbsp;</p>
-<p>&nbsp;【布达佩斯大饭店】<br><a href="http://ww2.sinaimg.cn/large/68eb7c93gw1eoud0ihps8j211y0lcwkg.jpg" target="_blank" rel="external"><img src="http://ww2.sinaimg.cn/large/68eb7c93gw1eoud0ihps8j211y0lcwkg.jpg" alt=""></a><br>据传2014年奥斯卡就炒鸡火了今年又被捧红了 文艺到醉 拼接章节式的小段故事一般 娓娓道来 层层递进 把越狱 偷画 偷腥 逃亡表现的如此的幽默 但又不失结构感 尽管脸谱化过重了一些但是人物表现的张力十足 要强有能力的门童 广结人缘唠叨满腹又一路坎坷的酒店主管 冷酷的杀手 可爱懵懂为爱奋不顾身的女孩 极致的展现了导演的造化功力 推荐★★★★★</p>
-<p>&nbsp;【恐怖直播】&nbsp;</p>
-<p>韩国独特角度和独特风格的电影 特爱把主角从内心到外表抓狂捉急焦虑挣扎各种心理状态细微刻画 又是一场 针对国家针对政府层面的立意 最近几部看到的韩国高分电影都带有政治色彩 这一步甚是左派风格 毅然决然的在绝望的时候化身成了恐怖分子 这样的延伸在国内甚至可能成为民族主义 民粹主义分裂人民和国家的借口 因为值得深思的是国家尊严和个人尊严冲突时的应激处理方式 自我价值和他人价值联系融和时生命取舍的价值观对待问题 诚然 身处电影的灾难时 我也不清楚会不会暴力的变成一个为了自证而自我毁灭恐怖分子 ★★★★&nbsp;</p>
-<p>【素媛】</p>
-<p>&nbsp;超棒暖人心的电影 情节有些虐  在火车上本以为是个故事剧情 居然在被窝里看哭了 韩国的心理戏真是让人赞 超离了父母的爱外依旧心系整个国家整个社会的法制正义 推荐★★★★★&nbsp;</p>
-<p>【疯狂原始人】&nbsp;</p>
-<p>米帝梦工厂动画始终如一的剧情和特效完美结合 加上些许或勇气或希望或爱情的立意 搭配完美结局 整合成套的美国动画标准制作 些许欢乐些许感人 讲述了原始人老爹不愿接触新事物到勇于探索新天地的历程 ★★★★&nbsp;</p>
-<p>【霍比特人3-五军之战】</p>
-<p>&nbsp;没有资格评价 过于复杂的家族关系和世界观 但相比霍比特人1睡着了的我已经充满斗志的看完了 抛开剧情设置而言 对覆灭濒临崩溃的军队的描绘并没有让人看到绝望或者惨痛 而主角们过于单一化的主线进入单挑模式也不让人有更多现象空间 面对黄金魔咒而挣脱出来的索林也显得有些唐突 最出彩的怂蛋却压制了主角的人物化性格 战争格斗场面甚至想起了早些年的一些国产历史剧 特效不太值得imax 只有颜值影迷和故事系列影迷能够如此深邃的看下去罢 ★★★★&nbsp;</p>
-<p>【无人区】&nbsp;</p>
-<p>人只有在群居时才是人类 给独特的视角和故事结构赞 主角光环有些过于负重了 血腥暴力可以再更贴近实际 但一切的黑暗和光明都已很出彩 推荐★★★★★</p>
-<p>&nbsp;【消失的爱人】</p>
-<p>&nbsp;剧情反转以至于电影的类型都突然翻转 本以为是黄赌毒的温情片 结果意想不到的确是恐怖剧情悬疑片 女主有高圆圆那种独特的大方而温柔的美 我要是男主都被吓傻了 这妞完全没法hold 各大影评好评到爆 目测奥斯卡有一些收获 不过本应生活的太过跳跃了★★★★&nbsp;</p>
-<p>【智取威虎山】&nbsp;</p>
-<p>难得的国产战争片一气呵成的2个多小时 尽管任务化妆和服装都略假 但剧情层层深入以及反派的桀骜残暴性格给加分不少 其中少数土匪的幽默细胞和土匪帮派的对话、组织、反间等特殊场景成为亮点 最后的特性也十分酷炫 作为红色电影能有如此震撼而连贯的气质徐克展现不俗实力 推荐★★★★★ &nbsp; &nbsp;</p>
-          
-        
-      
-    </div>
-    
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/01/29/2014生活生命、/" itemprop="url">
-                  [2014]生活生命、
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-29T00:42:10+08:00" content="2015-01-29">
-              2015-01-29
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/槽/" itemprop="url" rel="index">
-                    <span itemprop="name">槽</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/01/29/2014生活生命、/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/29/2014生活生命、/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>2014亦算是个重要节点。考研了。复试了。毕业了。喝醉了。一切都这么顺利，顺利得很平静。狂欢中带走离别，夹杂着不少的噪音。世界杯让我忘了自己，撞上了树状。自以为满心得意的DIP，睡过了。怪不了谁，谁都不应该为我负责，22岁，一个复杂的年龄。</p>
-<p>或许该是成长到成熟这个节点了。一个人一年，走了至今最多的城市，<strong>武汉 北京 天津 绍兴 杭州  桐乡乌镇 嘉善西塘 吴江同里 苏州 无锡 扬州 长沙 张家界 成都 都江堰 川主寺黄龙 九寨沟 若尔盖花湖 乐山 重庆 南宁 大同 介休 太原 平遥 鄂尔多斯 达拉特旗 包头 呼和浩特 </strong>。一个人一年，看了至今最多的书，尽管都是学术和科研，但终归是目测达到了智商的巅峰，无论数理逻辑还是语言学习，都未曾来过的顶峰。一个人一年，看过了至今最多的电影，学会了沉溺，更学会了跳跃和放弃，不再执着于影评，不再执着于类别，看的就是当下的心情 。一个人一年，习惯了抬头看星星，低头碰杯饮，吃了至今最多的零食，喝了至今最多的酒，吐了至今最多的槽。我有一个常煮面的锅，我有一个可以经常打羽毛球的伴，我有一个听李荣浩的音箱，我变得有些孤僻，但时而放荡得不着边际。更爱笑也学会了哭，面对恐惧却不自觉的冷静得冷酷，面对压力从容得像未曾来过。我学着独自承受，学着享受提供的起起伏伏，学着把握每一时刻的心跳。平淡里最显唐突的就是离别，但是把酒言欢，抑或酒吧，抑或桌游，抑或聚餐，都是无懈可击的欢乐筵席。有泪水，却不带苦涩。有倾斜，却毫无酸楚。我们珍重这说着的是永恒的朋友，唱着这一次又一次骊歌。</p>
-<p>&nbsp;</p>
-<p>我却爱逃避。逃避挥手。逃避责任。逃避胆怯。用放纵来表达着怂。</p>
-<p>&nbsp;</p>
-<p>2015.<strong>不怂</strong>。</p>
-          
-        
-      
-    </div>
-    
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/12/15/SublimeText添加中文编码/" itemprop="url">
-                  SublimeText添加中文编码
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-12-15T19:10:49+08:00" content="2014-12-15">
-              2014-12-15
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/代码狗/" itemprop="url" rel="index">
-                    <span itemprop="name">代码狗</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/代码狗/学习log/" itemprop="url" rel="index">
-                    <span itemprop="name">学习log</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/12/15/SublimeText添加中文编码/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/15/SublimeText添加中文编码/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>SublimeText添加中文编码</p>
-<ol>
-<li>Preferences”–&gt;“Package Control</li>
-<li>在输入框内输入“Install Package”，点击下方自动提示出来的“Install Package”</li>
-<li>弹出一个输入框内输入“CovertToUTF8”，下面就会相应的插件，鼠标点击安装。</li>
-<li>稍等几秒后，插件就会安装成功，无需重启Sublime Text,中文内容已经能够正确显示了。</li>
-</ol>
-          
-        
-      
-    </div>
-    
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/12/12/Hadoop2.2.0 Mapreduce Log日志分析小例/" itemprop="url">
-                  Hadoop2.2.0 Mapreduce Log日志分析小例
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-12-12T02:17:26+08:00" content="2014-12-12">
-              2014-12-12
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/代码狗/" itemprop="url" rel="index">
-                    <span itemprop="name">代码狗</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/代码狗/学习log/" itemprop="url" rel="index">
-                    <span itemprop="name">学习log</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/12/12/Hadoop2.2.0 Mapreduce Log日志分析小例/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/12/Hadoop2.2.0 Mapreduce Log日志分析小例/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>这个任务主要是在搭建好Hadoop2.2.0环境的基础上，模仿sample中的wordcount程序，手动编写一个Mapreduce的对日志文件分析的函数。该日志文件是模拟搜索引擎记录所有用户的查询，当有一个用户使用搜索引擎进行搜索时，日志文件会记录这样一条记录：（搜索时间、搜索关键字、用户IP）。其中，日志文件的格式是：</p>
-<ul>
-<li>时间+搜索词+IP地址</li>
-<li>2011-10-26 06:11:35 云计算 210.77.23.12</li>
-<li>2011-10-26 06:11:45 Hadoop 210.77.23.12</li>
-</ul>
-<p>利用Mapreduce模型对日志文件进行分析，需要完成的任务有：</p>
-<ul>
-<li>所有日志中出现次数最多的50个关键词；</li>
-<li>特定日期区间日志中出现次数最多的50个关键词；</li>
-<li>特定IP地址区间（假定前3段相同，区间在4段中设定）日志中出现次数最多的50个关键词</li>
-</ul>
-<p>任务主要流程包括：</p>
-<ul>
-<li>按照一定的规则随机生成并将日志文件写入DFS中。</li>
-<li>将日志文件进行字符串筛检，提取出所需字段并计数</li>
-<li>将累计的词数进行排序</li>
-</ul>
-<p><img src="http://ww1.sinaimg.cn/large/68eb7c93jw1en69s477ktj20fc0atdge.jpg" alt=""></p>
-<p>编程之前，研究了一下eclipse-hadoop的插件，其作用是可以快速的查看DFS中的新增的文件，即写入日志，生成日志都能快速的查看。下载jar包，将之放到eclipse目录下的dropins里。启动eclipse后再preference里可以配置hadoop的路径。</p>
-<p><img src="http://ww4.sinaimg.cn/large/68eb7c93jw1en69y207dij20hm055dga.jpg" alt=""></p>
-<p>在导航中打开map-reduce的窗口，右键新建一个HadoopLocation，如图：</p>
-<p><img src="http://ww3.sinaimg.cn/large/68eb7c93jw1en69yxctfuj20s20enq5z.jpg" alt="">        这里Mapreduce和DFS的port分别是mapred-site.Xml和core-site.xml中配置的端口。这样就可以在Program Explorer 中看到dfs的文件。</p>
-<p><img src="http://ww2.sinaimg.cn/large/68eb7c93jw1en69zmtefxj205v04e3yj.jpg" alt="">此外，加入了插件后还可以直接建立Mapreduce的项目，这里就不详述了。</p>
-<p><img src="http://ww1.sinaimg.cn/large/68eb7c93jw1en6a08tm2hj20gz09174x.jpg" alt=""><br>变成之前对Hadoop2.2.0的Mapreduce做一个简介。之前版本的Mapreduce是由Jobtracker和TaskTracker来管理的，之后出现了Yarn模型的版本，其要义是优化了每次Job都要经过JobTracker分配的结构，通过NodeManager管理节点任务，通过ResourceManager管理资源的分配。</p>
-<p><img src="http://ww1.sinaimg.cn/large/68eb7c93jw1en6a10wwoxj20cv09ogme.jpg" alt=""></p>
-<p>该系统程序的编写建立在系统自带的Wordcount demon上，通过重写Mapper类下的Map函数和Reducer类下的Reduce函数来读入分布式文件的数据，并进行分布式处理。其中，排序并找出前K个任务由两个Mapreduce完成。第一个任务Map负责读取分布式文件，截取字符串，并按任务需求过滤log信息；第一个任务Reduce负责对截取出的搜索词计数。第二个任务的Map负责封装新的词频和搜索词；第二个任务的Reduce负责将K-V键值对加入TreeMap并进行排序，最终输出TopK文件。<br>操作者需要在一台配置好Hadoop的Linux全分布式节点的环境下，在控制台通过hdfs命令输入7项参数（其中5项必选）：1.输入log日志文本路径 2.第一个Mapreduce输出的词频统计文件路径 3.第二个Mapreduce输出的词频统计顺序排列的文件路径（中间过程）4.第二个Mapreduce输出的最高词频统计结果的文件路径 5.任务需求 6.参数1 7.参数2 进行系统的操作，最终在在hdfs文件系统中找到生成的结果，一般以ABC-part-00000命名。参数输入错误或者系统崩溃会自动停止程序。</p>
-<p><img src="http://ww3.sinaimg.cn/large/68eb7c93jw1en6a20gi08j20o20bwmxy.jpg" alt=""></p>
-<p>之前叙述了系统由两部分构成，其中第一部分不作为系统的主体框架，只作为普通JavaApplication处理，另一部分则具体分为MAP1，REDUCE1,MAP2,REDUCE2来处理，以下是系统设计的具体框架。<br>第一部分较简单，通过调用Hadoop写入文件的API，再加上随机函数分别生成搜索词、IP和日期来实现。第二部分则通过编写两个函数入口run、两个map读取文件和两个reduce实现相应功能来组成。本系统的主要类如下：</p>
-<p><img src="http://ww1.sinaimg.cn/large/68eb7c93jw1en6a3grqz1j2055053jrl.jpg" alt=""></p>
-<p>其中，Config主要存放系统全局的参数，例如日志行数，日志起止时间，topK个数等。<br>DFSWritter负责第一个主要任务写入数据，包含以下函数：</p>
-<p><img src="http://ww2.sinaimg.cn/large/68eb7c93jw1en6a4d8g9pj205902cq2w.jpg" alt=""></p>
-<p>写入数据构成如下：</p>
-<p><img src="http://ww1.sinaimg.cn/large/68eb7c93jw1en6a51ij4xj20sr080q3h.jpg" alt=""></p>
-<p>其中获取随机日期的getRandomDate函数，其中在config中指定各参数</p>
-<p><img src="http://ww2.sinaimg.cn/large/68eb7c93jw1en6a5w98dvj20ke07fgn5.jpg" alt=""></p>
-<p>获取随机搜索词的函数，其中Config可以配置搜索词最短和最长词数。</p>
-<p><img src="http://ww1.sinaimg.cn/large/68eb7c93jw1en6a6p3he8j20nw07l0u9.jpg" alt=""></p>
-<p>获取随机IP的函数，其中IP最大最小值可在config中指定。</p>
-<p><img src="http://ww1.sinaimg.cn/large/68eb7c93jw1en6a7e0i34j20ne04j0tc.jpg" alt=""></p>
-<p>Writter函数，负责写入log数据，已指定了写入的路径。<br><img src="http://ww1.sinaimg.cn/large/68eb7c93jw1en6a856bgrj20i80eatbf.jpg" alt=""></p>
-<p>在main调用写入函数即可。第二个任务是进行日志文件的筛查、排序、查找最大值。主要用到的类有：</p>
-<p><img src="http://ww3.sinaimg.cn/large/68eb7c93jw1en6a9b6vr0j204w03a74d.jpg" alt=""></p>
-<p>LogAnalysiser21、LogAnalysiser21分别负责第一个、第二个Job的入口，继承了Configured类，实现配置Map和Reduce，若有Combiner或者partitioner也在这里进行配置。它们均重写了run函数进行mapreduce的启动。二者可以合并，这里分开让结构更清晰。<br>MapClass MapClass2分别是两个job的映射，读取输入的文件并传给Reduce。它们均继承自Mapper并重写map函数。<br>ReduceClass ReduceClass2 分别是两个Job的处理细节，收到来自Map的信息并作整合处理。它们均继承自Reducer并重写reduce函数。<br>如下图是该任务的系统流程：</p>
-<p><img src="http://ww4.sinaimg.cn/large/68eb7c93jw1en6aa7zbrjj20n60c8409.jpg" alt=""></p>
-<p>其中logAnalysis21负责对参数中mode进行判断，加载第一个job，主要函数run’为：</p>
-<p><img src="http://ww4.sinaimg.cn/large/68eb7c93jw1en6aapphpij20qz0byq4p.jpg" alt=""></p>
-<p><img src="http://ww4.sinaimg.cn/large/68eb7c93jw1en6ab82ey0j20eg05yt9u.jpg" alt=""></p>
-<p>MapClass中map函数如下，主要负责依据不同的需求对日志文件进行筛选</p>
-<p><img src="http://ww2.sinaimg.cn/large/68eb7c93jw1en6ac19sqjj20js0ct418.jpg" alt=""></p>
-<p><img src="http://ww1.sinaimg.cn/large/68eb7c93jw1en6acnbc0lj20k109djt9.jpg" alt=""></p>
-<p>ReduceClass 中reduce函数如下，主要负责计数并输出。</p>
-<p><img src="http://ww4.sinaimg.cn/large/68eb7c93jw1en6ad4qxadj20jg04daap.jpg" alt=""></p>
-<p>LogAnalysis22负责加载第二个job，run函数如下：</p>
-<p><img src="http://ww4.sinaimg.cn/large/68eb7c93jw1en6ady0bw1j20o20dydjd.jpg" alt=""></p>
-<p>MapClass2负责读取上一个job的wordcount文件，并对数据键值对进行改写，将词频改写为填充到10位的long，由于排序时同词频会被删除，因此将key改写为（词频+搜索词）value改写为（搜索词） 。Map函数如下：</p>
-<p><img src="http://ww2.sinaimg.cn/large/68eb7c93jw1en6aexl5nyj20o1039dgl.jpg" alt=""></p>
-<p>Reduce2负责读取传来的键值对，写入TreeMap，利用TreeMap的排序器自动对传来的改写（搜索词+词频）进行排序。这里用到了TreeMap自动根据key值进行排序的方法，但是key不能重复，因此在Map中改写起到了作用。同时，这里重写了TreeMap的Comparator函数，默认依据是从小到大排序。若指定了排序器Comparator，这里就可以按照从达到小进行排序了。排序完成后截取key前10位即为词频，value即为搜索词。Reduce函数主要如下：</p>
-<p><img src="http://ww3.sinaimg.cn/large/68eb7c93jw1en6affldqej20lv0dnjto.jpg" alt=""></p>
-<p>这里context输出只是中间结果sort，需要找到前N个高频搜索词，因此指定新的输出：</p>
-<p><img src="http://ww4.sinaimg.cn/large/68eb7c93jw1en6afzezfbj20ix0720u3.jpg" alt=""></p>
-<p>在安装配置好hadoop的分布式系统启动hadoop：</p>
-<p>&nbsp;</p>
-<pre class="brush: bash; gutter: true">./start-dfs.sh ./start-yarn.sh</pre>
-
-<p><img src="http://ww1.sinaimg.cn/large/68eb7c93jw1en6b2rf3ndj20hz05at9r.jpg" alt=""></p>
-<p>在Config.java确认配置参数</p>
-<p><img src="http://ww2.sinaimg.cn/large/68eb7c93jw1en6b3i6ungj207g07qmya.jpg" alt=""></p>
-<p>运行DFSWritter.java文件，将日志写入HDFS分布式文件系统，这里写入50个作为测试。</p>
-<p><img src="http://ww4.sinaimg.cn/large/68eb7c93jw1en6b41kibtj20ci01vdfx.jpg" alt=""></p>
-<p>输入hdf格式的命令，先列出log日志的结果</p>
-<p><img src="http://ww4.sinaimg.cn/large/68eb7c93jw1en6b4i2mh6j20cn0cvgnt.jpg" alt=""></p>
-<p><img src="http://ww2.sinaimg.cn/large/68eb7c93jw1en6b4wispqj20990bg0uy.jpg" alt=""></p>
-<p>将Java程序导出成JAR到本地路径/usr/workspace/jar/logAnalysis2.0.jar。</p>
-<p><img src="http://ww4.sinaimg.cn/large/68eb7c93jw1en6b5hlroyj20h709bgmn.jpg" alt=""></p>
-<p>在命令行hdf命令，并带上必要的参数。首先运行需求一</p>
-<p><img src="http://ww4.sinaimg.cn/large/68eb7c93jw1en6b6bmiaoj20i101y74m.jpg" alt=""></p>
-<p>两个Mapreduce一气呵成完成，分别查看wordcount\sort\topK,<br>查看Wordcount，可以看到按需统计的词频</p>
-<p><img src="http://ww2.sinaimg.cn/large/68eb7c93jw1en6b6um7e7j20hy0buq49.jpg" alt=""></p>
-<p>查看sort，其中大的值排在了最后。</p>
-<p><img src="http://ww3.sinaimg.cn/large/68eb7c93jw1en6b7psqyhj20fx0bv3yt.jpg" alt=""></p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p><img src="http://ww3.sinaimg.cn/large/68eb7c93jw1en6b84efm9j203x0ad749.jpg" alt=""></p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>最后查看topK结果，即截取了sort的最后的8项并倒序输入。</p>
-<p><img src="http://ww4.sinaimg.cn/large/68eb7c93jw1en6b9u4yjyj20hp06o3z6.jpg" alt=""></p>
-<p>运行第二个需求，在参数五中输入2，并写上起止IP</p>
-<p><img src="http://ww3.sinaimg.cn/large/68eb7c93jw1en6bad6w83j20i301474g.jpg" alt=""></p>
-<p>运行结果的wordcount、sort、topK文件分别如下</p>
-<p><img src="http://ww2.sinaimg.cn/large/68eb7c93jw1en6bb6k4j8j20gg0a2mxn.jpg" alt=""></p>
-<p>最后运行第三个需求，参数中带入3 和起止时间。</p>
-<p><img src="http://ww1.sinaimg.cn/large/68eb7c93jw1en6bbm6hi0j20i101k74j.jpg" alt=""></p>
-<p>再次分别查看wordcount sort topk文件，比对前文的全log发现完全符合。</p>
-<p><img src="http://ww2.sinaimg.cn/large/68eb7c93jw1en6bcbhaifj20fi0cxmxr.jpg" alt=""></p>
-<p>这样，一个建立在Hadoop的Mapreduce小例就完成了。</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-          
-        
-      
-    </div>
-    
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/12/06/Android adt zip包下载/" itemprop="url">
-                  Android adt zip包下载
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-12-06T16:28:47+08:00" content="2014-12-06">
-              2014-12-06
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/代码狗/" itemprop="url" rel="index">
-                    <span itemprop="name">代码狗</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/代码狗/学习log/" itemprop="url" rel="index">
-                    <span itemprop="name">学习log</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/12/06/Android adt zip包下载/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/06/Android adt zip包下载/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Android adt zip包下载<br><a href="http://developer.android.com/sdk/installing/installing-adt.html#Troubleshooting" target="_blank" rel="external">http://developer.android.com/sdk/installing/installing-adt.html#Troubleshooting</a></p>
-          
-        
-      
-    </div>
-    
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/11/12/hadoop2.2+wordcount/" itemprop="url">
-                  hadoop2.2.0+32bit centos6.5 全分布安装配置wordcount randomwritter
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-11-12T15:15:31+08:00" content="2014-11-12">
-              2014-11-12
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/代码狗/" itemprop="url" rel="index">
-                    <span itemprop="name">代码狗</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/代码狗/学习log/" itemprop="url" rel="index">
-                    <span itemprop="name">学习log</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/11/12/hadoop2.2+wordcount/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/12/hadoop2.2+wordcount/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>hadoop简直神烦，在centos64位中0.2.0和1.2都在安装的最后一步出了问题。node和name都启动了，log没有错误，就是report里各项均为零。折腾了好几天换到2.2.0需要编译才能使用同样是因为各种dependencies版本不兼容编译不通过。最终确定下来的配置是</p>
-<ul>
-<li>centos6.5的32位系统3台，其中两台安装在同一台物理机的虚拟机上 &amp;另一台物理机则安装第三个centos虚拟机</li>
-<li>两台机子分别是：</li>
-<li>master 192.168.199.111</li>
-<li>slave1 192.168.199.212</li>
-<li>slave1 192.168.199.184</li>
-<li>机子间的网络靠路由器连接的内部IP，由于内部分配的IP不是静态的，需要改成静态的（需要保证ip不会冲突）</li>
-</ul>
-<p>一 <strong>在VMware下安装centos6.5 <span style="color: #ff0000">32bit</span></strong></p>
-<p> 这个自己解决，在<a href="http://wiki.centos.org/Download" target="_blank" rel="external">http://wiki.centos.org/Download</a> 中选择镜像下载centos6.5，centos7由于刚发布，有些兼容不好。在安装的时候，自定义硬件-网络适配器 选择桥接模式，复制物理网络状态不要勾选。</p>
-<p><img src="http://ww3.sinaimg.cn/large/a5d0ed33gw1em886n10obj2079043q35.jpg" alt=""></p>
-<p>安装默认是的是NAT模式，与主机共用同一个IP地址，这样虚拟机下无法分离出更多的IP。安装后启动centos6.5，键入</p>
-<pre class="brush: bash; gutter: true">su root</pre>
-
-<p>输入密码，进入root最高权限用户。在键入</p>
-<pre class="brush: bash; gutter: true">vi /etc/hosts</pre>
-
-<p>可将原来的清空，在hosts文件中添加本机的主机名和IP以便不同节点之间识别，我的如下</p>
-<pre class="brush: bash; gutter: true">192.168.199.111  master
-192.168.199.212  slave1
-192.168.199.184  slave2</pre>
-
-<p>更改主机名</p>
-<pre class="brush: bash; gutter: true">vi /etc/sysconfig/network</pre>
-
-<p>我的主机更改如下</p>
-<pre class="brush: bash; gutter: true">NETWORKING=yes
-HOSTNAME=master</pre>
-
-<p>更改内部自动分配的IP地址</p>
-<pre class="brush: bash; gutter: true">vi /etc/sysconfig/network-scripts/ifcfg-eth0</pre>
-
-<p>如下图，其中IPADDR 192.168.199需要与物理机的前缀相同，111自己设一个没有冲突的ip地址，netmask和gateway和物理机完全一致。这些可以在物理机的命令行窗口执行命令</p>
-<pre class="brush: bash; gutter: true">ipconfig</pre>
-
-<p>进行查看。再键入</p>
-<pre class="brush: bash; gutter: true">service iptables status</pre>
-
-<p>查看虚拟机防火墙状态。若显示firewall is off则表示防火墙已关闭，若显示有内容，则输入</p>
-<pre class="brush: bash; gutter: true">chkconfig iptables off</pre>
-
-<p>关闭防火墙自启动，再输入</p>
-<pre class="brush: bash; gutter: true">service iptables stop</pre>
-
-<p>关闭防火墙。同时关闭物理机的防火墙和安全软件，这时候可以用ping 测试一下几台配好的机子是否相通。</p>
-<p>二 <strong>配置ssh无密码访问</strong><br>ssh是为了在不同节点之间传输文件和消息不用频繁的输入密码。在centos6.5中默认集成了ssh，因此不用安装ssh服务。首先在主节点master上键入</p>
-<pre class="brush: bash; gutter: true">ssh-keygen -t rsa</pre>
-
-<p>生成主节点信息的rsa密钥。进入/root/.ssh隐藏目录可发现生成了一个id_rsa和id_rsa.pub,将主节点信息注入授权key</p>
-<pre class="brush: bash; gutter: true">cd /root/.ssh
-ls
-cp id_rsa.pub authorized_keys
-cat id_rsa.pub&gt;&gt;authorized_keys</pre>
-
-<p>对authorized_keys进行附权操作（可省略，针对新建立的非root权限用户，例如很多例子里的hadoop用户）</p>
-<pre class="brush: bash; gutter: true">chmod 600 authorized_keys</pre>
-
-<p>配置sshd_config文件，并将下列项的注释去掉(其余物理机也要进行这样的操作)</p>
-<pre class="brush: bash; gutter: true">vim /etc/ssh/sshd_config
- RSAAuthentication yes
-PubkeyAuthentication yes
-AuthorizedKeysFile     .ssh/authorized_keys</pre>
-
-<p>将包含master密钥的授权key发送给slave1节点。</p>
-<pre class="brush: bash; gutter: true">scp  root@slave1 :/root/.ssh/authorized_keys.pub /root/.ssh/</pre>
-
-<p>这里会需要输入slave1的root密码，进行确认。在slave1登陆，同样的步骤生成id_rsa和id_rsa.pub。</p>
-<pre class="brush: bash; gutter: true">ssh-keygen -t rsa
-cd /root/.ssh
-ls
-mv id_rsa.pub slave1.pub
-cat slave1.pub&gt;&gt;authorized_keys</pre>
-
-<p>将包含master和slave1密钥信息的文件传给slave2（此后每加一个节点都需要这么做，把新生成的密钥加入到先前所有人信息的authorizd_keys中）</p>
-<pre class="brush: bash; gutter: true">scp  root@slave2 :/root/.ssh/authorized_keys.pub /root/.ssh/</pre>
-
-<p>重复上面的操作，最后将slave2生成的authorized_keys.pub传回给master和slave1.</p>
-<pre class="brush: bash; gutter: true">scp  root@master :/root/.ssh/authorized_keys.pub /root/.ssh/
-scp  root@slave1 :/root/.ssh/authorized_keys.pub /root/.ssh/</pre>
-
-<p>最后重启ssh服务</p>
-<pre class="brush: bash; gutter: true">service sshd restart</pre>
-
-<p>这时候可以在master上直接键入</p>
-<pre class="brush: bash; gutter: true">ssh slave1</pre>
-
-<p>登陆slave1主机，第一次登陆的时候需要输入root密码，之后就不需要了。这样就可以直接对slave1的文件进行读写操作，记得退出的时候要输入exit</p>
-<p>三 <strong>JDK和Hadoop路径的安装 </strong><br>这两个文件的安装都是下载和路径配置，跟目录分别为</p>
-<pre class="brush: bash; gutter: true">/usr/java
-/usr/hadoop</pre>
-
-<p>这两个路径简单的目的就是为了以后码得少一点<br><strong>Java</strong><br>Java最新版本的路径可在<a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="external">http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html</a><a href="http://www.java.com/zh_CN/download/manual.jsp" title="java8" target="_blank" rel="external">
-</a>下载java8或java7，这里选择的是jdk7，即jdk-7u15-linux-i586.tar.gz。可在物理机下载后直接复制到虚拟机桌面，解压、复制、改文件名</p>
-<pre class="brush: bash; gutter: true">tar -zxf jdk-7u15-linux-i586.tar.gz
-ls
-cp -rf jdk1.7.0_15 /usr
-mv jdk1.7.0_15 java</pre>
-
-<p>配置一下全局的环境</p>
-<pre class="brush: bash; gutter: true">vi /etc/profile</pre>
-
-<p>在文件末添加如下代码，配置JAVA安装目录，JRE目录，CLASSPASTH和PATH</p>
-<pre class="brush: bash; gutter: true">JAVA_HOME=/usr/java/
-JRE_HOME=/usr/java/jre
-PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
-CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib
-export JAVA_HOME JRE_HOME PATH CLASSPATH</pre>
-
-<p>里面的冒号与windows下系统环境的分号相通。更新一下配置的java环境，查看java版本，出现如下则配置成功。</p>
-<pre class="brush: bash; gutter: true">source /etc/profile
-java -version</pre>
-
-<p><img src="http://ww2.sinaimg.cn/large/68eb7c93jw1em9y51jqffj20d001zaa8.jpg" alt=""></p>
-<p><strong>hadoop</strong><br>hadoop2.2.0在64位下需要源码编译，比较繁琐且容易出错，在32位下则可直接使用。因此选择在<a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/" target="_blank" rel="external">http://www.apache.org/dyn/closer.cgi/hadoop/common/</a>官方网站下下载2.2.0版本的tar.gz包，即hadoop-2.2.0.tar.gz，放在虚拟机桌面，解压并复制到usr目录下，改名</p>
-<pre class="brush: bash; gutter: true">tar -zxf hadoop-2.2.0.tar.gz
-cp -rf hadoop-2.2.0 /usr/
-mv hadoop-2.2.0 hadoop</pre>
-
-<p>在/etc/profile中添加hadoop的信息</p>
-<pre class="brush: bash; gutter: true">vi /etc/profile
-export HADOOP_HOME=/usr/hadoop/
-export PAHT=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
-export HADOOP_LOG_DIR=/usr/hadoop/logs
-export YARN_LOG_DIR=$HADOOP_LOG_DIR</pre>
-
-<p>以上便完成了前期安装工作。</p>
-<p>四 <strong>Hadoop全分布的配置</strong><br>在hadoop中加入java的路径，修改的是hadoop目录下etc/hadoop的hadoop-env.sh</p>
-<pre class="brush: bash; gutter: true">vi /usr/hadoop/etc/hadoop/hadoop-env.sh</pre>
-
-<p>将java路径添加在#export java home那里。<br>修改core-site.xml,添加在configuration里，下同。</p>
-<pre class="brush: bash; gutter: true">vi /etc/hadoop/etc/hadoop/core-site.xml</pre>
-
-<pre class="brush: xml; gutter: true">  
-&lt;property&gt;  
-    &lt;name&gt;fs.default.name&lt;/name&gt;  
-        &lt;value&gt;hdfs://master:9000/&lt;/value&gt;  
-&lt;/property&gt;  
-&lt;property&gt;
-        &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;
-        &lt;value&gt;/usr/hadoop/tmp&lt;/value&gt;
-&lt;/property&gt;  
-</pre>
-
-<p>其中，master是主节点的host名fs.default.name与之前的版本名字有所不同。<br>修改hdfs-site.xml，定义数据节点和名称节点的路径，dfs.replication是datanode的数量，默认为3，小于3的必须写上确切的数目否则会出错。</p>
-<pre class="brush: xml; gutter: true"> 
-&lt;property&gt;  
-        &lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;  
-        &lt;value&gt;/usr/hadoop/hdf/data&lt;/value&gt;  
-        &lt;final&gt;true&lt;/final&gt;  
-&lt;/property&gt;  
-     &lt;property&gt;  
-        &lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;  
-        &lt;value&gt;/usr/hadoop/hdf/name&lt;/value&gt;  
-        &lt;final&gt;true&lt;/final&gt;  
-   &lt;/property&gt;  
-   &lt;property&gt;  
-        &lt;name&gt;dfs.replication&lt;/name&gt;  
-        &lt;value&gt;2&lt;/value&gt;  
-&lt;/property&gt;
-&lt;property&gt;  
-         &lt;name&gt;dfs.permissions&lt;/name&gt;  
-         &lt;value&gt;false&lt;/value&gt;  
-&lt;/property&gt;
-</pre>
-
-<p>修改mapred-site.xml 定义Mapreduce应用的jobtracker。由于系统并未自带，但提供了模板，因此复制一下</p>
-<pre class="brush: xml; gutter: true"> mv mapred-site.xml.template mapred-site.xml</pre>
-
-<pre class="brush: xml; gutter: true"> 
-&lt;property&gt;
-          &lt;name&gt;mapred.job.tracker&lt;/name&gt;
-          &lt;value&gt;master:9001&lt;/value&gt;
-&lt;/property&gt;
-</pre>
-
-<p>修改yarn-site.xml,配置resourcemanager和nodemanager，这个是2.0以上版本才有的通过yarn管理资源和节点的功能，</p>
-<pre class="brush: xml; gutter: true"> 
-&lt;property&gt;  
-        &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;  
-        &lt;value&gt;mapreduce_shuffle&lt;/value&gt;  
-&lt;/property&gt;  
-&lt;property&gt;  
-        &lt;name&gt;yarn.nodemanager.aux-services.mapreduce.shuffle.class&lt;/name&gt;  
-        &lt;value&gt;org.apache.hadoop.mapred.ShuffleHandler&lt;/value&gt;  
-&lt;/property&gt;  
-&lt;property&gt;  
-        &lt;name&gt;yarn.resourcemanager.resource-tracker.address&lt;/name&gt;  
-        &lt;value&gt;master:8025&lt;/value&gt;  
-&lt;/property&gt;  
-&lt;property&gt;  
-        &lt;name&gt;yarn.resourcemanager.scheduler.address&lt;/name&gt;  
-        &lt;value&gt;master:8030&lt;/value&gt;  
-&lt;/property&gt;  
-&lt;property&gt;  
-        &lt;name&gt;yarn.resourcemanager.address&lt;/name&gt;  
-        &lt;value&gt;master:8040&lt;/value&gt;  
-&lt;/property&gt; 
-</pre>
-
-<p>创建并未存在的目录，在hadoop目录下的tmp hdf/data hdf/name logs等<br>配置完后直接启动，则进行的是单节点操作。若要进行多节点，编辑同目录下的slaves文件，默认自带的是localhost，将其删除，将slave1和slave2一行一个写在文件中。<br>配置完以上信息就拍一个快照吧！之后就可以进行格式化和启动了，但是在运行自带程序中发现它并没有将任务分配到不同的节点，而是只在master本机的localjobrunner中做，<br><img src="http://ww3.sinaimg.cn/large/68eb7c93jw1ema12m75evj20k00fxdjj.jpg" alt=""><br>因此若需要在不同的节点分配资源，需要再进行一下配置。<br>修改yarn-env.sh，同样将java的目录配置在export java_home中。<br>再次修改mapred-site.xml，保留之前的配置，在后面加入如下属性</p>
-<pre class="brush: xml; gutter: true">&lt;property&gt;
-   &lt;name&gt;mapreduce.framework.name&lt;/name&gt;
-   &lt;value&gt;yarn&lt;/value&gt;
-&lt;/property&gt;
-&lt;property&gt;
-   &lt;name&gt;mapreduce.jobhistory.address&lt;/name&gt;
-   &lt;value&gt;master:10020&lt;/value&gt;
-&lt;/property&gt;
-&lt;property&gt;
-   &lt;name&gt;mapreduce.jobhistory.webapp.address&lt;/name&gt;
-   &lt;value&gt;master:19888&lt;/value&gt;
-&lt;/property&gt;
-</pre>
-
-<p>实际上就是利用yarn来管理和配置资源，如果配置了yarn，则之前的jobtracker就不起作用。最后修改yarn-site.xml</p>
-<pre class="brush: xml; gutter: true">&lt;property&gt;
-    &lt;name&gt;yarn.resourcemanager.address&lt;/name&gt;
-    &lt;value&gt;master:8032&lt;/value&gt;
-&lt;/property&gt;
-&lt;property&gt;
-    &lt;name&gt;yarn.resourcemanager.scheduler.address&lt;/name&gt;
-    &lt;value&gt;master:8030&lt;/value&gt;
-&lt;/property&gt;
-&lt;property&gt;
-    &lt;name&gt;yarn.resourcemanager.webapp.address&lt;/name&gt;
-    &lt;value&gt;master:8088&lt;/value&gt;
-&lt;/property&gt;
-&lt;property&gt;
-    &lt;name&gt;yarn.resourcemanager.resource-tracker.address&lt;/name&gt;
-    &lt;value&gt;master:8031&lt;/value&gt;
-&lt;/property&gt;
-&lt;property&gt;
-    &lt;name&gt;yarn.resourcemanager.admin.address&lt;/name&gt;
-    &lt;value&gt;master:8033&lt;/value&gt;
-&lt;/property&gt;
-&lt;property&gt;
-    &lt;nameyarn.nodemanager.address&lt;/name&gt;
-    &lt;value&gt;master:10000&lt;/value&gt;
-&lt;/property&gt;
-&lt;property&gt;
-    &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
-    &lt;value&gt;mapreduce_shuffle&lt;/value&gt;
-&lt;/property&gt;
-&lt;property&gt;
-    &lt;name&gt;yarn.nodemanager.aux-services.mapreduce.shuffle.class&lt;/name&gt;
-    &lt;value&gt;org.apache.hadoop.mapred.ShuffleHandler&lt;/value&gt;
-&lt;/property&gt;  
-</pre>
-
-<p>好了基本的配置完毕了。。。再照一次快照吧！进行格式化（切记不要进行多次格式化！若出现X node are exclued 。。的错误，把tmp 和hdf目录全删了再重建，再进行格式化）</p>
-<pre class="brush: xml; gutter: true">cd /usr/hadoop/bin
-./hdfs namenode -format
-</pre>
-
-<p>随后启动namenode和yarn</p>
-<pre class="brush: xml; gutter: true">cd /usr/hadoop/
-./start-hdf.sh
-./start-yarn.sh
-</pre>
-
-<p>若是没有报错就基本成功了！键入jps查看服务。如果没有出现nodemanager就需要手动启动</p>
-<pre class="brush: xml; gutter: true">cd /usr/hadoop/sbin/
-./yarn-daemon.sh start nodemanager
-</pre>
-
-<p>查看到的jps如下</p>
-<pre class="brush: xml; gutter: true">Jps
-NameNode
-ResourceManager
-SecondaryNameNode  
-NodeManager
-</pre>
-
-<p>这就表示启动成功了，可以查看节点状况</p>
-<pre class="brush: xml; gutter: true">cd /usr/hadoop/bin
-./hdfs dfsadmin -report  
-</pre>
-
-<p>也可以通过<a href="http://master:50070" target="_blank" rel="external">http://master:50070</a> 查看节点状况。<br><img src="http://ww1.sinaimg.cn/large/68eb7c93jw1ema1yjwdfjj20va05wdh9.jpg" alt=""><br>这样hadoop就配置好全分布了。</p>
-<p>五 <strong>运行自带测试程序</strong></p>
-<ul>
-<li>wordcount</li>
-</ul>
-<p>这是一个检测目标文本中所含词数的自带程序。可在<a href="http://www.gutenberg.org/files/20417/20417.txt" target="_blank" rel="external">http://www.gutenberg.org/files/20417/20417.txt</a>下载一篇英文文章，或者自己选择其他的文章。命名为aaa.txt 并放在虚拟机/etc/hadoop目录下。键入</p>
-<pre class="brush: xml; gutter: true">
-cd /usr/hadoop
-bin/hdfs dfs -mkdir /tmp
-bin/hdfs dfs -copyFromLocal /usr/hadoop/aaa.txt /tmp
-bin/hdfs dfs -ls /tmp
-bin/hadoop jar ./share/hadoop/mapreduce/hadoop-mapreduce-examples-2.2.0.jar wordcount /tmp/ /tmp-output 
-</pre>
-
-<p>tmp是建立hdfs的目录空间，在tmp-output中输出结果。运行过程中可以看到进程是由mapreduce.job完成。如图为任务开始时<br><img src="http://ww3.sinaimg.cn/large/68eb7c93jw1ema1sqro0nj20gi0bgtbl.jpg" alt="">同时可以登陆<a href="http://master:8088" target="_blank" rel="external">http://master:8088</a>观看正在运行的application的信息。如图是结束时候的网页信息。<img src="http://ww1.sinaimg.cn/large/68eb7c93jw1ema1wia60tj20qv07jjsp.jpg" alt="">如图是结束时候的命令行信息。<img src="http://ww2.sinaimg.cn/large/68eb7c93jw1ema1zogahbj20bc0azmye.jpg" alt="">执行完毕后可以查看刚才job的执行结果。</p>
-<pre class="brush: xml; gutter: true">
-cd /usr/hadoop
-bin/hdfs dfs -ls /tmp-output
-hdfs dfs -cat /tmp-output-00000
-</pre>
-
-<p>第二行的目录是输出目录，列出所有的输出信息后，找到名字头相同，后面添加了-0000等数字的就是输出结果。<br><img src="http://ww3.sinaimg.cn/large/68eb7c93jw1ema29bkuf1j20hk0cqdgm.jpg" alt=""></p>
-<ul>
-<li>randomwriter</li>
-</ul>
-<p>一葫芦画瓢，操作基本相同，randomwriter的任务是随机生成数到dfs中，每个map输入单个文件名，再随机写到键值对中，基本上是一个性能测试。</p>
-<pre class="brush: xml; gutter: true">
-cd  /usr/hadoop
-bin/hdfs dfs -mkdir /rdw
-bin/hadoop jar ./share/hadoop/mapreduce/hadoop-mapreduce-examples-2.2.0.jar randomwriter rdw
-</pre>
-
-<p>时间跨度比较久，机子较旧可能会非常慢。参考各类博客，版权不究。</p>
-          
-        
-      
-    </div>
-    
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/10/12/erdas9.2+lps安装/" itemprop="url">
-                  erdas9.2+lps安装
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-10-12T19:09:00+08:00" content="2014-10-12">
-              2014-10-12
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/代码狗/" itemprop="url" rel="index">
-                    <span itemprop="name">代码狗</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/代码狗/学习log/" itemprop="url" rel="index">
-                    <span itemprop="name">学习log</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/10/12/erdas9.2+lps安装/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/10/12/erdas9.2+lps安装/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="http://download.csdn.net/download/lxfcolor/3531297" target="_blank" rel="external">主程序 csdn种子</a> 速度略快<br><a href="http://jingyan.baidu.com/article/3aed632e7d5c8c70108091e6.html" target="_blank" rel="external">安装步骤和破解方法</a><br>其中，crack文件使用<a href="http://download.csdn.net/download/huahua0079/5015925" target="_blank" rel="external">csdn的crack</a><br>安装时注意和arcgis的兼容性问题</p>
-          
-        
-      
-    </div>
-    
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/05/25/要有追求啊/" itemprop="url">
-                  要有追求啊
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-05-25T02:41:31+08:00" content="2014-05-25">
-              2014-05-25
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/槽/" itemprop="url" rel="index">
-                    <span itemprop="name">槽</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/05/25/要有追求啊/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/05/25/要有追求啊/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>一定一定记得每周一篇测评啊。一定一定记得看美剧看教程看app啊。一定一定记得背单词刷书啊。拖延症伤不起！今天卖书收了60还是极好的</p>
-          
-        
-      
-    </div>
-    
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/05/15/猜地址游戏/" itemprop="url">
-                  猜地址游戏
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-05-15T19:28:08+08:00" content="2014-05-15">
-              2014-05-15
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/App强推/" itemprop="url" rel="index">
-                    <span itemprop="name">App强推</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/App强推/软文/" itemprop="url" rel="index">
-                    <span itemprop="name">软文</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/05/15/猜地址游戏/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/05/15/猜地址游戏/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="http://www.geoguessr.com#.U3SkybblRoc.link" target="_blank" rel="external">http://www.geoguessr.com#.U3SkybblRoc.link</a><br>碉堡的猜地址游戏！</p>
-          
-        
-      
-    </div>
-    
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2954,7 +2833,7 @@ bin/hadoop jar ./share/hadoop/mapreduce/hadoop-mapreduce-examples-2.2.0.jar rand
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">102</span>
+              <span class="site-state-item-count">111</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2971,7 +2850,7 @@ bin/hadoop jar ./share/hadoop/mapreduce/hadoop-mapreduce-examples-2.2.0.jar rand
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">62</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -3009,6 +2888,33 @@ bin/hadoop jar ./share/hadoop/mapreduce/hadoop-mapreduce-examples-2.2.0.jar rand
                 </a>
               </span>
             
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/ov_beeshoot" target="_blank" title="douban">
+                  
+                    <i class="fa fa-globe"></i>
+                  
+                  douban
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/ohahabienaola" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-instagram"></i>
+                  
+                  Instagram
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://plus.google.com/112912013380614886638" target="_blank" title="Google">
+                  
+                    <i class="fa fa-google"></i>
+                  
+                  Google
+                </a>
+              </span>
+            
           
         </div>
 
@@ -3035,7 +2941,7 @@ bin/hadoop jar ./share/hadoop/mapreduce/hadoop-mapreduce-examples-2.2.0.jar rand
         <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -3101,22 +3007,22 @@ bin/hadoop jar ./share/hadoop/mapreduce/hadoop-mapreduce-examples-2.2.0.jar rand
 
 
   
-  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+  <script type="text/javascript" src="/ven/jquery/index.js?v=2.1.3"></script>
 
   
-  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/ven/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
 
   
-  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  <script type="text/javascript" src="/ven/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
-  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+  <script type="text/javascript" src="/ven/velocity/velocity.min.js?v=1.2.1"></script>
 
   
-  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  <script type="text/javascript" src="/ven/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
   
-  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  <script type="text/javascript" src="/ven/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
 
   

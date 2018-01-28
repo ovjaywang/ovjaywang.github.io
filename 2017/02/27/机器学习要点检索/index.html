@@ -1,0 +1,939 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/ven/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.useso.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/ven/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ov智商捉急" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="这是一个机器学习知识记录贴，主要内容是Ng的ML课、《图解机器学习》、《机器学习》周志华版。懒癌发作了可能就不更了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习要点检索--基于图解机器学习">
+<meta property="og:url" content="http://ovjaywang.github.io/2017/02/27/机器学习要点检索/index.html">
+<meta property="og:site_name" content="ov智商捉急">
+<meta property="og:description" content="这是一个机器学习知识记录贴，主要内容是Ng的ML课、《图解机器学习》、《机器学习》周志华版。懒癌发作了可能就不更了">
+<meta property="og:updated_time" content="2018-01-28T05:32:56.733Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习要点检索--基于图解机器学习">
+<meta name="twitter:description" content="这是一个机器学习知识记录贴，主要内容是Ng的ML课、《图解机器学习》、《机器学习》周志华版。懒癌发作了可能就不更了">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 机器学习要点检索--基于图解机器学习 | ov智商捉急 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+    <div class="site-meta-headline">
+      <a>
+        <img class="custom-logo-image" src="/images/touxiang.jpg" alt="ov智商捉急">
+      </a>
+    </div>
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">ov智商捉急</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/me" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sth">
+          <a href="/sth" rel="section">
+            
+              <i class="menu-item-icon fa fa-child fa-fw"></i> <br>
+            
+            有料
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-pic-movie">
+          <a href="/a-pic-a-movie" rel="section">
+            
+              <i class="menu-item-icon fa fa-film fa-fw"></i> <br>
+            
+            一影一图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-bi">
+          <a href="/bigger" rel="section">
+            
+              <i class="menu-item-icon fa fa-thumbs-o-up fa-fw"></i> <br>
+            
+            装逼
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ZtWPUvzBjdXDQ7iNrTbW','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                机器学习要点检索--基于图解机器学习
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-02-27T16:54:19+08:00" content="2017-02-27">
+              2017-02-27
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/02/27/机器学习要点检索/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/27/机器学习要点检索/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这是一个机器学习知识记录贴，主要内容是Ng的ML课、《图解机器学习》、《机器学习》周志华版。懒癌发作了可能就不更了<br><a id="more"></a></p>
+<h1 id="机器学习任务"><a href="#机器学习任务" class="headerlink" title="机器学习任务"></a>机器学习任务</h1><p><strong>判别式（识别式）学习</strong>：通过预测数据生成对联合概率<strong>p(x,y)</strong>进行模式识别的方法·</p>
+<p><strong>产生式学习</strong>：利用机器学习方法对训练集<strong>p(y|x)</strong>进行学习的过程</p>
+<blockquote>
+<p>可能有拥有足够的信息来很好的解决一个感兴趣的特定问题，但却没有足够的信息来解决一个一般性问题。</p>
+</blockquote>
+<hr>
+<p>如果生成概率已知，则可以推出后验概率（所有y可能性的联合概率加和计算x的概率）；反之，则不能。</p>
+<p>$$p(y\mid x)=\frac{p(x,y)}{p(x)}=\frac{p(x,y)}{\sum _{y}p(x,y)}$$</p>
+<hr>
+<p><strong>统计派（频率派）</strong>：将模式θ(模型参数)作为决定论的变量，使用训练样本${(x_{i},y_{i})}_{i=1}^{n}$对Θ进行学习。(e.g.利用最大似然π)      </p>
+<p>其主要<strong>研究课题</strong>是如何有训练集得到高精度的模式Θ。      </p>
+<p>$$\underset{\theta}{max}\prod_{i=1}^{y}q(x_{i},y_{i},\theta )$$</p>
+<p><strong>贝叶斯派</strong> ：将模式Θ作为概率变量，对其先验概率p(Θ)加以考虑，计算与训练集相对应的后验概率p(Θ|D).并利用贝叶斯公式求解后验概率</p>
+<p>$$p(\theta \mid D)=\frac{p(D\mid \theta )p(\theta )}{p(D)}=\frac{\prod_{i=1}^{n}q(x_{i},y_{i}\mid \theta )p(\theta )}{\int \prod_{i=1}^{n}q(x_{i},y_{y}|\theta )p(\theta )d\theta }$$</p>
+<p>贝叶斯学派的<strong>主要任务</strong>是如何通过各种方式精确计算后验概率。</p>
+<hr>
+<blockquote>
+<p> 只在训练集的输入样本附近对函数进行近似，可以减轻维数灾难的影响</p>
+</blockquote>
+<h1 id="学习模型"><a href="#学习模型" class="headerlink" title="学习模型"></a>学习模型</h1><ul>
+<li><p><strong>线性模型</strong>–典型的代表是$$f_{\theta}(x)=\theta_{1}x+\theta_{0}$$对面积-房价进行一元一次线性拟合</p>
+<p>标准形式为：$f_{\theta }(x)=\sum_{j=1}^{b}\theta_{j}\phi_{j}(x)=\theta ^{\top }\phi (x)$,其中$\theta_{j}$是参数向量（待解求的参数集合）$\theta=(\theta_{1},\theta_{2}…\theta_{b})^{\top }$的第j个因子；$\phi_{j}(x)$ 是基函数（决定了拟合的模式 以特征为基础可以自由决定衍生的多项式、函数模式$ln x$、$\frac{1}{x}$等，一般来说都是多项式，即$\phi_{j}(x)=(1,x,x^2…x^{b-1})^{\top }$;又或者是三角多项式形式，即$\phi_{j}(x)=(1,sin x,cos x,sin 2x,cos 2x…sin mx,cos mx)^{\top }$）</p>
+</li>
+</ul>
+<p><strong>当不止考虑一个维度的因素（特征）时，输入维度太多易造成维度爆炸。</strong></p>
+<ul>
+<li><p><strong>核模型</strong>–典型代表四高斯核</p>
+<p>$$K(x,c)=e^{-\frac{\left | x-c \right |^2}{2h^2}}$$</p>
+<p>可理解为欧几里得空间映射到核函数空间中，在函数设计时可以依赖样本$$\{(x_{i},y_{i})\}_{i=1}^{n}$$。式中，h和c分别是带宽和均值。高斯核模型一般只能对样本附近的函数进行近似.</p>
+<p>标准形式为：$f_{\theta}(x)=\sum_{j=1}^{n}\theta_{j}K(x,x_j)$ 其中$K(x,x_j)$是二元核函数，以线性相加所有样本的方式定义。</p>
+</li>
+</ul>
+<p><strong>参数的个数不依赖于输入变量的维度d，而只有训练样本的数量m决定。</strong></p>
+<ul>
+<li><p><strong>层级模型</strong>–典型代表是神经网络,尤其是不完全映射的神经网络.</p>
+<p>标准形式为:$f_{\theta}(x)=\sum_{j=1}^{b}\alpha _{j}\phi (x;\beta _{j})$  其中$\phi (x;\beta _{j})$是带有参数向量β的基函数。即，整个模型的参数为$\theta=(\alpha ,\beta _{1}^\top ,…,\beta _{b}^\top )^\top $其中，α是层次模型线性形式的参数向量。</p>
+<p>​</p>
+</li>
+</ul>
+<p>常见的层级模型是卷积和神经网络。</p>
+<hr>
+<h1 id="最小二乘法"><a href="#最小二乘法" class="headerlink" title="最小二乘法"></a>最小二乘法</h1><p>入门的入门就是最小二乘了，类似二范数，目标是最小化所有样本与其预测值差的平方和：</p>
+<p><strong>敲黑板</strong>，上边表达的就是代价函数，即下式：</p>
+<p>$$J_{LS}(\theta )=\frac{1}{2}\sum_{i=1}^{n}(f_{\theta }(x_{i})-y_{i})^2$$</p>
+<p>其中，i是具体样本编号，n是样本个数，LS即least square最小二乘。</p>
+<p>解求目标是：</p>
+<p>$$\widehat{\theta_{LS}}=\underset{\theta }{argmin}J_{LS}(\theta )$$</p>
+<p>其中$\widehat{\theta_{LS}}$表达对参数的预测值。再次<strong>敲黑板</strong>，这句话包含很多意思</p>
+<ol>
+<li>以最小二乘法表达代价函数，解算的目标是：当代价函数求得最小的时候参数$\theta$的值</li>
+<li>代价函数的最小值是多少我不关心，我只关心代价函数求得最小时参数向量的值是多少–即解求的目标不是函数的最值，是函数的极值点。</li>
+<li>常用在线性函数最值的求解，配合<strong>SVD</strong>(范式函数)或<strong>梯度下降法</strong>解求$\theta$的值 两者的内涵是一致的</li>
+<li>需提前大致知道样本的模式(即基函数的确定，对多项式来说是最高几次？对三角函数式来说是基函数的振幅和频率的确定——基函数次数过高或项数过多易造成过拟合</li>
+</ol>
+<h2 id="正态方程解法-Normal-Equation"><a href="#正态方程解法-Normal-Equation" class="headerlink" title="正态方程解法(Normal Equation)"></a>正态方程解法(Normal Equation)</h2><p>对于解求一元函数，窝们知道应该对函数求导求取零值点；而对于向量（可视为多元函数），求取各参量的偏导求解零值亦可求取极值。对广义线性模式的预测函数</p>
+<p>$$f_{\theta }(x_{j})=\theta_{b-1}x^{b-1}_{j}+…+\theta_{2}x^{2}_{j}+\theta_{1}x_{j}+\theta_{0}x_{j}=\Theta ^{\top }\phi (x)$$</p>
+<p>来说，参数的偏导形式为：</p>
+<p>$$\bigtriangledown_{\theta}J_{LS}=\frac{\partial J_{LS}}{\partial \theta }=\frac{1}{2}\cdot 2\cdot\Phi ^{\top }(\Phi \Theta -y)=\Phi^{\top }\Phi \Theta ^{\top }-\Phi ^{\top}y$$</p>
+<p>其中，$\Phi $为基函数与样本点组成的n×b矩阵，</p>
+<p>$$\Phi =\begin{pmatrix}<br>\phi_{1}(x_{1}) &amp;\cdots   &amp; \phi_{b}(x_1)\\<br>\vdots &amp; \ddots  &amp; \vdots \\<br>\phi_{1}(x_n) &amp;\cdots &amp; \phi _{b}(x_{n})<br>\end{pmatrix}$$</p>
+<p>$\Theta$为b ×1 维参数向量参数向量。令偏导为0即可解求参数向量$\theta$的具体值：</p>
+<p><strong>$$\widehat{\theta _{LS}}=(\Phi^{\top }\Phi)^{-1} \Phi^{\top }y$$</strong></p>
+<p>上式对广义线性模式的基函数与参数向量的组合均适用。式中的矩阵逆运算，可通过<strong>SVD</strong>分解求得，因而如果样本过多（m值过大），维度过大(n值过大)，则复杂度较高，计算消耗较大（O(n^3)的复杂度）。</p>
+<p>若换用核模型，$$f_{\theta}(x)=\sum_{j=1}^{n}\theta _{j}K(x,x_j)$$,可认为直接把$\Phi$替换定义的核矩阵，即可求得核模型的最小二乘解。上式$\Phi$可替换为</p>
+<p>$$\kappa = \begin{pmatrix}</p>
+<p>K(x_{1},x_{1}) &amp;\cdots   &amp; K(x_{1},x_{n})\\\\</p>
+<p>\vdots &amp; \ddots  &amp; \vdots \\\\</p>
+<p>K(x_n,x_1) &amp;\cdots &amp; K(x_{n},x_{n})</p>
+<p>\end{pmatrix}$$</p>
+<p><strong>注意notes</strong>  当矩阵不可逆，及其可能两个特征过于<strong>接近</strong>或特征过少样本过多</p>
+<hr>
+<blockquote>
+<p>最小二乘法输出的预测值时由$    \Re(\Phi )$的正摄投影得到。其中，$\Re$表达$\Phi$的值域，$\Phi$是上式基函数矩阵与具体样本构成的n×b矩阵</p>
+</blockquote>
+<hr>
+<h2 id="梯度下降解法"><a href="#梯度下降解法" class="headerlink" title="梯度下降解法"></a>梯度下降解法</h2><p>  ​</p>
+<h3 id="梯度下降基本原理"><a href="#梯度下降基本原理" class="headerlink" title="梯度下降基本原理"></a>梯度下降基本原理</h3><p>计算线性回归时，为了更快收敛更节省计算资源，设计<strong>梯度下降法</strong>——给定某个初值，以一定的<strong>步长α</strong>（学习率）向<strong>梯度的方向</strong>（函数向局部极小值 下降最快的方向）趋近迭代的算法。</p>
+<ul>
+<li>该方式主要针对线性空间凸函数，即有可求极值点</li>
+<li>该方法需要同时更新所有的参数向量，计算本次 参数向量统一使用上一次的数据</li>
+<li>设置合理的阈值能更快收敛</li>
+</ul>
+<p>对向量参数$\theta$的每个具体参数，其迭代的方式为：$$\theta_{j}  += \theta_{j} - \alpha \frac{\partial }{\partial \theta _{j}}J_{LS}(\theta )$$</p>
+<p>其中α是<strong>学习率</strong>，后边一坨是<strong>代价函数对具体参数向量的偏导</strong>。学习率决定了趋近的速率，过小迭代次数过多收敛过慢，过大易造成远离极值点。对假设模型为线性函数形如上式$f_{\theta }(x_{j})=\theta_{b-1}x^{b-1}_{j}+…+\theta_{2}x^{2}_{j}+\theta_{1}x_{j}+\theta_{0}x_{j}=\Theta ^{\top }\phi (x)$的导数，将向量θ视为一个参数，其代价函数J(θ)对θ导数：</p>
+<p>$$ \frac{\partial }{\partial \theta }\frac{1}{2}(f_{\Theta }(X)-Y)^2=2\cdot \frac{1}{2}\cdot(h_{\theta}(X)-Y)\sum_{j=0}^{n}\frac{\partial }{\partial \theta _j}(\sum_{i=0}^{n}\theta _{i}x_{i}-Y)=\sum_{j=0}^{n}(h_{\theta}(X)-Y)x_j= (h_{\theta}(X)-Y)X$$</p>
+<ul>
+<li><p>其中j是参数向量某个具体位置，而$x_j$是其对应位置的基函数的值而非样本</p>
+</li>
+<li><p>$\phi$是基函数，$X$ Y分别是样本向量$X=\{x_1,x_2,…x_m\}$和样本结果实际值向量$Y=\{y_1,y_2…y_m\}$</p>
+</li>
+<li><p>i是基函数数量</p>
+</li>
+<li><p>举个栗子。更多的时候，以所有样本的形式列出参数向量更新的过程。当假设基函数为$\phi(x)={(x,1)}$即$f(x)=\theta_1x+\theta_0$其迭代时具体值为：</p>
+</li>
+</ul>
+<p>$$\theta_0 += \theta_0 - \alpha\frac{1}{m}\sum_{m}^{i=1}(h_{\theta}(x_i)-y_i)$$</p>
+<p>$$\theta_1 += \theta_1 - \alpha\frac{1}{m}\sum_{m}^{i=1}((h_{\theta}(x_i)-y_i)x_i)$$</p>
+<hr>
+<h3 id="梯度下降中的约束问题"><a href="#梯度下降中的约束问题" class="headerlink" title="梯度下降中的约束问题"></a>梯度下降中的约束问题</h3><p>很多时候，参数并非分布在整个空间域中，而是以一定先验可知的方式存在。例如对于双参数模型，其可能只在一条直线上；对于更多维的特征，其可能存在于一个超球范围内。对于参数的约束可以更好的防止过拟合、更快的进行迭代。以下两种是常见的参数条件约束</p>
+<hr>
+<h3 id="梯度下降注意事项"><a href="#梯度下降注意事项" class="headerlink" title="梯度下降注意事项"></a>梯度下降注意事项</h3><p>梯度下降主要由三种更新方式：</p>
+<ol>
+<li><p>以最最基本的梯度下降原理，每一次带入<strong>所有</strong>的样本数据解求更新偏导数-batch批量梯度下降</p>
+</li>
+<li><p>数据量过多，每次<strong>随机</strong>抽一个带入解算偏导数，则上式解算每个偏导的函数变为</p>
+</li>
+</ol>
+<p>$$666$$–随机梯度下降</p>
+<ol>
+<li>结合以上两种方式，每次迭代抽取<strong>一小波</strong>样本更新偏导数–mini-batch 随机批量梯度下降</li>
+</ol>
+<p>一般来说，梯度下降为了保证计算效率和迭代效率，选择第三种比较划算。      </p>
+<p>  ​      </p>
+<p>梯度下降中，选择<strong>合适的α</strong>比较重要。</p>
+<ul>
+<li>过小导致收敛过慢</li>
+<li>过大可能无法收敛或越出该局部最小值</li>
+<li>需要对多个α进行测试–出现代价函数增大应减小学习率；若迭代收敛过慢则增大学习率</li>
+</ul>
+<p>选择合适的特征尺度也利于收敛。一般而言，可以选择正则化以保证收敛时的计算更为<strong>顺滑精确</strong>(梯度平缓步长合适)。<strong>注意</strong>：特征尺度不能解决设计矩阵不可逆、J(θ)不收敛等问题。</p>
+<hr>
+<h3 id="梯度下降和正态方程比较"><a href="#梯度下降和正态方程比较" class="headerlink" title="梯度下降和正态方程比较"></a>梯度下降和正态方程比较</h3><table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">Gradient Descent</th>
+<th style="text-align:center">NORmal Equation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">需要选择α</td>
+<td style="text-align:center">✔</td>
+<td style="text-align:center">✘</td>
+</tr>
+<tr>
+<td style="text-align:center">需要迭代计算</td>
+<td style="text-align:center">✔</td>
+<td style="text-align:center">✘</td>
+</tr>
+<tr>
+<td style="text-align:center">需要计算逆矩阵</td>
+<td style="text-align:center">✘</td>
+<td style="text-align:center">✔</td>
+</tr>
+<tr>
+<td style="text-align:center">当维度n和样本m过大时计算顺利</td>
+<td style="text-align:center">✔</td>
+<td style="text-align:center">✘</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 id="有约束的线性回归"><a href="#有约束的线性回归" class="headerlink" title="有约束的线性回归"></a>有约束的线性回归</h1><p>众所周知的是。。线性回归容易过拟合。有效防止过拟合可以采用对参数向量θ进行空间限制。一般而言，θ是R(n+1)空间的任意一个超维空间点，可将其限制在一条超维直线、平面或超球中。</p>
+<h2 id="限制在空间域的直线上"><a href="#限制在空间域的直线上" class="headerlink" title="限制在空间域的直线上"></a>限制在空间域的直线上</h2><h1 id="Logistics回归（逻辑回归）"><a href="#Logistics回归（逻辑回归）" class="headerlink" title="Logistics回归（逻辑回归）"></a>Logistics回归（逻辑回归）</h1><h2 id="这是一个分类算法"><a href="#这是一个分类算法" class="headerlink" title="这是一个分类算法"></a><strong>这是一个分类算法</strong></h2>
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/20/UEFI双系统小记/" rel="next" title="UEFI双系统小记">
+                <i class="fa fa-chevron-left"></i> UEFI双系统小记
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/21/沙扬娜拉/" rel="prev" title="沙扬娜拉">
+                沙扬娜拉 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/02/27/机器学习要点检索/" data-title="机器学习要点检索--基于图解机器学习" data-content="" data-url="http://ovjaywang.github.io/2017/02/27/机器学习要点检索/">
+  <div class="ds-share-inline">
+    <ul class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/02/27/机器学习要点检索/" data-title="机器学习要点检索--基于图解机器学习" data-url="http://ovjaywang.github.io/2017/02/27/机器学习要点检索/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/xiaozaizi.png" alt="Jay Wang">
+          <p class="site-author-name" itemprop="name">Jay Wang</p>
+          <p class="site-description motion-element" itemprop="description">你猜?</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ovjaywang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/302060345" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/ov_beeshoot" target="_blank" title="douban">
+                  
+                    <i class="fa fa-globe"></i>
+                  
+                  douban
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/ohahabienaola" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-instagram"></i>
+                  
+                  Instagram
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://plus.google.com/112912013380614886638" target="_blank" title="Google">
+                  
+                    <i class="fa fa-google"></i>
+                  
+                  Google
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#机器学习任务"><span class="nav-number">1.</span> <span class="nav-text">机器学习任务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#学习模型"><span class="nav-number">2.</span> <span class="nav-text">学习模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最小二乘法"><span class="nav-number">3.</span> <span class="nav-text">最小二乘法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#正态方程解法-Normal-Equation"><span class="nav-number">3.1.</span> <span class="nav-text">正态方程解法(Normal Equation)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#梯度下降解法"><span class="nav-number">3.2.</span> <span class="nav-text">梯度下降解法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#梯度下降基本原理"><span class="nav-number">3.2.1.</span> <span class="nav-text">梯度下降基本原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#梯度下降中的约束问题"><span class="nav-number">3.2.2.</span> <span class="nav-text">梯度下降中的约束问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#梯度下降注意事项"><span class="nav-number">3.2.3.</span> <span class="nav-text">梯度下降注意事项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#梯度下降和正态方程比较"><span class="nav-number">3.2.4.</span> <span class="nav-text">梯度下降和正态方程比较</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#有约束的线性回归"><span class="nav-number">4.</span> <span class="nav-text">有约束的线性回归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#限制在空间域的直线上"><span class="nav-number">4.1.</span> <span class="nav-text">限制在空间域的直线上</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Logistics回归（逻辑回归）"><span class="nav-number">5.</span> <span class="nav-text">Logistics回归（逻辑回归）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#这是一个分类算法"><span class="nav-number">5.1.</span> <span class="nav-text">这是一个分类算法</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jay Wang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/ven/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/ven/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/ven/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/ven/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/ven/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/ven/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"mimimomo"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax --><!-- hexo-inject:end -->
+
+
+</body>
+</html>

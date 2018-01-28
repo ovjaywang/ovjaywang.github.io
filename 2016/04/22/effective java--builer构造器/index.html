@@ -27,7 +27,7 @@
 
 
 
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/ven/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -59,7 +59,7 @@
 
 
 
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+<link href="/ven/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
 
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
@@ -84,13 +84,13 @@
 
 <meta name="description" content="一个实体类往往有不同的属性 属性有的用于构造器 视为构造时的必需参数 而有的可有可无 类似json和xml一般，有多少个属性，每个属性有多少个赋值都不确定 。e.g.动物 名称string name和是否有尾巴istail是必须的，是否吃草iseatgrass 多重weight 交配手段sexmethod 科目等为非必须字段。解决这一构造问题一般有三种方式。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="effective java--builer构造器">
+<meta property="og:title" content="Effective Java--Builer构造器">
 <meta property="og:url" content="http://ovjaywang.github.io/2016/04/22/effective java--builer构造器/index.html">
 <meta property="og:site_name" content="ov智商捉急">
 <meta property="og:description" content="一个实体类往往有不同的属性 属性有的用于构造器 视为构造时的必需参数 而有的可有可无 类似json和xml一般，有多少个属性，每个属性有多少个赋值都不确定 。e.g.动物 名称string name和是否有尾巴istail是必须的，是否吃草iseatgrass 多重weight 交配手段sexmethod 科目等为非必须字段。解决这一构造问题一般有三种方式。">
-<meta property="og:updated_time" content="2016-04-28T16:36:57.000Z">
+<meta property="og:updated_time" content="2016-05-19T17:13:19.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="effective java--builer构造器">
+<meta name="twitter:title" content="Effective Java--Builer构造器">
 <meta name="twitter:description" content="一个实体类往往有不同的属性 属性有的用于构造器 视为构造时的必需参数 而有的可有可无 类似json和xml一般，有多少个属性，每个属性有多少个赋值都不确定 。e.g.动物 名称string name和是否有尾巴istail是必须的，是否吃草iseatgrass 多重weight 交配手段sexmethod 科目等为非必须字段。解决这一构造问题一般有三种方式。">
 
 
@@ -109,7 +109,7 @@
   };
 </script>
 
-  <title> effective java--builer构造器 | ov智商捉急 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> Effective Java--Builer构造器 | ov智商捉急 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -217,6 +217,26 @@
           </a>
         </li>
       
+        
+        <li class="menu-item menu-item-pic-movie">
+          <a href="/a-pic-a-movie" rel="section">
+            
+              <i class="menu-item-icon fa fa-film fa-fw"></i> <br>
+            
+            一影一图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-bi">
+          <a href="/bigger" rel="section">
+            
+              <i class="menu-item-icon fa fa-thumbs-o-up fa-fw"></i> <br>
+            
+            装逼
+          </a>
+        </li>
+      
 
       
         <li class="menu-item menu-item-search">
@@ -285,7 +305,7 @@
             
             
               
-                effective java--builer构造器
+                Effective Java--Builer构造器
               
             
           </h1>
@@ -378,8 +398,7 @@
 </li>
 </ol>
 <p>最丑的长字段实体类原本是这么写的</p>
-<pre><code>
-class Animal{
+<pre><code>class Animal{
     private string name;//必须参数
     private bool isTail;//必须参数
     private bool isEatGrass;//可选参数
@@ -414,14 +433,12 @@ class Animal{
     }
 }
 </code></pre><p>在某处调用就可能是这样</p>
-<pre><code class="java">
-Animal animal = new Animal(&quot;caonima&quot;,true,true,-1,3);
+<pre><code class="java">Animal animal = new Animal(&quot;caonima&quot;,true,true,-1,3);
 //由于我并不想知道体重，但又因为构造函数的关系不得不加上。
 //所以相当繁琐。当字段达到几十个时，调用构造函数都分不清参数是否对应上。
 </code></pre>
 <p>​将上文的动物实体类以builder的方式写出来，大概是这样的</p>
-<pre><code>
-class Animal{
+<pre><code>class Animal{
     private final string name;
     private final bool isTail;
     private final bool isEatGrass;
@@ -458,7 +475,6 @@ class Animal{
             return new Animal(this);
         }
     }
-
     //当然 在animal类的最后 也需要把builder的参数取出来
     private Animal(Builder builder){
         name = builder.name;
@@ -469,11 +485,9 @@ class Animal{
     }
 }
 </code></pre><p>在某处构造该类对象时，即可像下面一样声明</p>
-<pre><code>
-    Animal dog = new Animal.Builder(&quot;旺财&quot;,true).setIsEatGrass(false).setSexMethod(3).setWeight(20.0)
+<pre><code>    Animal dog = new Animal.Builder(&quot;旺财&quot;,true).setIsEatGrass(false).setSexMethod(3).setWeight(20.0)
 </code></pre><p>builder类似一个抽象工厂 客户端可以将这样一个builder传给方法，在方法中生成需要数量的对象。1.5+版本可以使用泛型定义。</p>
-<pre><code>
-public interface Builder{
+<pre><code>public interface Builder{
     public T build();
 }
 </code></pre><p>在类似生成二叉树，kd树的时候，往往用户只需要将数据push进入，然后调用一个builder整棵树就构造好了。这种方式往往类似于带限制通配符类型的builder.</p>
@@ -514,16 +528,16 @@ public interface Builder{
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/04/22/what-the-hell-of-sdf/" rel="next" title="删除sdf文件导致转到定义失效">
-                <i class="fa fa-chevron-left"></i> 删除sdf文件导致转到定义失效
+              <a href="/2016/04/22/what-the-hell-of-sdf/" rel="next" title="删除Sdf文件导致转到定义失效">
+                <i class="fa fa-chevron-left"></i> 删除Sdf文件导致转到定义失效
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/04/27/effective java 笔记--创建对象的几个tips/" rel="prev" title="effective java 笔记--创建对象的几个tips">
-                effective java 笔记--创建对象的几个tips <i class="fa fa-chevron-right"></i>
+              <a href="/2016/04/27/hexo多客户端写作/" rel="prev" title="Hexo多客户端写作">
+                Hexo多客户端写作 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -539,7 +553,7 @@ public interface Builder{
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/04/22/effective java--builer构造器/" data-title="effective java--builer构造器" data-content="" data-url="http://ovjaywang.github.io/2016/04/22/effective java--builer构造器/">
+        <div class="ds-share flat" data-thread-key="2016/04/22/effective java--builer构造器/" data-title="Effective Java--Builer构造器" data-content="" data-url="http://ovjaywang.github.io/2016/04/22/effective java--builer构造器/">
   <div class="ds-share-inline">
     <ul class="ds-share-icons-16">
 
@@ -569,7 +583,7 @@ public interface Builder{
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/04/22/effective java--builer构造器/" data-title="effective java--builer构造器" data-url="http://ovjaywang.github.io/2016/04/22/effective java--builer构造器/">
+      <div class="ds-thread" data-thread-key="2016/04/22/effective java--builer构造器/" data-title="Effective Java--Builer构造器" data-url="http://ovjaywang.github.io/2016/04/22/effective java--builer构造器/">
       </div>
     
   </div>
@@ -612,7 +626,7 @@ public interface Builder{
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">102</span>
+              <span class="site-state-item-count">111</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -629,7 +643,7 @@ public interface Builder{
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">62</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -664,6 +678,33 @@ public interface Builder{
                     <i class="fa fa-weibo"></i>
                   
                   Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/ov_beeshoot" target="_blank" title="douban">
+                  
+                    <i class="fa fa-globe"></i>
+                  
+                  douban
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/ohahabienaola" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-instagram"></i>
+                  
+                  Instagram
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://plus.google.com/112912013380614886638" target="_blank" title="Google">
+                  
+                    <i class="fa fa-google"></i>
+                  
+                  Google
                 </a>
               </span>
             
@@ -704,7 +745,7 @@ public interface Builder{
         <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -770,22 +811,22 @@ public interface Builder{
 
 
   
-  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+  <script type="text/javascript" src="/ven/jquery/index.js?v=2.1.3"></script>
 
   
-  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/ven/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
 
   
-  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  <script type="text/javascript" src="/ven/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
-  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+  <script type="text/javascript" src="/ven/velocity/velocity.min.js?v=1.2.1"></script>
 
   
-  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  <script type="text/javascript" src="/ven/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
   
-  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  <script type="text/javascript" src="/ven/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
 
   

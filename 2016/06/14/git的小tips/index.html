@@ -1,0 +1,842 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/ven/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.useso.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/ven/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="git,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ov智商捉急" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="Git是当下最流行最舒适的版本控制系统。这里大致把git容易忘记的事情做小结。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git的小tips">
+<meta property="og:url" content="http://ovjaywang.github.io/2016/06/14/git的小tips/index.html">
+<meta property="og:site_name" content="ov智商捉急">
+<meta property="og:description" content="Git是当下最流行最舒适的版本控制系统。这里大致把git容易忘记的事情做小结。">
+<meta property="og:updated_time" content="2017-01-17T16:44:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git的小tips">
+<meta name="twitter:description" content="Git是当下最流行最舒适的版本控制系统。这里大致把git容易忘记的事情做小结。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Git的小tips | ov智商捉急 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+    <div class="site-meta-headline">
+      <a>
+        <img class="custom-logo-image" src="/images/touxiang.jpg" alt="ov智商捉急">
+      </a>
+    </div>
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">ov智商捉急</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/me" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sth">
+          <a href="/sth" rel="section">
+            
+              <i class="menu-item-icon fa fa-child fa-fw"></i> <br>
+            
+            有料
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-pic-movie">
+          <a href="/a-pic-a-movie" rel="section">
+            
+              <i class="menu-item-icon fa fa-film fa-fw"></i> <br>
+            
+            一影一图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-bi">
+          <a href="/bigger" rel="section">
+            
+              <i class="menu-item-icon fa fa-thumbs-o-up fa-fw"></i> <br>
+            
+            装逼
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ZtWPUvzBjdXDQ7iNrTbW','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Git的小tips
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-14T20:59:12+08:00" content="2016-06-14">
+              2016-06-14
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/14/git的小tips/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/14/git的小tips/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Git是当下最流行最舒适的版本控制系统。这里大致把git容易忘记的事情做小结。<br><a id="more"></a></p>
+<h1 id="Git-Tips"><a href="#Git-Tips" class="headerlink" title="Git Tips"></a>Git Tips</h1><hr>
+<h2 id="Git的机制"><a href="#Git的机制" class="headerlink" title="Git的机制"></a>Git的机制</h2><p>记录每次commit的快照及镜像，而非版本增量。完全的分布式及提倡多分支非线性开发。</p>
+<ul>
+<li>类似CVS Subversion记录次提交时更新的文件及更新了哪些内容。</li>
+<li>Git则将快照记录在微型文件系统中，并使用指针(索引)指向当前快照以区别版本。</li>
+</ul>
+<p>Git每次提交不必联网 大部分操作在本地完成 只在完成一部分功能或需要共享时提交远程仓库 节约了流量 提升了效率 无网络状态亦可提交更新及浏览历史。</p>
+<h2 id="Git的四个状态"><a href="#Git的四个状态" class="headerlink" title="Git的四个状态"></a>Git的四个状态</h2><p><a href="!http://ooo.0o0.ooo/2016/06/14/57600bfe92c91.png">Git的四个状态</a> </p>
+<ul>
+<li>未追逐 新添加之前未有版本信息的文件 将未追踪的添加到版本管理使用<strong>add</strong>命令</li>
+<li>已追踪有三类（已修改 未修改 已暂存）</li>
+<li>未修改 一个时间点做了快照之后未修改的就是未修改 只要做出任意改动就会变成</li>
+<li>已修改 此时若修正好 需要把文件添加到暂缓存区 同样使用<strong>add</strong> 命令</li>
+<li>已暂存 此时暂时存储在内存中 需要把它永久的存在硬盘的git本地系统中 使用<strong>commit</strong>提交命令</li>
+</ul>
+<p>使用下命令显示本目录下的文件跟踪情况</p>
+<pre><code class="shell">git status
+</code></pre>
+<p>使用下命令查看修改和比较两个版本差异</p>
+<pre><code class="shell">git diff
+</code></pre>
+<h2 id="跟踪一个有趣的远程仓库"><a href="#跟踪一个有趣的远程仓库" class="headerlink" title="跟踪一个有趣的远程仓库"></a>跟踪一个有趣的远程仓库</h2><p>其实要做的只是 copy下来；过一段时间、知道它有更新的时候就pull一下，拉取下来</p>
+<pre><code class="shell">git clone git://github.com/[user_name]/[project_name].git
+..
+git pull origin project_name
+## 或者
+git fetch origin project_name
+git merge
+</code></pre>
+<p>键入</p>
+<pre><code class="shell">git remote show origin
+</code></pre>
+<p>可以查看到以下几个关键的东西</p>
+<ul>
+<li>local branch pushed with ‘git push’ 缺省推送分支</li>
+<li>caching 那些远端分支还未同步到本地</li>
+<li>stale tracking branches那些分支已经在远端被删除</li>
+<li>Remote branch merged with ‘git pull’ while on branch  git pull时自动合并那些分支</li>
+</ul>
+<h2 id="小逼格"><a href="#小逼格" class="headerlink" title="小逼格"></a>小逼格</h2><h3 id="加标签"><a href="#加标签" class="headerlink" title="加标签"></a>加标签</h3><pre><code class="shell">git tag [tag_name] #写入tag
+git tag #显示所有tag
+git show [tag_name] -lw #显示某个tag名字的提交
+git tag -a [tag_name] [commit_code] #给忘记添加标记的提交起个标签
+</code></pre>
+<h3 id="查看日志"><a href="#查看日志" class="headerlink" title="查看日志"></a>查看日志</h3><pre><code class="shell">git log 
+e.g. 
+git log --pretty=format:&quot;%h - %an, %ar : %s&quot;
+</code></pre>
+<p>上式以一个很优美的显示方案：哈希字符串、对象、时间、提交的说明 一行一个提交显示。<br>对于可显示选项，可选用下表备用词。</p>
+<table class="table table-bordered table-striped table-condensed"><br>    <tr><br>        <td>选项 </td><br>        <td>说明</td><br>    </tr><br>    <tr><br>        <td>-p </td><br>        <td>按补丁格式显示每个更新之间的差异。</td><br>    </tr><br>    <tr><br>        <td>–word-diff </td><br>        <td>按 word diff 格式显示差异。</td><br>    </tr><br>    <tr><br>        <td>–stat </td><br>        <td>显示每次更新的文件修改统计信息。</td><br>    </tr><br>    <tr><br>        <td>–shortstat </td><br>        <td>只显示 –stat 中最后的行数修改添加移除统计。</td><br>    </tr><br>    <tr><br>        <td>–name-only </td><br>        <td>仅在提交信息后显示已修改的文件清单。</td><br>    </tr><br>    <tr><br>        <td>–name-status </td><br>        <td>显示新增、修改、删除的文件清单。</td><br>    </tr><br>    <tr><br>        <td>–abbrev-commit </td><br>        <td>仅显示 SHA-1 的前几个字符，而非所有的 40 个字符。</td><br>    </tr><br>    <tr><br>        <td>–relative-date </td><br>        <td>使用较短的相对时间显示（比如，“2 weeks ago”）。</td><br>    </tr><br>    <tr><br>        <td>–graph </td><br>        <td>显示 ASCII 图形表示的分支合并历史。</td><br>    </tr><br>    <tr><br>        <td>–pretty </td><br>        <td>使用其他格式显示历史提交信息。可用的选项包括 oneline，short，full，fuller 和 format（后跟指定格式）。</td><br>    </tr><br>    <tr><br>        <td>–oneline </td><br>        <td>–pretty=oneline –abbrev-commit 的简化用法。</td><br>    </tr><br></table><br>而对于pretty中的格式，可以自由设定，如下表标注。<br><table><br>    <tr><br>        <td>选项 </td><br>        <td>说明</td><br>    </tr><br>    <tr><br>        <td>%H </td><br>        <td>提交对象（commit）的完整哈希字串</td><br>    </tr><br>    <tr><br>        <td>%h </td><br>        <td>提交对象的简短哈希字串</td><br>    </tr><br>    <tr><br>        <td>%T </td><br>        <td>树对象（tree）的完整哈希字串</td><br>    </tr><br>    <tr><br>        <td>%t </td><br>        <td>树对象的简短哈希字串</td><br>    </tr><br>    <tr><br>        <td>%P </td><br>        <td>父对象（parent）的完整哈希字串</td><br>    </tr><br>    <tr><br>        <td>%p </td><br>        <td>父对象的简短哈希字串</td><br>    </tr><br>    <tr><br>        <td>%an </td><br>        <td>作者（author）的名字</td><br>    </tr><br>    <tr><br>        <td>%ae </td><br>        <td>作者的电子邮件地址</td><br>    </tr><br>    <tr><br>        <td>%ad </td><br>        <td>作者修订日期（可以用 -date= 选项定制格式）</td><br>    </tr><br>    <tr><br>        <td>%ar </td><br>        <td>作者修订日期，按多久以前的方式显示</td><br>    </tr><br>    <tr><br>        <td>%cn </td><br>        <td>提交者(committer)的名字</td><br>    </tr><br>    <tr><br>        <td>%ce </td><br>        <td>提交者的电子邮件地址</td><br>    </tr><br>    <tr><br>        <td>%cd </td><br>        <td>提交日期</td><br>    </tr><br>    <tr><br>        <td>%cr </td><br>        <td>提交日期，按多久以前的方式显示</td><br>    </tr><br>    <tr><br>        <td>%s </td><br>        <td>提交说明</td><br>    </tr><br></table>
+
+<h2 id="自动补全-命令别名"><a href="#自动补全-命令别名" class="headerlink" title="自动补全-命令别名"></a>自动补全-命令别名</h2><p>相当酷炫而有用。直接看<a href="http://www.fenby.com/courses/sections/ji-qiao-he-qiao-men/" target="_blank" rel="external">这里</a></p>
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/git/" rel="tag">#git</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/12/位运算各种/" rel="next" title="位运算各种">
+                <i class="fa fa-chevron-left"></i> 位运算各种
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/18/Learn-sth-the-other-day/" rel="prev" title="Learn Sth. the Other Day">
+                Learn Sth. the Other Day <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/06/14/git的小tips/" data-title="Git的小tips" data-content="" data-url="http://ovjaywang.github.io/2016/06/14/git的小tips/">
+  <div class="ds-share-inline">
+    <ul class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/06/14/git的小tips/" data-title="Git的小tips" data-url="http://ovjaywang.github.io/2016/06/14/git的小tips/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/xiaozaizi.png" alt="Jay Wang">
+          <p class="site-author-name" itemprop="name">Jay Wang</p>
+          <p class="site-description motion-element" itemprop="description">你猜?</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ovjaywang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/302060345" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/ov_beeshoot" target="_blank" title="douban">
+                  
+                    <i class="fa fa-globe"></i>
+                  
+                  douban
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/ohahabienaola" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-instagram"></i>
+                  
+                  Instagram
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://plus.google.com/112912013380614886638" target="_blank" title="Google">
+                  
+                    <i class="fa fa-google"></i>
+                  
+                  Google
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Git-Tips"><span class="nav-number">1.</span> <span class="nav-text">Git Tips</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Git的机制"><span class="nav-number">1.1.</span> <span class="nav-text">Git的机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git的四个状态"><span class="nav-number">1.2.</span> <span class="nav-text">Git的四个状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#跟踪一个有趣的远程仓库"><span class="nav-number">1.3.</span> <span class="nav-text">跟踪一个有趣的远程仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小逼格"><span class="nav-number">1.4.</span> <span class="nav-text">小逼格</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#加标签"><span class="nav-number">1.4.1.</span> <span class="nav-text">加标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看日志"><span class="nav-number">1.4.2.</span> <span class="nav-text">查看日志</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动补全-命令别名"><span class="nav-number">1.5.</span> <span class="nav-text">自动补全-命令别名</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jay Wang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/ven/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/ven/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/ven/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/ven/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/ven/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/ven/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"mimimomo"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax --><!-- hexo-inject:end -->
+
+
+</body>
+</html>

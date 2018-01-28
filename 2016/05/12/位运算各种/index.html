@@ -27,7 +27,7 @@
 
 
 
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/ven/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -59,7 +59,7 @@
 
 
 
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+<link href="/ven/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
 
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
@@ -103,7 +103,7 @@
 同为0，异为1
 
 
-竖线(打不了)
+$\mid $
 按位或
 有1则1，双0为0
 
@@ -141,7 +141,7 @@
 同为0，异为1
 
 
-竖线(打不了)
+$\mid $
 按位或
 有1则1，双0为0
 
@@ -154,7 +154,7 @@
 ~
 按位取反
 变1为0，变0为1（包含符">
-<meta property="og:updated_time" content="2016-05-19T18:52:00.000Z">
+<meta property="og:updated_time" content="2016-08-30T13:32:36.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="位运算各种">
 <meta name="twitter:description" content="最近发现位运算在很多场合有很多运用啊。大概有以下几个方面:
@@ -178,7 +178,7 @@
 同为0，异为1
 
 
-竖线(打不了)
+$\mid $
 按位或
 有1则1，双0为0
 
@@ -323,6 +323,16 @@
               <i class="menu-item-icon fa fa-film fa-fw"></i> <br>
             
             一影一图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-bi">
+          <a href="/bigger" rel="section">
+            
+              <i class="menu-item-icon fa fa-thumbs-o-up fa-fw"></i> <br>
+            
+            装逼
           </a>
         </li>
       
@@ -498,7 +508,7 @@
 <td style="text-align:center">同为0，异为1</td>
 </tr>
 <tr>
-<td style="text-align:center">竖线(打不了)</td>
+<td style="text-align:center">$\mid $</td>
 <td style="text-align:center">按位或</td>
 <td style="text-align:center">有1则1，双0为0</td>
 </tr>
@@ -515,12 +525,12 @@
 <tr>
 <td style="text-align:center"><code>&lt;&lt;</code></td>
 <td style="text-align:center">按位左移（包括符号）</td>
-<td style="text-align:center">对应二进制每移一位乘二</td>
+<td style="text-align:center">二进制每移一位乘二,最右补零</td>
 </tr>
 <tr>
 <td style="text-align:center"><code>&gt;&gt;</code></td>
 <td style="text-align:center">按位右移（包括符号）</td>
-<td style="text-align:center">对应二进制每移一位除二</td>
+<td style="text-align:center">二进制每移一位除二,无符号最左补零，有符号补符号位</td>
 </tr>
 <tr>
 <td style="text-align:center"><code>`&gt;&gt;&gt;</code></td>
@@ -602,7 +612,7 @@ int d = ~c;//输出d为-51 2的ascii为50(十进制) 32(十六进制)
         return find2Num;
     }
 </code></pre>
-<h2 id="使用位亦或-节约空间的数据交换"><a href="#使用位亦或-节约空间的数据交换" class="headerlink" title="使用位亦或\^节约空间的数据交换"></a>使用位亦或\^节约空间的数据交换</h2><p>原理：a亦或b=c，b亦或a=c，也就是亦或满足交换律；位亦或的逆运算，也就是<code>(a^b)^b=a</code>等于它自己。所以，只需三个亦或运算即可交换数据。看代码。</p>
+<h2 id="使用位亦或-节约空间的数据交换"><a href="#使用位亦或-节约空间的数据交换" class="headerlink" title="使用位亦或^节约空间的数据交换"></a>使用位亦或^节约空间的数据交换</h2><p>原理：a亦或b=c，b亦或a=c，也就是亦或满足交换律；位亦或的逆运算，也就是<code>(a^b)^b=a</code>等于它自己。所以，只需三个亦或运算即可交换数据。看代码。</p>
 <pre><code>    a ^= b;
     b ^= a;
     a ^= b;
@@ -707,7 +717,7 @@ int b = b&gt;&gt;k | b &gt;&gt; (Integer.SIZE-k); //右数第k个当头
     }
 </code></pre>
 <blockquote>
-<p>但四，这个方式没有体现位移的优越性。通过分治的思想，由于结果只求1或0，那么通过1位表达2位的信息，通过2位表达4位的信息，通过4位表达8位的信息，通过8位表达16位的信息，通过16位表达32位的信息。通过五次<strong>表达</strong>，就可以求出结果。 </p>
+<p>但四，这个方式没有体现位移的优越性。通过分治的思想，由于结果只求1或0，那么通过1位表达2位的信息，通过2位表达4位的信息，通过4位表达8位的信息，通过8位表达16位的信息，通过16位表达32位的信息。通过五次<strong>表达</strong>，就可以求出结果。<br>最关心的，其实只是<font color="red">最后一位</font></p>
 </blockquote>
 <p>先看代码</p>
 <pre><code class="java">    public static int get1Count(int x){
@@ -724,12 +734,24 @@ int b = b&gt;&gt;k | b &gt;&gt; (Integer.SIZE-k); //右数第k个当头
 <p>解析一下。先拿byte举个栗子。因为byte是1个字节8个bit，所以表达-128~127即$-2^7\sim 2^7$.按照上面的方式，只需右移三次.举个例子88，二进制为$2^6+2^4+2^3=1011000$</p>
 </blockquote>
 <p>第一次</p>
+<pre><code>        01011000
+        00101100
+    xor --------
+        01110100  -&gt;这个是结果！
+</code></pre><p>结果的数值含义是，将原式中，这一位i与该位的上一位(即第i+1位)做了一次亦或，<font color="red">结果式中每出现一个1，则代表原式中必然邻位相异。</font>其实，由于最终结果只需要表述奇偶，因此两个1为0，等同于抵消的含义。</p>
+<p>第二次亦或</p>
+<pre><code>        01110100
+        00011101
+    xor --------
+        01101001 —&gt;第二次的结果
+</code></pre><p>结果的含义是，每一个数字1表示##原式##中，每一位与其前3位二进制数值中1的个数为奇数；每一个数字0表示##原式##中，每一位与其前3位二进制数值中1的个数为0.</p>
+<p>第三次亦或</p>
 <pre><code>
-        1011000
-         101100
-    xor -------
-        1110100  -&gt;这个是结果！
-</code></pre><p>结果的数值含义是，将原式中，这一位i与该位的上一位i+1做了一次亦或，结果式中每出现一个1，则代表原式中必然邻位相异。</p>
+        01101001
+        00000110
+    xor --------
+        01101111 -&gt;第三次结果
+</code></pre><p>显而易见，每个1的出现表示与其前7个数字1出现奇数次。<br>最后取最后一位<code>x&amp;1</code>,得到1，即原式中有奇数次1.结果正确。</p>
 <h2 id="进阶-计算二进制1的个数"><a href="#进阶-计算二进制1的个数" class="headerlink" title="进阶-计算二进制1的个数"></a>进阶-计算二进制1的个数</h2><h3 id="最原始的方式"><a href="#最原始的方式" class="headerlink" title="最原始的方式"></a>最原始的方式</h3><pre><code>    int BitCount(unsigned int n)
     {
         unsigned int c =0 ; // 计数器
@@ -936,6 +958,10 @@ x = x ^ ((~(x&gt;&gt;31))+1) + x&gt;&gt;31;
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2016/06/14/git的小tips/" rel="prev" title="Git的小tips">
+                Git的小tips <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -1022,7 +1048,7 @@ x = x ^ ((~(x&gt;&gt;31))+1) + x&gt;&gt;31;
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">105</span>
+              <span class="site-state-item-count">111</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1039,7 +1065,7 @@ x = x ^ ((~(x&gt;&gt;31))+1) + x&gt;&gt;31;
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">60</span>
+                <span class="site-state-item-count">62</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1122,7 +1148,7 @@ x = x ^ ((~(x&gt;&gt;31))+1) + x&gt;&gt;31;
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#几个运算符"><span class="nav-number">1.</span> <span class="nav-text">几个运算符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于取反"><span class="nav-number">2.</span> <span class="nav-text">关于取反</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于亦或"><span class="nav-number">3.</span> <span class="nav-text">关于亦或</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数组内只存在两个奇数次出现的数，其他都出现了偶数次，找出这两个数"><span class="nav-number">3.1.</span> <span class="nav-text">数组内只存在两个奇数次出现的数，其他都出现了偶数次，找出这两个数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用位亦或-节约空间的数据交换"><span class="nav-number">3.2.</span> <span class="nav-text">使用位亦或\^节约空间的数据交换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用亦或加密"><span class="nav-number">3.3.</span> <span class="nav-text">使用亦或加密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#亦或判别IP地址是否相等"><span class="nav-number">3.4.</span> <span class="nav-text">亦或判别IP地址是否相等</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于按位与"><span class="nav-number">4.</span> <span class="nav-text">关于按位与</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于按位与-1"><span class="nav-number">5.</span> <span class="nav-text">关于按位与</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#按位左右移"><span class="nav-number">6.</span> <span class="nav-text">按位左右移</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#左右移应用-二分求幂"><span class="nav-number">6.1.</span> <span class="nav-text">左右移应用-二分求幂</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用位移求二进制里1的奇偶"><span class="nav-number">6.2.</span> <span class="nav-text">利用位移求二进制里1的奇偶</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进阶-计算二进制1的个数"><span class="nav-number">6.3.</span> <span class="nav-text">进阶-计算二进制1的个数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最原始的方式"><span class="nav-number">6.3.1.</span> <span class="nav-text">最原始的方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原始方式的改进"><span class="nav-number">6.3.2.</span> <span class="nav-text">原始方式的改进</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#亦或清1法"><span class="nav-number">6.3.3.</span> <span class="nav-text">亦或清1法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查表法1："><span class="nav-number">6.3.4.</span> <span class="nav-text">查表法1：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查表法2：4bit查表"><span class="nav-number">6.3.5.</span> <span class="nav-text">查表法2：4bit查表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查表法3：8bit查表"><span class="nav-number">6.3.6.</span> <span class="nav-text">查表法3：8bit查表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#补充：位标志法"><span class="nav-number">6.3.7.</span> <span class="nav-text">补充：位标志法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#求二进制最高位前0的个数"><span class="nav-number">6.4.</span> <span class="nav-text">求二进制最高位前0的个数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二进制逆序"><span class="nav-number">6.5.</span> <span class="nav-text">二进制逆序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#位移求绝对值"><span class="nav-number">6.6.</span> <span class="nav-text">位移求绝对值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交换二进制高16位和低16位"><span class="nav-number">6.7.</span> <span class="nav-text">交换二进制高16位和低16位</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#几个运算符"><span class="nav-number">1.</span> <span class="nav-text">几个运算符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于取反"><span class="nav-number">2.</span> <span class="nav-text">关于取反</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于亦或"><span class="nav-number">3.</span> <span class="nav-text">关于亦或</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数组内只存在两个奇数次出现的数，其他都出现了偶数次，找出这两个数"><span class="nav-number">3.1.</span> <span class="nav-text">数组内只存在两个奇数次出现的数，其他都出现了偶数次，找出这两个数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用位亦或-节约空间的数据交换"><span class="nav-number">3.2.</span> <span class="nav-text">使用位亦或^节约空间的数据交换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用亦或加密"><span class="nav-number">3.3.</span> <span class="nav-text">使用亦或加密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#亦或判别IP地址是否相等"><span class="nav-number">3.4.</span> <span class="nav-text">亦或判别IP地址是否相等</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于按位与"><span class="nav-number">4.</span> <span class="nav-text">关于按位与</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于按位与-1"><span class="nav-number">5.</span> <span class="nav-text">关于按位与</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#按位左右移"><span class="nav-number">6.</span> <span class="nav-text">按位左右移</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#左右移应用-二分求幂"><span class="nav-number">6.1.</span> <span class="nav-text">左右移应用-二分求幂</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用位移求二进制里1的奇偶"><span class="nav-number">6.2.</span> <span class="nav-text">利用位移求二进制里1的奇偶</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进阶-计算二进制1的个数"><span class="nav-number">6.3.</span> <span class="nav-text">进阶-计算二进制1的个数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最原始的方式"><span class="nav-number">6.3.1.</span> <span class="nav-text">最原始的方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原始方式的改进"><span class="nav-number">6.3.2.</span> <span class="nav-text">原始方式的改进</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#亦或清1法"><span class="nav-number">6.3.3.</span> <span class="nav-text">亦或清1法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查表法1："><span class="nav-number">6.3.4.</span> <span class="nav-text">查表法1：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查表法2：4bit查表"><span class="nav-number">6.3.5.</span> <span class="nav-text">查表法2：4bit查表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查表法3：8bit查表"><span class="nav-number">6.3.6.</span> <span class="nav-text">查表法3：8bit查表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#补充：位标志法"><span class="nav-number">6.3.7.</span> <span class="nav-text">补充：位标志法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#求二进制最高位前0的个数"><span class="nav-number">6.4.</span> <span class="nav-text">求二进制最高位前0的个数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二进制逆序"><span class="nav-number">6.5.</span> <span class="nav-text">二进制逆序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#位移求绝对值"><span class="nav-number">6.6.</span> <span class="nav-text">位移求绝对值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交换二进制高16位和低16位"><span class="nav-number">6.7.</span> <span class="nav-text">交换二进制高16位和低16位</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
@@ -1141,7 +1167,7 @@ x = x ^ ((~(x&gt;&gt;31))+1) + x&gt;&gt;31;
         <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -1207,22 +1233,22 @@ x = x ^ ((~(x&gt;&gt;31))+1) + x&gt;&gt;31;
 
 
   
-  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+  <script type="text/javascript" src="/ven/jquery/index.js?v=2.1.3"></script>
 
   
-  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/ven/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
 
   
-  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  <script type="text/javascript" src="/ven/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
-  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+  <script type="text/javascript" src="/ven/velocity/velocity.min.js?v=1.2.1"></script>
 
   
-  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  <script type="text/javascript" src="/ven/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
   
-  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  <script type="text/javascript" src="/ven/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
 
   

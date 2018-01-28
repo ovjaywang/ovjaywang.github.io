@@ -27,7 +27,7 @@
 
 
 
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/ven/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -59,7 +59,7 @@
 
 
 
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+<link href="/ven/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
 
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
@@ -135,7 +135,7 @@
 <meta property="og:image" content="http://ooo.0o0.ooo/2016/02/25/56cf08c613352.png">
 <meta property="og:image" content="http://ooo.0o0.ooo/2016/02/25/56cf0b53675d9.png">
 <meta property="og:image" content="http://ooo.0o0.ooo/2016/02/25/56cf0eb50a41b.png">
-<meta property="og:updated_time" content="2016-04-28T17:41:45.000Z">
+<meta property="og:updated_time" content="2017-01-17T16:44:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="由opencv中findFundamentalMat和findHomography区别的引申">
 <meta name="twitter:description" content="openCV中有两个函数，findhomography和findfundamentalmat，长的很像。。一开始严重的弄混，以为都是求对应点投影矩阵的公式，万万没想到其实是两个完全不同的内涵。😒">
@@ -272,6 +272,16 @@
               <i class="menu-item-icon fa fa-film fa-fw"></i> <br>
             
             一影一图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-bi">
+          <a href="/bigger" rel="section">
+            
+              <i class="menu-item-icon fa fa-thumbs-o-up fa-fw"></i> <br>
+            
+            装逼
           </a>
         </li>
       
@@ -453,27 +463,27 @@
 <p><strong>灭点vanishing </strong> point：平行线在二维图像中汇聚的地方，空间中每一组平行线都有自己的灭点。</p>
 <p><strong>灭线vanishing line（消隐线 ）</strong> ：不同的灭线连线，即灭线。如果两组不同的平行线，都平行于大地，则他们的连线就是地平线（horizon line）</p>
 <hr>
-<h1 id="1-第一个矩阵Essential本质矩阵"><a href="#1-第一个矩阵Essential本质矩阵" class="headerlink" title="1. 第一个矩阵Essential本质矩阵"></a>1. 第一个矩阵Essential本质矩阵</h1><p>由于拍摄物体时，摄影中并不能被反映在图像中。如果让第二个观察者同时拍摄下某摄影中心和它所拍的照片呢?</p>
+<h1 id="第一个矩阵Essential本质矩阵"><a href="#第一个矩阵Essential本质矩阵" class="headerlink" title="第一个矩阵Essential本质矩阵"></a>第一个矩阵Essential本质矩阵</h1><p>由于拍摄物体时，摄影中心并不能被反映在图像中。如果让第二个观察者同时拍摄下某摄影中心和它所拍的照片呢?</p>
 <center><img src="http://ooo.0o0.ooo/2016/02/25/56cfbd34f3c9e.png" alt=""></center>
 
 <p>反映在第二个观察者的照片，摄影中心和物体分别投影在像片上，任意第一个摄影中心和它所拍摄物体的连线都可视为第二个摄影中心的极线。直观的理解，即为下图的erpr。</p>
 <center><img src="http://ooo.0o0.ooo/2016/02/25/56cfc06a0ddc5.png" alt=""></center>
 
-<p><strong>极线约束的理论就是左侧的物体成像在右侧的同名点一定在erpr上。</strong>反映左右极线关系的就是表达向量和右向量之间的约束关系的——<strong>本质矩阵**</strong>Eseential Matrix<strong>**。</strong>但大多数情况下，别的摄影中心并不一定会被成像，即极点不在相片中。如下图</p>
+<p><strong>极线约束的理论就是左侧的物体成像在右侧的同名点一定在erpr上。</strong>反映左右极线关系的就是表达向量和右向量之间的约束关系的——<strong>本质矩阵</strong>即<strong>Eseential Matrix</strong>。但大多数情况下，别的摄影中心并不一定会被成像，即极点不在相片中。如下图</p>
 <center><img src="http://ooo.0o0.ooo/2016/02/25/56cfc2d883aab.png" alt=""></center>
 
-<p>具体的矩阵运算参考<strong>  </strong><a href="http://www.cnblogs.com/gemstone/archive/2011/12/20/2294551.html" target="_blank" rel="external"><strong>计算机视觉基础4——对极几何(Epipolar Geometry)</strong></a> ，原理为三线同面（下图蓝色区域三边）  </p>
+<p>具体的矩阵运算参考 <a href="http://www.cnblogs.com/gemstone/archive/2011/12/20/2294551.html" target="_blank" rel="external"><strong>计算机视觉基础4——对极几何(Epipolar Geometry)</strong></a> ，原理为<strong>三线同面</strong>（下图蓝色区域三边）  </p>
 <center><img src="http://ooo.0o0.ooo/2016/02/24/56ce77dc874bc.png" alt=""> </center>
 
 <p><strong>其中，E是本质矩阵（Essential Matrix），R是像平面旋转矩阵，T是摄影中心平移矩阵，Pl和Pr分别为左右摄影中心指向同名点P的向量。S由矩阵T决定，具体形式为</strong></p>
 <center><img src="http://ooo.0o0.ooo/2016/02/24/56ce77fc78812.png" alt=""></center>
 
-<p><strong>本质矩阵</strong> 采用的是相机的外部参数，也就是说采用相机坐标(The essential matrix uses CAMERA coordinates)，不涉及相机内参数，如果要分析数字图像，则要考虑坐标(u,v)，此时需要用到内部参数(To use image coordinates we must consider the INTRINSIC camera parameters)</p>
+<p><strong>本质矩阵</strong> 采用的是相机的<strong>外部参数</strong>，也就是说采用相机坐标(The essential matrix uses CAMERA coordinates)，不涉及相机内参数，如果要分析数字图像，则要考虑坐标(u,v)，此时需要用到内部参数(To use image coordinates we must consider the INTRINSIC camera parameters)</p>
 <p><strong> 谨记1：Essential Matrix是连结两个摄影中心指向同名点的向量的矩阵，秩为2。</strong></p>
 <p><strong> 左向量·E·右向量=0！！！</strong></p>
 <p><strong> E由两部分组成！E=R·S  E仅由外方位元素决定！一张图记住E!!!</strong></p>
 <p><strong><center><img src="http://ooo.0o0.ooo/2016/02/25/56cfcab0b492e.png" alt=""></center></strong></p>
-<p>由向量引申而出的，是同名点的像素坐标，原理是共线方程。</p>
+<p>上式Pr Pl均基于物方三维坐标。同理由向量引申而出的，则是同名点的像素坐标，原理是<strong>共线方程</strong>。</p>
 <p><strong>二维同名点</strong></p>
 <center><img src="http://ooo.0o0.ooo/2016/02/26/56d00bc787259.png" alt=""></center>
 
@@ -484,15 +494,15 @@
 <p>使用齐次坐标，矩阵表示为：</p>
 <center><img src="http://ooo.0o0.ooo/2016/02/26/56d01aa83d7d6.png" alt=""></center>
 
-<p>其中，$\widetilde{p}$是像片任意同名点相机坐标，$\widetilde{l}$是方程系数。又依据同名点公式，$$Ep<em>{l} =\widetilde{l</em>{r}}$$，所以！对应外极线的方程系数可以直接由E矩阵和本侧同名点求出。其中，$\widetilde{l_{l}}$是左极点对应外极线方程。</p>
+<p>其中，$\widetilde{p}$是像片任意同名点相机坐标，$\widetilde{l}$是方程系数。又依据同名点公式，$$Ep_{l} =\widetilde{l_{r}}$$，所以！对应外极线的方程系数可以直接由E矩阵和本侧同名点求出。其中，$\widetilde{l_{l}}$是左极点对应外极线方程。</p>
 <p>当已知左侧点，其右侧对应点在直线</p>
-<center><img src="http://ooo.0o0.ooo/2016/02/26/56d08c864e4a7.png" alt=""></center><br>当已知右侧点，其左侧对应点在极线<br><center><img src="http://ooo.0o0.ooo/2016/02/26/56d01c07d68ed.png" alt=""></center><br><strong>极点</strong><br><br>别忘了。极点也是在极线上，所以有<br><center><img src="http://ooo.0o0.ooo/2016/02/26/56d0673df0710.png" alt=""></center><br>且，极点属于所有极线，因而<br><center><img src="http://ooo.0o0.ooo/2016/02/26/56d0678f1ddfc.png" alt=""></center><br>上式可用来定位极点的坐标<br><br><em> </em> <em><br><br># <strong> 2.第2个矩阵 Fundamental基础矩阵</strong><br><br>另一个需要提到的概念是基础矩阵。<br><br>Essential矩阵使用CameraCoords相机坐标系。尽管其中可计算像素坐标，但仍然以摄影中心为原点，像平面所有点z值都是f。当考虑相机内参数时，这就是FundamentalMatrix基础矩阵<br><center><img src="http://ooo.0o0.ooo/2016/01/22/56a2556c54d1d.png" alt=""></center><br>该图显示了fundamentalmatrix（基础矩阵）的基本内涵。p q分别为同名点。计算基础矩阵需要考虑到内参数的仿射变换。M为内参数的矩阵，包含6个参数的3</em>3矩阵。<br><center><img src="http://ooo.0o0.ooo/2016/02/26/56d069db39519.png" alt=""></center><br>将上式中的Camera坐标提到一边，带入基本矩阵解求对极同名点的方程，即可得到F的表达式.<br><center><img src="http://ooo.0o0.ooo/2016/02/24/56ce7854f3d64.jpg" alt=""></center><br>上式即为基础矩阵方程。其中，F是基础矩阵，x’x分别为同名点。而左右两个平面的两条极线为，显而易见，F由E和两个内参数矩阵决定。<br><center><img src="http://ooo.0o0.ooo/2016/02/26/56d06ae01c63d.png" alt=""></center><br>类似的，F与E一样都能指同名点坐标在对应极线的关系。下图分别是已知左右点其对应极线的关系。<br><center><img src="http://ooo.0o0.ooo/2016/02/24/56ce78b202e41.jpg" alt=""></center><br>一个简单的例子，如果从某种方式计算出基础矩阵，则在对应图中即可表示出像素点对应的极线。<br><center><img src="http://ooo.0o0.ooo/2016/02/28/56d3bee0758a5.png" alt=""></center><br>计算出矩阵即为l的三个参数。一般的，调整比例 将前两项的平方和定为1.<br><center><img src="http://ooo.0o0.ooo/2016/02/28/56d3bf4cbf895.png" alt=""></center>
+<center><img src="http://ooo.0o0.ooo/2016/02/26/56d08c864e4a7.png" alt=""></center><br>当已知右侧点，其左侧对应点在极线<br><center><img src="http://ooo.0o0.ooo/2016/02/26/56d01c07d68ed.png" alt=""></center><br><strong>极点</strong><br><br>别忘了。极点也是在极线上，所以有<br><center><img src="http://ooo.0o0.ooo/2016/02/26/56d0673df0710.png" alt=""></center><br>且，极点属于所有极线，因而<br><center><img src="http://ooo.0o0.ooo/2016/02/26/56d0678f1ddfc.png" alt=""></center><br>上式可用来定位极点的坐标<br><br><em> </em> <em><br><br># <strong> 第2个矩阵 Fundamental基础矩阵</strong><br><br>另一个需要提到的概念是基础矩阵。<br><br>Essential矩阵使用CameraCoords相机坐标系。尽管其中可计算像素坐标，但仍然以摄影中心为原点，像平面所有点z值都是f。当考虑相机内参数时，这就是FundamentalMatrix基础矩阵<br><center><img src="http://ooo.0o0.ooo/2016/01/22/56a2556c54d1d.png" alt=""></center><br>该图显示了fundamentalmatrix（基础矩阵）的基本内涵。p q分别为同名点。计算基础矩阵需要考虑到内参数的<strong>仿射变换</strong>。M为内参数的矩阵，包含6个参数的3</em>3矩阵。<br><center><img src="http://ooo.0o0.ooo/2016/02/26/56d069db39519.png" alt=""></center><br>将上式中的Camera坐标提到一边，带入基本矩阵解求对极同名点的方程，即可得到F的表达式.<br><center><img src="http://ooo.0o0.ooo/2016/02/24/56ce7854f3d64.jpg" alt=""></center><br>上式即为基础矩阵方程。其中，F是基础矩阵，x’x分别为同名点。而左右两个平面的两条极线为，显而易见，F由E和两个内参数矩阵决定。<br><center><img src="http://ooo.0o0.ooo/2016/02/26/56d06ae01c63d.png" alt=""></center><br>类似的，F与E一样都能指同名点坐标在对应极线的关系。下图分别是已知左右点其对应极线的关系。<br><center><img src="http://ooo.0o0.ooo/2016/02/24/56ce78b202e41.jpg" alt=""></center><br>一个简单的例子，如果从某种方式计算出基础矩阵，则在对应图中即可表示出像素点对应的极线。<br><center><img src="http://ooo.0o0.ooo/2016/02/28/56d3bee0758a5.png" alt=""></center><br>计算出矩阵即为l的三个参数。一般的，调整比例 将前两项的平方和定为1.<br><center><img src="http://ooo.0o0.ooo/2016/02/28/56d3bf4cbf895.png" alt=""></center>
 
 <p>findfundamentalmat()本意为基础矩阵，是假设两幅图像在同一三维场景中的不同视角。例如立体摄像机，从不同的角度拍摄同一个目标，它解算的是，两幅图像其中一个同名点，与其在外极线同名点的转换关系。它的映射基于三维场景，因此使用这个函数的时候，在不同的视角之间，应该有一个明显的基线。默认使用7点算法拟合数据。基础矩阵把左边图像的一个点的图像坐标与它右边图像中的对应点的图像联系起来，他是一个3x3的退化矩阵，描述了两个立体图像对的外极限几何关系，其计算依赖于在两个图像中相对应的一组点。</p>
 <p>与Homography矩阵（下文提到）不同，它在每组对应点有两组约束：x、y同时作为x’y’的自变量，估算一组对应点只有一行的约束，因为极线约束是标量等式。因此至少需要8个点。所以一般使用8点算法计算F矩阵(8点算法)。</p>
-<p>$$\begin{bmatrix} x^{‘}_i &amp; y^{‘}<em>i &amp; 1 \end{bmatrix} \begin{bmatrix} f</em>{11} &amp; f<em>{12} &amp; f</em>{13} \\ f<em>{21} &amp; f</em>{22} &amp; f<em>{23} \\  f</em>{31} &amp; f<em>{32}  &amp; f</em>{33}  \end{bmatrix} \begin{bmatrix} x_i \\ y_i \\ 1 \end{bmatrix}=0$$</p>
+<p>$$\begin{bmatrix} x^{‘}_i &amp; y^{‘}_i &amp; 1 \end{bmatrix} \begin{bmatrix} f_{11} &amp; f_{12} &amp; f_{13} \\\ f_{21} &amp; f_{22} &amp; f_{23} \\\  f_{31} &amp; f_{32}  &amp; f_{33}  \end{bmatrix} \begin{bmatrix} x_i \\\ y_i \\\ 1 \end{bmatrix}=0$$</p>
 <p>可推到出方程：</p>
-<p>$$ x_i x^{‘}_i {f_11} + x_i y^{‘}_i f_21 + x_i f_31 + y_i x^{‘}_i f_12 + y_i y^{‘}_i f_22 + y_i f_32 + {x_i}^{‘} f_13 + y^{‘}_i f_23 + f_33 =0$$</p>
+<p>$$ x_i x^{‘}_i f_{11} + x_i y^{‘}_i f_{21} + x_i f_{31} + y_i x^{‘}_i f_{12} + y_i y^{‘}_i f_{22} + y_i f_{32} + {x_i}^{‘} f_{13} + y^{‘}_i f_{23} + f_{33} =0$$</p>
 <center><img src="https://ooo.0o0.ooo/2016/02/29/56d3ed9679e76.png" alt=""></center>
 
 <p>最终目标是找到ATA的一个特征向量使得它的特征值最小。常用的解法是构造m*9的矩阵A（m是点对数），求解A的奇异值分解，即A=UDVT，</p>
@@ -526,7 +536,7 @@
 <center><img src="http://ooo.0o0.ooo/2016/02/29/56d3f7745f920.png" alt=""></center>
 
 <hr>
-<h1 id="3-第二个矩阵-Homography（单映）矩阵"><a href="#3-第二个矩阵-Homography（单映）矩阵" class="headerlink" title=" 3. 第二个矩阵 Homography（单映）矩阵"></a><strong> 3. 第二个矩阵 Homography（单映）矩阵</strong></h1><p>findhomography的前提是2D的转换，本意为单映（包含平移、仿射、尺度三种变换），试图找到一个3*3的投影矩阵，能够把1图中所有的点，通过某种形变，匹配到2图中去。当基线很小的时候(视差变化小，扭曲形变也少)，这个方法能够计算出精度极高的解。<br>当然可以首先参考opencv的<a href="http://docs.opencv.org/2.4/modules/calib3d/doc/camera_calibration_and_3d_reconstruction.html?highlight=findhomography" target="_blank" rel="external">文档</a> 这里首先介绍二维映射的单映（homography）矩阵</p>
+<h1 id="第二个矩阵-Homography（单映）矩阵"><a href="#第二个矩阵-Homography（单映）矩阵" class="headerlink" title="  第二个矩阵 Homography（单映）矩阵"></a><strong>  第二个矩阵 Homography（单映）矩阵</strong></h1><p>findhomography的前提是2D的转换，本意为单映（包含平移、仿射、尺度三种变换），试图找到一个3*3的投影矩阵，能够把1图中所有的点，通过某种形变，匹配到2图中去。当基线很小的时候(视差变化小，扭曲形变也少)，这个方法能够计算出精度极高的解。<br>当然可以首先参考opencv的<a href="http://docs.opencv.org/2.4/modules/calib3d/doc/camera_calibration_and_3d_reconstruction.html?highlight=findhomography" target="_blank" rel="external">文档</a> 这里首先介绍二维映射的单映（homography）矩阵</p>
 <center><img src="https://ooo.0o0.ooo/2016/01/23/56a3baf462830.png" alt=""></center>
 
 <p>该式反应了像点齐次坐标的单映变换的方程。（u v）(u’ v’)分别是左右图像的同名像点坐标。通过一个8个自由度的矩阵P来解算两者之间的关系。p02 p12与平移相关，p00,p01,p10,p11与旋转 尺度和仿射（平行变换）变换有关，p20,p21与拉伸扭曲有关。</p>
@@ -545,7 +555,7 @@
 <center><img src="http://ooo.0o0.ooo/2016/02/24/56ce6cd71fc88.png" alt=""></center>
 
 <p>上图可以看到，将三维坐标点z值设为0，[p,q,0,1]即为三维齐次坐标。</p>
-<p>$$ \begin{bmatrix} x \\ y \\ 1<br>\end{bmatrix} \sim \begin{bmatrix} f &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; f &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; 0 \end{bmatrix} \begin{bmatrix} r_11 &amp; r_12 &amp; r_13 &amp; t_x \\ r_21 &amp; r_22 &amp; r_23 &amp; t_y \\ r_31 &amp; r_32&amp; r_33 &amp; t_z \\ 0 &amp; 0 &amp; 0 &amp; 1 \end{bmatrix} \begin{bmatrix} p \\ q \\ 0 \\ 1 \end{bmatrix} \sim \begin{bmatrix} fr_11 &amp; fr_12 &amp; ft_x \\ fr_21 &amp; fr_22 &amp; ft_y \\ r_31 &amp; r_32 &amp; t_z \end{bmatrix} \begin{bmatrix} p \\ q \\ 1 \end{bmatrix}<br>$$$$\sim \begin{bmatrix} h_11 &amp; h_12&amp;h_13 \\ h_21 &amp; h_22 &amp; h_23 \\ h_31 &amp; h_32 &amp; h_33 \end{bmatrix} \begin{bmatrix} p \\ q \\ 1 \end{bmatrix}$$<br>最终推到出，3D转2D的投影变换成为2D转2D的变换，该变化可逆！其特例是，当采用的物方坐标系z轴与主光轴平行，即正射影像，则上式R矩阵为</p>
+<p>$$ \begin{bmatrix} x\\\ y \\\ 1<br>\end{bmatrix} \sim \begin{bmatrix} f &amp; 0 &amp; 0 &amp; 0 \\\ 0 &amp; f &amp; 0 &amp; 0 \\\ 0 &amp; 0 &amp; 1 &amp; 0 \end{bmatrix} \begin{bmatrix} r_{11} &amp; r_{12} &amp; r_{13} &amp; t_x \\\ r_{21} &amp; r_{22} &amp; r_{23} &amp; t_y \\\ r_{31} &amp; r_{32}&amp; r_33 &amp; t_z \\\ 0 &amp; 0 &amp; 0 &amp; 1 \end{bmatrix} \begin{bmatrix} p \\\ q \\\ 0\\\ 1 \end{bmatrix} \sim \begin{bmatrix} fr_{11} &amp; fr_{12} &amp; ft_x \\\ fr_{21} &amp; fr_{22} &amp; ft_y \\\ r_{31} &amp; r_{32} &amp; t_z \end{bmatrix} \begin{bmatrix} p \\\ q\\\ 1 \end{bmatrix}<br>$$$$\sim \begin{bmatrix} h_{11} &amp; h_{12}&amp;h_{13} \\\ h_{21} &amp; h_{22} &amp; h_{23} \\\ h_{31} &amp; h_{32} &amp; h_{33} \end{bmatrix} \begin{bmatrix} p \\\ q \\\ 1 \end{bmatrix}$$<br>最终推到出，3D转2D的投影变换成为2D转2D的变换，该变化可逆！其特例是，当采用的物方坐标系z轴与主光轴平行，即正射影像，则上式R矩阵为</p>
 <center><img src="http://ooo.0o0.ooo/2016/02/24/56ce7aab1b305.png" alt=""></center>
 
 <p>则上式变形为：</p>
@@ -559,24 +569,24 @@
 <p>上文中一直讨论的是从物方坐标系到像片坐标系的转换，倘若再加上内方位参数的内矩阵，则可直接导出从物方坐标到像素坐标的公式，如下图示意。内方位参数为仿射变换（Affine 6自由度 保持平行结构的变换）</p>
 <center><img src="http://ooo.0o0.ooo/2016/02/25/56ceb1181fa03.png" alt=""></center>
 
-<p>将world-&gt;film-&gt;pixel结合起来，对于同一个物体，在某位置某台相机拍摄的照片就可以认为是一个单映H。当然，不同的位置拍摄的像片，各自对应物体的单映是不同的。但由于单映是可逆的，拍摄同一物体的两幅图像，也可以用使用$$H=H<em>{1}H</em>{2}^{-1}$$</p>
+<p>将world-&gt;film-&gt;pixel结合起来，对于同一个物体，在某位置某台相机拍摄的照片就可以认为是一个单映H。当然，不同的位置拍摄的像片，各自对应物体的单映是不同的。但由于单映是可逆的，拍摄同一物体的两幅图像，也可以用使用$$H=H_{1}H_{2}^{-1}$$</p>
 <center><img src="http://ooo.0o0.ooo/2016/02/25/56ceb83e89a7b.png" alt=""><img src="http://ooo.0o0.ooo/2016/02/25/56cebcef9abd7.png" alt=""></center>
 
 <hr>
-<h1 id="4-Homography（单映）矩阵的求取"><a href="#4-Homography（单映）矩阵的求取" class="headerlink" title=" 4. Homography（单映）矩阵的求取"></a><strong> 4. Homography（单映）矩阵的求取</strong></h1><p>参考<a href="http://www.robots.ox.ac.uk/~vgg/presentations/bmvc97/criminispaper/node3.html" target="_blank" rel="external">这里</a>  只要大于4个匹配点，都认为是冗余测量，必须融合数据。文章里提到了三种解求二维面到面的单应矩阵的球法。</p>
+<h1 id="Homography（单映）矩阵的求取"><a href="#Homography（单映）矩阵的求取" class="headerlink" title="  Homography（单映）矩阵的求取"></a><strong>  Homography（单映）矩阵的求取</strong></h1><p>参考<a href="http://www.robots.ox.ac.uk/~vgg/presentations/bmvc97/criminispaper/node3.html" target="_blank" rel="external">这里</a>  只要大于4个匹配点，都认为是冗余测量，必须融合数据。文章里提到了三种解求二维面到面的单应矩阵的球法。</p>
 <ul>
 <li>非线性的解决办法，使用伪逆进行分解。当所解求值为0时会有bug。</li>
 <li>线性最小二乘解法，通常使用SVD分解，V矩阵就对应了最小奇异值。<a href="http://blog.chinaunix.net/uid-20761674-id-4040274.html" target="_blank" rel="external">这个SVD的文章</a>相当好的解释了SVD分解的意义。八个未知数对应八个特征向量，也对应八个线性方程的解。SVD能直接解求出这八个向量，即V中的特征向量。</li>
 <li>非线性几何解法，使对应点和映射点差值欧几里得距离（或平方和）最小。</li>
 </ul>
 <p>Homograhy的计算：计算该矩阵当然不会上式f θ等值直接解算。由于是二维图像之间的关系，一般都已知二维对应点集，直接采用最小二乘的方式使用LM进行计算。在一般情况下的H矩阵可表示为</p>
-<p>$$ \begin{bmatrix} x^{‘} \\ y^{‘} \\ 1 \end{bmatrix} \sim \begin{bmatrix} h_11 &amp; h_12 &amp; h_13 \\ h_21 &amp; h_22 &amp; h_23 \\ h_31 &amp; h_32 &amp; h_33 \end{bmatrix} \begin{bmatrix} x \\ y \\ 1 \end{bmatrix}$$</p>
-<p>其中，$h_31 h_32 h_33$是为了配置相似比例，化简为</p>
-<p>$$x^{‘}=\frac{h_11 x + h_12 y + h_13 }{ h_31 x + h_32 y + h_33 }$$</p>
-<p>$$y^{‘}=\frac{h_21 \cdot x + h_22 y + h_23 }{ h_31 x + h_32 y + h_33 }$$</p>
+<p>$$ \begin{bmatrix} x^{‘} \\\ y^{‘} \\\ 1 \end{bmatrix} \sim \begin{bmatrix} h_{11} &amp; h_{12} &amp; h_{13} \\\ h_{21} &amp; h_{22} &amp; h_{23} \\\ h_{31} &amp; h_{32} &amp; h_{33} \end{bmatrix} \begin{bmatrix} x \\\ y \\\ 1 \end{bmatrix}$$</p>
+<p>其中，$h_{31} h_{32} h_{33}$是为了配置相似比例，化简为</p>
+<p>$$x^{‘}=\frac{h_{11} x + h_{12} y + h_{13} }{ h_{31} x + h_{32} y + h_{33} }$$</p>
+<p>$$y^{‘}=\frac{h_{21} \cdot x + h_{22} y + h_{23} }{ h_{31} x + h_{32} y + h_{33} }$$</p>
 <p>但可以看到，h所有元素同乘k 等式依旧成立。因而强制设为8自由度有两种方式，</p>
 <p>①$$ h_{33} = 1 $$</p>
-<p>②$ h<em>{11}\^{2} + h</em>{12}\^{2} = 1 $<br>采用第一种方式较为常见。<br>当采用最小二乘解求H矩阵时，一般先用Ransac筛选最大集，然后利用下方程。</p>
+<p>②$$ h_{11}^{2} + h_{12}^{2} = 1 $$<br>采用第一种方式较为常见。<br>当采用最小二乘解求H矩阵时，一般先用Ransac筛选最大集，然后利用下方程。</p>
 <center><img src="http://ooo.0o0.ooo/2016/02/25/56cf041a7c664.png" alt=""></center>
 
 <p>以x y x’y’为A b矩阵参数，迭代解求H。由于是线性方程，因而可以直接使用$$h=(A^{T}A)^{-1}(A^{T}b)$$求取每次的残差。</p>
@@ -638,16 +648,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/01/18/社交app的2015/" rel="next" title="社交app的2015">
-                <i class="fa fa-chevron-left"></i> 社交app的2015
+              <a href="/2016/01/18/社交app的2015/" rel="next" title="社交App的2015">
+                <i class="fa fa-chevron-left"></i> 社交App的2015
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/03/08/最近demo 模块 算法总结/" rel="prev" title="最近demo 模块 算法总结">
-                最近demo 模块 算法总结 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/03/08/demo-conclusion/" rel="prev" title="最近Demo 模块 算法总结">
+                最近Demo 模块 算法总结 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -736,7 +746,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">105</span>
+              <span class="site-state-item-count">111</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -753,7 +763,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">60</span>
+                <span class="site-state-item-count">62</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -836,7 +846,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-第一个矩阵Essential本质矩阵"><span class="nav-number">1.</span> <span class="nav-text">1. 第一个矩阵Essential本质矩阵</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-第二个矩阵-Homography（单映）矩阵"><span class="nav-number">2.</span> <span class="nav-text"> 3. 第二个矩阵 Homography（单映）矩阵</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Homography（单映）矩阵的求取"><span class="nav-number">3.</span> <span class="nav-text"> 4. Homography（单映）矩阵的求取</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#谨记三："><span class="nav-number">4.</span> <span class="nav-text">** 谨记三：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一个矩阵Essential本质矩阵"><span class="nav-number">1.</span> <span class="nav-text">第一个矩阵Essential本质矩阵</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二个矩阵-Homography（单映）矩阵"><span class="nav-number">2.</span> <span class="nav-text">  第二个矩阵 Homography（单映）矩阵</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Homography（单映）矩阵的求取"><span class="nav-number">3.</span> <span class="nav-text">  Homography（单映）矩阵的求取</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#谨记三："><span class="nav-number">4.</span> <span class="nav-text">** 谨记三：</span></a></li></ol></div>
             
           </div>
         </section>
@@ -855,7 +865,7 @@
         <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -921,22 +931,22 @@
 
 
   
-  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+  <script type="text/javascript" src="/ven/jquery/index.js?v=2.1.3"></script>
 
   
-  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/ven/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
 
   
-  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  <script type="text/javascript" src="/ven/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
-  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+  <script type="text/javascript" src="/ven/velocity/velocity.min.js?v=1.2.1"></script>
 
   
-  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  <script type="text/javascript" src="/ven/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
   
-  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  <script type="text/javascript" src="/ven/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
 
   
